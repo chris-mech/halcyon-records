@@ -1,5 +1,4 @@
 <Project Sdk="Aspire.AppHost.Sdk/13.4.6">
-
   <ItemGroup>
     <ProjectReference Include="..\HalcyonRecords.Api\HalcyonRecords.Api.csproj" />
   </ItemGroup>
@@ -16,5 +15,4 @@
     <Nullable>enable</Nullable>
     <UserSecretsId>a47f1b44-a0b9-4b65-b8f8-ac06334bf11d</UserSecretsId>
   </PropertyGroup>
-
 </Project>

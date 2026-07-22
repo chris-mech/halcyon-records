@@ -1,5 +1,9 @@
+using HalcyonRecords.Api.Common.Endpoints;
+
 var builder = WebApplication.CreateBuilder(args);
 builder.AddServiceDefaults();
+
+builder.Services.AddEndpoints(typeof(Program).Assembly);
 
 builder.Services.AddMediatR(cfg =>
 {
@@ -10,6 +14,6 @@ builder.Services.AddMediatR(cfg =>
 var app = builder.Build();
 
 app.MapDefaultEndpoints();
-app.MapGet("/", () => "Hello World!");
+app.MapEndpoints();
 
-app.Run();
+await app.RunAsync();
