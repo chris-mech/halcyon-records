@@ -1,0 +1,7 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/HalcyonRecords.Api/HalcyonRecords.Api.csproj" />
+    <Project Path="src/HalcyonRecords.AppHost/HalcyonRecords.AppHost.csproj" />
+    <Project Path="src/HalcyonRecords.ServiceDefaults/HalcyonRecords.ServiceDefaults.csproj" />
+  </Folder>
+</Solution>
