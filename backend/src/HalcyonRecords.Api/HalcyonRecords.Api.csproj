@@ -1,5 +1,4 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.Web">
-
   <ItemGroup>
     <ProjectReference Include="..\HalcyonRecords.ServiceDefaults\HalcyonRecords.ServiceDefaults.csproj" />
   </ItemGroup>
@@ -15,5 +14,4 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <UserSecretsId>bbc66577-82c4-4998-82cf-c928aa58921c</UserSecretsId>
   </PropertyGroup>
-
 </Project>
