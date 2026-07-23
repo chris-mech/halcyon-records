@@ -28,8 +28,14 @@ jobs:
           cache: true
           cache-dependency-path: backend/**/packages.lock.json
 
-      - name: Restore dependencies
-        run: dotnet restore --locked-mode
+      - name: Restore Api (locked)
+        run: dotnet restore src/HalcyonRecords.Api/HalcyonRecords.Api.csproj --locked-mode
+
+      - name: Restore ServiceDefaults (locked)
+        run: dotnet restore src/HalcyonRecords.ServiceDefaults/HalcyonRecords.ServiceDefaults.csproj --locked-mode
+
+      - name: Restore AppHost
+        run: dotnet restore src/HalcyonRecords.AppHost/HalcyonRecords.AppHost.csproj
 
       - name: Build
         run: dotnet build --no-restore --configuration Release
