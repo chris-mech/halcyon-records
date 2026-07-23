@@ -1,0 +1,47 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "backend/**"
+  pull_request:
+    branches: [main]
+    paths:
+      - "backend/**"
+
+jobs:
+  backend:
+    name: Backend
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: backend
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v6
+        with:
+          dotnet-version: "10.0.x"
+          cache: true
+          cache-dependency-path: backend/**/packages.lock.json
+
+      - name: Restore Api (locked)
+        run: dotnet restore src/HalcyonRecords.Api/HalcyonRecords.Api.csproj --locked-mode
+
+      - name: Restore ServiceDefaults (locked)
+        run: dotnet restore src/HalcyonRecords.ServiceDefaults/HalcyonRecords.ServiceDefaults.csproj --locked-mode
+
+      - name: Restore AppHost
+        run: dotnet restore src/HalcyonRecords.AppHost/HalcyonRecords.AppHost.csproj
+
+      - name: Build
+        run: dotnet build --no-restore --configuration Release
+
+      - name: Restore CSharpier
+        run: dotnet tool restore
+
+      - name: Check formatting
+        run: dotnet csharpier check .
