@@ -7,7 +7,8 @@ namespace HalcyonRecords.Api.Common.Results
     {
         extension(List<Error> errors)
         {
-            public Results<ProblemHttpResult, ValidationProblem> Problem()
+            public Results<TSuccess, ProblemHttpResult, ValidationProblem> Problem<TSuccess>()
+                where TSuccess : IResult
             {
                 if (errors.Count == 0)
                 {
