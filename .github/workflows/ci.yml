@@ -1,0 +1,41 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "backend/**"
+  pull_request:
+    branches: [main]
+    paths:
+      - "backend/**"
+
+jobs:
+  backend:
+    name: Backend
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: backend
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v6
+        with:
+          dotnet-version: "10.0.x"
+          cache: true
+          cache-dependency-path: backend/**/packages.lock.json
+
+      - name: Restore dependencies
+        run: dotnet restore --locked-mode
+
+      - name: Build
+        run: dotnet build --no-restore --configuration Release
+
+      - name: Restore CSharpier
+        run: dotnet tool restore
+
+      - name: Check formatting
+        run: dotnet csharpier check .
