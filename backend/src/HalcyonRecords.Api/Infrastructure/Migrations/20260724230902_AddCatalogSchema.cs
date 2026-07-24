@@ -40,11 +40,26 @@ namespace HalcyonRecords.Api.Infrastructure.Migrations
                         maxLength: 500,
                         nullable: true
                     ),
+                    UnitsInStock = table.Column<int>(type: "int", nullable: false),
+                    PriceInPence = table.Column<int>(type: "int", nullable: false),
+                    OriginalPriceInPence = table.Column<int>(type: "int", nullable: true),
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Albums", x => x.Id);
+                    table.CheckConstraint(
+                        "CK_Albums_OriginalPriceInPence_GreaterThanPrice",
+                        "OriginalPriceInPence IS NULL OR OriginalPriceInPence > PriceInPence"
+                    );
+                    table.CheckConstraint(
+                        "CK_Albums_PriceInPence_NotNegative",
+                        "PriceInPence >= 0"
+                    );
                     table.CheckConstraint("CK_Albums_Title_NotEmpty", "LEN(Title) > 0");
+                    table.CheckConstraint(
+                        "CK_Albums_UnitsInStock_NotNegative",
+                        "UnitsInStock >= 0"
+                    );
                 }
             );
 
@@ -103,45 +118,6 @@ namespace HalcyonRecords.Api.Infrastructure.Migrations
                 {
                     table.PrimaryKey("PK_Genres", x => x.Id);
                     table.CheckConstraint("CK_Genres_Name_NotEmpty", "LEN(Name) > 0");
-                }
-            );
-
-            migrationBuilder.CreateTable(
-                name: "Stocks",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false),
-                    AlbumId = table.Column<int>(type: "int", nullable: false),
-                    UnitsInStock = table.Column<int>(type: "int", nullable: false),
-                    PriceInPence = table.Column<int>(type: "int", nullable: false),
-                    OriginalPriceInPence = table.Column<int>(type: "int", nullable: true),
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Stocks", x => x.Id);
-                    table.CheckConstraint(
-                        "CK_Stocks_OriginalPriceInPence_GreaterThanPrice",
-                        "OriginalPriceInPence IS NULL OR OriginalPriceInPence > PriceInPence"
-                    );
-                    table.CheckConstraint(
-                        "CK_Stocks_OriginalPriceInPence_NotNegative",
-                        "OriginalPriceInPence IS NULL OR OriginalPriceInPence >= 0"
-                    );
-                    table.CheckConstraint(
-                        "CK_Stocks_PriceInPence_NotNegative",
-                        "PriceInPence >= 0"
-                    );
-                    table.CheckConstraint(
-                        "CK_Stocks_UnitsInStock_NotNegative",
-                        "UnitsInStock >= 0"
-                    );
-                    table.ForeignKey(
-                        name: "FK_Stocks_Albums_AlbumId",
-                        column: x => x.AlbumId,
-                        principalTable: "Albums",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade
-                    );
                 }
             );
 
@@ -238,13 +214,6 @@ namespace HalcyonRecords.Api.Infrastructure.Migrations
                 column: "Slug",
                 unique: true
             );
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Stocks_AlbumId",
-                table: "Stocks",
-                column: "AlbumId",
-                unique: true
-            );
         }
 
         /// <inheritdoc />
@@ -254,13 +223,11 @@ namespace HalcyonRecords.Api.Infrastructure.Migrations
 
             migrationBuilder.DropTable(name: "AlbumGenres");
 
-            migrationBuilder.DropTable(name: "Stocks");
-
             migrationBuilder.DropTable(name: "Artists");
 
-            migrationBuilder.DropTable(name: "Genres");
-
             migrationBuilder.DropTable(name: "Albums");
+
+            migrationBuilder.DropTable(name: "Genres");
         }
     }
 }

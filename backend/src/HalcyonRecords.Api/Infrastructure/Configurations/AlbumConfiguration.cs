@@ -10,7 +10,16 @@ public sealed class AlbumConfiguration : IEntityTypeConfiguration<Album>
     {
         builder.ToTable(
             "Albums",
-            t => t.HasCheckConstraint("CK_Albums_Title_NotEmpty", "LEN(Title) > 0")
+            t =>
+            {
+                t.HasCheckConstraint("CK_Albums_Title_NotEmpty", "LEN(Title) > 0");
+                t.HasCheckConstraint("CK_Albums_UnitsInStock_NotNegative", "UnitsInStock >= 0");
+                t.HasCheckConstraint("CK_Albums_PriceInPence_NotNegative", "PriceInPence >= 0");
+                t.HasCheckConstraint(
+                    "CK_Albums_OriginalPriceInPence_GreaterThanPrice",
+                    "OriginalPriceInPence IS NULL OR OriginalPriceInPence > PriceInPence"
+                );
+            }
         );
 
         builder.Property(a => a.Title).HasMaxLength(1000);
@@ -20,12 +29,5 @@ public sealed class AlbumConfiguration : IEntityTypeConfiguration<Album>
         builder.HasIndex(a => a.Slug).IsUnique();
 
         builder.Property(a => a.ImageUrl).HasMaxLength(500);
-
-        builder
-            .HasOne(a => a.Stock)
-            .WithOne(s => s.Album)
-            .HasForeignKey<Stock>(s => s.AlbumId)
-            .IsRequired()
-            .OnDelete(DeleteBehavior.Cascade);
     }
 }

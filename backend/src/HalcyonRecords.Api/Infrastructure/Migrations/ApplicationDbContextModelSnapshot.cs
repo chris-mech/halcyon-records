@@ -44,6 +44,12 @@ namespace HalcyonRecords.Api.Infrastructure.Migrations
                         .HasMaxLength(200)
                         .HasColumnType("nvarchar(200)");
 
+                    b.Property<int?>("OriginalPriceInPence")
+                        .HasColumnType("int");
+
+                    b.Property<int>("PriceInPence")
+                        .HasColumnType("int");
+
                     b.Property<DateOnly?>("ReleaseDate")
                         .HasColumnType("date");
 
@@ -57,6 +63,9 @@ namespace HalcyonRecords.Api.Infrastructure.Migrations
                         .HasMaxLength(1000)
                         .HasColumnType("nvarchar(1000)");
 
+                    b.Property<int>("UnitsInStock")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
                     b.HasIndex("Slug")
@@ -64,7 +73,13 @@ namespace HalcyonRecords.Api.Infrastructure.Migrations
 
                     b.ToTable("Albums", null, t =>
                         {
+                            t.HasCheckConstraint("CK_Albums_OriginalPriceInPence_GreaterThanPrice", "OriginalPriceInPence IS NULL OR OriginalPriceInPence > PriceInPence");
+
+                            t.HasCheckConstraint("CK_Albums_PriceInPence_NotNegative", "PriceInPence >= 0");
+
                             t.HasCheckConstraint("CK_Albums_Title_NotEmpty", "LEN(Title) > 0");
+
+                            t.HasCheckConstraint("CK_Albums_UnitsInStock_NotNegative", "UnitsInStock >= 0");
                         });
                 });
 
@@ -167,40 +182,6 @@ namespace HalcyonRecords.Api.Infrastructure.Migrations
                         });
                 });
 
-            modelBuilder.Entity("HalcyonRecords.Api.Domain.Stock", b =>
-                {
-                    b.Property<int>("Id")
-                        .HasColumnType("int");
-
-                    b.Property<int>("AlbumId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("OriginalPriceInPence")
-                        .HasColumnType("int");
-
-                    b.Property<int>("PriceInPence")
-                        .HasColumnType("int");
-
-                    b.Property<int>("UnitsInStock")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("AlbumId")
-                        .IsUnique();
-
-                    b.ToTable("Stocks", null, t =>
-                        {
-                            t.HasCheckConstraint("CK_Stocks_OriginalPriceInPence_GreaterThanPrice", "OriginalPriceInPence IS NULL OR OriginalPriceInPence > PriceInPence");
-
-                            t.HasCheckConstraint("CK_Stocks_OriginalPriceInPence_NotNegative", "OriginalPriceInPence IS NULL OR OriginalPriceInPence >= 0");
-
-                            t.HasCheckConstraint("CK_Stocks_PriceInPence_NotNegative", "PriceInPence >= 0");
-
-                            t.HasCheckConstraint("CK_Stocks_UnitsInStock_NotNegative", "UnitsInStock >= 0");
-                        });
-                });
-
             modelBuilder.Entity("HalcyonRecords.Api.Domain.AlbumArtist", b =>
                 {
                     b.HasOne("HalcyonRecords.Api.Domain.Album", "Album")
@@ -239,24 +220,11 @@ namespace HalcyonRecords.Api.Infrastructure.Migrations
                     b.Navigation("Genre");
                 });
 
-            modelBuilder.Entity("HalcyonRecords.Api.Domain.Stock", b =>
-                {
-                    b.HasOne("HalcyonRecords.Api.Domain.Album", "Album")
-                        .WithOne("Stock")
-                        .HasForeignKey("HalcyonRecords.Api.Domain.Stock", "AlbumId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Album");
-                });
-
             modelBuilder.Entity("HalcyonRecords.Api.Domain.Album", b =>
                 {
                     b.Navigation("AlbumArtists");
 
                     b.Navigation("AlbumGenres");
-
-                    b.Navigation("Stock");
                 });
 
             modelBuilder.Entity("HalcyonRecords.Api.Domain.Artist", b =>

@@ -19,10 +19,6 @@ public class IdConverterTests
     public void GenreIdConverter_RoundTripsThroughProviderValue() =>
         AssertRoundTrips(new GenreIdConverter(), new GenreId(33));
 
-    [Fact]
-    public void StockIdConverter_RoundTripsThroughProviderValue() =>
-        AssertRoundTrips(new StockIdConverter(), new StockId(33));
-
     private static void AssertRoundTrips<TId>(ValueConverter converter, TId id)
     {
         var providerValue = converter.ConvertToProvider(id);
