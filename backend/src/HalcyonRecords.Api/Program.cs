@@ -2,9 +2,13 @@ using System.Diagnostics;
 using HalcyonRecords.Api.Common;
 using HalcyonRecords.Api.Common.Endpoints;
 using HalcyonRecords.Api.Common.RateLimiting;
+using HalcyonRecords.Api.Infrastructure;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.AddServiceDefaults();
+
+builder.AddSqlServerDbContext<ApplicationDbContext>("halcyonrecords");
 
 builder.Services.AddEndpoints(typeof(Program).Assembly);
 
@@ -28,6 +32,13 @@ builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
 builder.Services.AddApiRateLimiting(builder.Configuration);
 
 var app = builder.Build();
+
+if (app.Environment.IsDevelopment())
+{
+    using var scope = app.Services.CreateScope();
+    var dbContext = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+    await dbContext.Database.MigrateAsync();
+}
 
 app.UseExceptionHandler();
 app.UseRateLimiter();
