@@ -13,8 +13,10 @@ public class Album
     public bool IsNew { get; set; }
     public bool IsStaffPick { get; set; }
     public string? ImageUrl { get; set; }
+    public int UnitsInStock { get; set; }
+    public int PriceInPence { get; set; }
+    public int? OriginalPriceInPence { get; set; }
 
-    public Stock? Stock { get; set; }
     public ICollection<AlbumArtist> AlbumArtists { get; set; } = [];
     public ICollection<AlbumGenre> AlbumGenres { get; set; } = [];
 }
