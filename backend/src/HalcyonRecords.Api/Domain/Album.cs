@@ -12,7 +12,7 @@ public class Album
     public string? Label { get; set; }
     public bool IsNew { get; set; }
     public bool IsStaffPick { get; set; }
-    public Uri? ImageUrl { get; set; }
+    public string? ImageUrl { get; set; }
 
     public Stock? Stock { get; set; }
     public ICollection<AlbumArtist> AlbumArtists { get; set; } = [];
