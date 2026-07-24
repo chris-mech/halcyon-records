@@ -60,8 +60,14 @@ jobs:
       - name: Restore AppHost
         run: dotnet restore src/HalcyonRecords.AppHost/HalcyonRecords.AppHost.csproj
 
+      - name: Restore UnitTests (locked)
+        run: dotnet restore tests/HalcyonRecords.Api.UnitTests/HalcyonRecords.Api.UnitTests.csproj --locked-mode
+
       - name: Build
         run: dotnet build --no-restore --configuration Release
+
+      - name: Test
+        run: dotnet test --no-restore --no-build --configuration Release
 
       - name: Restore CSharpier
         run: dotnet tool restore

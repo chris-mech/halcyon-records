@@ -4,4 +4,7 @@
     <Project Path="src/HalcyonRecords.AppHost/HalcyonRecords.AppHost.csproj" />
     <Project Path="src/HalcyonRecords.ServiceDefaults/HalcyonRecords.ServiceDefaults.csproj" />
   </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/HalcyonRecords.Api.UnitTests/HalcyonRecords.Api.UnitTests.csproj" />
+  </Folder>
 </Solution>
