@@ -49,27 +49,6 @@
 }
 
 :root {
-  --background: #fbf9f3;
-  --foreground: #211e1a;
-  --card: #fefdfa;
-  --card-foreground: #211e1a;
-  --popover: #fefdfa;
-  --popover-foreground: #211e1a;
-  --primary: #c1543a;
-  --primary-foreground: #fefdfa;
-  --secondary: #5f7688;
-  --secondary-foreground: #fefdfa;
-  --muted: #fefdfa;
-  --muted-foreground: #6b6355;
-  --accent: #c9bc9c;
-  --accent-foreground: #211e1a;
-  --destructive: oklch(0.577 0.245 27.325);
-  --border: #c9bc9c;
-  --input: #c9bc9c;
-  --ring: #5f7688;
-  --radius: 0;
-}
-:root {
   --card: oklch(0.994 0.004 91.445);
   --card-foreground: oklch(0.237 0.009 75.182);
   --popover: oklch(0.994 0.004 91.445);
