@@ -1,0 +1,42 @@
+﻿[
+  {
+    "name": "Lena Marsh",
+    "slug": "lena-marsh",
+    "bio": "Placeholder bio.",
+    "origin": "Bristol, UK",
+    "activeSince": 2011,
+    "imageUrl": null
+  },
+  {
+    "name": "The Coastline Static",
+    "slug": "the-coastline-static",
+    "bio": "Placeholder bio.",
+    "origin": "Portland, US",
+    "activeSince": 2015,
+    "imageUrl": null
+  },
+  {
+    "name": "Odessa Grey",
+    "slug": "odessa-grey",
+    "bio": "Placeholder bio.",
+    "origin": "Leeds, UK",
+    "activeSince": 2009,
+    "imageUrl": null
+  },
+  {
+    "name": "Junction Eleven",
+    "slug": "junction-eleven",
+    "bio": "Placeholder bio.",
+    "origin": "Glasgow, UK",
+    "activeSince": 2018,
+    "imageUrl": null
+  },
+  {
+    "name": "Mira Voss",
+    "slug": "mira-voss",
+    "bio": "Placeholder bio.",
+    "origin": "Berlin, DE",
+    "activeSince": 2013,
+    "imageUrl": null
+  }
+]
