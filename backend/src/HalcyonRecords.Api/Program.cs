@@ -3,6 +3,7 @@ using HalcyonRecords.Api.Common;
 using HalcyonRecords.Api.Common.Endpoints;
 using HalcyonRecords.Api.Common.RateLimiting;
 using HalcyonRecords.Api.Infrastructure;
+using HalcyonRecords.Api.Infrastructure.Seed;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -38,6 +39,7 @@ if (app.Environment.IsDevelopment())
     using var scope = app.Services.CreateScope();
     var dbContext = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
     await dbContext.Database.MigrateAsync();
+    await DbSeeder.SeedAsync(dbContext);
 }
 
 app.UseExceptionHandler();

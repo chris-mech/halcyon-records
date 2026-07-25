@@ -25,7 +25,10 @@ namespace HalcyonRecords.Api.Infrastructure.Migrations
             modelBuilder.Entity("HalcyonRecords.Api.Domain.Album", b =>
                 {
                     b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
@@ -116,7 +119,10 @@ namespace HalcyonRecords.Api.Infrastructure.Migrations
             modelBuilder.Entity("HalcyonRecords.Api.Domain.Artist", b =>
                 {
                     b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<int?>("ActiveSince")
                         .HasColumnType("int");
@@ -156,7 +162,10 @@ namespace HalcyonRecords.Api.Infrastructure.Migrations
             modelBuilder.Entity("HalcyonRecords.Api.Domain.Genre", b =>
                 {
                     b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Name")
                         .IsRequired()

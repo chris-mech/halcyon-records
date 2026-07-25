@@ -13,6 +13,8 @@ public sealed class GenreConfiguration : IEntityTypeConfiguration<Genre>
             t => t.HasCheckConstraint("CK_Genres_Name_NotEmpty", "LEN(Name) > 0")
         );
 
+        builder.Property(g => g.Id).ValueGeneratedOnAdd();
+
         builder.Property(g => g.Name).HasMaxLength(150);
         builder.HasIndex(g => g.Name).IsUnique();
 
