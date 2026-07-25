@@ -13,7 +13,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Include="Infrastructure/Seed/Data/*.json" CopyToOutputDirectory="PreserveNewest" />
+      <None Include="Infrastructure/Seed/Data/*.json" CopyToOutputDirectory="PreserveNewest" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Remove="Infrastructure/Seed/Data/*.json" />
   </ItemGroup>
 
   <PropertyGroup>
