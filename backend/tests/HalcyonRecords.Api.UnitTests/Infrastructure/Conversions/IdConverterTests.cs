@@ -20,7 +20,11 @@ public class IdConverterTests
     public void GenreIdConverter_RoundTripsThroughProviderValue(GenreId id) =>
         AssertRoundTrips(new GenreIdConverter(), id, id.Value);
 
-    private static void AssertRoundTrips<TId>(ValueConverter converter, TId id, int expectedProviderValue)
+    private static void AssertRoundTrips<TId>(
+        ValueConverter converter,
+        TId id,
+        int expectedProviderValue
+    )
     {
         var providerValue = converter.ConvertToProvider(id);
         providerValue.Should().Be(expectedProviderValue);
