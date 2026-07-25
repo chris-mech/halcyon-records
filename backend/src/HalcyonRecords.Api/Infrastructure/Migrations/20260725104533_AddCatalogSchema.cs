@@ -15,7 +15,9 @@ namespace HalcyonRecords.Api.Infrastructure.Migrations
                 name: "Albums",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false),
+                    Id = table
+                        .Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     Title = table.Column<string>(
                         type: "nvarchar(1000)",
                         maxLength: 1000,
@@ -67,7 +69,9 @@ namespace HalcyonRecords.Api.Infrastructure.Migrations
                 name: "Artists",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false),
+                    Id = table
+                        .Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(
                         type: "nvarchar(150)",
                         maxLength: 150,
@@ -102,7 +106,9 @@ namespace HalcyonRecords.Api.Infrastructure.Migrations
                 name: "Genres",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false),
+                    Id = table
+                        .Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(
                         type: "nvarchar(150)",
                         maxLength: 150,

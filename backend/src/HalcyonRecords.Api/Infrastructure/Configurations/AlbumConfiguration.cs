@@ -22,6 +22,8 @@ public sealed class AlbumConfiguration : IEntityTypeConfiguration<Album>
             }
         );
 
+        builder.Property(a => a.Id).ValueGeneratedOnAdd();
+
         builder.Property(a => a.Title).HasMaxLength(1000);
         builder.Property(a => a.Label).HasMaxLength(200);
 

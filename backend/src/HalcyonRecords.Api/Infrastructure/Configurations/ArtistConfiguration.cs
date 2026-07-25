@@ -13,6 +13,8 @@ public sealed class ArtistConfiguration : IEntityTypeConfiguration<Artist>
             t => t.HasCheckConstraint("CK_Artists_Name_NotEmpty", "LEN(Name) > 0")
         );
 
+        builder.Property(a => a.Id).ValueGeneratedOnAdd();
+
         builder.Property(a => a.Name).HasMaxLength(150);
         builder.Property(a => a.Origin).HasMaxLength(200);
 

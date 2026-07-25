@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace HalcyonRecords.Api.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20260724230902_AddCatalogSchema")]
+    [Migration("20260725104533_AddCatalogSchema")]
     partial class AddCatalogSchema
     {
         /// <inheritdoc />
@@ -28,7 +28,10 @@ namespace HalcyonRecords.Api.Infrastructure.Migrations
             modelBuilder.Entity("HalcyonRecords.Api.Domain.Album", b =>
                 {
                     b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
@@ -119,7 +122,10 @@ namespace HalcyonRecords.Api.Infrastructure.Migrations
             modelBuilder.Entity("HalcyonRecords.Api.Domain.Artist", b =>
                 {
                     b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<int?>("ActiveSince")
                         .HasColumnType("int");
@@ -159,7 +165,10 @@ namespace HalcyonRecords.Api.Infrastructure.Migrations
             modelBuilder.Entity("HalcyonRecords.Api.Domain.Genre", b =>
                 {
                     b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Name")
                         .IsRequired()
