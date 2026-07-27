@@ -75,7 +75,11 @@ public static class DbSeeder
                 foreach (var artistSourceId in entry.ArtistSourceIds)
                 {
                     album.AlbumArtists.Add(
-                        new AlbumArtist { Album = album, Artist = artistsBySourceId[artistSourceId] }
+                        new AlbumArtist
+                        {
+                            Album = album,
+                            Artist = artistsBySourceId[artistSourceId],
+                        }
                     );
                 }
 
