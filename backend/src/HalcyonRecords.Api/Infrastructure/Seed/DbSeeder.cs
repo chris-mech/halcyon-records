@@ -1,6 +1,7 @@
-﻿using System.Text.Json;
-using HalcyonRecords.Api.Domain;
+﻿using HalcyonRecords.Api.Domain;
 using Microsoft.EntityFrameworkCore;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace HalcyonRecords.Api.Infrastructure.Seed;
 
@@ -11,6 +12,7 @@ public static class DbSeeder
     private static readonly JsonSerializerOptions JsonOptions = new()
     {
         PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
+        Converters = { new JsonStringEnumConverter<SeedSource>() },
     };
 
     public static async Task SeedAsync(
