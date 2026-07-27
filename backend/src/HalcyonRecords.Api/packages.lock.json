@@ -55,6 +55,12 @@
         "resolved": "10.29.0.143774",
         "contentHash": "YOBCHTjqb4ak7yjLQhQJ6S0+aTkgnuMcekjCrhWruyIIoWlB1C8W+Fgr18bWit+xx7Gd9sNl5sziOwh6D804Hg=="
       },
+      "Sqids": {
+        "type": "Direct",
+        "requested": "[3.2.1, )",
+        "resolved": "3.2.1",
+        "contentHash": "8uqA+i1CYgRz5H/Sd+ucmEh+/r9IwihxH24XuBfvZPsERuWLjnOITeODdcKyFZ40wfeG1xH2H+MS4o7DpVt8og=="
+      },
       "Humanizer.Core": {
         "type": "Transitive",
         "resolved": "2.14.1",

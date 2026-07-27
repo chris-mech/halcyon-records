@@ -738,6 +738,11 @@
           "System.Threading.RateLimiting": "8.0.0"
         }
       },
+      "Sqids": {
+        "type": "Transitive",
+        "resolved": "3.2.1",
+        "contentHash": "8uqA+i1CYgRz5H/Sd+ucmEh+/r9IwihxH24XuBfvZPsERuWLjnOITeODdcKyFZ40wfeG1xH2H+MS4o7DpVt8og=="
+      },
       "System.Configuration.ConfigurationManager": {
         "type": "Transitive",
         "resolved": "9.0.13",
@@ -839,7 +844,8 @@
           "Aspire.Microsoft.EntityFrameworkCore.SqlServer": "[13.4.6, )",
           "ErrorOr": "[2.1.1, )",
           "HalcyonRecords.ServiceDefaults": "[1.0.0, )",
-          "MediatR": "[14.2.0, )"
+          "MediatR": "[14.2.0, )",
+          "Sqids": "[3.2.1, )"
         }
       },
       "halcyonrecords.servicedefaults": {
