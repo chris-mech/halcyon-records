@@ -1,7 +1,8 @@
 ﻿[
   {
     "name": "Lena Marsh",
-    "slug": "lena-marsh",
+    "sourceId": "7eb83daa-2915-414b-be54-2d8a9a9c2927",
+    "source": "Generated",
     "bio": "Placeholder bio.",
     "origin": "Bristol, UK",
     "activeSince": 2011,
@@ -9,7 +10,8 @@
   },
   {
     "name": "The Coastline Static",
-    "slug": "the-coastline-static",
+    "sourceId": "da140048-06d0-4601-843d-cf65014b2f2d",
+    "source": "Generated",
     "bio": "Placeholder bio.",
     "origin": "Portland, US",
     "activeSince": 2015,
@@ -17,7 +19,8 @@
   },
   {
     "name": "Odessa Grey",
-    "slug": "odessa-grey",
+    "sourceId": "1f4e8aff-adde-41fc-8a45-c69346605b36",
+    "source": "Generated",
     "bio": "Placeholder bio.",
     "origin": "Leeds, UK",
     "activeSince": 2009,
@@ -25,7 +28,8 @@
   },
   {
     "name": "Junction Eleven",
-    "slug": "junction-eleven",
+    "sourceId": "604712c0-7c26-40c4-99a2-993f0151ea91",
+    "source": "Generated",
     "bio": "Placeholder bio.",
     "origin": "Glasgow, UK",
     "activeSince": 2018,
@@ -33,7 +37,8 @@
   },
   {
     "name": "Mira Voss",
-    "slug": "mira-voss",
+    "sourceId": "ee1d4d83-1405-48bc-a991-26115db88d98",
+    "source": "Generated",
     "bio": "Placeholder bio.",
     "origin": "Berlin, DE",
     "activeSince": 2013,
