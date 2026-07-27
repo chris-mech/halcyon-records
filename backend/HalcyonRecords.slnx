@@ -9,5 +9,6 @@
   </Folder>
   <Folder Name="/tools/">
     <Project Path="tools/HalcyonRecords.SeedDataGenerator/HalcyonRecords.SeedDataGenerator.csproj" />
+    <Project Path="tools/HalcyonRecords.SeedDataGenerator.Core/HalcyonRecords.SeedDataGenerator.Core.csproj" />
   </Folder>
 </Solution>

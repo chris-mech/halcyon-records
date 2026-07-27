@@ -7,10 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\src\HalcyonRecords.Api\HalcyonRecords.Api.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="10.0.10" />
+    <ProjectReference Include="..\HalcyonRecords.SeedDataGenerator.Core\HalcyonRecords.SeedDataGenerator.Core.csproj" />
   </ItemGroup>
 </Project>
