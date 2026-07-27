@@ -6,7 +6,6 @@ public class Album
 {
     public AlbumId Id { get; set; }
     public required string Title { get; set; }
-    public required string Slug { get; set; }
     public string? Description { get; set; }
     public DateOnly? ReleaseDate { get; set; }
     public string? Label { get; set; }

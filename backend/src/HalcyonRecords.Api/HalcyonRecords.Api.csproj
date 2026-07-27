@@ -10,6 +10,7 @@
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="10.0.10">
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
+    <PackageReference Include="Sqids" Version="3.2.1" />
   </ItemGroup>
 
   <ItemGroup>

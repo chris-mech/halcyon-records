@@ -36,23 +36,23 @@ public static class DbSeeder
             cancellationToken
         );
 
-        var artists = artistEntries
-            .Select(entry => new Artist
+        var artistsBySourceId = artistEntries.ToDictionary(
+            entry => entry.SourceId,
+            entry => new Artist
             {
                 Name = entry.Name,
-                Slug = entry.Slug,
                 Bio = entry.Bio,
                 Origin = entry.Origin,
                 ActiveSince = entry.ActiveSince,
                 ImageUrl = entry.ImageUrl,
-            })
-            .ToList();
+            }
+        );
+        var artists = artistsBySourceId.Values.ToList();
 
         var genres = genreEntries
             .Select(entry => new Genre { Name = entry.Name, Slug = entry.Slug })
             .ToList();
 
-        var artistsBySlug = artists.ToDictionary(artist => artist.Slug);
         var genresBySlug = genres.ToDictionary(genre => genre.Slug);
 
         var albums = albumEntries
@@ -61,7 +61,6 @@ public static class DbSeeder
                 var album = new Album
                 {
                     Title = entry.Title,
-                    Slug = entry.Slug,
                     Description = entry.Description,
                     ReleaseDate = entry.ReleaseDate,
                     Label = entry.Label,
@@ -73,10 +72,14 @@ public static class DbSeeder
                     OriginalPriceInPence = entry.OriginalPriceInPence,
                 };
 
-                foreach (var artistSlug in entry.ArtistSlugs)
+                foreach (var artistSourceId in entry.ArtistSourceIds)
                 {
                     album.AlbumArtists.Add(
-                        new AlbumArtist { Album = album, Artist = artistsBySlug[artistSlug] }
+                        new AlbumArtist
+                        {
+                            Album = album,
+                            Artist = artistsBySourceId[artistSourceId],
+                        }
                     );
                 }
 
