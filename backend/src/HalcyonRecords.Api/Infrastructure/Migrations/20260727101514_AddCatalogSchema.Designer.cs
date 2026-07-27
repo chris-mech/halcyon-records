@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace HalcyonRecords.Api.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20260725104533_AddCatalogSchema")]
+    [Migration("20260727101514_AddCatalogSchema")]
     partial class AddCatalogSchema
     {
         /// <inheritdoc />
@@ -59,11 +59,6 @@ namespace HalcyonRecords.Api.Infrastructure.Migrations
                     b.Property<DateOnly?>("ReleaseDate")
                         .HasColumnType("date");
 
-                    b.Property<string>("Slug")
-                        .IsRequired()
-                        .HasMaxLength(200)
-                        .HasColumnType("nvarchar(200)");
-
                     b.Property<string>("Title")
                         .IsRequired()
                         .HasMaxLength(1000)
@@ -73,9 +68,6 @@ namespace HalcyonRecords.Api.Infrastructure.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("Slug")
-                        .IsUnique();
 
                     b.ToTable("Albums", null, t =>
                         {
@@ -146,15 +138,7 @@ namespace HalcyonRecords.Api.Infrastructure.Migrations
                         .HasMaxLength(200)
                         .HasColumnType("nvarchar(200)");
 
-                    b.Property<string>("Slug")
-                        .IsRequired()
-                        .HasMaxLength(200)
-                        .HasColumnType("nvarchar(200)");
-
                     b.HasKey("Id");
-
-                    b.HasIndex("Slug")
-                        .IsUnique();
 
                     b.ToTable("Artists", null, t =>
                         {

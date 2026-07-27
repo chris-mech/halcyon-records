@@ -6,7 +6,6 @@ public class Artist
 {
     public ArtistId Id { get; set; }
     public required string Name { get; set; }
-    public required string Slug { get; set; }
     public string? Bio { get; set; }
     public string? Origin { get; set; }
     public int? ActiveSince { get; set; }

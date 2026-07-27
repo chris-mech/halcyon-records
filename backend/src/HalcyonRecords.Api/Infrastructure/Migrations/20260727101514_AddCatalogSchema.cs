@@ -23,11 +23,6 @@ namespace HalcyonRecords.Api.Infrastructure.Migrations
                         maxLength: 1000,
                         nullable: false
                     ),
-                    Slug = table.Column<string>(
-                        type: "nvarchar(200)",
-                        maxLength: 200,
-                        nullable: false
-                    ),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     ReleaseDate = table.Column<DateOnly>(type: "date", nullable: true),
                     Label = table.Column<string>(
@@ -75,11 +70,6 @@ namespace HalcyonRecords.Api.Infrastructure.Migrations
                     Name = table.Column<string>(
                         type: "nvarchar(150)",
                         maxLength: 150,
-                        nullable: false
-                    ),
-                    Slug = table.Column<string>(
-                        type: "nvarchar(200)",
-                        maxLength: 200,
                         nullable: false
                     ),
                     Bio = table.Column<string>(type: "nvarchar(max)", nullable: true),
@@ -191,20 +181,6 @@ namespace HalcyonRecords.Api.Infrastructure.Migrations
                 name: "IX_AlbumGenres_GenreId",
                 table: "AlbumGenres",
                 column: "GenreId"
-            );
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Albums_Slug",
-                table: "Albums",
-                column: "Slug",
-                unique: true
-            );
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Artists_Slug",
-                table: "Artists",
-                column: "Slug",
-                unique: true
             );
 
             migrationBuilder.CreateIndex(

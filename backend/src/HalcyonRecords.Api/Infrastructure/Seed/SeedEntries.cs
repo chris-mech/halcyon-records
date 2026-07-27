@@ -1,8 +1,15 @@
 ﻿namespace HalcyonRecords.Api.Infrastructure.Seed;
 
+public enum SeedSource
+{
+    MusicBrainz,
+    Generated,
+}
+
 public sealed record ArtistSeedEntry(
     string Name,
-    string Slug,
+    Guid SourceId,
+    SeedSource Source,
     string? Bio,
     string? Origin,
     int? ActiveSince,
@@ -13,14 +20,15 @@ public sealed record GenreSeedEntry(string Name, string Slug);
 
 public sealed record AlbumSeedEntry(
     string Title,
-    string Slug,
+    Guid SourceId,
+    SeedSource Source,
     string? Description,
     DateOnly? ReleaseDate,
     string? Label,
     bool IsNew,
     bool IsStaffPick,
     string? ImageUrl,
-    IReadOnlyList<string> ArtistSlugs,
+    IReadOnlyList<Guid> ArtistSourceIds,
     IReadOnlyList<string> GenreSlugs,
     int UnitsInStock,
     int PriceInPence,
