@@ -1,7 +1,7 @@
-﻿using HalcyonRecords.Api.Domain;
-using Microsoft.EntityFrameworkCore;
-using System.Text.Json;
+﻿using System.Text.Json;
 using System.Text.Json.Serialization;
+using HalcyonRecords.Api.Domain;
+using Microsoft.EntityFrameworkCore;
 
 namespace HalcyonRecords.Api.Infrastructure.Seed;
 
