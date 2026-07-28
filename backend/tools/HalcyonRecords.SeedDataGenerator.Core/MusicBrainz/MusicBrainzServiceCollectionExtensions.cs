@@ -20,12 +20,12 @@ public static class MusicBrainzServiceCollectionExtensions
                 configuration.GetSection(MusicBrainzOptions.SectionName).Get<MusicBrainzOptions>()
                 ?? new MusicBrainzOptions();
 
-            if (string.IsNullOrEmpty(musicBrainzOptions.BaseAddress))
+            if (string.IsNullOrWhiteSpace(musicBrainzOptions.BaseAddress))
             {
                 throw new InvalidOperationException("MusicBrainz:BaseAddress is not configured.");
             }
 
-            if (string.IsNullOrEmpty(musicBrainzOptions.ContactEmail))
+            if (string.IsNullOrWhiteSpace(musicBrainzOptions.ContactEmail))
             {
                 throw new InvalidOperationException(
                     "MusicBrainz:ContactEmail is not configured — set it via "
