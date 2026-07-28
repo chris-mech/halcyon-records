@@ -1,18 +1,22 @@
 [
   {
     "name": "Jazz",
-    "slug": "jazz"
+    "slug": "jazz",
+    "description": "Modal, cool, hard bop and everything that came after — records for late nights and slow Sundays alike."
   },
   {
     "name": "Electronic",
-    "slug": "electronic"
+    "slug": "electronic",
+    "description": "From deep house to ambient drift — electronic music for dancing, thinking, or doing both at once."
   },
   {
-    "name": "Folk",
-    "slug": "folk"
+    "name": "Folk, World, & Country",
+    "slug": "folk-world-and-country",
+    "description": "Country twang, front-porch folk, and rhythms from every corner of the map — proof that roots music has no borders."
   },
   {
     "name": "Rock",
-    "slug": "rock"
+    "slug": "rock",
+    "description": "Loud guitars, louder hooks, and the odd quiet moment in between — the genre that never really left."
   }
 ]

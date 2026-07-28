@@ -16,7 +16,7 @@ public sealed record ArtistSeedEntry(
     string? ImageUrl
 );
 
-public sealed record GenreSeedEntry(string Name, string Slug);
+public sealed record GenreSeedEntry(string Name, string Slug, string? Description = null);
 
 public sealed record AlbumSeedEntry(
     string Title,
