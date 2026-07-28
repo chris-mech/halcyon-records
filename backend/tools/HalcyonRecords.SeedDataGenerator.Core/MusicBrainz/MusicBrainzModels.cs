@@ -31,7 +31,10 @@ public sealed record MusicBrainzLifeSpan(string? Begin);
 
 public sealed record MusicBrainzArea(string? Name);
 
-public sealed record MusicBrainzReleaseGroup(Guid? Id, IReadOnlyList<MusicBrainzRelation>? Relations);
+public sealed record MusicBrainzReleaseGroup(
+    Guid? Id,
+    IReadOnlyList<MusicBrainzRelation>? Relations
+);
 
 public sealed record MusicBrainzRelation(string? Type, MusicBrainzUrl? Url);
 
