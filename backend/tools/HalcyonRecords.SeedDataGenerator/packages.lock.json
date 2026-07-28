@@ -675,7 +675,8 @@
         "type": "Project",
         "dependencies": {
           "HalcyonRecords.Api": "[1.0.0, )",
-          "Microsoft.EntityFrameworkCore.SqlServer": "[10.0.10, )"
+          "Microsoft.EntityFrameworkCore.SqlServer": "[10.0.10, )",
+          "Microsoft.Extensions.Http.Resilience": "[10.8.0, )"
         }
       },
       "halcyonrecords.servicedefaults": {
