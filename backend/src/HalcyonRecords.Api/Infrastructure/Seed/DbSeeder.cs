@@ -1,4 +1,5 @@
 ﻿using System.Text.Json;
+using System.Text.Json.Serialization;
 using HalcyonRecords.Api.Domain;
 using Microsoft.EntityFrameworkCore;
 
@@ -11,6 +12,7 @@ public static class DbSeeder
     private static readonly JsonSerializerOptions JsonOptions = new()
     {
         PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
+        Converters = { new JsonStringEnumConverter<SeedSource>() },
     };
 
     public static async Task SeedAsync(
@@ -50,7 +52,12 @@ public static class DbSeeder
         var artists = artistsBySourceId.Values.ToList();
 
         var genres = genreEntries
-            .Select(entry => new Genre { Name = entry.Name, Slug = entry.Slug })
+            .Select(entry => new Genre
+            {
+                Name = entry.Name,
+                Slug = entry.Slug,
+                Description = entry.Description,
+            })
             .ToList();
 
         var genresBySlug = genres.ToDictionary(genre => genre.Slug);

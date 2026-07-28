@@ -42,7 +42,7 @@
     "isStaffPick": true,
     "imageUrl": null,
     "artistSourceIds": [ "1f4e8aff-adde-41fc-8a45-c69346605b36" ],
-    "genreSlugs": [ "folk" ],
+    "genreSlugs": [ "folk-world-and-country" ],
     "unitsInStock": 8,
     "priceInPence": 1799,
     "originalPriceInPence": null
@@ -74,7 +74,7 @@
     "isStaffPick": false,
     "imageUrl": null,
     "artistSourceIds": [ "ee1d4d83-1405-48bc-a991-26115db88d98" ],
-    "genreSlugs": [ "jazz", "folk" ],
+    "genreSlugs": [ "jazz", "folk-world-and-country" ],
     "unitsInStock": 3,
     "priceInPence": 1499,
     "originalPriceInPence": null
@@ -122,7 +122,7 @@
     "isStaffPick": true,
     "imageUrl": null,
     "artistSourceIds": [ "1f4e8aff-adde-41fc-8a45-c69346605b36" ],
-    "genreSlugs": [ "folk" ],
+    "genreSlugs": [ "folk-world-and-country" ],
     "unitsInStock": 9,
     "priceInPence": 1999,
     "originalPriceInPence": null
