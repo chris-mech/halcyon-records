@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace HalcyonRecords.Api.Infrastructure.Migrations
 {
     /// <inheritdoc />
-    public partial class AddCatalogSchema : Migration
+    public partial class AddCatalogueSchema : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -109,6 +109,7 @@ namespace HalcyonRecords.Api.Infrastructure.Migrations
                         maxLength: 200,
                         nullable: false
                     ),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
                 },
                 constraints: table =>
                 {

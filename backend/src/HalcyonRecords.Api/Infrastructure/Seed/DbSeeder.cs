@@ -52,7 +52,12 @@ public static class DbSeeder
         var artists = artistsBySourceId.Values.ToList();
 
         var genres = genreEntries
-            .Select(entry => new Genre { Name = entry.Name, Slug = entry.Slug })
+            .Select(entry => new Genre
+            {
+                Name = entry.Name,
+                Slug = entry.Slug,
+                Description = entry.Description,
+            })
             .ToList();
 
         var genresBySlug = genres.ToDictionary(genre => genre.Slug);
