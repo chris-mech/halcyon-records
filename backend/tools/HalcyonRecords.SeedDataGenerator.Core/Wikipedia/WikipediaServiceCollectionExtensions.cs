@@ -1,5 +1,5 @@
-﻿using System.Reflection;
-using System.Threading.RateLimiting;
+﻿using System.Threading.RateLimiting;
+using HalcyonRecords.SeedDataGenerator.Core.Common;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -7,14 +7,9 @@ namespace HalcyonRecords.SeedDataGenerator.Core.Wikipedia;
 
 public static class WikipediaServiceCollectionExtensions
 {
-    private static readonly string AppVersion = Assembly.GetExecutingAssembly().GetName().Version
-        is { } version
-        ? $"{version.Major}.{version.Minor}"
-        : "0.0";
-
     extension(IServiceCollection services)
     {
-        public IServiceCollection AddWikidataClient(IConfiguration configuration)
+        public IServiceCollection AddWikipediaClient(IConfiguration configuration)
         {
             var wikipediaOptions =
                 configuration.GetSection(WikipediaOptions.SectionName).Get<WikipediaOptions>()
@@ -38,21 +33,13 @@ public static class WikipediaServiceCollectionExtensions
                 {
                     client.BaseAddress = new Uri(wikipediaOptions.BaseAddress);
                     client.DefaultRequestHeaders.UserAgent.ParseAdd(
-                        $"HalcyonRecordsSeedTool/{AppVersion} ({wikipediaOptions.ContactEmail})"
+                        SeedToolUserAgent.For(wikipediaOptions.ContactEmail)
                     );
                 })
                 .AddStandardResilienceHandler(options =>
                 {
                     var throughputLimiter = new SlidingWindowRateLimiter(
-                        new SlidingWindowRateLimiterOptions
-                        {
-                            PermitLimit = 200,
-                            Window = TimeSpan.FromMinutes(1),
-                            SegmentsPerWindow = 6,
-                            AutoReplenishment = true,
-                            QueueLimit = int.MaxValue,
-                            QueueProcessingOrder = QueueProcessingOrder.OldestFirst,
-                        }
+                        wikipediaOptions.RateLimit
                     );
 
                     options.RateLimiter.RateLimiter = args =>

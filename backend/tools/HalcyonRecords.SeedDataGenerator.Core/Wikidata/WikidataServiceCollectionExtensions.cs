@@ -1,5 +1,5 @@
-﻿using System.Reflection;
-using System.Threading.RateLimiting;
+﻿using System.Threading.RateLimiting;
+using HalcyonRecords.SeedDataGenerator.Core.Common;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -7,11 +7,6 @@ namespace HalcyonRecords.SeedDataGenerator.Core.Wikidata;
 
 public static class WikidataServiceCollectionExtensions
 {
-    private static readonly string AppVersion = Assembly.GetExecutingAssembly().GetName().Version
-        is { } version
-        ? $"{version.Major}.{version.Minor}"
-        : "0.0";
-
     extension(IServiceCollection services)
     {
         public IServiceCollection AddWikidataClient(IConfiguration configuration)
@@ -38,22 +33,12 @@ public static class WikidataServiceCollectionExtensions
                 {
                     client.BaseAddress = new Uri(wikidataOptions.BaseAddress);
                     client.DefaultRequestHeaders.UserAgent.ParseAdd(
-                        $"HalcyonRecordsSeedTool/{AppVersion} ({wikidataOptions.ContactEmail})"
+                        SeedToolUserAgent.For(wikidataOptions.ContactEmail)
                     );
                 })
                 .AddStandardResilienceHandler(options =>
                 {
-                    var throughputLimiter = new SlidingWindowRateLimiter(
-                        new SlidingWindowRateLimiterOptions
-                        {
-                            PermitLimit = 200,
-                            Window = TimeSpan.FromMinutes(1),
-                            SegmentsPerWindow = 6,
-                            AutoReplenishment = true,
-                            QueueLimit = int.MaxValue,
-                            QueueProcessingOrder = QueueProcessingOrder.OldestFirst,
-                        }
-                    );
+                    var throughputLimiter = new SlidingWindowRateLimiter(wikidataOptions.RateLimit);
 
                     options.RateLimiter.RateLimiter = args =>
                         throughputLimiter.AcquireAsync(1, args.Context.CancellationToken);

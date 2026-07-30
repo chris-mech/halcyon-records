@@ -1,5 +1,5 @@
-﻿using System.Reflection;
-using System.Threading.RateLimiting;
+﻿using System.Threading.RateLimiting;
+using HalcyonRecords.SeedDataGenerator.Core.Common;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -7,11 +7,6 @@ namespace HalcyonRecords.SeedDataGenerator.Core.MusicBrainz;
 
 public static class MusicBrainzServiceCollectionExtensions
 {
-    private static readonly string AppVersion = Assembly.GetExecutingAssembly().GetName().Version
-        is { } version
-        ? $"{version.Major}.{version.Minor}"
-        : "0.0";
-
     extension(IServiceCollection services)
     {
         public IServiceCollection AddMusicBrainzClient(IConfiguration configuration)
@@ -38,21 +33,13 @@ public static class MusicBrainzServiceCollectionExtensions
                 {
                     client.BaseAddress = new Uri(musicBrainzOptions.BaseAddress);
                     client.DefaultRequestHeaders.UserAgent.ParseAdd(
-                        $"HalcyonRecordsSeedTool/{AppVersion} ({musicBrainzOptions.ContactEmail})"
+                        SeedToolUserAgent.For(musicBrainzOptions.ContactEmail)
                     );
                 })
                 .AddStandardResilienceHandler(options =>
                 {
                     var throughputLimiter = new TokenBucketRateLimiter(
-                        new TokenBucketRateLimiterOptions
-                        {
-                            TokenLimit = 1,
-                            TokensPerPeriod = 1,
-                            ReplenishmentPeriod = TimeSpan.FromSeconds(1),
-                            AutoReplenishment = true,
-                            QueueLimit = int.MaxValue,
-                            QueueProcessingOrder = QueueProcessingOrder.OldestFirst,
-                        }
+                        musicBrainzOptions.RateLimit
                     );
 
                     options.RateLimiter.RateLimiter = args =>

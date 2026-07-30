@@ -1,6 +1,6 @@
 ﻿using System.Net.Http.Headers;
-using System.Reflection;
 using System.Threading.RateLimiting;
+using HalcyonRecords.SeedDataGenerator.Core.Common;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -8,11 +8,6 @@ namespace HalcyonRecords.SeedDataGenerator.Core.Discogs;
 
 public static class DiscogsServiceCollectionExtensions
 {
-    private static readonly string AppVersion = Assembly.GetExecutingAssembly().GetName().Version
-        is { } version
-        ? $"{version.Major}.{version.Minor}"
-        : "0.0";
-
     extension(IServiceCollection services)
     {
         public IServiceCollection AddDiscogsClient(IConfiguration configuration)
@@ -47,7 +42,7 @@ public static class DiscogsServiceCollectionExtensions
                 {
                     client.BaseAddress = new Uri(discogsOptions.BaseAddress);
                     client.DefaultRequestHeaders.UserAgent.ParseAdd(
-                        $"HalcyonRecordsSeedTool/{AppVersion} ({discogsOptions.ContactEmail})"
+                        SeedToolUserAgent.For(discogsOptions.ContactEmail)
                     );
                     client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(
                         "Discogs",
@@ -56,17 +51,7 @@ public static class DiscogsServiceCollectionExtensions
                 })
                 .AddStandardResilienceHandler(options =>
                 {
-                    var throughputLimiter = new SlidingWindowRateLimiter(
-                        new SlidingWindowRateLimiterOptions
-                        {
-                            PermitLimit = 60,
-                            Window = TimeSpan.FromMinutes(1),
-                            SegmentsPerWindow = 6,
-                            AutoReplenishment = true,
-                            QueueLimit = int.MaxValue,
-                            QueueProcessingOrder = QueueProcessingOrder.OldestFirst,
-                        }
-                    );
+                    var throughputLimiter = new SlidingWindowRateLimiter(discogsOptions.RateLimit);
 
                     options.RateLimiter.RateLimiter = args =>
                         throughputLimiter.AcquireAsync(1, args.Context.CancellationToken);
