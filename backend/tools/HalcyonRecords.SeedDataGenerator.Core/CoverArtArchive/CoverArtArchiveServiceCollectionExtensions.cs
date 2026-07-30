@@ -1,5 +1,5 @@
-﻿using System.Reflection;
-using System.Threading.RateLimiting;
+﻿using System.Threading.RateLimiting;
+using HalcyonRecords.SeedDataGenerator.Core.Common;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -7,11 +7,6 @@ namespace HalcyonRecords.SeedDataGenerator.Core.CoverArtArchive;
 
 public static class CoverArtArchiveServiceCollectionExtensions
 {
-    private static readonly string AppVersion = Assembly.GetExecutingAssembly().GetName().Version
-        is { } version
-        ? $"{version.Major}.{version.Minor}"
-        : "0.0";
-
     extension(IServiceCollection services)
     {
         public IServiceCollection AddCoverArtArchiveClient(IConfiguration configuration)
@@ -42,21 +37,16 @@ public static class CoverArtArchiveServiceCollectionExtensions
                 {
                     client.BaseAddress = new Uri(coverArtArchiveOptions.BaseAddress);
                     client.DefaultRequestHeaders.UserAgent.ParseAdd(
-                        $"HalcyonRecordsSeedTool/{AppVersion} ({coverArtArchiveOptions.ContactEmail})"
+                        SeedToolUserAgent.For(coverArtArchiveOptions.ContactEmail)
                     );
                 })
+                .ConfigurePrimaryHttpMessageHandler(() =>
+                    new HttpClientHandler { AllowAutoRedirect = false }
+                )
                 .AddStandardResilienceHandler(options =>
                 {
                     var throughputLimiter = new TokenBucketRateLimiter(
-                        new TokenBucketRateLimiterOptions
-                        {
-                            TokenLimit = 1,
-                            TokensPerPeriod = 1,
-                            ReplenishmentPeriod = TimeSpan.FromSeconds(1),
-                            AutoReplenishment = true,
-                            QueueLimit = int.MaxValue,
-                            QueueProcessingOrder = QueueProcessingOrder.OldestFirst,
-                        }
+                        coverArtArchiveOptions.RateLimit
                     );
 
                     options.RateLimiter.RateLimiter = args =>

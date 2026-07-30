@@ -1,16 +1,9 @@
-﻿using System.Net.Http.Json;
-using System.Text.Json;
-using HalcyonRecords.SeedDataGenerator.Core.Common;
+﻿using System.Net;
 
 namespace HalcyonRecords.SeedDataGenerator.Core.CoverArtArchive;
 
 public sealed class CoverArtArchiveClient
 {
-    private static readonly JsonSerializerOptions JsonOptions = new()
-    {
-        PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
-    };
-
     private readonly HttpClient _httpClient;
 
     public CoverArtArchiveClient(HttpClient httpClient)
@@ -18,36 +11,34 @@ public sealed class CoverArtArchiveClient
         _httpClient = httpClient;
     }
 
-    public async Task<CoverArtArchiveResponse?> GetByReleaseAsync(
+    public Task<Uri?> GetReleaseFrontImageUrlAsync(
         Guid mbid,
         CancellationToken cancellationToken = default
-    )
-    {
-        var response = await _httpClient.GetOrNullAsync($"release/{mbid}/", cancellationToken);
+    ) => GetFrontImageUrlAsync($"release/{mbid}/front", cancellationToken);
 
-        return response is null
-            ? null
-            : await response.Content.ReadFromJsonAsync<CoverArtArchiveResponse>(
-                JsonOptions,
-                cancellationToken
-            );
-    }
-
-    public async Task<CoverArtArchiveResponse?> GetByReleaseGroupAsync(
+    public Task<Uri?> GetReleaseGroupFrontImageUrlAsync(
         Guid mbid,
         CancellationToken cancellationToken = default
+    ) => GetFrontImageUrlAsync($"release-group/{mbid}/front", cancellationToken);
+
+    private async Task<Uri?> GetFrontImageUrlAsync(
+        string requestUri,
+        CancellationToken cancellationToken
     )
     {
-        var response = await _httpClient.GetOrNullAsync(
-            $"release-group/{mbid}/",
-            cancellationToken
-        );
+        using var response = await _httpClient.GetAsync(requestUri, cancellationToken);
 
-        return response is null
-            ? null
-            : await response.Content.ReadFromJsonAsync<CoverArtArchiveResponse>(
-                JsonOptions,
-                cancellationToken
-            );
+        if (response.StatusCode == HttpStatusCode.NotFound)
+        {
+            return null;
+        }
+
+        if (response.StatusCode == HttpStatusCode.TemporaryRedirect)
+        {
+            return response.Headers.Location;
+        }
+
+        response.EnsureSuccessStatusCode();
+        return response.Headers.Location;
     }
 }
