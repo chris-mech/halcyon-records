@@ -1,5 +1,4 @@
-﻿using System.Net.Http.Json;
-using System.Text.Json;
+﻿using System.Text.Json;
 using HalcyonRecords.SeedDataGenerator.Core.Common;
 
 namespace HalcyonRecords.SeedDataGenerator.Core.MusicBrainz;
@@ -7,7 +6,7 @@ namespace HalcyonRecords.SeedDataGenerator.Core.MusicBrainz;
 public sealed class MusicBrainzClient
 {
     private const string ArtistIncludes = "url-rels";
-    private const string ReleaseIncludes = "artist-credits+labels+genres+release-groups";
+    private const string ReleaseIncludes = "artist-credits+labels+release-groups";
     private const string ReleaseGroupIncludes = "url-rels";
 
     private static readonly JsonSerializerOptions JsonOptions = new()
@@ -22,57 +21,33 @@ public sealed class MusicBrainzClient
         _httpClient = httpClient;
     }
 
-    public async Task<MusicBrainzArtist?> GetArtistAsync(
+    public Task<MusicBrainzArtist?> GetArtistAsync(
         Guid mbid,
         CancellationToken cancellationToken = default
-    )
-    {
-        var response = await _httpClient.GetOrNullAsync(
+    ) =>
+        _httpClient.GetFromJsonOrNullAsync<MusicBrainzArtist>(
             $"artist/{mbid}?inc={ArtistIncludes}&fmt=json",
+            JsonOptions,
             cancellationToken
         );
 
-        return response is null
-            ? null
-            : await response.Content.ReadFromJsonAsync<MusicBrainzArtist>(
-                JsonOptions,
-                cancellationToken
-            );
-    }
-
-    public async Task<MusicBrainzRelease?> GetReleaseAsync(
+    public Task<MusicBrainzRelease?> GetReleaseAsync(
         Guid mbid,
         CancellationToken cancellationToken = default
-    )
-    {
-        var response = await _httpClient.GetOrNullAsync(
+    ) =>
+        _httpClient.GetFromJsonOrNullAsync<MusicBrainzRelease>(
             $"release/{mbid}?inc={ReleaseIncludes}&fmt=json",
+            JsonOptions,
             cancellationToken
         );
 
-        return response is null
-            ? null
-            : await response.Content.ReadFromJsonAsync<MusicBrainzRelease>(
-                JsonOptions,
-                cancellationToken
-            );
-    }
-
-    public async Task<MusicBrainzReleaseGroup?> GetReleaseGroupAsync(
+    public Task<MusicBrainzReleaseGroup?> GetReleaseGroupAsync(
         Guid mbid,
         CancellationToken cancellationToken = default
-    )
-    {
-        var response = await _httpClient.GetOrNullAsync(
+    ) =>
+        _httpClient.GetFromJsonOrNullAsync<MusicBrainzReleaseGroup>(
             $"release-group/{mbid}?inc={ReleaseGroupIncludes}&fmt=json",
+            JsonOptions,
             cancellationToken
         );
-
-        return response is null
-            ? null
-            : await response.Content.ReadFromJsonAsync<MusicBrainzReleaseGroup>(
-                JsonOptions,
-                cancellationToken
-            );
-    }
 }

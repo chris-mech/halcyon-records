@@ -1,5 +1,4 @@
-﻿using System.Net.Http.Json;
-using System.Text.Json;
+﻿using System.Text.Json;
 using HalcyonRecords.SeedDataGenerator.Core.Common;
 
 namespace HalcyonRecords.SeedDataGenerator.Core.Discogs;
@@ -18,35 +17,25 @@ public sealed class DiscogsClient
         _httpClient = httpClient;
     }
 
-    public async Task<DiscogsArtist?> GetArtistAsync(
+    public Task<DiscogsArtist?> GetArtistAsync(
         long artistId,
         CancellationToken cancellationToken = default
-    )
-    {
-        var response = await _httpClient.GetOrNullAsync($"artists/{artistId}", cancellationToken);
+    ) =>
+        _httpClient.GetFromJsonOrNullAsync<DiscogsArtist>(
+            $"artists/{artistId}",
+            JsonOptions,
+            cancellationToken
+        );
 
-        return response is null
-            ? null
-            : await response.Content.ReadFromJsonAsync<DiscogsArtist>(
-                JsonOptions,
-                cancellationToken
-            );
-    }
-
-    public async Task<DiscogsMaster?> GetMasterAsync(
+    public Task<DiscogsMaster?> GetMasterAsync(
         long masterId,
         CancellationToken cancellationToken = default
-    )
-    {
-        var response = await _httpClient.GetOrNullAsync($"masters/{masterId}", cancellationToken);
-
-        return response is null
-            ? null
-            : await response.Content.ReadFromJsonAsync<DiscogsMaster>(
-                JsonOptions,
-                cancellationToken
-            );
-    }
+    ) =>
+        _httpClient.GetFromJsonOrNullAsync<DiscogsMaster>(
+            $"masters/{masterId}",
+            JsonOptions,
+            cancellationToken
+        );
 
     public async Task<IReadOnlyList<DiscogsSearchResult>> SearchMastersAsync(
         string artist,
@@ -55,18 +44,12 @@ public sealed class DiscogsClient
     )
     {
         var requestUri =
-            $"database/search?type=master"
+            "database/search?type=master"
             + $"&artist={Uri.EscapeDataString(artist)}"
             + $"&release_title={Uri.EscapeDataString(releaseTitle)}";
 
-        var response = await _httpClient.GetOrNullAsync(requestUri, cancellationToken);
-
-        if (response is null)
-        {
-            return [];
-        }
-
-        var result = await response.Content.ReadFromJsonAsync<DiscogsSearchResponse>(
+        var result = await _httpClient.GetFromJsonOrNullAsync<DiscogsSearchResponse>(
+            requestUri,
             JsonOptions,
             cancellationToken
         );

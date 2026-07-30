@@ -1,5 +1,4 @@
-﻿using System.Net.Http.Json;
-using System.Text.Json;
+﻿using System.Text.Json;
 using HalcyonRecords.SeedDataGenerator.Core.Common;
 
 namespace HalcyonRecords.SeedDataGenerator.Core.Wikidata;
@@ -29,14 +28,8 @@ public sealed class WikidataClient
             $"api.php?action=wbgetentities&ids={Uri.EscapeDataString(qid)}"
             + $"&props={SitelinksProps}&sitefilter=enwiki&format=json&formatversion=2";
 
-        var response = await _httpClient.GetOrNullAsync(requestUri, cancellationToken);
-
-        if (response is null)
-        {
-            return null;
-        }
-
-        var result = await response.Content.ReadFromJsonAsync<WikidataEntitiesResponse>(
+        var result = await _httpClient.GetFromJsonOrNullAsync<WikidataEntitiesResponse>(
+            requestUri,
             JsonOptions,
             cancellationToken
         );
