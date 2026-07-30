@@ -8,6 +8,7 @@ public sealed class MusicBrainzClient
 {
     private const string ArtistIncludes = "url-rels";
     private const string ReleaseIncludes = "artist-credits+labels+genres+release-groups";
+    private const string ReleaseGroupIncludes = "url-rels";
 
     private static readonly JsonSerializerOptions JsonOptions = new()
     {
@@ -52,6 +53,24 @@ public sealed class MusicBrainzClient
         return response is null
             ? null
             : await response.Content.ReadFromJsonAsync<MusicBrainzRelease>(
+                JsonOptions,
+                cancellationToken
+            );
+    }
+
+    public async Task<MusicBrainzReleaseGroup?> GetReleaseGroupAsync(
+        Guid mbid,
+        CancellationToken cancellationToken = default
+    )
+    {
+        var response = await _httpClient.GetOrNullAsync(
+            $"release-group/{mbid}?inc={ReleaseGroupIncludes}&fmt=json",
+            cancellationToken
+        );
+
+        return response is null
+            ? null
+            : await response.Content.ReadFromJsonAsync<MusicBrainzReleaseGroup>(
                 JsonOptions,
                 cancellationToken
             );
