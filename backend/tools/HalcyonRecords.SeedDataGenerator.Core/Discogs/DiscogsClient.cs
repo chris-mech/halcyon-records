@@ -1,6 +1,6 @@
-﻿using System.Net;
-using System.Net.Http.Json;
+﻿using System.Net.Http.Json;
 using System.Text.Json;
+using HalcyonRecords.SeedDataGenerator.Core.Common;
 
 namespace HalcyonRecords.SeedDataGenerator.Core.Discogs;
 
@@ -23,7 +23,7 @@ public sealed class DiscogsClient
         CancellationToken cancellationToken = default
     )
     {
-        var response = await SendAsync($"artists/{artistId}", cancellationToken);
+        var response = await _httpClient.GetOrNullAsync($"artists/{artistId}", cancellationToken);
 
         return response is null
             ? null
@@ -38,7 +38,7 @@ public sealed class DiscogsClient
         CancellationToken cancellationToken = default
     )
     {
-        var response = await SendAsync($"masters/{masterId}", cancellationToken);
+        var response = await _httpClient.GetOrNullAsync($"masters/{masterId}", cancellationToken);
 
         return response is null
             ? null
@@ -59,7 +59,7 @@ public sealed class DiscogsClient
             + $"&artist={Uri.EscapeDataString(artist)}"
             + $"&release_title={Uri.EscapeDataString(releaseTitle)}";
 
-        var response = await SendAsync(requestUri, cancellationToken);
+        var response = await _httpClient.GetOrNullAsync(requestUri, cancellationToken);
 
         if (response is null)
         {
@@ -72,21 +72,5 @@ public sealed class DiscogsClient
         );
 
         return result?.Results ?? [];
-    }
-
-    private async Task<HttpResponseMessage?> SendAsync(
-        string requestUri,
-        CancellationToken cancellationToken
-    )
-    {
-        var response = await _httpClient.GetAsync(requestUri, cancellationToken);
-
-        if (response.StatusCode == HttpStatusCode.NotFound)
-        {
-            return null;
-        }
-
-        response.EnsureSuccessStatusCode();
-        return response;
     }
 }

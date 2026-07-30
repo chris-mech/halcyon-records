@@ -1,6 +1,6 @@
-﻿using System.Net;
-using System.Net.Http.Json;
+﻿using System.Net.Http.Json;
 using System.Text.Json;
+using HalcyonRecords.SeedDataGenerator.Core.Common;
 
 namespace HalcyonRecords.SeedDataGenerator.Core.MusicBrainz;
 
@@ -26,7 +26,7 @@ public sealed class MusicBrainzClient
         CancellationToken cancellationToken = default
     )
     {
-        var response = await SendAsync(
+        var response = await _httpClient.GetOrNullAsync(
             $"artist/{mbid}?inc={ArtistIncludes}&fmt=json",
             cancellationToken
         );
@@ -44,7 +44,7 @@ public sealed class MusicBrainzClient
         CancellationToken cancellationToken = default
     )
     {
-        var response = await SendAsync(
+        var response = await _httpClient.GetOrNullAsync(
             $"release/{mbid}?inc={ReleaseIncludes}&fmt=json",
             cancellationToken
         );
@@ -55,21 +55,5 @@ public sealed class MusicBrainzClient
                 JsonOptions,
                 cancellationToken
             );
-    }
-
-    private async Task<HttpResponseMessage?> SendAsync(
-        string requestUri,
-        CancellationToken cancellationToken
-    )
-    {
-        var response = await _httpClient.GetAsync(requestUri, cancellationToken);
-
-        if (response.StatusCode == HttpStatusCode.NotFound)
-        {
-            return null;
-        }
-
-        response.EnsureSuccessStatusCode();
-        return response;
     }
 }
