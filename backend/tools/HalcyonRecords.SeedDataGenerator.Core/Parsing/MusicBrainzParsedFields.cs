@@ -15,7 +15,8 @@ public sealed record MusicBrainzReleaseFields(
     DateOnly? ReleaseDate,
     string? Label,
     IReadOnlyList<Guid> ArtistCreditIds,
-    Guid? ReleaseGroupId
+    Guid? ReleaseGroupId,
+    string? PrimaryArtistName
 );
 
 public sealed record MusicBrainzReleaseGroupFields(long? DiscogsMasterId, string? WikidataQid);

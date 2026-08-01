@@ -59,13 +59,16 @@ public static class MusicBrainzParsing
         List<Guid> artistCreditIds =
             raw.ArtistCredit?.Select(credit => credit.Artist?.Id).OfType<Guid>().ToList() ?? [];
 
+        var primaryArtistName = raw.ArtistCredit?.FirstOrDefault()?.Name;
+
         return new MusicBrainzReleaseFields(
             SourceId: raw.Id.Value,
             Title: raw.Title,
             ReleaseDate: releaseDate,
             Label: label,
             ArtistCreditIds: artistCreditIds,
-            ReleaseGroupId: raw.ReleaseGroup?.Id
+            ReleaseGroupId: raw.ReleaseGroup?.Id,
+            PrimaryArtistName: primaryArtistName
         );
     }
 

@@ -1,22 +1,14 @@
 ﻿using System.Text.Json;
 using ErrorOr;
-using HalcyonRecords.SeedDataGenerator.Core.CoverArtArchive;
-using HalcyonRecords.SeedDataGenerator.Core.Discogs;
-using HalcyonRecords.SeedDataGenerator.Core.MusicBrainz;
-using HalcyonRecords.SeedDataGenerator.Core.Parsing;
-using HalcyonRecords.SeedDataGenerator.Core.Wikidata;
-using HalcyonRecords.SeedDataGenerator.Core.Wikipedia;
+using HalcyonRecords.SeedDataGenerator.Core.Enrichment;
 using HalcyonRecords.Shared;
 
 namespace HalcyonRecords.SeedDataGenerator.Core.Store;
 
 public sealed class SeedDataStore
 {
-    private readonly MusicBrainzClient _musicBrainzClient;
-    private readonly DiscogsClient _discogsClient;
-    private readonly CoverArtArchiveClient _coverArtArchiveClient;
-    private readonly WikidataClient _wikidataClient;
-    private readonly WikipediaClient _wikipediaClient;
+    private readonly IArtistEnricher _artistEnricher;
+    private readonly IAlbumEnricher _albumEnricher;
     private readonly SeedDataStoreOptions _options;
 
     private readonly Dictionary<Guid, ArtistSeedEntry> _artistsBySourceId = [];
@@ -24,19 +16,13 @@ public sealed class SeedDataStore
     private readonly Dictionary<Guid, AlbumSeedEntry> _albumsBySourceId = [];
 
     public SeedDataStore(
-        MusicBrainzClient musicBrainzClient,
-        DiscogsClient discogsClient,
-        CoverArtArchiveClient coverArtArchiveClient,
-        WikidataClient wikidataClient,
-        WikipediaClient wikipediaClient,
+        IArtistEnricher artistEnricher,
+        IAlbumEnricher albumEnricher,
         SeedDataStoreOptions options
     )
     {
-        _musicBrainzClient = musicBrainzClient;
-        _discogsClient = discogsClient;
-        _coverArtArchiveClient = coverArtArchiveClient;
-        _wikidataClient = wikidataClient;
-        _wikipediaClient = wikipediaClient;
+        _artistEnricher = artistEnricher;
+        _albumEnricher = albumEnricher;
         _options = options;
     }
 
@@ -109,39 +95,7 @@ public sealed class SeedDataStore
             return DomainErrors.Artist.AlreadySeeded(artistMbid);
         }
 
-        var raw = await _musicBrainzClient.GetArtistAsync(artistMbid, cancellationToken);
-        if (raw is null)
-        {
-            return DomainErrors.Artist.NotFound($"No MusicBrainz artist found for '{artistMbid}'.");
-        }
-
-        var parsed = MusicBrainzParsing.ParseArtist(raw);
-        if (parsed.IsError)
-        {
-            return parsed.Errors;
-        }
-
-        var fields = parsed.Value;
-
-        var discogsArtist = fields.DiscogsArtistId is not null
-            ? await _discogsClient.GetArtistAsync(fields.DiscogsArtistId.Value, cancellationToken)
-            : null;
-        var discogsFields = DiscogsParsing.ParseArtist(discogsArtist);
-
-        var bio = discogsFields.Bio;
-        if (string.IsNullOrWhiteSpace(bio))
-        {
-            bio = await ResolveWikipediaExtractAsync(fields.WikidataQid, cancellationToken);
-        }
-
-        return new AddArtistPlan(
-            fields.SourceId,
-            fields.Name,
-            fields.Origin,
-            fields.ActiveSince,
-            bio,
-            discogsFields.ImageUrl
-        );
+        return await _artistEnricher.PreviewAsync(artistMbid, cancellationToken);
     }
 
     public ArtistSeedEntry CommitAddArtist(AddArtistPlan plan)
@@ -170,106 +124,20 @@ public sealed class SeedDataStore
             return DomainErrors.Album.AlreadySeeded(releaseMbid);
         }
 
-        var raw = await _musicBrainzClient.GetReleaseAsync(releaseMbid, cancellationToken);
-        if (raw is null)
-        {
-            return DomainErrors.Album.NotFound(
-                $"No MusicBrainz release found for '{releaseMbid}'."
-            );
-        }
-
-        var parsed = MusicBrainzParsing.ParseRelease(raw);
-        if (parsed.IsError)
-        {
-            return parsed.Errors;
-        }
-
-        var fields = parsed.Value;
-
-        var releaseGroup = fields.ReleaseGroupId is { } releaseGroupId
-            ? await _musicBrainzClient.GetReleaseGroupAsync(releaseGroupId, cancellationToken)
-            : null;
-
-        var coverImageUrl = await _coverArtArchiveClient.GetReleaseFrontImageUrlAsync(
+        return await _albumEnricher.PreviewAsync(
             releaseMbid,
+            _artistsBySourceId.Keys.ToHashSet(),
             cancellationToken
-        );
-        if (coverImageUrl is null && fields.ReleaseGroupId is { } fallbackGroupId)
-        {
-            coverImageUrl = await _coverArtArchiveClient.GetReleaseGroupFrontImageUrlAsync(
-                fallbackGroupId,
-                cancellationToken
-            );
-        }
-
-        var releaseGroupFields = releaseGroup is not null
-            ? MusicBrainzParsing.ParseReleaseGroup(releaseGroup)
-            : null;
-
-        var discogsMasterId = releaseGroupFields?.DiscogsMasterId;
-        IReadOnlyList<ResolvedGenre> resolvedGenres = [];
-        IReadOnlyList<DiscogsSearchResult>? discogsCandidates = null;
-
-        if (discogsMasterId is not null)
-        {
-            resolvedGenres = await ResolveGenresAsync(discogsMasterId.Value, cancellationToken);
-        }
-        else
-        {
-            var primaryArtistName = raw.ArtistCredit?.FirstOrDefault()?.Name;
-            discogsCandidates = primaryArtistName is not null
-                ? await _discogsClient.SearchMastersAsync(
-                    primaryArtistName,
-                    fields.Title,
-                    cancellationToken
-                )
-                : [];
-        }
-
-        var description = await ResolveWikipediaExtractAsync(
-            releaseGroupFields?.WikidataQid,
-            cancellationToken
-        );
-
-        var missingArtistCreditIds = fields
-            .ArtistCreditIds.Where(artistId => !_artistsBySourceId.ContainsKey(artistId))
-            .ToList();
-
-        return new AddAlbumPlan(
-            fields.SourceId,
-            fields.Title,
-            fields.ReleaseDate,
-            fields.Label,
-            fields.ArtistCreditIds,
-            discogsMasterId,
-            discogsCandidates,
-            resolvedGenres,
-            coverImageUrl,
-            description,
-            missingArtistCreditIds
         );
     }
 
-    public async Task<ErrorOr<AddAlbumPlan>> ResolveDiscogsMasterAsync(
+    public Task<AddAlbumPlan> ResolveDiscogsMasterAsync(
         AddAlbumPlan plan,
         long chosenMasterId,
         CancellationToken cancellationToken = default
-    )
-    {
-        var resolvedGenres = await ResolveGenresAsync(chosenMasterId, cancellationToken);
+    ) => _albumEnricher.ResolveDiscogsMasterAsync(plan, chosenMasterId, cancellationToken);
 
-        return plan with
-        {
-            DiscogsMasterId = chosenMasterId,
-            DiscogsCandidates = null,
-            ResolvedGenres = resolvedGenres,
-        };
-    }
-
-    public async Task<AlbumSeedEntry> CommitAddAlbumAsync(
-        AddAlbumPlan plan,
-        CancellationToken cancellationToken = default
-    )
+    public AlbumSeedEntry CommitAddAlbum(AddAlbumPlan plan)
     {
         List<string> genreSlugs = [];
         foreach (var genre in plan.ResolvedGenres)
@@ -291,13 +159,15 @@ public sealed class SeedDataStore
                 continue;
             }
 
-            var artistPlan = await PreviewAddArtistAsync(artistId, cancellationToken);
-            if (artistPlan.IsError)
+            var missingArtistPlan = plan.MissingArtistPlans.FirstOrDefault(p =>
+                p.SourceId == artistId
+            );
+            if (missingArtistPlan is null)
             {
                 continue;
             }
 
-            CommitAddArtist(artistPlan.Value);
+            CommitAddArtist(missingArtistPlan);
             artistSourceIds.Add(artistId);
         }
 
@@ -320,37 +190,6 @@ public sealed class SeedDataStore
 
         _albumsBySourceId[entry.SourceId] = entry;
         return entry;
-    }
-
-    private async Task<IReadOnlyList<ResolvedGenre>> ResolveGenresAsync(
-        long masterId,
-        CancellationToken cancellationToken
-    )
-    {
-        var master = await _discogsClient.GetMasterAsync(masterId, cancellationToken);
-        return DiscogsParsing.ParseMasterGenres(master);
-    }
-
-    private async Task<string?> ResolveWikipediaExtractAsync(
-        string? qid,
-        CancellationToken cancellationToken
-    )
-    {
-        if (qid is null)
-        {
-            return null;
-        }
-
-        var entity = await _wikidataClient.GetEntityAsync(qid, cancellationToken);
-        var title = WikidataParsing.ParseSitelinkTitle(entity);
-
-        if (title is null)
-        {
-            return null;
-        }
-
-        var summary = await _wikipediaClient.GetSummaryAsync(title, cancellationToken);
-        return WikipediaParsing.ParseExtract(summary);
     }
 
     private async Task<List<T>> ReadSeedFileAsync<T>(

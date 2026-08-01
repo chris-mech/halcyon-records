@@ -1,7 +1,7 @@
 ﻿using HalcyonRecords.SeedDataGenerator.Core.Discogs;
 using HalcyonRecords.SeedDataGenerator.Core.Parsing;
 
-namespace HalcyonRecords.SeedDataGenerator.Core.Store;
+namespace HalcyonRecords.SeedDataGenerator.Core.Enrichment;
 
 public sealed record AddArtistPlan(
     Guid SourceId,
@@ -23,5 +23,5 @@ public sealed record AddAlbumPlan(
     IReadOnlyList<ResolvedGenre> ResolvedGenres,
     Uri? CoverImageUrl,
     string? Description,
-    IReadOnlyList<Guid> MissingArtistCreditIds
+    IReadOnlyList<AddArtistPlan> MissingArtistPlans
 );
