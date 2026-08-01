@@ -4,7 +4,9 @@ public sealed record MusicBrainzArtistFields(
     Guid SourceId,
     string Name,
     string? Origin,
-    int? ActiveSince
+    int? ActiveSince,
+    long? DiscogsArtistId,
+    string? WikidataQid
 );
 
 public sealed record MusicBrainzReleaseFields(
@@ -15,3 +17,5 @@ public sealed record MusicBrainzReleaseFields(
     IReadOnlyList<Guid> ArtistCreditIds,
     Guid? ReleaseGroupId
 );
+
+public sealed record MusicBrainzReleaseGroupFields(long? DiscogsMasterId, string? WikidataQid);

@@ -20,6 +20,12 @@ public static class DomainErrors
                 code: "Album.MissingTitle",
                 description: "MusicBrainz release has no title."
             );
+
+        public static Error AlreadySeeded(Guid sourceId) =>
+            Error.Conflict(
+                code: "Album.AlreadySeeded",
+                description: $"Album '{sourceId}' already exists in the seed data (merge mode)."
+            );
     }
 
     public static class Artist
@@ -37,6 +43,12 @@ public static class DomainErrors
             Error.Validation(
                 code: "Artist.MissingName",
                 description: "MusicBrainz artist has no name."
+            );
+
+        public static Error AlreadySeeded(Guid sourceId) =>
+            Error.Conflict(
+                code: "Artist.AlreadySeeded",
+                description: $"Artist '{sourceId}' already exists in the seed data (merge mode)."
             );
     }
 

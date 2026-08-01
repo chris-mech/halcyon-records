@@ -25,7 +25,9 @@ public static class MusicBrainzParsing
             SourceId: raw.Id.Value,
             Name: raw.Name,
             Origin: raw.Area?.Name,
-            ActiveSince: activeSince
+            ActiveSince: activeSince,
+            DiscogsArtistId: ExtractRelationId(raw.Relations, "discogs"),
+            WikidataQid: ExtractRelationSlug(raw.Relations, "wikidata")
         );
     }
 
@@ -65,5 +67,29 @@ public static class MusicBrainzParsing
             ArtistCreditIds: artistCreditIds,
             ReleaseGroupId: raw.ReleaseGroup?.Id
         );
+    }
+
+    public static MusicBrainzReleaseGroupFields ParseReleaseGroup(MusicBrainzReleaseGroup raw) =>
+        new(
+            DiscogsMasterId: ExtractRelationId(raw.Relations, "discogs"),
+            WikidataQid: ExtractRelationSlug(raw.Relations, "wikidata")
+        );
+
+    private static long? ExtractRelationId(
+        IReadOnlyList<MusicBrainzRelation>? relations,
+        string type
+    )
+    {
+        var slug = ExtractRelationSlug(relations, type);
+        return long.TryParse(slug, out var id) ? id : null;
+    }
+
+    private static string? ExtractRelationSlug(
+        IReadOnlyList<MusicBrainzRelation>? relations,
+        string type
+    )
+    {
+        var resource = relations?.FirstOrDefault(relation => relation.Type == type)?.Url?.Resource;
+        return string.IsNullOrWhiteSpace(resource) ? null : resource.TrimEnd('/').Split('/')[^1];
     }
 }
