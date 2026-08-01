@@ -1,7 +1,7 @@
 ﻿using System.Text.Json;
 using System.Text.Json.Serialization;
 
-namespace HalcyonRecords.Api.Infrastructure.Seed;
+namespace HalcyonRecords.Shared;
 
 public static class SeedDataFileNames
 {

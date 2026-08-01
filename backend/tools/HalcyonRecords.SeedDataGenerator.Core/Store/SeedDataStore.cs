@@ -1,13 +1,12 @@
 ﻿using System.Text.Json;
 using ErrorOr;
-using HalcyonRecords.Api.Common.Results;
-using HalcyonRecords.Api.Infrastructure.Seed;
 using HalcyonRecords.SeedDataGenerator.Core.CoverArtArchive;
 using HalcyonRecords.SeedDataGenerator.Core.Discogs;
 using HalcyonRecords.SeedDataGenerator.Core.MusicBrainz;
 using HalcyonRecords.SeedDataGenerator.Core.Parsing;
 using HalcyonRecords.SeedDataGenerator.Core.Wikidata;
 using HalcyonRecords.SeedDataGenerator.Core.Wikipedia;
+using HalcyonRecords.Shared;
 
 namespace HalcyonRecords.SeedDataGenerator.Core.Store;
 

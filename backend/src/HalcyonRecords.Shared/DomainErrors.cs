@@ -1,6 +1,6 @@
 ﻿using ErrorOr;
 
-namespace HalcyonRecords.Api.Common.Results;
+namespace HalcyonRecords.Shared;
 
 public static class DomainErrors
 {

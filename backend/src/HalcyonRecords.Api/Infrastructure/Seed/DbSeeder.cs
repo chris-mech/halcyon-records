@@ -1,5 +1,6 @@
 ﻿using System.Text.Json;
 using HalcyonRecords.Api.Domain;
+using HalcyonRecords.Shared;
 using Microsoft.EntityFrameworkCore;
 
 namespace HalcyonRecords.Api.Infrastructure.Seed;

@@ -1,6 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.Web">
   <ItemGroup>
     <ProjectReference Include="..\HalcyonRecords.ServiceDefaults\HalcyonRecords.ServiceDefaults.csproj" />
+    <ProjectReference Include="..\HalcyonRecords.Shared\HalcyonRecords.Shared.csproj" />
   </ItemGroup>
 
   <ItemGroup>

@@ -1,7 +1,7 @@
 ﻿using System.Globalization;
 using ErrorOr;
-using HalcyonRecords.Api.Common.Results;
 using HalcyonRecords.SeedDataGenerator.Core.MusicBrainz;
+using HalcyonRecords.Shared;
 
 namespace HalcyonRecords.SeedDataGenerator.Core.Parsing;
 

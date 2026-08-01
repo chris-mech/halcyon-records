@@ -1,4 +1,4 @@
-﻿namespace HalcyonRecords.Api.Infrastructure.Seed;
+﻿namespace HalcyonRecords.Shared;
 
 public enum SeedSource
 {

@@ -553,6 +553,12 @@
           "OpenTelemetry.Instrumentation.Http": "[1.15.1, )",
           "OpenTelemetry.Instrumentation.Runtime": "[1.15.1, )"
         }
+      },
+      "halcyonrecords.shared": {
+        "type": "Project",
+        "dependencies": {
+          "ErrorOr": "[2.1.1, )"
+        }
       }
     }
   }

@@ -1,7 +1,6 @@
 ﻿using ErrorOr;
-using HalcyonRecords.Api.Common;
-using HalcyonRecords.Api.Common.Results;
 using HalcyonRecords.SeedDataGenerator.Core.Discogs;
+using HalcyonRecords.Shared;
 
 namespace HalcyonRecords.SeedDataGenerator.Core.Parsing;
 

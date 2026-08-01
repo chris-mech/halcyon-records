@@ -1,6 +1,6 @@
 ﻿using System.Text;
 
-namespace HalcyonRecords.Api.Common;
+namespace HalcyonRecords.Shared;
 
 public static class Slugifier
 {

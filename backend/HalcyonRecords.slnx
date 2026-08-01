@@ -3,6 +3,7 @@
     <Project Path="src/HalcyonRecords.Api/HalcyonRecords.Api.csproj" />
     <Project Path="src/HalcyonRecords.AppHost/HalcyonRecords.AppHost.csproj" />
     <Project Path="src/HalcyonRecords.ServiceDefaults/HalcyonRecords.ServiceDefaults.csproj" />
+    <Project Path="src/HalcyonRecords.Shared/HalcyonRecords.Shared.csproj" />
   </Folder>
   <Folder Name="/tests/">
     <Project Path="tests/HalcyonRecords.Api.UnitTests/HalcyonRecords.Api.UnitTests.csproj" />
