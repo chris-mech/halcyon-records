@@ -5,26 +5,15 @@ using HalcyonRecords.Shared;
 
 namespace HalcyonRecords.SeedDataGenerator.Core.Store;
 
-public sealed class SeedDataStore
+public sealed class SeedDataStore(
+    IArtistEnricher artistEnricher,
+    IAlbumEnricher albumEnricher,
+    SeedDataStoreOptions options
+)
 {
-    private readonly IArtistEnricher _artistEnricher;
-    private readonly IAlbumEnricher _albumEnricher;
-    private readonly SeedDataStoreOptions _options;
-
     private readonly Dictionary<Guid, ArtistSeedEntry> _artistsBySourceId = [];
     private readonly Dictionary<string, GenreSeedEntry> _genresBySlug = [];
     private readonly Dictionary<Guid, AlbumSeedEntry> _albumsBySourceId = [];
-
-    public SeedDataStore(
-        IArtistEnricher artistEnricher,
-        IAlbumEnricher albumEnricher,
-        SeedDataStoreOptions options
-    )
-    {
-        _artistEnricher = artistEnricher;
-        _albumEnricher = albumEnricher;
-        _options = options;
-    }
 
     public SeedMode Mode { get; private set; } = SeedMode.Merge;
 
@@ -95,7 +84,7 @@ public sealed class SeedDataStore
             return DomainErrors.Artist.AlreadySeeded(artistMbid);
         }
 
-        return await _artistEnricher.PreviewAsync(artistMbid, cancellationToken);
+        return await artistEnricher.PreviewAsync(artistMbid, cancellationToken);
     }
 
     public ArtistSeedEntry CommitAddArtist(AddArtistPlan plan)
@@ -124,7 +113,7 @@ public sealed class SeedDataStore
             return DomainErrors.Album.AlreadySeeded(releaseMbid);
         }
 
-        return await _albumEnricher.PreviewAsync(
+        return await albumEnricher.PreviewAsync(
             releaseMbid,
             _artistsBySourceId.Keys.ToHashSet(),
             cancellationToken
@@ -135,7 +124,7 @@ public sealed class SeedDataStore
         AddAlbumPlan plan,
         long chosenMasterId,
         CancellationToken cancellationToken = default
-    ) => _albumEnricher.ResolveDiscogsMasterAsync(plan, chosenMasterId, cancellationToken);
+    ) => albumEnricher.ResolveDiscogsMasterAsync(plan, chosenMasterId, cancellationToken);
 
     public AlbumSeedEntry CommitAddAlbum(AddAlbumPlan plan)
     {
@@ -197,7 +186,7 @@ public sealed class SeedDataStore
         CancellationToken cancellationToken
     )
     {
-        var filePath = Path.Combine(_options.SeedDataFolder, fileName);
+        var filePath = Path.Combine(options.SeedDataFolder, fileName);
 
         if (!File.Exists(filePath))
         {
@@ -220,7 +209,7 @@ public sealed class SeedDataStore
         CancellationToken cancellationToken
     )
     {
-        var filePath = Path.Combine(_options.SeedDataFolder, fileName);
+        var filePath = Path.Combine(options.SeedDataFolder, fileName);
         await using var stream = File.Create(filePath);
 
         await JsonSerializer.SerializeAsync(

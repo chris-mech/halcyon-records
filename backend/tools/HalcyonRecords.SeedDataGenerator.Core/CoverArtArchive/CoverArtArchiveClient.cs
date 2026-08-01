@@ -2,15 +2,8 @@
 
 namespace HalcyonRecords.SeedDataGenerator.Core.CoverArtArchive;
 
-public sealed class CoverArtArchiveClient
+public sealed class CoverArtArchiveClient(HttpClient httpClient)
 {
-    private readonly HttpClient _httpClient;
-
-    public CoverArtArchiveClient(HttpClient httpClient)
-    {
-        _httpClient = httpClient;
-    }
-
     public Task<Uri?> GetReleaseFrontImageUrlAsync(
         Guid mbid,
         CancellationToken cancellationToken = default
@@ -26,7 +19,7 @@ public sealed class CoverArtArchiveClient
         CancellationToken cancellationToken
     )
     {
-        using var response = await _httpClient.GetAsync(requestUri, cancellationToken);
+        using var response = await httpClient.GetAsync(requestUri, cancellationToken);
 
         if (response.StatusCode == HttpStatusCode.NotFound)
         {

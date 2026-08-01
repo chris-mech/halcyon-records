@@ -3,7 +3,7 @@ using HalcyonRecords.SeedDataGenerator.Core.Common;
 
 namespace HalcyonRecords.SeedDataGenerator.Core.MusicBrainz;
 
-public sealed class MusicBrainzClient
+public sealed class MusicBrainzClient(HttpClient httpClient)
 {
     private const string ArtistIncludes = "url-rels";
     private const string ReleaseIncludes = "artist-credits+labels+release-groups";
@@ -14,18 +14,11 @@ public sealed class MusicBrainzClient
         PropertyNamingPolicy = JsonNamingPolicy.KebabCaseLower,
     };
 
-    private readonly HttpClient _httpClient;
-
-    public MusicBrainzClient(HttpClient httpClient)
-    {
-        _httpClient = httpClient;
-    }
-
     public Task<MusicBrainzArtist?> GetArtistAsync(
         Guid mbid,
         CancellationToken cancellationToken = default
     ) =>
-        _httpClient.GetFromJsonOrNullAsync<MusicBrainzArtist>(
+        httpClient.GetFromJsonOrNullAsync<MusicBrainzArtist>(
             $"artist/{mbid}?inc={ArtistIncludes}&fmt=json",
             JsonOptions,
             cancellationToken
@@ -35,7 +28,7 @@ public sealed class MusicBrainzClient
         Guid mbid,
         CancellationToken cancellationToken = default
     ) =>
-        _httpClient.GetFromJsonOrNullAsync<MusicBrainzRelease>(
+        httpClient.GetFromJsonOrNullAsync<MusicBrainzRelease>(
             $"release/{mbid}?inc={ReleaseIncludes}&fmt=json",
             JsonOptions,
             cancellationToken
@@ -45,7 +38,7 @@ public sealed class MusicBrainzClient
         Guid mbid,
         CancellationToken cancellationToken = default
     ) =>
-        _httpClient.GetFromJsonOrNullAsync<MusicBrainzReleaseGroup>(
+        httpClient.GetFromJsonOrNullAsync<MusicBrainzReleaseGroup>(
             $"release-group/{mbid}?inc={ReleaseGroupIncludes}&fmt=json",
             JsonOptions,
             cancellationToken

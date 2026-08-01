@@ -3,7 +3,7 @@ using HalcyonRecords.SeedDataGenerator.Core.Common;
 
 namespace HalcyonRecords.SeedDataGenerator.Core.Wikidata;
 
-public sealed class WikidataClient
+public sealed class WikidataClient(HttpClient httpClient)
 {
     private const string SitelinksProps = "sitelinks";
 
@@ -11,13 +11,6 @@ public sealed class WikidataClient
     {
         PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
     };
-
-    private readonly HttpClient _httpClient;
-
-    public WikidataClient(HttpClient httpClient)
-    {
-        _httpClient = httpClient;
-    }
 
     public async Task<WikidataEntity?> GetEntityAsync(
         string qid,
@@ -28,7 +21,7 @@ public sealed class WikidataClient
             $"api.php?action=wbgetentities&ids={Uri.EscapeDataString(qid)}"
             + $"&props={SitelinksProps}&sitefilter=enwiki&format=json&formatversion=2";
 
-        var result = await _httpClient.GetFromJsonOrNullAsync<WikidataEntitiesResponse>(
+        var result = await httpClient.GetFromJsonOrNullAsync<WikidataEntitiesResponse>(
             requestUri,
             JsonOptions,
             cancellationToken
