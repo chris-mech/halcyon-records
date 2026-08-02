@@ -1,0 +1,112 @@
+﻿using System.Collections.ObjectModel;
+using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
+using HalcyonRecords.SeedDataGenerator.Core.MusicBrainz;
+using HalcyonRecords.SeedDataGenerator.Core.Session;
+using HalcyonRecords.SeedDataGenerator.Navigation;
+using HalcyonRecords.Shared;
+
+namespace HalcyonRecords.SeedDataGenerator.ViewModels;
+
+public sealed partial class ArtistAddViewModel(
+    SeedDataSession session,
+    NavigationService navigationService
+) : ObservableObject
+{
+    [ObservableProperty]
+    public partial string? SearchName { get; set; }
+
+    [ObservableProperty]
+    public partial string? MbidInput { get; set; }
+
+    [ObservableProperty]
+    public partial string? ErrorMessage { get; set; }
+
+    [ObservableProperty]
+    public partial bool IsBusy { get; set; }
+
+    [ObservableProperty]
+    public partial AddArtistPlan? Plan { get; set; }
+
+    public ObservableCollection<MusicBrainzArtistSearchResult> SearchResults { get; } = [];
+
+    [RelayCommand]
+    private async Task SearchAsync()
+    {
+        if (string.IsNullOrWhiteSpace(SearchName))
+        {
+            return;
+        }
+
+        IsBusy = true;
+        ErrorMessage = null;
+        Plan = null;
+        SearchResults.Clear();
+
+        var results = await session.SearchArtistsAsync(SearchName);
+
+        foreach (var result in results)
+        {
+            SearchResults.Add(result);
+        }
+
+        IsBusy = false;
+    }
+
+    [RelayCommand]
+    private async Task SelectSearchResultAsync(MusicBrainzArtistSearchResult result)
+    {
+        if (result.Id is not { } id)
+        {
+            return;
+        }
+
+        await PreviewAsync(new ArtistMbid(id));
+    }
+
+    [RelayCommand]
+    private async Task LookUpMbidAsync()
+    {
+        if (!Guid.TryParse(MbidInput, out var id))
+        {
+            ErrorMessage = "That doesn't look like a valid MusicBrainz ID.";
+            return;
+        }
+
+        await PreviewAsync(new ArtistMbid(id));
+    }
+
+    [RelayCommand]
+    private void Commit()
+    {
+        if (Plan is null)
+        {
+            return;
+        }
+
+        session.CommitAddArtist(Plan);
+        navigationService.GoBack();
+    }
+
+    [RelayCommand]
+    private void Cancel() => navigationService.GoBack();
+
+    private async Task PreviewAsync(ArtistMbid artistId)
+    {
+        IsBusy = true;
+        ErrorMessage = null;
+        Plan = null;
+
+        var result = await session.PreviewAddArtistAsync(artistId);
+
+        IsBusy = false;
+
+        if (result.IsError)
+        {
+            ErrorMessage = string.Join("; ", result.Errors.Select(e => e.Description));
+            return;
+        }
+
+        Plan = result.Value;
+    }
+}

@@ -50,6 +50,7 @@ public partial class App : Application
         services.AddSeedDataSession(configuration);
         services.AddSingleton<NavigationService>();
         services.AddTransient<ArtistListViewModel>();
+        services.AddTransient<ArtistAddViewModel>();
 
         return services.BuildServiceProvider();
     }

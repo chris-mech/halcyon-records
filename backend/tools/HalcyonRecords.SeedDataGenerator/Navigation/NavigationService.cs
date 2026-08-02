@@ -19,4 +19,14 @@ public sealed class NavigationService
 
         _frame.Navigate(pageType, parameter);
     }
+
+    public bool CanGoBack => _frame?.CanGoBack ?? false;
+
+    public void GoBack()
+    {
+        if (_frame?.CanGoBack == true)
+        {
+            _frame.GoBack();
+        }
+    }
 }
