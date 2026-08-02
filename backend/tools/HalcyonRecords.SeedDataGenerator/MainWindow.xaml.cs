@@ -1,6 +1,9 @@
 using HalcyonRecords.SeedDataGenerator.Core.Session;
+using HalcyonRecords.SeedDataGenerator.Navigation;
+using HalcyonRecords.SeedDataGenerator.Views;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.UI.Xaml;
+using Microsoft.UI.Xaml.Controls;
 
 namespace HalcyonRecords.SeedDataGenerator;
 
@@ -10,7 +13,53 @@ public sealed partial class MainWindow : Window
     {
         InitializeComponent();
 
-        var session = App.Current.Services.GetRequiredService<SeedDataSession>();
-        StatusText.Text = $"Seed data session ready ({session.Mode} mode).";
+        App.Current.Services.GetRequiredService<NavigationService>().Initialize(ContentFrame);
+
+        RootGrid.Loaded += OnRootGridLoaded;
+    }
+
+    private void OnRootGridLoaded(object sender, RoutedEventArgs e)
+    {
+        RootGrid.Loaded -= OnRootGridLoaded;
+        _ = StartSessionAsync();
+    }
+
+    private async Task StartSessionAsync()
+    {
+        try
+        {
+            var mode = await ShowModePickerAsync();
+
+            var session = App.Current.Services.GetRequiredService<SeedDataSession>();
+            await session.LoadAsync(mode);
+
+            ContentFrame.Navigate(typeof(ArtistListPage));
+        }
+        catch (Exception ex)
+        {
+            ContentFrame.Content = new TextBlock
+            {
+                Text = $"Startup failed:\n{ex}",
+                TextWrapping = TextWrapping.Wrap,
+                Margin = new Thickness(24),
+            };
+        }
+    }
+
+    private async Task<SeedMode> ShowModePickerAsync()
+    {
+        var dialog = new ContentDialog
+        {
+            XamlRoot = Content.XamlRoot,
+            Title = "Seed data session",
+            Content =
+                "Merge with the existing seed data, or start fresh and allow overwriting duplicates?",
+            PrimaryButtonText = "Merge",
+            SecondaryButtonText = "Overwrite",
+            DefaultButton = ContentDialogButton.Primary,
+        };
+
+        var result = await dialog.ShowAsync();
+        return result == ContentDialogResult.Primary ? SeedMode.Merge : SeedMode.Overwrite;
     }
 }

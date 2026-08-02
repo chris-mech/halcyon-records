@@ -4,12 +4,7 @@
   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
   Title="Halcyon Records — Seed Data Generator"
 >
-  <Grid>
-    <TextBlock
-      x:Name="StatusText"
-      HorizontalAlignment="Center"
-      VerticalAlignment="Center"
-      FontSize="20"
-    />
+  <Grid x:Name="RootGrid">
+    <Frame x:Name="ContentFrame" />
   </Grid>
 </Window>

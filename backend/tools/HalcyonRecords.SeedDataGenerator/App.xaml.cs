@@ -4,6 +4,8 @@ using HalcyonRecords.SeedDataGenerator.Core.MusicBrainz;
 using HalcyonRecords.SeedDataGenerator.Core.Session;
 using HalcyonRecords.SeedDataGenerator.Core.Wikidata;
 using HalcyonRecords.SeedDataGenerator.Core.Wikipedia;
+using HalcyonRecords.SeedDataGenerator.Navigation;
+using HalcyonRecords.SeedDataGenerator.ViewModels;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.UI.Xaml;
@@ -46,6 +48,8 @@ public partial class App : Application
         services.AddWikidataClient(configuration);
         services.AddWikipediaClient(configuration);
         services.AddSeedDataSession(configuration);
+        services.AddSingleton<NavigationService>();
+        services.AddTransient<ArtistListViewModel>();
 
         return services.BuildServiceProvider();
     }
