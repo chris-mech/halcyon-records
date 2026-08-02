@@ -39,3 +39,26 @@ public sealed record MusicBrainzReleaseGroup(
 public sealed record MusicBrainzRelation(string? Type, MusicBrainzUrl? Url);
 
 public sealed record MusicBrainzUrl(string? Resource);
+
+public sealed record MusicBrainzArtistSearchResponse(
+    IReadOnlyList<MusicBrainzArtistSearchResult>? Artists
+);
+
+public sealed record MusicBrainzArtistSearchResult(
+    Guid? Id,
+    string? Name,
+    int? Score,
+    string? Disambiguation
+);
+
+public sealed record MusicBrainzReleaseSearchResponse(
+    IReadOnlyList<MusicBrainzReleaseSearchResult>? Releases
+);
+
+public sealed record MusicBrainzReleaseSearchResult(
+    Guid? Id,
+    string? Title,
+    int? Score,
+    string? Date,
+    IReadOnlyList<MusicBrainzArtistCredit>? ArtistCredit
+);

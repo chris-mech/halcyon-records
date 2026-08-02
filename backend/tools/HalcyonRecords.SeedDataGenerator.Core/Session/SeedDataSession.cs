@@ -2,6 +2,7 @@
 using ErrorOr;
 using HalcyonRecords.SeedDataGenerator.Core.Common;
 using HalcyonRecords.SeedDataGenerator.Core.Discogs;
+using HalcyonRecords.SeedDataGenerator.Core.MusicBrainz;
 using HalcyonRecords.SeedDataGenerator.Core.Services;
 using HalcyonRecords.Shared;
 
@@ -45,6 +46,8 @@ public sealed class SeedDataSession(
     ICoverImageService coverImageService,
     IDescriptionService descriptionService,
     IDiscogsMasterSearchService discogsMasterSearchService,
+    IMusicBrainzArtistSearchService musicBrainzArtistSearchService,
+    IMusicBrainzReleaseSearchService musicBrainzReleaseSearchService,
     SeedDataSessionOptions options
 )
 {
@@ -110,6 +113,17 @@ public sealed class SeedDataSession(
             cancellationToken
         );
     }
+
+    public Task<IReadOnlyList<MusicBrainzArtistSearchResult>> SearchArtistsAsync(
+        string name,
+        CancellationToken cancellationToken = default
+    ) => musicBrainzArtistSearchService.ResolveAsync(name, cancellationToken);
+
+    public Task<IReadOnlyList<MusicBrainzReleaseSearchResult>> SearchAlbumsAsync(
+        string? artistName,
+        string releaseTitle,
+        CancellationToken cancellationToken = default
+    ) => musicBrainzReleaseSearchService.ResolveAsync(artistName, releaseTitle, cancellationToken);
 
     public async Task<ErrorOr<AddArtistPlan>> PreviewAddArtistAsync(
         ArtistMbid artistMbid,

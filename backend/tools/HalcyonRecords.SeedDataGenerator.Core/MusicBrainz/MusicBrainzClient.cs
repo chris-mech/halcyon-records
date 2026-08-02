@@ -43,4 +43,42 @@ public sealed class MusicBrainzClient(HttpClient httpClient)
             JsonOptions,
             cancellationToken
         );
+
+    public async Task<IReadOnlyList<MusicBrainzArtistSearchResult>> SearchArtistsAsync(
+        string name,
+        CancellationToken cancellationToken = default
+    )
+    {
+        var query = $"artist:{EscapeLuceneTerm(name)}";
+
+        var result = await httpClient.GetFromJsonOrNullAsync<MusicBrainzArtistSearchResponse>(
+            $"artist?query={Uri.EscapeDataString(query)}&fmt=json",
+            JsonOptions,
+            cancellationToken
+        );
+
+        return result?.Artists ?? [];
+    }
+
+    public async Task<IReadOnlyList<MusicBrainzReleaseSearchResult>> SearchReleasesAsync(
+        string? artist,
+        string releaseTitle,
+        CancellationToken cancellationToken = default
+    )
+    {
+        var query = artist is not null
+            ? $"release:{EscapeLuceneTerm(releaseTitle)} AND artist:{EscapeLuceneTerm(artist)}"
+            : $"release:{EscapeLuceneTerm(releaseTitle)}";
+
+        var result = await httpClient.GetFromJsonOrNullAsync<MusicBrainzReleaseSearchResponse>(
+            $"release?query={Uri.EscapeDataString(query)}&fmt=json",
+            JsonOptions,
+            cancellationToken
+        );
+
+        return result?.Releases ?? [];
+    }
+
+    private static string EscapeLuceneTerm(string value) =>
+        $"\"{value.Replace("\\", "\\\\").Replace("\"", "\\\"")}\"";
 }
