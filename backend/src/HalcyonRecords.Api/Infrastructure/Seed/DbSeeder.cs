@@ -49,7 +49,7 @@ public static class DbSeeder
             .Select(entry => new Genre
             {
                 Name = entry.Name,
-                Slug = entry.Slug,
+                Slug = entry.Slug.Value,
                 Description = entry.Description,
             })
             .ToList();
@@ -87,7 +87,7 @@ public static class DbSeeder
                 foreach (var genreSlug in entry.GenreSlugs)
                 {
                     album.AlbumGenres.Add(
-                        new AlbumGenre { Album = album, Genre = genresBySlug[genreSlug] }
+                        new AlbumGenre { Album = album, Genre = genresBySlug[genreSlug.Value] }
                     );
                 }
 

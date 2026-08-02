@@ -1,4 +1,5 @@
 ﻿using ErrorOr;
+using HalcyonRecords.SeedDataGenerator.Core.Common;
 using HalcyonRecords.SeedDataGenerator.Core.MusicBrainz;
 using HalcyonRecords.Shared;
 
@@ -7,29 +8,29 @@ namespace HalcyonRecords.SeedDataGenerator.Core.Services;
 public interface IMusicBrainzArtistService
 {
     Task<ErrorOr<MusicBrainzArtistFields>> LoadAsync(
-        Guid artistMbid,
+        ArtistMbid artistMbid,
         CancellationToken cancellationToken = default
     );
 }
 
 public sealed record MusicBrainzArtistFields(
-    Guid SourceId,
+    ArtistMbid SourceId,
     string Name,
     string? Origin,
     int? ActiveSince,
-    long? DiscogsArtistId,
-    string? WikidataQid
+    DiscogsArtistId? DiscogsArtistId,
+    WikidataQid? WikidataQid
 );
 
 public sealed class MusicBrainzArtistService(MusicBrainzClient musicBrainzClient)
     : IMusicBrainzArtistService
 {
     public async Task<ErrorOr<MusicBrainzArtistFields>> LoadAsync(
-        Guid artistMbid,
+        ArtistMbid artistMbid,
         CancellationToken cancellationToken = default
     )
     {
-        var raw = await musicBrainzClient.GetArtistAsync(artistMbid, cancellationToken);
+        var raw = await musicBrainzClient.GetArtistAsync(artistMbid.Value, cancellationToken);
         if (raw is null)
         {
             return DomainErrors.Artist.NotFound($"No MusicBrainz artist found for '{artistMbid}'.");
@@ -48,12 +49,18 @@ public sealed class MusicBrainzArtistService(MusicBrainzClient musicBrainzClient
         var activeSince = int.TryParse(raw.LifeSpan?.Begin, out var year) ? year : (int?)null;
 
         return new MusicBrainzArtistFields(
-            SourceId: raw.Id.Value,
+            SourceId: new ArtistMbid(raw.Id.Value),
             Name: raw.Name,
             Origin: raw.Area?.Name,
             ActiveSince: activeSince,
-            DiscogsArtistId: MusicBrainzRelations.ExtractId(raw.Relations, "discogs"),
+            DiscogsArtistId: MusicBrainzRelations.ExtractId(raw.Relations, "discogs")
+                is { } discogsId
+                ? new DiscogsArtistId(discogsId)
+                : null,
             WikidataQid: MusicBrainzRelations.ExtractSlug(raw.Relations, "wikidata")
+                is { } wikidataQid
+                ? new WikidataQid(wikidataQid)
+                : null
         );
     }
 }

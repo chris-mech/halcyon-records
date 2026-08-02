@@ -1,5 +1,6 @@
 ﻿using System.Text.Json;
 using ErrorOr;
+using HalcyonRecords.SeedDataGenerator.Core.Common;
 using HalcyonRecords.SeedDataGenerator.Core.Discogs;
 using HalcyonRecords.SeedDataGenerator.Core.Services;
 using HalcyonRecords.Shared;
@@ -7,7 +8,7 @@ using HalcyonRecords.Shared;
 namespace HalcyonRecords.SeedDataGenerator.Core.Session;
 
 public sealed record AddArtistPlan(
-    Guid SourceId,
+    ArtistMbid SourceId,
     string Name,
     string? Origin,
     int? ActiveSince,
@@ -16,12 +17,12 @@ public sealed record AddArtistPlan(
 );
 
 public sealed record AddAlbumPlan(
-    Guid SourceId,
+    ReleaseMbid SourceId,
     string Title,
     DateOnly? ReleaseDate,
     string? Label,
-    IReadOnlyList<Guid> ArtistCreditIds,
-    long? DiscogsMasterId,
+    IReadOnlyList<ArtistMbid> ArtistCreditIds,
+    DiscogsMasterId? DiscogsMasterId,
     IReadOnlyList<DiscogsSearchResult>? DiscogsCandidates,
     IReadOnlyList<ResolvedGenre> ResolvedGenres,
     Uri? CoverImageUrl,
@@ -47,9 +48,9 @@ public sealed class SeedDataSession(
     SeedDataSessionOptions options
 )
 {
-    private readonly Dictionary<Guid, ArtistSeedEntry> _artistsBySourceId = [];
-    private readonly Dictionary<string, GenreSeedEntry> _genresBySlug = [];
-    private readonly Dictionary<Guid, AlbumSeedEntry> _albumsBySourceId = [];
+    private readonly Dictionary<ArtistMbid, ArtistSeedEntry> _artistsBySourceId = [];
+    private readonly Dictionary<GenreSlug, GenreSeedEntry> _genresBySlug = [];
+    private readonly Dictionary<ReleaseMbid, AlbumSeedEntry> _albumsBySourceId = [];
 
     public SeedMode Mode { get; private set; } = SeedMode.Merge;
 
@@ -111,7 +112,7 @@ public sealed class SeedDataSession(
     }
 
     public async Task<ErrorOr<AddArtistPlan>> PreviewAddArtistAsync(
-        Guid artistMbid,
+        ArtistMbid artistMbid,
         CancellationToken cancellationToken = default
     )
     {
@@ -140,7 +141,7 @@ public sealed class SeedDataSession(
     }
 
     public async Task<ErrorOr<AddAlbumPlan>> PreviewAddAlbumAsync(
-        Guid releaseMbid,
+        ReleaseMbid releaseMbid,
         CancellationToken cancellationToken = default
     )
     {
@@ -226,7 +227,7 @@ public sealed class SeedDataSession(
 
     public async Task<AddAlbumPlan> ResolveDiscogsMasterAsync(
         AddAlbumPlan plan,
-        long chosenMasterId,
+        DiscogsMasterId chosenMasterId,
         CancellationToken cancellationToken = default
     )
     {
@@ -242,7 +243,7 @@ public sealed class SeedDataSession(
 
     public AlbumSeedEntry CommitAddAlbum(AddAlbumPlan plan)
     {
-        List<string> genreSlugs = [];
+        List<GenreSlug> genreSlugs = [];
         foreach (var genre in plan.ResolvedGenres)
         {
             if (!_genresBySlug.ContainsKey(genre.Slug))
@@ -253,7 +254,7 @@ public sealed class SeedDataSession(
             genreSlugs.Add(genre.Slug);
         }
 
-        List<Guid> artistSourceIds = [];
+        List<ArtistMbid> artistSourceIds = [];
         foreach (var artistId in plan.ArtistCreditIds)
         {
             if (_artistsBySourceId.ContainsKey(artistId))
@@ -296,7 +297,7 @@ public sealed class SeedDataSession(
     }
 
     private async Task<ErrorOr<AddArtistPlan>> LoadArtistPlanAsync(
-        Guid artistMbid,
+        ArtistMbid artistMbid,
         CancellationToken cancellationToken
     )
     {

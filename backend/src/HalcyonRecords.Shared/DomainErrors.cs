@@ -21,7 +21,7 @@ public static class DomainErrors
                 description: "MusicBrainz release has no title."
             );
 
-        public static Error AlreadySeeded(Guid sourceId) =>
+        public static Error AlreadySeeded(ReleaseMbid sourceId) =>
             Error.Conflict(
                 code: "Album.AlreadySeeded",
                 description: $"Album '{sourceId}' already exists in the seed data (merge mode)."
@@ -45,7 +45,7 @@ public static class DomainErrors
                 description: "MusicBrainz artist has no name."
             );
 
-        public static Error AlreadySeeded(Guid sourceId) =>
+        public static Error AlreadySeeded(ArtistMbid sourceId) =>
             Error.Conflict(
                 code: "Artist.AlreadySeeded",
                 description: $"Artist '{sourceId}' already exists in the seed data (merge mode)."

@@ -1,11 +1,12 @@
-﻿using HalcyonRecords.SeedDataGenerator.Core.Wikidata;
+﻿using HalcyonRecords.SeedDataGenerator.Core.Common;
+using HalcyonRecords.SeedDataGenerator.Core.Wikidata;
 using HalcyonRecords.SeedDataGenerator.Core.Wikipedia;
 
 namespace HalcyonRecords.SeedDataGenerator.Core.Services;
 
 public interface IDescriptionService
 {
-    Task<string?> ResolveAsync(string? qid, CancellationToken cancellationToken = default);
+    Task<string?> ResolveAsync(WikidataQid? qid, CancellationToken cancellationToken = default);
 }
 
 public sealed class DescriptionService(
@@ -14,16 +15,16 @@ public sealed class DescriptionService(
 ) : IDescriptionService
 {
     public async Task<string?> ResolveAsync(
-        string? qid,
+        WikidataQid? qid,
         CancellationToken cancellationToken = default
     )
     {
-        if (qid is null)
+        if (qid is not { } id)
         {
             return null;
         }
 
-        var entity = await wikidataClient.GetEntityAsync(qid, cancellationToken);
+        var entity = await wikidataClient.GetEntityAsync(id.Value, cancellationToken);
         var title = entity?.Sitelinks?.Values.FirstOrDefault()?.Title;
 
         if (title is null)
