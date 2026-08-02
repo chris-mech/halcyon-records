@@ -1,14 +1,50 @@
 ﻿using System.Text.Json;
 using ErrorOr;
-using HalcyonRecords.SeedDataGenerator.Core.Enrichment;
+using HalcyonRecords.SeedDataGenerator.Core.Discogs;
+using HalcyonRecords.SeedDataGenerator.Core.Services;
 using HalcyonRecords.Shared;
 
-namespace HalcyonRecords.SeedDataGenerator.Core.Store;
+namespace HalcyonRecords.SeedDataGenerator.Core.Session;
 
-public sealed class SeedDataStore(
-    IArtistEnricher artistEnricher,
-    IAlbumEnricher albumEnricher,
-    SeedDataStoreOptions options
+public sealed record AddArtistPlan(
+    Guid SourceId,
+    string Name,
+    string? Origin,
+    int? ActiveSince,
+    string? Bio,
+    string? ImageUrl
+);
+
+public sealed record AddAlbumPlan(
+    Guid SourceId,
+    string Title,
+    DateOnly? ReleaseDate,
+    string? Label,
+    IReadOnlyList<Guid> ArtistCreditIds,
+    long? DiscogsMasterId,
+    IReadOnlyList<DiscogsSearchResult>? DiscogsCandidates,
+    IReadOnlyList<ResolvedGenre> ResolvedGenres,
+    Uri? CoverImageUrl,
+    string? Description,
+    IReadOnlyList<AddArtistPlan> MissingArtistPlans
+);
+
+public enum SeedMode
+{
+    Merge,
+    Overwrite,
+}
+
+public sealed class SeedDataSession(
+    IReleaseService releaseService,
+    IReleaseGroupService releaseGroupService,
+    IMusicBrainzArtistService musicBrainzArtistService,
+    IDiscogsArtistService discogsArtistService,
+    IGenreService genreService,
+    ICoverImageService coverImageService,
+    IDescriptionService descriptionService,
+    DiscogsClient discogsClient,
+    SeedDataSessionOptions options
 )
 {
     private readonly Dictionary<Guid, ArtistSeedEntry> _artistsBySourceId = [];
@@ -84,7 +120,7 @@ public sealed class SeedDataStore(
             return DomainErrors.Artist.AlreadySeeded(artistMbid);
         }
 
-        return await artistEnricher.PreviewAsync(artistMbid, cancellationToken);
+        return await LoadArtistPlanAsync(artistMbid, cancellationToken);
     }
 
     public ArtistSeedEntry CommitAddArtist(AddArtistPlan plan)
@@ -113,18 +149,96 @@ public sealed class SeedDataStore(
             return DomainErrors.Album.AlreadySeeded(releaseMbid);
         }
 
-        return await albumEnricher.PreviewAsync(
+        var loaded = await releaseService.LoadAsync(releaseMbid, cancellationToken);
+        if (loaded.IsError)
+        {
+            return loaded.Errors;
+        }
+
+        var fields = loaded.Value;
+
+        var coverImageUrl = await coverImageService.ResolveAsync(
             releaseMbid,
-            _artistsBySourceId.Keys.ToHashSet(),
+            fields.ReleaseGroupId,
             cancellationToken
+        );
+
+        var releaseGroupFields = fields.ReleaseGroupId is { } releaseGroupId
+            ? await releaseGroupService.ResolveAsync(releaseGroupId, cancellationToken)
+            : null;
+
+        var discogsMasterId = releaseGroupFields?.DiscogsMasterId;
+        IReadOnlyList<ResolvedGenre> resolvedGenres = [];
+        IReadOnlyList<DiscogsSearchResult>? discogsCandidates = null;
+
+        if (discogsMasterId is not null)
+        {
+            resolvedGenres = await genreService.ResolveAsync(
+                discogsMasterId.Value,
+                cancellationToken
+            );
+        }
+        else
+        {
+            discogsCandidates = fields.PrimaryArtistName is not null
+                ? await discogsClient.SearchMastersAsync(
+                    fields.PrimaryArtistName,
+                    fields.Title,
+                    cancellationToken
+                )
+                : [];
+        }
+
+        var description = await descriptionService.ResolveAsync(
+            releaseGroupFields?.WikidataQid,
+            cancellationToken
+        );
+
+        List<AddArtistPlan> missingArtistPlans = [];
+        foreach (var artistId in fields.ArtistCreditIds)
+        {
+            if (_artistsBySourceId.ContainsKey(artistId))
+            {
+                continue;
+            }
+
+            var artistPlan = await LoadArtistPlanAsync(artistId, cancellationToken);
+            if (!artistPlan.IsError)
+            {
+                missingArtistPlans.Add(artistPlan.Value);
+            }
+        }
+
+        return new AddAlbumPlan(
+            fields.SourceId,
+            fields.Title,
+            fields.ReleaseDate,
+            fields.Label,
+            fields.ArtistCreditIds,
+            discogsMasterId,
+            discogsCandidates,
+            resolvedGenres,
+            coverImageUrl,
+            description,
+            missingArtistPlans
         );
     }
 
-    public Task<AddAlbumPlan> ResolveDiscogsMasterAsync(
+    public async Task<AddAlbumPlan> ResolveDiscogsMasterAsync(
         AddAlbumPlan plan,
         long chosenMasterId,
         CancellationToken cancellationToken = default
-    ) => albumEnricher.ResolveDiscogsMasterAsync(plan, chosenMasterId, cancellationToken);
+    )
+    {
+        var resolvedGenres = await genreService.ResolveAsync(chosenMasterId, cancellationToken);
+
+        return plan with
+        {
+            DiscogsMasterId = chosenMasterId,
+            DiscogsCandidates = null,
+            ResolvedGenres = resolvedGenres,
+        };
+    }
 
     public AlbumSeedEntry CommitAddAlbum(AddAlbumPlan plan)
     {
@@ -179,6 +293,40 @@ public sealed class SeedDataStore(
 
         _albumsBySourceId[entry.SourceId] = entry;
         return entry;
+    }
+
+    private async Task<ErrorOr<AddArtistPlan>> LoadArtistPlanAsync(
+        Guid artistMbid,
+        CancellationToken cancellationToken
+    )
+    {
+        var loaded = await musicBrainzArtistService.LoadAsync(artistMbid, cancellationToken);
+        if (loaded.IsError)
+        {
+            return loaded.Errors;
+        }
+
+        var fields = loaded.Value;
+
+        var discogsFields = await discogsArtistService.ResolveAsync(
+            fields.DiscogsArtistId,
+            cancellationToken
+        );
+
+        var bio = discogsFields.Bio;
+        if (string.IsNullOrWhiteSpace(bio))
+        {
+            bio = await descriptionService.ResolveAsync(fields.WikidataQid, cancellationToken);
+        }
+
+        return new AddArtistPlan(
+            fields.SourceId,
+            fields.Name,
+            fields.Origin,
+            fields.ActiveSince,
+            bio,
+            discogsFields.ImageUrl
+        );
     }
 
     private async Task<List<T>> ReadSeedFileAsync<T>(
