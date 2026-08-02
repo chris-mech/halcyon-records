@@ -154,6 +154,64 @@ public sealed class SeedDataSession(
         return entry;
     }
 
+    public IReadOnlyList<AlbumSeedEntry> GetAlbumsReferencing(ArtistMbid artistId) =>
+        _albumsBySourceId.Values.Where(album => album.ArtistSourceIds.Contains(artistId)).ToList();
+
+    public IReadOnlyList<AlbumSeedEntry> DeleteArtist(ArtistMbid artistId)
+    {
+        if (!_artistsBySourceId.ContainsKey(artistId))
+        {
+            throw new InvalidOperationException(
+                $"Cannot delete artist '{artistId}' — no such artist in the session."
+            );
+        }
+
+        var affectedAlbums = GetAlbumsReferencing(artistId);
+
+        foreach (var album in affectedAlbums)
+        {
+            _albumsBySourceId.Remove(album.SourceId);
+        }
+
+        _artistsBySourceId.Remove(artistId);
+
+        return affectedAlbums;
+    }
+
+    public Task<ErrorOr<AddArtistPlan>> RefreshArtistAsync(
+        ArtistMbid artistId,
+        CancellationToken cancellationToken = default
+    ) => LoadArtistPlanAsync(artistId, cancellationToken);
+
+    public ArtistSeedEntry UpdateArtist(
+        ArtistMbid artistId,
+        string name,
+        string? origin,
+        int? activeSince,
+        string? bio,
+        string? imageUrl
+    )
+    {
+        if (!_artistsBySourceId.ContainsKey(artistId))
+        {
+            throw new InvalidOperationException(
+                $"Cannot update artist '{artistId}' — no such artist in the session."
+            );
+        }
+
+        var updated = _artistsBySourceId[artistId] with
+        {
+            Name = name,
+            Origin = origin,
+            ActiveSince = activeSince,
+            Bio = bio,
+            ImageUrl = imageUrl,
+        };
+
+        _artistsBySourceId[artistId] = updated;
+        return updated;
+    }
+
     public async Task<ErrorOr<AddAlbumPlan>> PreviewAddAlbumAsync(
         ReleaseMbid releaseMbid,
         CancellationToken cancellationToken = default
