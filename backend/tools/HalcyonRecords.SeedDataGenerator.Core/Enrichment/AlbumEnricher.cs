@@ -1,17 +1,45 @@
 ﻿using ErrorOr;
-using HalcyonRecords.SeedDataGenerator.Core.CoverArtArchive;
 using HalcyonRecords.SeedDataGenerator.Core.Discogs;
-using HalcyonRecords.SeedDataGenerator.Core.MusicBrainz;
-using HalcyonRecords.SeedDataGenerator.Core.Parsing;
-using HalcyonRecords.Shared;
+using HalcyonRecords.SeedDataGenerator.Core.Services;
 
 namespace HalcyonRecords.SeedDataGenerator.Core.Enrichment;
 
+public interface IAlbumEnricher
+{
+    Task<ErrorOr<AddAlbumPlan>> PreviewAsync(
+        Guid releaseMbid,
+        IReadOnlySet<Guid> knownArtistSourceIds,
+        CancellationToken cancellationToken = default
+    );
+
+    Task<AddAlbumPlan> ResolveDiscogsMasterAsync(
+        AddAlbumPlan plan,
+        long chosenMasterId,
+        CancellationToken cancellationToken = default
+    );
+}
+
+public sealed record AddAlbumPlan(
+    Guid SourceId,
+    string Title,
+    DateOnly? ReleaseDate,
+    string? Label,
+    IReadOnlyList<Guid> ArtistCreditIds,
+    long? DiscogsMasterId,
+    IReadOnlyList<DiscogsSearchResult>? DiscogsCandidates,
+    IReadOnlyList<ResolvedGenre> ResolvedGenres,
+    Uri? CoverImageUrl,
+    string? Description,
+    IReadOnlyList<AddArtistPlan> MissingArtistPlans
+);
+
 public sealed class AlbumEnricher(
-    MusicBrainzClient musicBrainzClient,
+    IReleaseService releaseService,
+    IReleaseGroupService releaseGroupService,
+    IGenreService genreService,
+    ICoverImageService coverImageService,
+    IDescriptionService descriptionService,
     DiscogsClient discogsClient,
-    CoverArtArchiveClient coverArtArchiveClient,
-    WikipediaDescriptionResolver descriptionResolver,
     IArtistEnricher artistEnricher
 ) : IAlbumEnricher
 {
@@ -21,40 +49,22 @@ public sealed class AlbumEnricher(
         CancellationToken cancellationToken = default
     )
     {
-        var raw = await musicBrainzClient.GetReleaseAsync(releaseMbid, cancellationToken);
-        if (raw is null)
+        var loaded = await releaseService.LoadAsync(releaseMbid, cancellationToken);
+        if (loaded.IsError)
         {
-            return DomainErrors.Album.NotFound(
-                $"No MusicBrainz release found for '{releaseMbid}'."
-            );
+            return loaded.Errors;
         }
 
-        var parsed = MusicBrainzParsing.ParseRelease(raw);
-        if (parsed.IsError)
-        {
-            return parsed.Errors;
-        }
+        var fields = loaded.Value;
 
-        var fields = parsed.Value;
-
-        var releaseGroup = fields.ReleaseGroupId is { } releaseGroupId
-            ? await musicBrainzClient.GetReleaseGroupAsync(releaseGroupId, cancellationToken)
-            : null;
-
-        var coverImageUrl = await coverArtArchiveClient.GetReleaseFrontImageUrlAsync(
+        var coverImageUrl = await coverImageService.ResolveAsync(
             releaseMbid,
+            fields.ReleaseGroupId,
             cancellationToken
         );
-        if (coverImageUrl is null && fields.ReleaseGroupId is { } fallbackGroupId)
-        {
-            coverImageUrl = await coverArtArchiveClient.GetReleaseGroupFrontImageUrlAsync(
-                fallbackGroupId,
-                cancellationToken
-            );
-        }
 
-        var releaseGroupFields = releaseGroup is not null
-            ? MusicBrainzParsing.ParseReleaseGroup(releaseGroup)
+        var releaseGroupFields = fields.ReleaseGroupId is { } releaseGroupId
+            ? await releaseGroupService.ResolveAsync(releaseGroupId, cancellationToken)
             : null;
 
         var discogsMasterId = releaseGroupFields?.DiscogsMasterId;
@@ -63,7 +73,10 @@ public sealed class AlbumEnricher(
 
         if (discogsMasterId is not null)
         {
-            resolvedGenres = await ResolveGenresAsync(discogsMasterId.Value, cancellationToken);
+            resolvedGenres = await genreService.ResolveAsync(
+                discogsMasterId.Value,
+                cancellationToken
+            );
         }
         else
         {
@@ -76,7 +89,7 @@ public sealed class AlbumEnricher(
                 : [];
         }
 
-        var description = await descriptionResolver.ResolveAsync(
+        var description = await descriptionService.ResolveAsync(
             releaseGroupFields?.WikidataQid,
             cancellationToken
         );
@@ -117,7 +130,7 @@ public sealed class AlbumEnricher(
         CancellationToken cancellationToken = default
     )
     {
-        var resolvedGenres = await ResolveGenresAsync(chosenMasterId, cancellationToken);
+        var resolvedGenres = await genreService.ResolveAsync(chosenMasterId, cancellationToken);
 
         return plan with
         {
@@ -125,14 +138,5 @@ public sealed class AlbumEnricher(
             DiscogsCandidates = null,
             ResolvedGenres = resolvedGenres,
         };
-    }
-
-    private async Task<IReadOnlyList<ResolvedGenre>> ResolveGenresAsync(
-        long masterId,
-        CancellationToken cancellationToken
-    )
-    {
-        var master = await discogsClient.GetMasterAsync(masterId, cancellationToken);
-        return DiscogsParsing.ParseMasterGenres(master);
     }
 }

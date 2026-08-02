@@ -1,15 +1,29 @@
 ﻿using ErrorOr;
-using HalcyonRecords.SeedDataGenerator.Core.Discogs;
-using HalcyonRecords.SeedDataGenerator.Core.MusicBrainz;
-using HalcyonRecords.SeedDataGenerator.Core.Parsing;
-using HalcyonRecords.Shared;
+using HalcyonRecords.SeedDataGenerator.Core.Services;
 
 namespace HalcyonRecords.SeedDataGenerator.Core.Enrichment;
 
+public interface IArtistEnricher
+{
+    Task<ErrorOr<AddArtistPlan>> PreviewAsync(
+        Guid artistMbid,
+        CancellationToken cancellationToken = default
+    );
+}
+
+public sealed record AddArtistPlan(
+    Guid SourceId,
+    string Name,
+    string? Origin,
+    int? ActiveSince,
+    string? Bio,
+    string? ImageUrl
+);
+
 public sealed class ArtistEnricher(
-    MusicBrainzClient musicBrainzClient,
-    DiscogsClient discogsClient,
-    WikipediaDescriptionResolver descriptionResolver
+    IMusicBrainzArtistService musicBrainzArtistService,
+    IDiscogsArtistService discogsArtistService,
+    IDescriptionService descriptionService
 ) : IArtistEnricher
 {
     public async Task<ErrorOr<AddArtistPlan>> PreviewAsync(
@@ -17,29 +31,23 @@ public sealed class ArtistEnricher(
         CancellationToken cancellationToken = default
     )
     {
-        var raw = await musicBrainzClient.GetArtistAsync(artistMbid, cancellationToken);
-        if (raw is null)
+        var loaded = await musicBrainzArtistService.LoadAsync(artistMbid, cancellationToken);
+        if (loaded.IsError)
         {
-            return DomainErrors.Artist.NotFound($"No MusicBrainz artist found for '{artistMbid}'.");
+            return loaded.Errors;
         }
 
-        var parsed = MusicBrainzParsing.ParseArtist(raw);
-        if (parsed.IsError)
-        {
-            return parsed.Errors;
-        }
+        var fields = loaded.Value;
 
-        var fields = parsed.Value;
-
-        var discogsArtist = fields.DiscogsArtistId is not null
-            ? await discogsClient.GetArtistAsync(fields.DiscogsArtistId.Value, cancellationToken)
-            : null;
-        var discogsFields = DiscogsParsing.ParseArtist(discogsArtist);
+        var discogsFields = await discogsArtistService.ResolveAsync(
+            fields.DiscogsArtistId,
+            cancellationToken
+        );
 
         var bio = discogsFields.Bio;
         if (string.IsNullOrWhiteSpace(bio))
         {
-            bio = await descriptionResolver.ResolveAsync(fields.WikidataQid, cancellationToken);
+            bio = await descriptionService.ResolveAsync(fields.WikidataQid, cancellationToken);
         }
 
         return new AddArtistPlan(

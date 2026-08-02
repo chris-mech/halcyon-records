@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using HalcyonRecords.SeedDataGenerator.Core.Services;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace HalcyonRecords.SeedDataGenerator.Core.Enrichment;
 
@@ -8,7 +9,13 @@ public static class EnrichmentServiceCollectionExtensions
     {
         public IServiceCollection AddEnrichment()
         {
-            services.AddSingleton<WikipediaDescriptionResolver>();
+            services.AddSingleton<IReleaseService, ReleaseService>();
+            services.AddSingleton<IReleaseGroupService, ReleaseGroupService>();
+            services.AddSingleton<IMusicBrainzArtistService, MusicBrainzArtistService>();
+            services.AddSingleton<IDiscogsArtistService, DiscogsArtistService>();
+            services.AddSingleton<IGenreService, GenreService>();
+            services.AddSingleton<ICoverImageService, CoverImageService>();
+            services.AddSingleton<IDescriptionService, DescriptionService>();
             services.AddSingleton<IArtistEnricher, ArtistEnricher>();
             services.AddSingleton<IAlbumEnricher, AlbumEnricher>();
 
