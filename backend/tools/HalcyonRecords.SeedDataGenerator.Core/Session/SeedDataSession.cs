@@ -44,7 +44,7 @@ public sealed class SeedDataSession(
     IGenreService genreService,
     ICoverImageService coverImageService,
     IDescriptionService descriptionService,
-    DiscogsClient discogsClient,
+    IDiscogsMasterSearchService discogsMasterSearchService,
     SeedDataSessionOptions options
 )
 {
@@ -150,79 +150,7 @@ public sealed class SeedDataSession(
             return DomainErrors.Album.AlreadySeeded(releaseMbid);
         }
 
-        var loaded = await releaseService.LoadAsync(releaseMbid, cancellationToken);
-        if (loaded.IsError)
-        {
-            return loaded.Errors;
-        }
-
-        var fields = loaded.Value;
-
-        var coverImageUrl = await coverImageService.ResolveAsync(
-            releaseMbid,
-            fields.ReleaseGroupId,
-            cancellationToken
-        );
-
-        var releaseGroupFields = fields.ReleaseGroupId is { } releaseGroupId
-            ? await releaseGroupService.ResolveAsync(releaseGroupId, cancellationToken)
-            : null;
-
-        var discogsMasterId = releaseGroupFields?.DiscogsMasterId;
-        IReadOnlyList<ResolvedGenre> resolvedGenres = [];
-        IReadOnlyList<DiscogsSearchResult>? discogsCandidates = null;
-
-        if (discogsMasterId is not null)
-        {
-            resolvedGenres = await genreService.ResolveAsync(
-                discogsMasterId.Value,
-                cancellationToken
-            );
-        }
-        else
-        {
-            discogsCandidates = fields.PrimaryArtistName is not null
-                ? await discogsClient.SearchMastersAsync(
-                    fields.PrimaryArtistName,
-                    fields.Title,
-                    cancellationToken
-                )
-                : [];
-        }
-
-        var description = await descriptionService.ResolveAsync(
-            releaseGroupFields?.WikidataQid,
-            cancellationToken
-        );
-
-        List<AddArtistPlan> missingArtistPlans = [];
-        foreach (var artistId in fields.ArtistCreditIds)
-        {
-            if (_artistsBySourceId.ContainsKey(artistId))
-            {
-                continue;
-            }
-
-            var artistPlan = await LoadArtistPlanAsync(artistId, cancellationToken);
-            if (!artistPlan.IsError)
-            {
-                missingArtistPlans.Add(artistPlan.Value);
-            }
-        }
-
-        return new AddAlbumPlan(
-            fields.SourceId,
-            fields.Title,
-            fields.ReleaseDate,
-            fields.Label,
-            fields.ArtistCreditIds,
-            discogsMasterId,
-            discogsCandidates,
-            resolvedGenres,
-            coverImageUrl,
-            description,
-            missingArtistPlans
-        );
+        return await LoadAlbumPlanAsync(releaseMbid, cancellationToken);
     }
 
     public async Task<AddAlbumPlan> ResolveDiscogsMasterAsync(
@@ -246,32 +174,26 @@ public sealed class SeedDataSession(
         List<GenreSlug> genreSlugs = [];
         foreach (var genre in plan.ResolvedGenres)
         {
-            if (!_genresBySlug.ContainsKey(genre.Slug))
-            {
-                _genresBySlug[genre.Slug] = new GenreSeedEntry(genre.Name, genre.Slug);
-            }
-
+            _genresBySlug.TryAdd(genre.Slug, new GenreSeedEntry(genre.Name, genre.Slug));
             genreSlugs.Add(genre.Slug);
         }
 
         List<ArtistMbid> artistSourceIds = [];
         foreach (var artistId in plan.ArtistCreditIds)
         {
-            if (_artistsBySourceId.ContainsKey(artistId))
+            if (!_artistsBySourceId.ContainsKey(artistId))
             {
-                artistSourceIds.Add(artistId);
-                continue;
+                var missingArtistPlan = plan.MissingArtistPlans.FirstOrDefault(p =>
+                    p.SourceId == artistId
+                );
+                if (missingArtistPlan is null)
+                {
+                    continue;
+                }
+
+                CommitAddArtist(missingArtistPlan);
             }
 
-            var missingArtistPlan = plan.MissingArtistPlans.FirstOrDefault(p =>
-                p.SourceId == artistId
-            );
-            if (missingArtistPlan is null)
-            {
-                continue;
-            }
-
-            CommitAddArtist(missingArtistPlan);
             artistSourceIds.Add(artistId);
         }
 
@@ -294,6 +216,95 @@ public sealed class SeedDataSession(
 
         _albumsBySourceId[entry.SourceId] = entry;
         return entry;
+    }
+
+    private async Task<ErrorOr<AddAlbumPlan>> LoadAlbumPlanAsync(
+        ReleaseMbid releaseMbid,
+        CancellationToken cancellationToken
+    )
+    {
+        var loaded = await releaseService.LoadAsync(releaseMbid, cancellationToken);
+        if (loaded.IsError)
+        {
+            return loaded.Errors;
+        }
+
+        var fields = loaded.Value;
+
+        var coverImageUrl = await coverImageService.ResolveAsync(
+            releaseMbid,
+            fields.ReleaseGroupId,
+            cancellationToken
+        );
+
+        var releaseGroupFields = fields.ReleaseGroupId is { } releaseGroupId
+            ? await releaseGroupService.ResolveAsync(releaseGroupId, cancellationToken)
+            : null;
+
+        var discogsMasterId = releaseGroupFields?.DiscogsMasterId;
+
+        var description = await descriptionService.ResolveAsync(
+            releaseGroupFields?.WikidataQid,
+            cancellationToken
+        );
+
+        IReadOnlyList<ResolvedGenre> resolvedGenres = [];
+        IReadOnlyList<DiscogsSearchResult>? discogsCandidates = null;
+
+        if (discogsMasterId is { } masterId)
+        {
+            resolvedGenres = await genreService.ResolveAsync(masterId, cancellationToken);
+        }
+        else
+        {
+            discogsCandidates = await discogsMasterSearchService.ResolveAsync(
+                fields.PrimaryArtistName,
+                fields.Title,
+                cancellationToken
+            );
+        }
+
+        var missingArtistPlans = await ResolveMissingArtistPlansAsync(
+            fields.ArtistCreditIds,
+            cancellationToken
+        );
+
+        return new AddAlbumPlan(
+            SourceId: fields.SourceId,
+            Title: fields.Title,
+            ReleaseDate: fields.ReleaseDate,
+            Label: fields.Label,
+            ArtistCreditIds: fields.ArtistCreditIds,
+            DiscogsMasterId: discogsMasterId,
+            DiscogsCandidates: discogsCandidates,
+            ResolvedGenres: resolvedGenres,
+            CoverImageUrl: coverImageUrl,
+            Description: description,
+            MissingArtistPlans: missingArtistPlans
+        );
+    }
+
+    private async Task<List<AddArtistPlan>> ResolveMissingArtistPlansAsync(
+        IReadOnlyList<ArtistMbid> artistCreditIds,
+        CancellationToken cancellationToken
+    )
+    {
+        List<AddArtistPlan> plans = [];
+        foreach (var artistId in artistCreditIds)
+        {
+            if (_artistsBySourceId.ContainsKey(artistId))
+            {
+                continue;
+            }
+
+            var artistPlan = await LoadArtistPlanAsync(artistId, cancellationToken);
+            if (!artistPlan.IsError)
+            {
+                plans.Add(artistPlan.Value);
+            }
+        }
+
+        return plans;
     }
 
     private async Task<ErrorOr<AddArtistPlan>> LoadArtistPlanAsync(
@@ -321,12 +332,12 @@ public sealed class SeedDataSession(
         }
 
         return new AddArtistPlan(
-            fields.SourceId,
-            fields.Name,
-            fields.Origin,
-            fields.ActiveSince,
-            bio,
-            discogsFields.ImageUrl
+            SourceId: fields.SourceId,
+            Name: fields.Name,
+            Origin: fields.Origin,
+            ActiveSince: fields.ActiveSince,
+            Bio: bio,
+            ImageUrl: discogsFields.ImageUrl
         );
     }
 
@@ -363,7 +374,7 @@ public sealed class SeedDataSession(
 
         await JsonSerializer.SerializeAsync(
             stream,
-            values.ToList(),
+            values,
             SeedDataJsonOptions.Default,
             cancellationToken
         );

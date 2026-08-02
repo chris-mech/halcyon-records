@@ -24,6 +24,7 @@ public static class SeedDataSessionServiceCollectionExtensions
             services.AddSingleton<IReleaseGroupService, ReleaseGroupService>();
             services.AddSingleton<IMusicBrainzArtistService, MusicBrainzArtistService>();
             services.AddSingleton<IDiscogsArtistService, DiscogsArtistService>();
+            services.AddSingleton<IDiscogsMasterSearchService, DiscogsMasterSearchService>();
             services.AddSingleton<IGenreService, GenreService>();
             services.AddSingleton<ICoverImageService, CoverImageService>();
             services.AddSingleton<IDescriptionService, DescriptionService>();
