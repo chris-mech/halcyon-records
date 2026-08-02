@@ -1,0 +1,13 @@
+{
+  "solution": {
+    "path": "HalcyonRecords.slnx",
+    "projects": [
+      "src/HalcyonRecords.Api/HalcyonRecords.Api.csproj",
+      "src/HalcyonRecords.AppHost/HalcyonRecords.AppHost.csproj",
+      "src/HalcyonRecords.ServiceDefaults/HalcyonRecords.ServiceDefaults.csproj",
+      "src/HalcyonRecords.Shared/HalcyonRecords.Shared.csproj",
+      "tests/HalcyonRecords.Api.UnitTests/HalcyonRecords.Api.UnitTests.csproj",
+      "tools/HalcyonRecords.SeedDataGenerator.Core/HalcyonRecords.SeedDataGenerator.Core.csproj"
+    ]
+  }
+}
