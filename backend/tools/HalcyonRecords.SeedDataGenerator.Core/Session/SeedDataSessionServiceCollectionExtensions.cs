@@ -20,6 +20,14 @@ public static class SeedDataSessionServiceCollectionExtensions
                 );
             }
 
+            if (!Path.IsPathRooted(options.SeedDataFolder))
+            {
+                options.SeedDataFolder = Path.Combine(
+                    AppContext.BaseDirectory,
+                    options.SeedDataFolder
+                );
+            }
+
             services.AddSingleton<IReleaseService, ReleaseService>();
             services.AddSingleton<IReleaseGroupService, ReleaseGroupService>();
             services.AddSingleton<IMusicBrainzArtistService, MusicBrainzArtistService>();
