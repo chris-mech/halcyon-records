@@ -3,6 +3,8 @@ using HalcyonRecords.SeedDataGenerator.ViewModels;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
+using Microsoft.UI.Xaml.Input;
+using Windows.System;
 
 namespace HalcyonRecords.SeedDataGenerator.Views;
 
@@ -31,6 +33,24 @@ public sealed partial class ArtistAddPage : Page
         if (ViewModel.Plan is not null && e.NewSize.Height > 0)
         {
             PreviewPanel.StartBringIntoView();
+        }
+    }
+
+    private void OnMbidInputKeyDown(object sender, KeyRoutedEventArgs e)
+    {
+        if (e.Key == VirtualKey.Enter)
+        {
+            ViewModel.LookUpMbidCommand.Execute(null);
+            e.Handled = true;
+        }
+    }
+
+    private void OnSearchNameKeyDown(object sender, KeyRoutedEventArgs e)
+    {
+        if (e.Key == VirtualKey.Enter)
+        {
+            ViewModel.SearchCommand.Execute(null);
+            e.Handled = true;
         }
     }
 }

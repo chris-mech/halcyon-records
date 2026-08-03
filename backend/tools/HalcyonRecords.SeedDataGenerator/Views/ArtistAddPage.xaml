@@ -17,8 +17,9 @@
       <StackPanel Orientation="Horizontal" Spacing="8">
         <TextBox
           Width="360"
-          Text="{x:Bind ViewModel.MbidInput, Mode=TwoWay}"
+          Text="{x:Bind ViewModel.MbidInput, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
           PlaceholderText="MusicBrainz artist ID"
+          KeyDown="OnMbidInputKeyDown"
         />
         <Button Content="Look Up" Command="{x:Bind ViewModel.LookUpMbidCommand}" />
       </StackPanel>
@@ -27,8 +28,9 @@
       <StackPanel Orientation="Horizontal" Spacing="8">
         <TextBox
           Width="360"
-          Text="{x:Bind ViewModel.SearchName, Mode=TwoWay}"
+          Text="{x:Bind ViewModel.SearchName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
           PlaceholderText="Artist name"
+          KeyDown="OnSearchNameKeyDown"
         />
         <Button Content="Search" Command="{x:Bind ViewModel.SearchCommand}" />
       </StackPanel>
@@ -69,10 +71,25 @@
         Visibility="{x:Bind local:BindingHelpers.ToVisibility(ViewModel.Plan), Mode=OneWay}"
       >
         <TextBlock Text="Preview" FontWeight="SemiBold" />
-        <TextBlock Text="{x:Bind ViewModel.Plan.Name, Mode=OneWay}" FontSize="18" />
-        <TextBlock Text="{x:Bind ViewModel.Plan.Origin, Mode=OneWay}" />
-        <TextBlock Text="{x:Bind local:BindingHelpers.FormatYear(ViewModel.Plan.ActiveSince), Mode=OneWay}" />
-        <TextBlock Text="{x:Bind ViewModel.Plan.Bio, Mode=OneWay}" TextWrapping="Wrap" />
+        <TextBlock Text="{x:Bind ViewModel.PlanName, Mode=OneWay}" FontSize="18" />
+
+        <StackPanel Orientation="Horizontal" Spacing="8">
+          <TextBlock Text="Type:" FontWeight="SemiBold" />
+          <TextBlock Text="{x:Bind ViewModel.PlanType, Mode=OneWay}" />
+        </StackPanel>
+
+        <StackPanel Orientation="Horizontal" Spacing="8">
+          <TextBlock Text="Origin:" FontWeight="SemiBold" />
+          <TextBlock Text="{x:Bind ViewModel.PlanOrigin, Mode=OneWay}" />
+        </StackPanel>
+
+        <StackPanel Orientation="Horizontal" Spacing="8">
+          <TextBlock Text="Since:" FontWeight="SemiBold" />
+          <TextBlock Text="{x:Bind ViewModel.PlanSinceYear, Mode=OneWay}" />
+        </StackPanel>
+
+        <TextBlock Text="Bio" FontWeight="SemiBold" />
+        <TextBlock Text="{x:Bind ViewModel.PlanBio, Mode=OneWay}" TextWrapping="Wrap" />
         <Button Content="Add Artist" Command="{x:Bind ViewModel.CommitCommand}" />
       </StackPanel>
     </StackPanel>

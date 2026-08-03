@@ -28,6 +28,20 @@ public sealed partial class ArtistAddViewModel(
     [ObservableProperty]
     public partial AddArtistPlan? Plan { get; set; }
 
+    [ObservableProperty]
+    public partial string PlanName { get; set; } = string.Empty;
+
+    [ObservableProperty]
+    public partial string PlanType { get; set; } = string.Empty;
+
+    [ObservableProperty]
+    public partial string PlanOrigin { get; set; } = string.Empty;
+
+    [ObservableProperty]
+    public partial string PlanSinceYear { get; set; } = string.Empty;
+
+    [ObservableProperty]
+    public partial string PlanBio { get; set; } = string.Empty;
     public ObservableCollection<MusicBrainzArtistSearchResult> SearchResults { get; } = [];
 
     [RelayCommand]
@@ -95,7 +109,6 @@ public sealed partial class ArtistAddViewModel(
     {
         IsBusy = true;
         ErrorMessage = null;
-        Plan = null;
 
         var result = await session.PreviewAddArtistAsync(artistId);
 
@@ -104,9 +117,25 @@ public sealed partial class ArtistAddViewModel(
         if (result.IsError)
         {
             ErrorMessage = string.Join("; ", result.Errors.Select(e => e.Description));
+            ClearPlan();
             return;
         }
 
         Plan = result.Value;
+        PlanName = Plan.Name;
+        PlanType = BindingHelpers.FormatArtistType(Plan.Type);
+        PlanOrigin = BindingHelpers.OrPlaceholder(Plan.Origin, "Unknown");
+        PlanSinceYear = BindingHelpers.FormatYear(Plan.SinceYear);
+        PlanBio = BindingHelpers.OrPlaceholder(Plan.Bio, "No bio available.");
+    }
+
+    private void ClearPlan()
+    {
+        Plan = null;
+        PlanName = string.Empty;
+        PlanType = string.Empty;
+        PlanOrigin = string.Empty;
+        PlanSinceYear = string.Empty;
+        PlanBio = string.Empty;
     }
 }
