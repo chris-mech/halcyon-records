@@ -5,6 +5,33 @@
   Title="Halcyon Records — Seed Data Generator"
 >
   <Grid x:Name="RootGrid">
-    <Frame x:Name="ContentFrame" />
+    <Grid.RowDefinitions>
+      <RowDefinition Height="Auto" />
+      <RowDefinition Height="*" />
+    </Grid.RowDefinitions>
+
+    <StackPanel
+      Grid.Row="0"
+      Orientation="Horizontal"
+      Spacing="8"
+      Padding="12"
+      HorizontalAlignment="Right"
+    >
+      <ProgressRing
+        x:Name="SaveProgressRing"
+        IsActive="False"
+        Visibility="Collapsed"
+        Width="20"
+        Height="20"
+      />
+      <Button
+        x:Name="SaveAndExitButton"
+        Content="Save and Exit"
+        IsEnabled="False"
+        Click="OnSaveAndExitClick"
+      />
+    </StackPanel>
+
+    <Frame x:Name="ContentFrame" Grid.Row="1" />
   </Grid>
 </Window>

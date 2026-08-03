@@ -34,6 +34,7 @@ public sealed partial class MainWindow : Window
             await session.LoadAsync(mode);
 
             ContentFrame.Navigate(typeof(ArtistListPage));
+            SaveAndExitButton.IsEnabled = true;
         }
         catch (Exception ex)
         {
@@ -61,5 +62,34 @@ public sealed partial class MainWindow : Window
 
         var result = await dialog.ShowAsync();
         return result == ContentDialogResult.Primary ? SeedMode.Merge : SeedMode.Overwrite;
+    }
+
+    private async void OnSaveAndExitClick(object sender, RoutedEventArgs e)
+    {
+        SaveAndExitButton.IsEnabled = false;
+        SaveProgressRing.IsActive = true;
+        SaveProgressRing.Visibility = Visibility.Visible;
+
+        try
+        {
+            var session = App.Current.Services.GetRequiredService<SeedDataSession>();
+            await session.SaveAsync();
+            Application.Current.Exit();
+        }
+        catch (Exception ex)
+        {
+            SaveProgressRing.IsActive = false;
+            SaveProgressRing.Visibility = Visibility.Collapsed;
+            SaveAndExitButton.IsEnabled = true;
+
+            var dialog = new ContentDialog
+            {
+                XamlRoot = Content.XamlRoot,
+                Title = "Save failed",
+                Content = ex.Message,
+                CloseButtonText = "OK",
+            };
+            await dialog.ShowAsync();
+        }
     }
 }
