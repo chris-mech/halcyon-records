@@ -17,7 +17,8 @@ public sealed record MusicBrainzArtistFields(
     ArtistMbid SourceId,
     string Name,
     string? Origin,
-    int? ActiveSince,
+    ArtistType? Type,
+    int? SinceYear,
     DiscogsArtistId? DiscogsArtistId,
     WikidataQid? WikidataQid
 );
@@ -46,13 +47,22 @@ public sealed class MusicBrainzArtistService(MusicBrainzClient musicBrainzClient
             return DomainErrors.Artist.MissingName();
         }
 
-        var activeSince = int.TryParse(raw.LifeSpan?.Begin, out var year) ? year : (int?)null;
+        var sinceYear =
+            raw.LifeSpan?.Begin is { Length: >= 4 } begin
+            && int.TryParse(begin.AsSpan(0, 4), out var year)
+                ? year
+                : (int?)null;
+
+        var type = Enum.TryParse<ArtistType>(raw.Type, ignoreCase: true, out var parsedType)
+            ? parsedType
+            : (ArtistType?)null;
 
         return new MusicBrainzArtistFields(
             SourceId: new ArtistMbid(raw.Id.Value),
             Name: raw.Name,
             Origin: raw.Area?.Name,
-            ActiveSince: activeSince,
+            Type: type,
+            SinceYear: sinceYear,
             DiscogsArtistId: MusicBrainzRelations.ExtractId(raw.Relations, "discogs")
                 is { } discogsId
                 ? new DiscogsArtistId(discogsId)

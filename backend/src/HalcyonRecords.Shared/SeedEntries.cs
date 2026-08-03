@@ -6,13 +6,24 @@ public enum SeedSource
     Generated,
 }
 
+public enum ArtistType
+{
+    Person,
+    Group,
+    Orchestra,
+    Choir,
+    Character,
+    Other,
+}
+
 public sealed record ArtistSeedEntry(
     string Name,
     ArtistMbid SourceId,
     SeedSource Source,
     string? Bio,
     string? Origin,
-    int? ActiveSince,
+    ArtistType? Type,
+    int? SinceYear,
     string? ImageUrl
 );
 

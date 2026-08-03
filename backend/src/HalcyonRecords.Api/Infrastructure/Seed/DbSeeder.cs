@@ -39,7 +39,8 @@ public static class DbSeeder
                 Name = entry.Name,
                 Bio = entry.Bio,
                 Origin = entry.Origin,
-                ActiveSince = entry.ActiveSince,
+                Type = entry.Type,
+                SinceYear = entry.SinceYear,
                 ImageUrl = entry.ImageUrl,
             }
         );

@@ -116,9 +116,6 @@ namespace HalcyonRecords.Api.Infrastructure.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int?>("ActiveSince")
-                        .HasColumnType("int");
-
                     b.Property<string>("Bio")
                         .HasColumnType("nvarchar(max)");
 
@@ -134,6 +131,13 @@ namespace HalcyonRecords.Api.Infrastructure.Migrations
                     b.Property<string>("Origin")
                         .HasMaxLength(200)
                         .HasColumnType("nvarchar(200)");
+
+                    b.Property<int?>("SinceYear")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Type")
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
 
                     b.HasKey("Id");
 

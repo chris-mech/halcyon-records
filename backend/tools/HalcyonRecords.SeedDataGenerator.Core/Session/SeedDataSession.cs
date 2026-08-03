@@ -12,7 +12,8 @@ public sealed record AddArtistPlan(
     ArtistMbid SourceId,
     string Name,
     string? Origin,
-    int? ActiveSince,
+    ArtistType? Type,
+    int? SinceYear,
     string? Bio,
     string? ImageUrl
 );
@@ -146,7 +147,8 @@ public sealed class SeedDataSession(
             Source: SeedSource.MusicBrainz,
             Bio: plan.Bio,
             Origin: plan.Origin,
-            ActiveSince: plan.ActiveSince,
+            Type: plan.Type,
+            SinceYear: plan.SinceYear,
             ImageUrl: plan.ImageUrl
         );
 
@@ -187,7 +189,8 @@ public sealed class SeedDataSession(
         ArtistMbid artistId,
         string name,
         string? origin,
-        int? activeSince,
+        ArtistType? type,
+        int? sinceYear,
         string? bio,
         string? imageUrl
     )
@@ -203,7 +206,8 @@ public sealed class SeedDataSession(
         {
             Name = name,
             Origin = origin,
-            ActiveSince = activeSince,
+            Type = type,
+            SinceYear = sinceYear,
             Bio = bio,
             ImageUrl = imageUrl,
         };
@@ -407,7 +411,8 @@ public sealed class SeedDataSession(
             SourceId: fields.SourceId,
             Name: fields.Name,
             Origin: fields.Origin,
-            ActiveSince: fields.ActiveSince,
+            Type: fields.Type,
+            SinceYear: fields.SinceYear,
             Bio: bio,
             ImageUrl: discogsFields.ImageUrl
         );

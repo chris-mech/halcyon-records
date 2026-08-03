@@ -22,6 +22,7 @@ public sealed record MusicBrainzReleaseGroupRef(Guid? Id);
 public sealed record MusicBrainzArtist(
     Guid? Id,
     string? Name,
+    string? Type,
     MusicBrainzLifeSpan? LifeSpan,
     MusicBrainzArea? Area,
     IReadOnlyList<MusicBrainzRelation>? Relations
