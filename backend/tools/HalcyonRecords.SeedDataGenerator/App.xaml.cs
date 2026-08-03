@@ -51,6 +51,7 @@ public partial class App : Application
         services.AddSingleton<NavigationService>();
         services.AddTransient<ArtistListViewModel>();
         services.AddTransient<ArtistAddViewModel>();
+        services.AddTransient<ArtistDetailViewModel>();
 
         return services.BuildServiceProvider();
     }

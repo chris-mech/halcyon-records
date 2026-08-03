@@ -1,0 +1,9 @@
+<Page
+  x:Class="HalcyonRecords.SeedDataGenerator.Views.ArtistEditPage"
+  xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+>
+  <Grid>
+    <TextBlock x:Name="DetailText" HorizontalAlignment="Center" VerticalAlignment="Center" />
+  </Grid>
+</Page>

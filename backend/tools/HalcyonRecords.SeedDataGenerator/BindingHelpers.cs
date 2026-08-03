@@ -1,4 +1,5 @@
-﻿using Microsoft.UI.Xaml;
+﻿using HalcyonRecords.Shared;
+using Microsoft.UI.Xaml;
 
 namespace HalcyonRecords.SeedDataGenerator;
 
@@ -14,4 +15,9 @@ public static class BindingHelpers
         count > 0 ? Visibility.Visible : Visibility.Collapsed;
 
     public static string FormatYear(int? year) => year?.ToString() ?? "Unknown";
+
+    public static string OrPlaceholder(string? value, string placeholder) =>
+        string.IsNullOrWhiteSpace(value) ? placeholder : value;
+
+    public static string FormatArtistType(ArtistType? type) => type?.ToString() ?? "Unknown";
 }
