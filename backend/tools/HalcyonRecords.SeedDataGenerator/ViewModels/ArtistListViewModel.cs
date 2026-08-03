@@ -13,7 +13,8 @@ public sealed partial class ArtistListViewModel(
     NavigationService navigationService
 ) : ObservableObject
 {
-    public ObservableCollection<ArtistSeedEntry> Artists { get; } = new(session.Artists);
+    public ObservableCollection<ArtistSeedEntry> Artists { get; } =
+        new(session.Artists.OrderBy(a => a.Name, StringComparer.CurrentCultureIgnoreCase));
 
     [RelayCommand]
     private void AddArtist() => navigationService.Navigate(typeof(ArtistAddPage));
