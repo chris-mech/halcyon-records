@@ -20,10 +20,11 @@ public sealed partial class ArtistDetailViewModel(
 
     public void Initialize(ArtistSeedEntry artist)
     {
-        Artist = artist;
+        var current = session.Artists.FirstOrDefault(a => a.SourceId == artist.SourceId) ?? artist;
+        Artist = current;
 
         Albums.Clear();
-        foreach (var album in session.GetAlbumsReferencing(artist.SourceId))
+        foreach (var album in session.GetAlbumsReferencing(current.SourceId))
         {
             Albums.Add(album);
         }
