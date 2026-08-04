@@ -16,6 +16,8 @@ public static class BindingHelpers
 
     public static string FormatYear(int? year) => year?.ToString() ?? "Unknown";
 
+    public static string FormatYear(DateOnly? date) => date?.Year.ToString() ?? "Unknown";
+
     public static string OrPlaceholder(string? value, string placeholder) =>
         string.IsNullOrWhiteSpace(value) ? placeholder : value;
 

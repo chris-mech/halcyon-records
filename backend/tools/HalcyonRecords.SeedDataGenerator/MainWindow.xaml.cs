@@ -34,6 +34,8 @@ public sealed partial class MainWindow : Window
             await session.LoadAsync(mode);
 
             ContentFrame.Navigate(typeof(ArtistListPage));
+            ArtistsButton.IsEnabled = true;
+            AlbumsButton.IsEnabled = true;
             SaveAndExitButton.IsEnabled = true;
         }
         catch (Exception ex)
@@ -92,4 +94,14 @@ public sealed partial class MainWindow : Window
             await dialog.ShowAsync();
         }
     }
+
+    private void OnArtistsClick(object sender, RoutedEventArgs e) =>
+        App
+            .Current.Services.GetRequiredService<NavigationService>()
+            .NavigateHome(typeof(ArtistListPage));
+
+    private void OnAlbumsClick(object sender, RoutedEventArgs e) =>
+        App
+            .Current.Services.GetRequiredService<NavigationService>()
+            .NavigateHome(typeof(AlbumListPage));
 }

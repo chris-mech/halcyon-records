@@ -29,4 +29,17 @@ public sealed class NavigationService
             _frame.GoBack();
         }
     }
+
+    public void NavigateHome(Type pageType)
+    {
+        if (_frame is null)
+        {
+            throw new InvalidOperationException(
+                "NavigationService was never initialized with a Frame."
+            );
+        }
+
+        _frame.Navigate(pageType);
+        _frame.BackStack.Clear();
+    }
 }
