@@ -33,4 +33,9 @@ public static class BindingHelpers
         credits is { Count: > 0 }
             ? string.Join(", ", credits.Select(c => c.Name ?? c.Artist?.Name ?? "Unknown"))
             : "Unknown";
+
+    public static string FormatPrice(int pence) => $"£{pence / 100m:0.00}";
+
+    public static string FormatPrice(int? pence) =>
+        pence is { } value ? FormatPrice(value) : string.Empty;
 }
