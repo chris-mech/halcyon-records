@@ -128,6 +128,10 @@
               <StackPanel Orientation="Horizontal" Spacing="12">
                 <TextBlock Text="{x:Bind Title}" FontWeight="SemiBold" />
                 <TextBlock Text="{x:Bind local:BindingHelpers.FormatList(Genre)}" Opacity="0.7" />
+                <TextBlock
+                  Text="{x:Bind local:BindingHelpers.FormatCommunity(Community)}"
+                  Opacity="0.7"
+                />
               </StackPanel>
             </DataTemplate>
           </ListView.ItemTemplate>

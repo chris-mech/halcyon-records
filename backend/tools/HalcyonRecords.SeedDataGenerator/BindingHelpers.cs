@@ -1,4 +1,5 @@
-﻿using HalcyonRecords.SeedDataGenerator.Core.MusicBrainz;
+﻿using HalcyonRecords.SeedDataGenerator.Core.Discogs;
+using HalcyonRecords.SeedDataGenerator.Core.MusicBrainz;
 using HalcyonRecords.Shared;
 using Microsoft.UI.Xaml;
 
@@ -38,4 +39,13 @@ public static class BindingHelpers
 
     public static string FormatPrice(int? pence) =>
         pence is { } value ? FormatPrice(value) : string.Empty;
+
+    public static string FormatCommunity(DiscogsCommunity? community) =>
+        community switch
+        {
+            { Have: { } have, Want: { } want } => $"Have {have}, Want {want}",
+            { Have: { } have } => $"Have {have}",
+            { Want: { } want } => $"Want {want}",
+            _ => string.Empty,
+        };
 }
