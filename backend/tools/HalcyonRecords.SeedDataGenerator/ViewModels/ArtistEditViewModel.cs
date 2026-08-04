@@ -101,13 +101,15 @@ public sealed partial class ArtistEditViewModel(
             TypeSelection == "Unknown" ? (ArtistType?)null : Enum.Parse<ArtistType>(TypeSelection);
 
         session.UpdateArtist(
-            artistId: _artistId,
-            name: Name,
-            origin: Origin,
-            type: type,
-            sinceYear: sinceYear,
-            bio: Bio,
-            imageUrl: ImageUrl
+            new AddArtistPlan(
+                SourceId: _artistId,
+                Name: Name,
+                Origin: Origin,
+                Type: type,
+                SinceYear: sinceYear,
+                Bio: Bio,
+                ImageUrl: ImageUrl
+            )
         );
         navigationService.GoBack();
     }

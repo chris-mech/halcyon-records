@@ -185,34 +185,26 @@ public sealed class SeedDataSession(
         CancellationToken cancellationToken = default
     ) => LoadArtistPlanAsync(artistId, cancellationToken);
 
-    public ArtistSeedEntry UpdateArtist(
-        ArtistMbid artistId,
-        string name,
-        string? origin,
-        ArtistType? type,
-        int? sinceYear,
-        string? bio,
-        string? imageUrl
-    )
+    public ArtistSeedEntry UpdateArtist(AddArtistPlan plan)
     {
-        if (!_artistsBySourceId.ContainsKey(artistId))
+        if (!_artistsBySourceId.ContainsKey(plan.SourceId))
         {
             throw new InvalidOperationException(
-                $"Cannot update artist '{artistId}' — no such artist in the session."
+                $"Cannot update artist '{plan.SourceId}' — no such artist in the session."
             );
         }
 
-        var updated = _artistsBySourceId[artistId] with
+        var updated = _artistsBySourceId[plan.SourceId] with
         {
-            Name = name,
-            Origin = origin,
-            Type = type,
-            SinceYear = sinceYear,
-            Bio = bio,
-            ImageUrl = imageUrl,
+            Name = plan.Name,
+            Origin = plan.Origin,
+            Type = plan.Type,
+            SinceYear = plan.SinceYear,
+            Bio = plan.Bio,
+            ImageUrl = plan.ImageUrl,
         };
 
-        _artistsBySourceId[artistId] = updated;
+        _artistsBySourceId[plan.SourceId] = updated;
         return updated;
     }
 
