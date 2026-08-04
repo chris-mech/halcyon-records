@@ -56,6 +56,7 @@ public partial class App : Application
         services.AddTransient<AlbumListViewModel>();
         services.AddTransient<AlbumAddViewModel>();
         services.AddTransient<AlbumDetailViewModel>();
+        services.AddTransient<AlbumEditViewModel>();
 
         return services.BuildServiceProvider();
     }

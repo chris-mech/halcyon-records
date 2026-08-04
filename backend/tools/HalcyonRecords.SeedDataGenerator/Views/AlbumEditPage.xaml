@@ -2,8 +2,91 @@
   x:Class="HalcyonRecords.SeedDataGenerator.Views.AlbumEditPage"
   xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+  xmlns:local="using:HalcyonRecords.SeedDataGenerator"
 >
-  <Grid>
-    <TextBlock Text="Edit Album — coming soon" Margin="24" />
-  </Grid>
+  <ScrollViewer Padding="24">
+    <StackPanel Spacing="16" MaxWidth="600" HorizontalAlignment="Left">
+      <Button
+        Content="Cancel"
+        Command="{x:Bind ViewModel.CancelCommand}"
+        HorizontalAlignment="Left"
+      />
+
+      <TextBlock Text="Title" FontWeight="SemiBold" />
+      <TextBox Text="{x:Bind ViewModel.Title, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+
+      <TextBlock Text="Release date" FontWeight="SemiBold" />
+      <StackPanel Orientation="Horizontal" Spacing="8">
+        <CalendarDatePicker
+          Date="{x:Bind ViewModel.ReleaseDate, Mode=TwoWay}"
+          PlaceholderText="No release date"
+        />
+        <Button Content="Clear" Command="{x:Bind ViewModel.ClearReleaseDateCommand}" />
+      </StackPanel>
+
+      <TextBlock Text="Label" FontWeight="SemiBold" />
+      <TextBox Text="{x:Bind ViewModel.Label, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+
+      <TextBlock Text="Description" FontWeight="SemiBold" />
+      <TextBox
+        Text="{x:Bind ViewModel.Description, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+        TextWrapping="Wrap"
+        AcceptsReturn="True"
+        Height="120"
+      />
+
+      <TextBlock Text="Image URL" FontWeight="SemiBold" />
+      <TextBox Text="{x:Bind ViewModel.ImageUrl, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+
+      <TextBlock Text="Stock and pricing" FontWeight="SemiBold" />
+      <StackPanel Orientation="Horizontal" Spacing="8">
+        <TextBox
+          Width="100"
+          MaxLength="6"
+          Text="{x:Bind ViewModel.UnitsInStockInput, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+          BeforeTextChanging="OnUnitsInStockBeforeTextChanging"
+          Header="Units in stock"
+        />
+        <TextBox
+          Width="100"
+          MaxLength="8"
+          Text="{x:Bind ViewModel.PriceInput, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+          BeforeTextChanging="OnPriceBeforeTextChanging"
+          Header="Price (£)"
+        />
+        <TextBox
+          Width="100"
+          MaxLength="8"
+          Text="{x:Bind ViewModel.OriginalPriceInput, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+          BeforeTextChanging="OnPriceBeforeTextChanging"
+          Header="Was (£, optional)"
+        />
+      </StackPanel>
+      <StackPanel Orientation="Horizontal" Spacing="16">
+        <CheckBox Content="New" IsChecked="{x:Bind ViewModel.IsNew, Mode=TwoWay}" />
+        <CheckBox Content="Staff Pick" IsChecked="{x:Bind ViewModel.IsStaffPick, Mode=TwoWay}" />
+      </StackPanel>
+
+      <Button
+        Content="Refresh from online sources"
+        Command="{x:Bind ViewModel.RefreshCommand}"
+        HorizontalAlignment="Left"
+      />
+
+      <TextBlock
+        Text="{x:Bind ViewModel.ErrorMessage, Mode=OneWay}"
+        Foreground="Red"
+        TextWrapping="Wrap"
+        Visibility="{x:Bind local:BindingHelpers.ToVisibility(ViewModel.ErrorMessage), Mode=OneWay}"
+      />
+
+      <ProgressRing
+        IsActive="{x:Bind ViewModel.IsBusy, Mode=OneWay}"
+        Visibility="{x:Bind local:BindingHelpers.ToVisibility(ViewModel.IsBusy), Mode=OneWay}"
+        HorizontalAlignment="Left"
+      />
+
+      <Button Content="Save" Command="{x:Bind ViewModel.SaveCommand}" HorizontalAlignment="Left" />
+    </StackPanel>
+  </ScrollViewer>
 </Page>
