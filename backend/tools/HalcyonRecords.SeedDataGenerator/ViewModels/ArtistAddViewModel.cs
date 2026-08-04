@@ -49,6 +49,7 @@ public sealed partial class ArtistAddViewModel(
     {
         if (string.IsNullOrWhiteSpace(SearchName))
         {
+            ErrorMessage = "Enter an artist name to search.";
             return;
         }
 
@@ -84,6 +85,7 @@ public sealed partial class ArtistAddViewModel(
         if (!Guid.TryParse(MbidInput, out var id))
         {
             ErrorMessage = "That doesn't look like a valid MusicBrainz ID.";
+            ClearPlan();
             return;
         }
 
