@@ -32,6 +32,14 @@ public sealed record AddAlbumPlan(
     IReadOnlyList<AddArtistPlan> MissingArtistPlans
 );
 
+public sealed record AlbumCommerceDetails(
+    int UnitsInStock,
+    int PriceInPence,
+    int? OriginalPriceInPence,
+    bool IsNew,
+    bool IsStaffPick
+);
+
 public enum SeedMode
 {
     Merge,
@@ -237,7 +245,7 @@ public sealed class SeedDataSession(
         };
     }
 
-    public AlbumSeedEntry CommitAddAlbum(AddAlbumPlan plan)
+    public AlbumSeedEntry CommitAddAlbum(AddAlbumPlan plan, AlbumCommerceDetails commerce)
     {
         List<GenreSlug> genreSlugs = [];
         foreach (var genre in plan.ResolvedGenres)
@@ -272,19 +280,69 @@ public sealed class SeedDataSession(
             Description: plan.Description,
             ReleaseDate: plan.ReleaseDate,
             Label: plan.Label,
-            IsNew: false,
-            IsStaffPick: false,
+            IsNew: commerce.IsNew,
+            IsStaffPick: commerce.IsStaffPick,
             ImageUrl: plan.CoverImageUrl?.ToString(),
             ArtistSourceIds: artistSourceIds,
             GenreSlugs: genreSlugs,
-            UnitsInStock: 0,
-            PriceInPence: 0,
-            OriginalPriceInPence: null
+            UnitsInStock: commerce.UnitsInStock,
+            PriceInPence: commerce.PriceInPence,
+            OriginalPriceInPence: commerce.OriginalPriceInPence
         );
 
         _albumsBySourceId[entry.SourceId] = entry;
         return entry;
     }
+
+    public AlbumSeedEntry UpdateAlbum(
+        ReleaseMbid sourceId,
+        string title,
+        DateOnly? releaseDate,
+        string? label,
+        string? description,
+        string? imageUrl,
+        AlbumCommerceDetails commerce
+    )
+    {
+        if (!_albumsBySourceId.ContainsKey(sourceId))
+        {
+            throw new InvalidOperationException(
+                $"Cannot update album '{sourceId}' — no such album in the session."
+            );
+        }
+
+        var updated = _albumsBySourceId[sourceId] with
+        {
+            Title = title,
+            ReleaseDate = releaseDate,
+            Label = label,
+            Description = description,
+            ImageUrl = imageUrl,
+            UnitsInStock = commerce.UnitsInStock,
+            PriceInPence = commerce.PriceInPence,
+            OriginalPriceInPence = commerce.OriginalPriceInPence,
+            IsNew = commerce.IsNew,
+            IsStaffPick = commerce.IsStaffPick,
+        };
+
+        _albumsBySourceId[sourceId] = updated;
+        return updated;
+    }
+
+    public void DeleteAlbum(ReleaseMbid sourceId)
+    {
+        if (!_albumsBySourceId.Remove(sourceId))
+        {
+            throw new InvalidOperationException(
+                $"Cannot delete album '{sourceId}' — no such album in the session."
+            );
+        }
+    }
+
+    public Task<ErrorOr<AddAlbumPlan>> RefreshAlbumAsync(
+        ReleaseMbid sourceId,
+        CancellationToken cancellationToken = default
+    ) => LoadAlbumPlanAsync(sourceId, cancellationToken);
 
     private async Task<ErrorOr<AddAlbumPlan>> LoadAlbumPlanAsync(
         ReleaseMbid releaseMbid,
