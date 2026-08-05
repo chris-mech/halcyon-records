@@ -16,6 +16,25 @@ public sealed record ResolvedGenre(string Name, GenreSlug Slug);
 
 public sealed class GenreService(DiscogsClient discogsClient) : IGenreService
 {
+    public static readonly IReadOnlyList<string> KnownGenreNames =
+    [
+        "Blues",
+        "Brass & Military",
+        "Children's",
+        "Classical",
+        "Electronic",
+        "Folk, World, & Country",
+        "Funk / Soul",
+        "Hip-Hop",
+        "Jazz",
+        "Latin",
+        "Non-Music",
+        "Pop",
+        "Reggae",
+        "Rock",
+        "Stage & Screen",
+    ];
+
     public async Task<IReadOnlyList<ResolvedGenre>> ResolveAsync(
         DiscogsMasterId masterId,
         CancellationToken cancellationToken = default

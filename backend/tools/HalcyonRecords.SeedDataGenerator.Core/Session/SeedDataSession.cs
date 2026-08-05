@@ -167,6 +167,9 @@ public sealed class SeedDataSession(
     public IReadOnlyList<AlbumSeedEntry> GetAlbumsReferencing(ArtistMbid artistId) =>
         _albumsBySourceId.Values.Where(album => album.ArtistSourceIds.Contains(artistId)).ToList();
 
+    public IReadOnlyList<AlbumSeedEntry> GetAlbumsReferencing(GenreSlug genreSlug) =>
+        _albumsBySourceId.Values.Where(album => album.GenreSlugs.Contains(genreSlug)).ToList();
+
     public IReadOnlyList<AlbumSeedEntry> DeleteArtist(ArtistMbid artistId)
     {
         if (!_artistsBySourceId.ContainsKey(artistId))
@@ -343,6 +346,68 @@ public sealed class SeedDataSession(
         ReleaseMbid sourceId,
         CancellationToken cancellationToken = default
     ) => LoadAlbumPlanAsync(sourceId, cancellationToken);
+
+    public IReadOnlyList<string> GetAvailableGenreNames() =>
+        GenreService.KnownGenreNames.Except(_genresBySlug.Values.Select(g => g.Name)).ToList();
+
+    public GenreSeedEntry AddGenre(string name)
+    {
+        if (!GenreService.KnownGenreNames.Contains(name))
+        {
+            throw new InvalidOperationException(
+                $"Cannot add genre '{name}' — not part of the known Discogs taxonomy."
+            );
+        }
+
+        var slug = new GenreSlug(Slugifier.Slugify(name));
+
+        if (!_genresBySlug.TryAdd(slug, new GenreSeedEntry(name, slug)))
+        {
+            throw new InvalidOperationException(
+                $"Cannot add genre '{name}' — already present in the session."
+            );
+        }
+
+        return _genresBySlug[slug];
+    }
+
+    public GenreSeedEntry UpdateGenreDescription(GenreSlug slug, string? description)
+    {
+        if (!_genresBySlug.ContainsKey(slug))
+        {
+            throw new InvalidOperationException(
+                $"Cannot update genre '{slug}' — no such genre in the session."
+            );
+        }
+
+        var updated = _genresBySlug[slug] with { Description = description };
+        _genresBySlug[slug] = updated;
+        return updated;
+    }
+
+    public IReadOnlyList<AlbumSeedEntry> DeleteGenre(GenreSlug slug)
+    {
+        if (!_genresBySlug.ContainsKey(slug))
+        {
+            throw new InvalidOperationException(
+                $"Cannot delete genre '{slug}' — no such genre in the session."
+            );
+        }
+
+        var affectedAlbums = GetAlbumsReferencing(slug);
+
+        foreach (var album in affectedAlbums)
+        {
+            _albumsBySourceId[album.SourceId] = album with
+            {
+                GenreSlugs = album.GenreSlugs.Where(genreSlug => genreSlug != slug).ToList(),
+            };
+        }
+
+        _genresBySlug.Remove(slug);
+
+        return affectedAlbums;
+    }
 
     private async Task<ErrorOr<AddAlbumPlan>> LoadAlbumPlanAsync(
         ReleaseMbid releaseMbid,
