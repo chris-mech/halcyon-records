@@ -1,4 +1,5 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
+﻿using System.Collections.ObjectModel;
+using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using HalcyonRecords.SeedDataGenerator.Core.Session;
 using HalcyonRecords.SeedDataGenerator.Navigation;
@@ -12,6 +13,7 @@ public sealed partial class AlbumEditViewModel(
 ) : ObservableObject
 {
     private ReleaseMbid _albumId;
+    private IReadOnlyList<ArtistMbid> _originalArtistSourceIds = [];
 
     [ObservableProperty]
     public partial string Title { get; set; } = string.Empty;
@@ -49,9 +51,12 @@ public sealed partial class AlbumEditViewModel(
     [ObservableProperty]
     public partial bool IsBusy { get; set; }
 
+    public ObservableCollection<SelectableGenre> GenreOptions { get; } = [];
+
     public void Initialize(AlbumSeedEntry album)
     {
         _albumId = album.SourceId;
+        _originalArtistSourceIds = album.ArtistSourceIds;
         PopulateOnlineFields(
             album.Title,
             album.ReleaseDate,
@@ -67,6 +72,19 @@ public sealed partial class AlbumEditViewModel(
             : null;
         IsNew = album.IsNew;
         IsStaffPick = album.IsStaffPick;
+
+        GenreOptions.Clear();
+        foreach (
+            var genre in session.Genres.OrderBy(
+                g => g.Name,
+                StringComparer.CurrentCultureIgnoreCase
+            )
+        )
+        {
+            GenreOptions.Add(
+                new SelectableGenre(genre.Slug, genre.Name, album.GenreSlugs.Contains(genre.Slug))
+            );
+        }
     }
 
     [RelayCommand]
@@ -133,6 +151,10 @@ public sealed partial class AlbumEditViewModel(
             Label,
             Description,
             ImageUrl,
+            new AlbumLinks(
+                ArtistSourceIds: _originalArtistSourceIds,
+                GenreSlugs: GenreOptions.Where(g => g.IsSelected).Select(g => g.Slug).ToList()
+            ),
             new AlbumCommerceDetails(
                 UnitsInStock: unitsInStock,
                 PriceInPence: priceInPence,

@@ -40,6 +40,11 @@ public sealed record AlbumCommerceDetails(
     bool IsStaffPick
 );
 
+public sealed record AlbumLinks(
+    IReadOnlyList<ArtistMbid> ArtistSourceIds,
+    IReadOnlyList<GenreSlug> GenreSlugs
+);
+
 public enum SeedMode
 {
     Merge,
@@ -304,6 +309,7 @@ public sealed class SeedDataSession(
         string? label,
         string? description,
         string? imageUrl,
+        AlbumLinks links,
         AlbumCommerceDetails commerce
     )
     {
@@ -321,6 +327,8 @@ public sealed class SeedDataSession(
             Label = label,
             Description = description,
             ImageUrl = imageUrl,
+            ArtistSourceIds = links.ArtistSourceIds,
+            GenreSlugs = links.GenreSlugs,
             UnitsInStock = commerce.UnitsInStock,
             PriceInPence = commerce.PriceInPence,
             OriginalPriceInPence = commerce.OriginalPriceInPence,
