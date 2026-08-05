@@ -1,6 +1,7 @@
 ﻿using HalcyonRecords.SeedDataGenerator.ViewModels;
 using HalcyonRecords.Shared;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Navigation;
 
@@ -23,6 +24,21 @@ public sealed partial class AlbumEditPage : Page
         if (e.Parameter is AlbumSeedEntry album)
         {
             ViewModel.Initialize(album);
+        }
+    }
+
+    private async void OnAddNewArtistClick(object sender, RoutedEventArgs e)
+    {
+        var dialog = new AddArtistDialog { XamlRoot = XamlRoot };
+        var result = await dialog.ShowAsync();
+
+        if (result == ContentDialogResult.Primary)
+        {
+            var entry = dialog.ViewModel.Commit();
+            if (entry is not null)
+            {
+                ViewModel.AddArtistOption(entry);
+            }
         }
     }
 

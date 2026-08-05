@@ -39,6 +39,16 @@
       <TextBlock Text="Image URL" FontWeight="SemiBold" />
       <TextBox Text="{x:Bind ViewModel.ImageUrl, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
 
+      <TextBlock Text="Artists" FontWeight="SemiBold" />
+      <ItemsControl ItemsSource="{x:Bind ViewModel.ArtistOptions}">
+        <ItemsControl.ItemTemplate>
+          <DataTemplate x:DataType="vm:SelectableArtist">
+            <CheckBox Content="{x:Bind Name}" IsChecked="{x:Bind IsSelected, Mode=TwoWay}" />
+          </DataTemplate>
+        </ItemsControl.ItemTemplate>
+      </ItemsControl>
+      <Button Content="Add New Artist" Click="OnAddNewArtistClick" HorizontalAlignment="Left" />
+
       <TextBlock Text="Genres" FontWeight="SemiBold" />
       <ItemsControl ItemsSource="{x:Bind ViewModel.GenreOptions}">
         <ItemsControl.ItemTemplate>

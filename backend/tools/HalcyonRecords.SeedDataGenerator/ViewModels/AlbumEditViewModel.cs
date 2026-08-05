@@ -13,7 +13,6 @@ public sealed partial class AlbumEditViewModel(
 ) : ObservableObject
 {
     private ReleaseMbid _albumId;
-    private IReadOnlyList<ArtistMbid> _originalArtistSourceIds = [];
 
     [ObservableProperty]
     public partial string Title { get; set; } = string.Empty;
@@ -51,12 +50,13 @@ public sealed partial class AlbumEditViewModel(
     [ObservableProperty]
     public partial bool IsBusy { get; set; }
 
+    public ObservableCollection<SelectableArtist> ArtistOptions { get; } = [];
+
     public ObservableCollection<SelectableGenre> GenreOptions { get; } = [];
 
     public void Initialize(AlbumSeedEntry album)
     {
         _albumId = album.SourceId;
-        _originalArtistSourceIds = album.ArtistSourceIds;
         PopulateOnlineFields(
             album.Title,
             album.ReleaseDate,
@@ -73,6 +73,23 @@ public sealed partial class AlbumEditViewModel(
         IsNew = album.IsNew;
         IsStaffPick = album.IsStaffPick;
 
+        ArtistOptions.Clear();
+        foreach (
+            var artist in session.Artists.OrderBy(
+                a => a.Name,
+                StringComparer.CurrentCultureIgnoreCase
+            )
+        )
+        {
+            ArtistOptions.Add(
+                new SelectableArtist(
+                    artist.SourceId,
+                    artist.Name,
+                    album.ArtistSourceIds.Contains(artist.SourceId)
+                )
+            );
+        }
+
         GenreOptions.Clear();
         foreach (
             var genre in session.Genres.OrderBy(
@@ -86,6 +103,9 @@ public sealed partial class AlbumEditViewModel(
             );
         }
     }
+
+    public void AddArtistOption(ArtistSeedEntry entry) =>
+        ArtistOptions.Add(new SelectableArtist(entry.SourceId, entry.Name, isSelected: true));
 
     [RelayCommand]
     private async Task RefreshAsync()
@@ -144,6 +164,13 @@ public sealed partial class AlbumEditViewModel(
             originalPriceInPence = parsedOriginal;
         }
 
+        var selectedArtistIds = ArtistOptions.Where(a => a.IsSelected).Select(a => a.Id).ToList();
+        if (selectedArtistIds.Count == 0)
+        {
+            ErrorMessage = "At least one artist is required.";
+            return;
+        }
+
         session.UpdateAlbum(
             _albumId,
             Title,
@@ -152,7 +179,7 @@ public sealed partial class AlbumEditViewModel(
             Description,
             ImageUrl,
             new AlbumLinks(
-                ArtistSourceIds: _originalArtistSourceIds,
+                ArtistSourceIds: selectedArtistIds,
                 GenreSlugs: GenreOptions.Where(g => g.IsSelected).Select(g => g.Slug).ToList()
             ),
             new AlbumCommerceDetails(

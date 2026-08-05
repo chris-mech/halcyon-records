@@ -20,6 +20,7 @@
     <None Remove="Views\GenreDetailPage.xaml" />
     <None Remove="Views\GenreEditPage.xaml" />
     <None Remove="Views\GenreListPage.xaml" />
+    <None Remove="Views\AddArtistDialog.xaml" />
   </ItemGroup>
 
   <ItemGroup>
@@ -39,6 +40,12 @@
 
   <ItemGroup>
     <None Include="appsettings.json" CopyToOutputDirectory="PreserveNewest" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Page Update="Views\AddArtistDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
 
   <ItemGroup>

@@ -61,6 +61,7 @@ public partial class App : Application
         services.AddTransient<GenreAddViewModel>();
         services.AddTransient<GenreDetailViewModel>();
         services.AddTransient<GenreEditViewModel>();
+        services.AddTransient<AddArtistDialogViewModel>();
 
         return services.BuildServiceProvider();
     }
