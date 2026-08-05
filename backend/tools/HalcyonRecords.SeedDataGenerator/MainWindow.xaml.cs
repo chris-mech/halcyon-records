@@ -36,6 +36,7 @@ public sealed partial class MainWindow : Window
             ContentFrame.Navigate(typeof(ArtistListPage));
             ArtistsButton.IsEnabled = true;
             AlbumsButton.IsEnabled = true;
+            GenresButton.IsEnabled = true;
             SaveAndExitButton.IsEnabled = true;
         }
         catch (Exception ex)
@@ -104,4 +105,9 @@ public sealed partial class MainWindow : Window
         App
             .Current.Services.GetRequiredService<NavigationService>()
             .NavigateHome(typeof(AlbumListPage));
+
+    private void OnGenresClick(object sender, RoutedEventArgs e) =>
+        App
+            .Current.Services.GetRequiredService<NavigationService>()
+            .NavigateHome(typeof(GenreListPage));
 }

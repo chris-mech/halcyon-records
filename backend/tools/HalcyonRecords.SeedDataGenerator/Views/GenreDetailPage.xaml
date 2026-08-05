@@ -1,0 +1,48 @@
+<Page
+  x:Class="HalcyonRecords.SeedDataGenerator.Views.GenreDetailPage"
+  xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+  xmlns:local="using:HalcyonRecords.SeedDataGenerator"
+  xmlns:shared="using:HalcyonRecords.Shared"
+>
+  <ScrollViewer Padding="24">
+    <StackPanel Spacing="16" MaxWidth="600" HorizontalAlignment="Left">
+      <Button Content="Back" Command="{x:Bind ViewModel.BackCommand}" HorizontalAlignment="Left" />
+
+      <TextBlock
+        Text="{x:Bind ViewModel.Genre.Name, Mode=OneWay}"
+        FontSize="24"
+        FontWeight="SemiBold"
+      />
+
+      <StackPanel Orientation="Horizontal" Spacing="8">
+        <TextBlock Text="Slug:" FontWeight="SemiBold" />
+        <TextBlock Text="{x:Bind ViewModel.Genre.Slug.Value, Mode=OneWay}" />
+      </StackPanel>
+
+      <TextBlock Text="Description" FontWeight="SemiBold" />
+      <TextBlock
+        Text="{x:Bind local:BindingHelpers.OrPlaceholder(ViewModel.Genre.Description, 'No description yet.'), Mode=OneWay}"
+        TextWrapping="Wrap"
+      />
+
+      <StackPanel Orientation="Horizontal" Spacing="8">
+        <Button Content="Edit" Command="{x:Bind ViewModel.EditCommand}" />
+        <Button Content="Delete" Click="OnDeleteClick" />
+      </StackPanel>
+
+      <TextBlock Text="Albums" FontWeight="SemiBold" />
+      <ListView
+        ItemsSource="{x:Bind ViewModel.Albums}"
+        SelectionMode="None"
+        Visibility="{x:Bind local:BindingHelpers.ToVisibilityFromCount(ViewModel.Albums.Count), Mode=OneWay}"
+      >
+        <ListView.ItemTemplate>
+          <DataTemplate x:DataType="shared:AlbumSeedEntry">
+            <TextBlock Text="{x:Bind Title}" />
+          </DataTemplate>
+        </ListView.ItemTemplate>
+      </ListView>
+    </StackPanel>
+  </ScrollViewer>
+</Page>
