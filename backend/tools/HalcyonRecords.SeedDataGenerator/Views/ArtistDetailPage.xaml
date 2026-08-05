@@ -1,0 +1,57 @@
+<Page
+  x:Class="HalcyonRecords.SeedDataGenerator.Views.ArtistDetailPage"
+  xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+  xmlns:local="using:HalcyonRecords.SeedDataGenerator"
+  xmlns:shared="using:HalcyonRecords.Shared"
+>
+  <ScrollViewer Padding="24">
+    <StackPanel Spacing="16" MaxWidth="600" HorizontalAlignment="Left">
+      <Button Content="Back" Command="{x:Bind ViewModel.BackCommand}" HorizontalAlignment="Left" />
+
+      <TextBlock
+        Text="{x:Bind ViewModel.Artist.Name, Mode=OneWay}"
+        FontSize="24"
+        FontWeight="SemiBold"
+      />
+
+      <StackPanel Orientation="Horizontal" Spacing="8">
+        <TextBlock Text="Type:" FontWeight="SemiBold" />
+        <TextBlock Text="{x:Bind local:BindingHelpers.FormatArtistType(ViewModel.Artist.Type), Mode=OneWay}" />
+      </StackPanel>
+
+      <StackPanel Orientation="Horizontal" Spacing="8">
+        <TextBlock Text="Origin:" FontWeight="SemiBold" />
+        <TextBlock Text="{x:Bind local:BindingHelpers.OrPlaceholder(ViewModel.Artist.Origin, 'Unknown'), Mode=OneWay}" />
+      </StackPanel>
+
+      <StackPanel Orientation="Horizontal" Spacing="8">
+        <TextBlock Text="Since:" FontWeight="SemiBold" />
+        <TextBlock Text="{x:Bind local:BindingHelpers.FormatYear(ViewModel.Artist.SinceYear), Mode=OneWay}" />
+      </StackPanel>
+
+      <TextBlock Text="Bio" FontWeight="SemiBold" />
+      <TextBlock
+        Text="{x:Bind local:BindingHelpers.OrPlaceholder(ViewModel.Artist.Bio, 'No bio available.'), Mode=OneWay}"
+        TextWrapping="Wrap"
+      />
+      <StackPanel Orientation="Horizontal" Spacing="8">
+        <Button Content="Edit" Command="{x:Bind ViewModel.EditCommand}" />
+        <Button Content="Delete" Click="OnDeleteClick" />
+      </StackPanel>
+
+      <TextBlock Text="Albums" FontWeight="SemiBold" />
+      <ListView
+        ItemsSource="{x:Bind ViewModel.Albums}"
+        SelectionMode="None"
+        Visibility="{x:Bind local:BindingHelpers.ToVisibilityFromCount(ViewModel.Albums.Count), Mode=OneWay}"
+      >
+        <ListView.ItemTemplate>
+          <DataTemplate x:DataType="shared:AlbumSeedEntry">
+            <TextBlock Text="{x:Bind Title}" />
+          </DataTemplate>
+        </ListView.ItemTemplate>
+      </ListView>
+    </StackPanel>
+  </ScrollViewer>
+</Page>

@@ -1,0 +1,44 @@
+<Window
+  x:Class="HalcyonRecords.SeedDataGenerator.MainWindow"
+  xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+  Title="Halcyon Records — Seed Data Generator"
+>
+  <Grid x:Name="RootGrid">
+    <Grid.RowDefinitions>
+      <RowDefinition Height="Auto" />
+      <RowDefinition Height="*" />
+    </Grid.RowDefinitions>
+
+    <Grid Grid.Row="0" Padding="12">
+      <Grid.ColumnDefinitions>
+        <ColumnDefinition Width="*" />
+        <ColumnDefinition Width="Auto" />
+      </Grid.ColumnDefinitions>
+
+      <StackPanel Grid.Column="0" Orientation="Horizontal" Spacing="8">
+        <Button x:Name="ArtistsButton" Content="Artists" IsEnabled="False" Click="OnArtistsClick" />
+        <Button x:Name="AlbumsButton" Content="Albums" IsEnabled="False" Click="OnAlbumsClick" />
+        <Button x:Name="GenresButton" Content="Genres" IsEnabled="False" Click="OnGenresClick" />
+      </StackPanel>
+
+      <StackPanel Grid.Column="1" Orientation="Horizontal" Spacing="8">
+        <ProgressRing
+          x:Name="SaveProgressRing"
+          IsActive="False"
+          Visibility="Collapsed"
+          Width="20"
+          Height="20"
+        />
+        <Button
+          x:Name="SaveAndExitButton"
+          Content="Save and Exit"
+          IsEnabled="False"
+          Click="OnSaveAndExitClick"
+        />
+      </StackPanel>
+    </Grid>
+
+    <Frame x:Name="ContentFrame" Grid.Row="1" />
+  </Grid>
+</Window>

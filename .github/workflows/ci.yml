@@ -63,17 +63,45 @@ jobs:
       - name: Restore UnitTests (locked)
         run: dotnet restore tests/HalcyonRecords.Api.UnitTests/HalcyonRecords.Api.UnitTests.csproj --locked-mode
 
+      - name: Restore SeedDataGenerator.Core (locked)
+        run: dotnet restore tools/HalcyonRecords.SeedDataGenerator.Core/HalcyonRecords.SeedDataGenerator.Core.csproj --locked-mode
+
       - name: Build
-        run: dotnet build --no-restore --configuration Release
+        run: dotnet build HalcyonRecords.CI.slnf --no-restore --configuration Release
 
       - name: Test
-        run: dotnet test --no-restore --no-build --configuration Release
+        run: dotnet test HalcyonRecords.CI.slnf --no-restore --no-build --configuration Release
 
       - name: Restore CSharpier
         run: dotnet tool restore
 
       - name: Check formatting
         run: dotnet csharpier check .
+
+  winui:
+    name: Backend (WinUI tool)
+    needs: changes
+    if: needs.changes.outputs.backend == 'true'
+    runs-on: windows-latest
+    defaults:
+      run:
+        working-directory: backend
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v6
+        with:
+          dotnet-version: "10.0.x"
+          cache: true
+          cache-dependency-path: backend/**/packages.lock.json
+
+      - name: Restore SeedDataGenerator (locked)
+        run: dotnet restore tools/HalcyonRecords.SeedDataGenerator/HalcyonRecords.SeedDataGenerator.csproj --locked-mode
+
+      - name: Build
+        run: dotnet build tools/HalcyonRecords.SeedDataGenerator/HalcyonRecords.SeedDataGenerator.csproj --no-restore --configuration Release
 
   frontend:
     name: Frontend
@@ -106,7 +134,7 @@ jobs:
 
   ci-required:
     name: CI Required
-    needs: [changes, backend, frontend]
+    needs: [changes, backend, winui, frontend]
     if: always()
     runs-on: ubuntu-latest
     steps:
@@ -118,6 +146,10 @@ jobs:
           fi
           if [[ "${{ needs.backend.result }}" == "failure" || "${{ needs.backend.result }}" == "cancelled" ]]; then
             echo "Backend job failed"
+            exit 1
+          fi
+          if [[ "${{ needs.winui.result }}" == "failure" || "${{ needs.winui.result }}" == "cancelled" ]]; then
+            echo "Backend WinUI tool job failed"
             exit 1
           fi
           if [[ "${{ needs.frontend.result }}" == "failure" || "${{ needs.frontend.result }}" == "cancelled" ]]; then

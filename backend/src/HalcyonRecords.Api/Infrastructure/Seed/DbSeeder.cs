@@ -1,6 +1,6 @@
 ﻿using System.Text.Json;
-using System.Text.Json.Serialization;
 using HalcyonRecords.Api.Domain;
+using HalcyonRecords.Shared;
 using Microsoft.EntityFrameworkCore;
 
 namespace HalcyonRecords.Api.Infrastructure.Seed;
@@ -8,12 +8,6 @@ namespace HalcyonRecords.Api.Infrastructure.Seed;
 public static class DbSeeder
 {
     private const string SeedDataFolder = "Infrastructure/Seed/Data";
-
-    private static readonly JsonSerializerOptions JsonOptions = new()
-    {
-        PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
-        Converters = { new JsonStringEnumConverter<SeedSource>() },
-    };
 
     public static async Task SeedAsync(
         ApplicationDbContext dbContext,
@@ -26,15 +20,15 @@ public static class DbSeeder
         }
 
         var artistEntries = await ReadSeedFileAsync<ArtistSeedEntry>(
-            "SampleArtists.json",
+            SeedDataFileNames.Artists,
             cancellationToken
         );
         var genreEntries = await ReadSeedFileAsync<GenreSeedEntry>(
-            "SampleGenres.json",
+            SeedDataFileNames.Genres,
             cancellationToken
         );
         var albumEntries = await ReadSeedFileAsync<AlbumSeedEntry>(
-            "SampleAlbums.json",
+            SeedDataFileNames.Albums,
             cancellationToken
         );
 
@@ -45,7 +39,8 @@ public static class DbSeeder
                 Name = entry.Name,
                 Bio = entry.Bio,
                 Origin = entry.Origin,
-                ActiveSince = entry.ActiveSince,
+                Type = entry.Type,
+                SinceYear = entry.SinceYear,
                 ImageUrl = entry.ImageUrl,
             }
         );
@@ -55,7 +50,7 @@ public static class DbSeeder
             .Select(entry => new Genre
             {
                 Name = entry.Name,
-                Slug = entry.Slug,
+                Slug = entry.Slug.Value,
                 Description = entry.Description,
             })
             .ToList();
@@ -93,7 +88,7 @@ public static class DbSeeder
                 foreach (var genreSlug in entry.GenreSlugs)
                 {
                     album.AlbumGenres.Add(
-                        new AlbumGenre { Album = album, Genre = genresBySlug[genreSlug] }
+                        new AlbumGenre { Album = album, Genre = genresBySlug[genreSlug.Value] }
                     );
                 }
 
@@ -117,7 +112,7 @@ public static class DbSeeder
 
         return await JsonSerializer.DeserializeAsync<List<T>>(
                 stream,
-                JsonOptions,
+                SeedDataJsonOptions.Default,
                 cancellationToken
             )
             ?? throw new InvalidOperationException($"Seed file '{fileName}' deserialised to null.");

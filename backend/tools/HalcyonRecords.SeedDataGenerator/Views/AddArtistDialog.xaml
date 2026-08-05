@@ -1,0 +1,80 @@
+﻿<ContentDialog
+  x:Class="HalcyonRecords.SeedDataGenerator.Views.AddArtistDialog"
+  xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+  xmlns:local="using:HalcyonRecords.SeedDataGenerator"
+  xmlns:musicbrainz="using:HalcyonRecords.SeedDataGenerator.Core.MusicBrainz"
+  Title="Add New Artist"
+  PrimaryButtonText="Add"
+  SecondaryButtonText="Cancel"
+  DefaultButton="Primary"
+  IsPrimaryButtonEnabled="{x:Bind ViewModel.CanCommit, Mode=OneWay}"
+>
+  <StackPanel Spacing="12" MinWidth="400">
+    <TextBlock Text="MusicBrainz ID" FontWeight="SemiBold" />
+    <Grid ColumnSpacing="8">
+      <Grid.ColumnDefinitions>
+        <ColumnDefinition Width="*" />
+        <ColumnDefinition Width="Auto" />
+      </Grid.ColumnDefinitions>
+      <TextBox
+        Grid.Column="0"
+        Text="{x:Bind ViewModel.MbidInput, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+      />
+      <Button Grid.Column="1" Content="Look Up" Command="{x:Bind ViewModel.LookUpMbidCommand}" />
+    </Grid>
+
+    <TextBlock Text="Or search by name" FontWeight="SemiBold" />
+    <Grid ColumnSpacing="8">
+      <Grid.ColumnDefinitions>
+        <ColumnDefinition Width="*" />
+        <ColumnDefinition Width="Auto" />
+      </Grid.ColumnDefinitions>
+      <TextBox
+        Grid.Column="0"
+        Text="{x:Bind ViewModel.SearchName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+      />
+      <Button Grid.Column="1" Content="Search" Command="{x:Bind ViewModel.SearchCommand}" />
+    </Grid>
+
+    <ListView
+      ItemsSource="{x:Bind ViewModel.SearchResults}"
+      IsItemClickEnabled="True"
+      ItemClick="OnSearchResultClick"
+      SelectionMode="None"
+      MaxHeight="160"
+      Visibility="{x:Bind local:BindingHelpers.ToVisibilityFromCount(ViewModel.SearchResults.Count), Mode=OneWay}"
+    >
+      <ListView.ItemTemplate>
+        <DataTemplate x:DataType="musicbrainz:MusicBrainzArtistSearchResult">
+          <StackPanel Orientation="Horizontal" Spacing="8">
+            <TextBlock Text="{x:Bind Name}" />
+            <TextBlock Text="{x:Bind Disambiguation}" Opacity="0.7" />
+          </StackPanel>
+        </DataTemplate>
+      </ListView.ItemTemplate>
+    </ListView>
+
+    <StackPanel
+      Orientation="Horizontal"
+      Spacing="8"
+      Visibility="{x:Bind local:BindingHelpers.ToVisibility(ViewModel.CanCommit), Mode=OneWay}"
+    >
+      <TextBlock Text="Found:" FontWeight="SemiBold" />
+      <TextBlock Text="{x:Bind ViewModel.PlanName, Mode=OneWay}" />
+    </StackPanel>
+
+    <TextBlock
+      Text="{x:Bind ViewModel.ErrorMessage, Mode=OneWay}"
+      Foreground="Red"
+      TextWrapping="Wrap"
+      Visibility="{x:Bind local:BindingHelpers.ToVisibility(ViewModel.ErrorMessage), Mode=OneWay}"
+    />
+
+    <ProgressRing
+      IsActive="{x:Bind ViewModel.IsBusy, Mode=OneWay}"
+      Visibility="{x:Bind local:BindingHelpers.ToVisibility(ViewModel.IsBusy), Mode=OneWay}"
+      HorizontalAlignment="Left"
+    />
+  </StackPanel>
+</ContentDialog>

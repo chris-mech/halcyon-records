@@ -78,7 +78,12 @@ namespace HalcyonRecords.Api.Infrastructure.Migrations
                         maxLength: 200,
                         nullable: true
                     ),
-                    ActiveSince = table.Column<int>(type: "int", nullable: true),
+                    Type = table.Column<string>(
+                        type: "nvarchar(20)",
+                        maxLength: 20,
+                        nullable: true
+                    ),
+                    SinceYear = table.Column<int>(type: "int", nullable: true),
                     ImageUrl = table.Column<string>(
                         type: "nvarchar(500)",
                         maxLength: 500,

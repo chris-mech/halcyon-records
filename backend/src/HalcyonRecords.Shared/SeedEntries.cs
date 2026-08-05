@@ -1,4 +1,4 @@
-﻿namespace HalcyonRecords.Api.Infrastructure.Seed;
+﻿namespace HalcyonRecords.Shared;
 
 public enum SeedSource
 {
@@ -6,21 +6,32 @@ public enum SeedSource
     Generated,
 }
 
+public enum ArtistType
+{
+    Person,
+    Group,
+    Orchestra,
+    Choir,
+    Character,
+    Other,
+}
+
 public sealed record ArtistSeedEntry(
     string Name,
-    Guid SourceId,
+    ArtistMbid SourceId,
     SeedSource Source,
     string? Bio,
     string? Origin,
-    int? ActiveSince,
+    ArtistType? Type,
+    int? SinceYear,
     string? ImageUrl
 );
 
-public sealed record GenreSeedEntry(string Name, string Slug, string? Description = null);
+public sealed record GenreSeedEntry(string Name, GenreSlug Slug, string? Description = null);
 
 public sealed record AlbumSeedEntry(
     string Title,
-    Guid SourceId,
+    ReleaseMbid SourceId,
     SeedSource Source,
     string? Description,
     DateOnly? ReleaseDate,
@@ -28,8 +39,8 @@ public sealed record AlbumSeedEntry(
     bool IsNew,
     bool IsStaffPick,
     string? ImageUrl,
-    IReadOnlyList<Guid> ArtistSourceIds,
-    IReadOnlyList<string> GenreSlugs,
+    IReadOnlyList<ArtistMbid> ArtistSourceIds,
+    IReadOnlyList<GenreSlug> GenreSlugs,
     int UnitsInStock,
     int PriceInPence,
     int? OriginalPriceInPence

@@ -1,0 +1,97 @@
+<Page
+  x:Class="HalcyonRecords.SeedDataGenerator.Views.ArtistAddPage"
+  xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+  xmlns:local="using:HalcyonRecords.SeedDataGenerator"
+  xmlns:musicBrainz="using:HalcyonRecords.SeedDataGenerator.Core.MusicBrainz"
+>
+  <ScrollViewer Padding="24">
+    <StackPanel Spacing="16" MaxWidth="600" HorizontalAlignment="Left">
+      <Button
+        Content="Cancel"
+        Command="{x:Bind ViewModel.CancelCommand}"
+        HorizontalAlignment="Left"
+      />
+
+      <TextBlock Text="Add by MusicBrainz ID" FontWeight="SemiBold" />
+      <StackPanel Orientation="Horizontal" Spacing="8">
+        <TextBox
+          Width="360"
+          Text="{x:Bind ViewModel.MbidInput, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+          PlaceholderText="MusicBrainz artist ID"
+          KeyDown="OnMbidInputKeyDown"
+        />
+        <Button Content="Look Up" Command="{x:Bind ViewModel.LookUpMbidCommand}" />
+      </StackPanel>
+
+      <TextBlock Text="Or search by name" FontWeight="SemiBold" />
+      <StackPanel Orientation="Horizontal" Spacing="8">
+        <TextBox
+          Width="360"
+          Text="{x:Bind ViewModel.SearchName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+          PlaceholderText="Artist name"
+          KeyDown="OnSearchNameKeyDown"
+        />
+        <Button Content="Search" Command="{x:Bind ViewModel.SearchCommand}" />
+      </StackPanel>
+
+      <ListView
+        ItemsSource="{x:Bind ViewModel.SearchResults}"
+        IsItemClickEnabled="True"
+        ItemClick="OnSearchResultClick"
+        SelectionMode="None"
+        Visibility="{x:Bind local:BindingHelpers.ToVisibilityFromCount(ViewModel.SearchResults.Count), Mode=OneWay}"
+      >
+        <ListView.ItemTemplate>
+          <DataTemplate x:DataType="musicBrainz:MusicBrainzArtistSearchResult">
+            <StackPanel Orientation="Horizontal" Spacing="12">
+              <TextBlock Text="{x:Bind Name}" FontWeight="SemiBold" />
+              <TextBlock Text="{x:Bind Disambiguation}" Opacity="0.7" />
+            </StackPanel>
+          </DataTemplate>
+        </ListView.ItemTemplate>
+      </ListView>
+
+      <TextBlock
+        Text="{x:Bind ViewModel.ErrorMessage, Mode=OneWay}"
+        Foreground="Red"
+        TextWrapping="Wrap"
+        Visibility="{x:Bind local:BindingHelpers.ToVisibility(ViewModel.ErrorMessage), Mode=OneWay}"
+      />
+
+      <ProgressRing
+        IsActive="{x:Bind ViewModel.IsBusy, Mode=OneWay}"
+        Visibility="{x:Bind local:BindingHelpers.ToVisibility(ViewModel.IsBusy), Mode=OneWay}"
+        HorizontalAlignment="Left"
+      />
+
+      <StackPanel
+        x:Name="PreviewPanel"
+        Spacing="8"
+        Visibility="{x:Bind local:BindingHelpers.ToVisibility(ViewModel.Plan), Mode=OneWay}"
+      >
+        <TextBlock Text="Preview" FontWeight="SemiBold" />
+        <TextBlock Text="{x:Bind ViewModel.PlanName, Mode=OneWay}" FontSize="18" />
+
+        <StackPanel Orientation="Horizontal" Spacing="8">
+          <TextBlock Text="Type:" FontWeight="SemiBold" />
+          <TextBlock Text="{x:Bind ViewModel.PlanType, Mode=OneWay}" />
+        </StackPanel>
+
+        <StackPanel Orientation="Horizontal" Spacing="8">
+          <TextBlock Text="Origin:" FontWeight="SemiBold" />
+          <TextBlock Text="{x:Bind ViewModel.PlanOrigin, Mode=OneWay}" />
+        </StackPanel>
+
+        <StackPanel Orientation="Horizontal" Spacing="8">
+          <TextBlock Text="Since:" FontWeight="SemiBold" />
+          <TextBlock Text="{x:Bind ViewModel.PlanSinceYear, Mode=OneWay}" />
+        </StackPanel>
+
+        <TextBlock Text="Bio" FontWeight="SemiBold" />
+        <TextBlock Text="{x:Bind ViewModel.PlanBio, Mode=OneWay}" TextWrapping="Wrap" />
+        <Button Content="Add Artist" Command="{x:Bind ViewModel.CommitCommand}" />
+      </StackPanel>
+    </StackPanel>
+  </ScrollViewer>
+</Page>

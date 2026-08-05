@@ -3,8 +3,13 @@
     <Project Path="src/HalcyonRecords.Api/HalcyonRecords.Api.csproj" />
     <Project Path="src/HalcyonRecords.AppHost/HalcyonRecords.AppHost.csproj" />
     <Project Path="src/HalcyonRecords.ServiceDefaults/HalcyonRecords.ServiceDefaults.csproj" />
+    <Project Path="src/HalcyonRecords.Shared/HalcyonRecords.Shared.csproj" />
   </Folder>
   <Folder Name="/tests/">
     <Project Path="tests/HalcyonRecords.Api.UnitTests/HalcyonRecords.Api.UnitTests.csproj" />
+  </Folder>
+  <Folder Name="/tools/">
+    <Project Path="tools/HalcyonRecords.SeedDataGenerator/HalcyonRecords.SeedDataGenerator.csproj" />
+    <Project Path="tools/HalcyonRecords.SeedDataGenerator.Core/HalcyonRecords.SeedDataGenerator.Core.csproj" />
   </Folder>
 </Solution>

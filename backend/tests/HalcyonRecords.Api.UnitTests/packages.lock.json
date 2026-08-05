@@ -844,6 +844,7 @@
           "Aspire.Microsoft.EntityFrameworkCore.SqlServer": "[13.4.6, )",
           "ErrorOr": "[2.1.1, )",
           "HalcyonRecords.ServiceDefaults": "[1.0.0, )",
+          "HalcyonRecords.Shared": "[1.0.0, )",
           "MediatR": "[14.2.0, )",
           "Sqids": "[3.2.1, )"
         }
@@ -858,6 +859,12 @@
           "OpenTelemetry.Instrumentation.AspNetCore": "[1.17.0, )",
           "OpenTelemetry.Instrumentation.Http": "[1.15.1, )",
           "OpenTelemetry.Instrumentation.Runtime": "[1.15.1, )"
+        }
+      },
+      "halcyonrecords.shared": {
+        "type": "Project",
+        "dependencies": {
+          "ErrorOr": "[2.1.1, )"
         }
       }
     }
