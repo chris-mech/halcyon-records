@@ -27,6 +27,12 @@
         "resolved": "8.10.0",
         "contentHash": "yGvv+xp0gHFgGwhQcGoDdKIrhLhPi3zYYWWLLHPMctr+G6PWD7QH8L4wqoa5WRZquPbfSV/cP1MraI7ppAHrWw=="
       },
+      "FluentValidation": {
+        "type": "Direct",
+        "requested": "[12.1.1, )",
+        "resolved": "12.1.1",
+        "contentHash": "EPpkIe1yh1a0OXyC100oOA8WMbZvqUu5plwhvYcb7oSELfyUZzfxV48BLhvs3kKo4NwG7MGLNgy1RJiYtT8Dpw=="
+      },
       "Microsoft.EntityFrameworkCore.SqlServer": {
         "type": "Direct",
         "requested": "[10.0.10, )",
@@ -109,11 +115,6 @@
         "dependencies": {
           "NETStandard.Library": "1.6.1"
         }
-      },
-      "FluentValidation": {
-        "type": "Transitive",
-        "resolved": "12.1.1",
-        "contentHash": "EPpkIe1yh1a0OXyC100oOA8WMbZvqUu5plwhvYcb7oSELfyUZzfxV48BLhvs3kKo4NwG7MGLNgy1RJiYtT8Dpw=="
       },
       "FluentValidation.DependencyInjectionExtensions": {
         "type": "Transitive",
