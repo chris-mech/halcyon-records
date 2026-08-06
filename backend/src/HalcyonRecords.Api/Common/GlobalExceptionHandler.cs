@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.WebUtilities;
 
 namespace HalcyonRecords.Api.Common;
 
@@ -45,6 +46,11 @@ file static class ExceptionMappingExtensions
         public (int StatusCode, string Title, string Detail) ToProblemDetailsParts() =>
             exception switch
             {
+                BadHttpRequestException badHttpRequestException => (
+                    badHttpRequestException.StatusCode,
+                    ReasonPhrases.GetReasonPhrase(badHttpRequestException.StatusCode),
+                    "The request did not meet the server's requirements and could not be processed."
+                ),
                 TaskCanceledException => (
                     StatusCodes.Status408RequestTimeout,
                     "Request Timeout",

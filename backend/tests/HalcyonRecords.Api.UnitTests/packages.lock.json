@@ -27,6 +27,12 @@
         "resolved": "8.10.0",
         "contentHash": "yGvv+xp0gHFgGwhQcGoDdKIrhLhPi3zYYWWLLHPMctr+G6PWD7QH8L4wqoa5WRZquPbfSV/cP1MraI7ppAHrWw=="
       },
+      "FluentValidation": {
+        "type": "Direct",
+        "requested": "[12.1.1, )",
+        "resolved": "12.1.1",
+        "contentHash": "EPpkIe1yh1a0OXyC100oOA8WMbZvqUu5plwhvYcb7oSELfyUZzfxV48BLhvs3kKo4NwG7MGLNgy1RJiYtT8Dpw=="
+      },
       "Microsoft.EntityFrameworkCore.SqlServer": {
         "type": "Direct",
         "requested": "[10.0.10, )",
@@ -108,6 +114,15 @@
         "contentHash": "HaI8puqA66YU7/9cK4Sgbs1taUTP1Ssa4QT2PIzqJ7GvAbN1QgkjbRsjH+FSbMh1MJdvS0CIwQNLtFT+KF6KpA==",
         "dependencies": {
           "NETStandard.Library": "1.6.1"
+        }
+      },
+      "FluentValidation.DependencyInjectionExtensions": {
+        "type": "Transitive",
+        "resolved": "12.1.1",
+        "contentHash": "D0VXh4dtjjX2aQizuaa0g6R8X3U1JaVqJPfGCvLwZX9t/O2h7tkpbitbadQMfwcgSPdDbI2vDxuwRMv/Uf9dHA==",
+        "dependencies": {
+          "FluentValidation": "12.1.1",
+          "Microsoft.Extensions.DependencyInjection.Abstractions": "2.1.0"
         }
       },
       "MediatR": {
@@ -843,6 +858,7 @@
         "dependencies": {
           "Aspire.Microsoft.EntityFrameworkCore.SqlServer": "[13.4.6, )",
           "ErrorOr": "[2.1.1, )",
+          "FluentValidation.DependencyInjectionExtensions": "[12.1.1, )",
           "HalcyonRecords.ServiceDefaults": "[1.0.0, )",
           "HalcyonRecords.Shared": "[1.0.0, )",
           "MediatR": "[14.2.0, )",
