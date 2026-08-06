@@ -12,5 +12,5 @@ public sealed record GetAlbumsQuery(
     bool IsStaffPick,
     bool InStock,
     IReadOnlyList<string>? Genres,
-    AlbumSortBy Sort
+    string Sort
 ) : IRequest<ErrorOr<PagedResult<AlbumSummaryResponse>>>;

@@ -45,7 +45,9 @@ public sealed class GetAlbumsHandler(ApplicationDbContext dbContext, SqidsEncode
             );
         }
 
-        albums = query.Sort switch
+        var sort = Enum.Parse<AlbumSortBy>(query.Sort);
+
+        albums = sort switch
         {
             AlbumSortBy.OldestFirst => albums.OrderBy(a => a.ReleaseDate).ThenBy(a => a.Id),
             AlbumSortBy.PriceAsc => albums.OrderBy(a => a.PriceInPence).ThenBy(a => a.Id),
@@ -83,6 +85,7 @@ public sealed class GetAlbumsHandler(ApplicationDbContext dbContext, SqidsEncode
                 a.OriginalPriceInPence,
                 a.IsNew,
                 a.IsStaffPick,
+                IsInStock = a.UnitsInStock > 0,
                 Artists = a
                     .AlbumArtists.OrderBy(aa => aa.Artist.Name)
                     .Select(aa => new { aa.Artist.Id, aa.Artist.Name }),
@@ -103,6 +106,7 @@ public sealed class GetAlbumsHandler(ApplicationDbContext dbContext, SqidsEncode
                 a.IsNew,
                 a.OriginalPriceInPence is not null,
                 a.IsStaffPick,
+                a.IsInStock,
                 a.Artists.Select(artist => new AlbumArtistResponse(
                         sqids.Encode(artist.Id.Value),
                         artist.Name

@@ -15,6 +15,8 @@ public sealed class GetAlbumsValidator : AbstractValidator<GetAlbumsQuery>
             .WithMessage("Too many genres selected.")
             .When(x => x.Genres is not null);
 
-        RuleFor(x => x.Sort).IsInEnum();
+        RuleFor(x => x.Sort)
+            .IsEnumName(typeof(AlbumSortBy), caseSensitive: true)
+            .WithMessage("'{PropertyValue}' is not a valid sort option.");
     }
 }

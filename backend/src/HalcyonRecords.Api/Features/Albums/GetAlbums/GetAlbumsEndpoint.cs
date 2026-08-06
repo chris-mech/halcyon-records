@@ -23,7 +23,7 @@ public sealed class GetAlbumsEndpoint : IEndpoint
                 bool? isStaffPick,
                 bool? inStock,
                 string[]? genres,
-                AlbumSortBy? sort,
+                string? sort,
                 ISender sender
             ) =>
             {
@@ -36,7 +36,7 @@ public sealed class GetAlbumsEndpoint : IEndpoint
                         isStaffPick ?? false,
                         inStock ?? false,
                         genres,
-                        sort ?? AlbumSortBy.NewestFirst
+                        sort ?? nameof(AlbumSortBy.NewestFirst)
                     )
                 );
 
