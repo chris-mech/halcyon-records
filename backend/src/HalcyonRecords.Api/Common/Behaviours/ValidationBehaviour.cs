@@ -2,9 +2,9 @@
 using FluentValidation;
 using MediatR;
 
-namespace HalcyonRecords.Api.Common.Behaviors;
+namespace HalcyonRecords.Api.Common.Behaviours;
 
-public sealed class ValidationBehavior<TRequest, TResult>(IValidator<TRequest>? validator = null)
+public sealed class ValidationBehaviour<TRequest, TResult>(IValidator<TRequest>? validator = null)
     : IPipelineBehavior<TRequest, ErrorOr<TResult>>
     where TRequest : IRequest<ErrorOr<TResult>>
 {

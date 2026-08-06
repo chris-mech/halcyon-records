@@ -1,7 +1,7 @@
 using System.Diagnostics;
 using FluentValidation;
 using HalcyonRecords.Api.Common;
-using HalcyonRecords.Api.Common.Behaviors;
+using HalcyonRecords.Api.Common.Behaviours;
 using HalcyonRecords.Api.Common.Endpoints;
 using HalcyonRecords.Api.Common.RateLimiting;
 using HalcyonRecords.Api.Infrastructure;
@@ -31,7 +31,7 @@ builder.Services.AddValidatorsFromAssemblyContaining<Program>();
 builder.Services.AddMediatR(config =>
 {
     config.RegisterServicesFromAssembly(typeof(Program).Assembly);
-    config.AddOpenBehavior(typeof(ValidationBehavior<,>));
+    config.AddOpenBehavior(typeof(ValidationBehaviour<,>));
     config.LicenseKey = builder.Configuration["MediatR:LicenseKey"];
 });
 
