@@ -1,6 +1,10 @@
 var builder = DistributedApplication.CreateBuilder(args);
 
-var sql = builder.AddSqlServer("sql").WithDataVolume().AddDatabase("halcyonrecords");
+var sql = builder
+    .AddSqlServer("sql")
+    .WithImageTag("2025-latest")
+    .WithDataVolume()
+    .AddDatabase("halcyonrecords");
 
 var meilisearch = builder.AddMeilisearch("meilisearch");
 
