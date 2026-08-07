@@ -15,7 +15,7 @@ public class GetAlbumsHandlerTests(SqlServerContainerFixture fixture) : Integrat
     [Fact]
     public async Task Handle_AlbumWithMultipleArtistsAndGenres_ReturnsAllOfThemNested()
     {
-        var album = NewAlbum("Concrete Bloom");
+        var album = NewAlbum("Full Detail Album");
         Link(album, NewArtist("Artist One"));
         Link(album, NewArtist("Artist Two"));
         Link(album, NewGenre("Genre One", "genre-one"));
