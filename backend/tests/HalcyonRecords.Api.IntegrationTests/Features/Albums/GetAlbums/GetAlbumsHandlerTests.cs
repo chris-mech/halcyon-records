@@ -1,4 +1,5 @@
 ﻿using FluentAssertions;
+using HalcyonRecords.Api.Common.Sqids;
 using HalcyonRecords.Api.Domain;
 using HalcyonRecords.Api.Features.Albums.GetAlbums;
 using HalcyonRecords.Api.IntegrationTests.Common;
@@ -8,7 +9,7 @@ namespace HalcyonRecords.Api.IntegrationTests.Features.Albums.GetAlbums;
 
 public class GetAlbumsHandlerTests(SqlServerContainerFixture fixture) : IntegrationTestBase(fixture)
 {
-    private GetAlbumsHandler Handler => new(DbContext, new SqidsEncoder<int>());
+    private GetAlbumsHandler Handler => new(DbContext, new AlbumSqidEncoder(), new ArtistSqidEncoder());
 
     [Fact]
     public async Task Handle_AlbumWithMultipleArtistsAndGenres_ReturnsAllOfThemNested()
