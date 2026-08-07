@@ -4,10 +4,10 @@ using HalcyonRecords.Api.Common;
 using HalcyonRecords.Api.Common.Behaviours;
 using HalcyonRecords.Api.Common.Endpoints;
 using HalcyonRecords.Api.Common.RateLimiting;
+using HalcyonRecords.Api.Common.Sqids;
 using HalcyonRecords.Api.Infrastructure;
 using HalcyonRecords.Api.Infrastructure.Seed;
 using Microsoft.EntityFrameworkCore;
-using Sqids;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.AddServiceDefaults();
@@ -16,15 +16,8 @@ builder.AddSqlServerDbContext<ApplicationDbContext>("halcyonrecords");
 
 builder.Services.AddEndpoints(typeof(Program).Assembly);
 
-builder.Services.AddSingleton(
-    new SqidsEncoder<int>(
-        new SqidsOptions
-        {
-            Alphabet = "gvCi8aFhyjVq1ELk5tSwWURGOMp42ubnosl3z9IHZe6TcABQ7XdrDPNxfKYJ0m",
-            MinLength = 6,
-        }
-    )
-);
+builder.Services.AddSingleton<AlbumSqidEncoder>();
+builder.Services.AddSingleton<ArtistSqidEncoder>();
 
 builder.Services.AddValidatorsFromAssemblyContaining<Program>();
 

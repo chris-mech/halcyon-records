@@ -7,6 +7,7 @@ using Testcontainers.MsSql;
 [assembly: AssemblyFixture(
     typeof(HalcyonRecords.Api.IntegrationTests.Common.SqlServerContainerFixture)
 )]
+[assembly: CollectionBehavior(DisableTestParallelization = true)]
 
 namespace HalcyonRecords.Api.IntegrationTests.Common;
 

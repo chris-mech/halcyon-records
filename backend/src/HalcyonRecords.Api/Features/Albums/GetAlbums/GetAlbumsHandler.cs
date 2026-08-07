@@ -1,15 +1,18 @@
 ﻿using ErrorOr;
 using HalcyonRecords.Api.Common.Contracts;
+using HalcyonRecords.Api.Common.Sqids;
 using HalcyonRecords.Api.Infrastructure;
 using HalcyonRecords.Shared;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
-using Sqids;
 
 namespace HalcyonRecords.Api.Features.Albums.GetAlbums;
 
-public sealed class GetAlbumsHandler(ApplicationDbContext dbContext, SqidsEncoder<int> sqids)
-    : IRequestHandler<GetAlbumsQuery, ErrorOr<PagedResult<AlbumSummaryResponse>>>
+public sealed class GetAlbumsHandler(
+    ApplicationDbContext dbContext,
+    AlbumSqidEncoder albumSqids,
+    ArtistSqidEncoder artistSqids
+) : IRequestHandler<GetAlbumsQuery, ErrorOr<PagedResult<AlbumSummaryResponse>>>
 {
     public async Task<ErrorOr<PagedResult<AlbumSummaryResponse>>> Handle(
         GetAlbumsQuery query,
@@ -93,10 +96,11 @@ public sealed class GetAlbumsHandler(ApplicationDbContext dbContext, SqidsEncode
                     .AlbumGenres.OrderBy(ag => ag.Genre.Name)
                     .Select(ag => new { ag.Genre.Name, ag.Genre.Slug }),
             })
+            .AsSplitQuery()
             .ToListAsync(cancellationToken);
 
         var items = page.Select(a => new AlbumSummaryResponse(
-                sqids.Encode(a.Id.Value),
+                albumSqids.Encode(a.Id.Value),
                 a.Title,
                 Slugifier.Slugify(a.Title),
                 a.ImageUrl,
@@ -108,7 +112,7 @@ public sealed class GetAlbumsHandler(ApplicationDbContext dbContext, SqidsEncode
                 a.IsStaffPick,
                 a.IsInStock,
                 a.Artists.Select(artist => new AlbumArtistResponse(
-                        sqids.Encode(artist.Id.Value),
+                        artistSqids.Encode(artist.Id.Value),
                         artist.Name
                     ))
                     .ToList(),
