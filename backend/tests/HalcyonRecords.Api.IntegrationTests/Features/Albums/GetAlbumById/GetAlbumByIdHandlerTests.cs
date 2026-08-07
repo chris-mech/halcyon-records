@@ -12,6 +12,7 @@ public class GetAlbumByIdHandlerTests(SqlServerContainerFixture fixture)
     : IntegrationTestBase(fixture)
 {
     private static readonly AlbumSqidEncoder AlbumSqids = new();
+    private static readonly ArtistSqidEncoder ArtistSqids = new();
 
     private GetAlbumByIdHandler Handler =>
         new(DbContext, new AlbumSqidEncoder(), new ArtistSqidEncoder());
@@ -32,8 +33,10 @@ public class GetAlbumByIdHandlerTests(SqlServerContainerFixture fixture)
             IsStaffPick = true,
             UnitsInStock = 3,
         };
-        Link(album, NewArtist("Zeta Band"));
-        Link(album, NewArtist("Alpha Band"));
+        var alphaBand = NewArtist("Alpha Band");
+        var zetaBand = NewArtist("Zeta Band");
+        Link(album, zetaBand);
+        Link(album, alphaBand);
         Link(album, NewGenre("Rock", "rock"));
         Link(album, NewGenre("Ambient", "ambient"));
 
@@ -47,6 +50,7 @@ public class GetAlbumByIdHandlerTests(SqlServerContainerFixture fixture)
 
         result.IsError.Should().BeFalse();
         var response = result.Value;
+        response.Sqid.Should().Be(AlbumSqids.Encode(album.Id.Value));
         response.Title.Should().Be("Full Detail Album");
         response.TitleSlug.Should().Be(Slugifier.Slugify("Full Detail Album"));
         response.Description.Should().Be("A description");
@@ -56,7 +60,34 @@ public class GetAlbumByIdHandlerTests(SqlServerContainerFixture fixture)
         response.IsOnSale.Should().BeTrue();
         response.IsInStock.Should().BeTrue();
         response.Artists.Select(a => a.Name).Should().Equal("Alpha Band", "Zeta Band");
+        response
+            .Artists.Select(a => a.Sqid)
+            .Should()
+            .Equal(ArtistSqids.Encode(alphaBand.Id.Value), ArtistSqids.Encode(zetaBand.Id.Value));
         response.Genres.Select(g => g.Name).Should().Equal("Ambient", "Rock");
+    }
+
+    [Fact]
+    public async Task Handle_AlbumNotOnSaleAndOutOfStock_DerivesFalseForBothFlags()
+    {
+        var album = new Album
+        {
+            Title = "Full Price Out Of Stock",
+            PriceInPence = 1000,
+            OriginalPriceInPence = null,
+            UnitsInStock = 0,
+        };
+
+        DbContext.Albums.Add(album);
+        await DbContext.SaveChangesAsync(TestContext.Current.CancellationToken);
+
+        var result = await Handler.Handle(
+            new GetAlbumByIdQuery(AlbumSqids.Encode(album.Id.Value)),
+            CancellationToken.None
+        );
+
+        result.Value.IsOnSale.Should().BeFalse();
+        result.Value.IsInStock.Should().BeFalse();
     }
 
     [Theory]
