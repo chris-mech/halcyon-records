@@ -12,8 +12,7 @@ public sealed class GetAlbumsHandler(
     ApplicationDbContext dbContext,
     AlbumSqidEncoder albumSqids,
     ArtistSqidEncoder artistSqids
-)
-    : IRequestHandler<GetAlbumsQuery, ErrorOr<PagedResult<AlbumSummaryResponse>>>
+) : IRequestHandler<GetAlbumsQuery, ErrorOr<PagedResult<AlbumSummaryResponse>>>
 {
     public async Task<ErrorOr<PagedResult<AlbumSummaryResponse>>> Handle(
         GetAlbumsQuery query,

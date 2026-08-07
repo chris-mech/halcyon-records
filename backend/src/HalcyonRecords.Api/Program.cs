@@ -1,3 +1,4 @@
+using System.Diagnostics;
 using FluentValidation;
 using HalcyonRecords.Api.Common;
 using HalcyonRecords.Api.Common.Behaviours;
@@ -7,7 +8,6 @@ using HalcyonRecords.Api.Common.Sqids;
 using HalcyonRecords.Api.Infrastructure;
 using HalcyonRecords.Api.Infrastructure.Seed;
 using Microsoft.EntityFrameworkCore;
-using System.Diagnostics;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.AddServiceDefaults();
