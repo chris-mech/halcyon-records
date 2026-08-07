@@ -11,6 +11,7 @@ public class GetRelatedAlbumsHandlerTests(SqlServerContainerFixture fixture)
     : IntegrationTestBase(fixture)
 {
     private static readonly AlbumSqidEncoder AlbumSqids = new();
+    private static readonly ArtistSqidEncoder ArtistSqids = new();
 
     private const int MaxResults = 4;
 
@@ -115,6 +116,53 @@ public class GetRelatedAlbumsHandlerTests(SqlServerContainerFixture fixture)
         titles.Should().HaveCount(MaxResults);
         titles.Should().Contain(genreMatches.Select(a => a.Title));
         titles.Intersect(artistMatches.Select(a => a.Title)).Should().HaveCount(remainingSlots);
+
+        var albumsByTitle = albums.ToDictionary(a => a.Title);
+        foreach (var item in result.Value)
+        {
+            item.Sqid.Should().Be(AlbumSqids.Encode(albumsByTitle[item.Title].Id.Value));
+            item.IsOnSale.Should().BeFalse();
+            item.IsInStock.Should().BeFalse();
+        }
+
+        var pickedArtistMatch = result.Value.First(a => artistMatches.Any(m => m.Title == a.Title));
+        pickedArtistMatch.Artists.Should().ContainSingle();
+        pickedArtistMatch.Artists[0].Name.Should().Be("Rare Artist");
+        pickedArtistMatch.Artists[0].Sqid.Should().Be(ArtistSqids.Encode(rareArtist.Id.Value));
+    }
+
+    [Fact]
+    public async Task Handle_CandidateMatchingBothGenreAndArtist_AppearsOnlyOnce()
+    {
+        var sharedGenre = NewGenre("Overlap Genre", "overlap-genre");
+        var sharedArtist = NewArtist("Overlap Artist");
+
+        var current = NewAlbum("Current Album");
+        Link(current, sharedGenre);
+        Link(current, sharedArtist);
+
+        var bothMatch = NewAlbum("Both Match");
+        Link(bothMatch, sharedGenre);
+        Link(bothMatch, sharedArtist);
+
+        var genreOnlyMatches = new[] { NewAlbum("Genre Only 1"), NewAlbum("Genre Only 2") };
+        foreach (var album in genreOnlyMatches)
+        {
+            Link(album, sharedGenre);
+        }
+
+        List<Album> albums = [current, bothMatch, .. genreOnlyMatches];
+        DbContext.Albums.AddRange(albums);
+        await DbContext.SaveChangesAsync(TestContext.Current.CancellationToken);
+
+        var result = await Handler.Handle(
+            new GetRelatedAlbumsQuery(AlbumSqids.Encode(current.Id.Value)),
+            CancellationToken.None
+        );
+
+        result.Value.Should().HaveCount(3);
+        result.Value.Select(a => a.Sqid).Should().OnlyHaveUniqueItems();
+        result.Value.Should().ContainSingle(a => a.Title == "Both Match");
     }
 
     [Fact]
