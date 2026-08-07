@@ -50,6 +50,7 @@ public sealed class GetAlbumByIdHandler(
             album.IsNew,
             album.OriginalPriceInPence is not null,
             album.IsStaffPick,
+            album.UnitsInStock,
             album.UnitsInStock > 0,
             album
                 .AlbumArtists.OrderBy(aa => aa.Artist.Name)

@@ -13,6 +13,7 @@ public sealed record AlbumDetailResponse(
     bool IsNew,
     bool IsOnSale,
     bool IsStaffPick,
+    int UnitsInStock,
     bool IsInStock,
     IReadOnlyList<AlbumDetailArtistResponse> Artists,
     IReadOnlyList<AlbumDetailGenreResponse> Genres
