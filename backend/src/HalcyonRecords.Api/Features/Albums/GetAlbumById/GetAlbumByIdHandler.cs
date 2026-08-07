@@ -30,6 +30,7 @@ public sealed class GetAlbumByIdHandler(
                 .ThenInclude(aa => aa.Artist)
             .Include(a => a.AlbumGenres)
                 .ThenInclude(ag => ag.Genre)
+            .AsSplitQuery()
             .FirstOrDefaultAsync(a => a.Id == new AlbumId(id), cancellationToken);
 
         if (album is null)

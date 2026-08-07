@@ -96,6 +96,7 @@ public sealed class GetAlbumsHandler(
                     .AlbumGenres.OrderBy(ag => ag.Genre.Name)
                     .Select(ag => new { ag.Genre.Name, ag.Genre.Slug }),
             })
+            .AsSplitQuery()
             .ToListAsync(cancellationToken);
 
         var items = page.Select(a => new AlbumSummaryResponse(
