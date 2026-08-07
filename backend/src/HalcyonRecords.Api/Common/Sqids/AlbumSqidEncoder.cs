@@ -14,5 +14,13 @@ public sealed class AlbumSqidEncoder
 
     public string Encode(int id) => _encoder.Encode(id);
 
-    public int? Decode(string sqid) => _encoder.Decode(sqid) is [var id] ? id : null;
+    public int? Decode(string sqid)
+    {
+        if (_encoder.Decode(sqid) is not [var id])
+        {
+            return null;
+        }
+
+        return _encoder.Encode(id) == sqid ? id : null;
+    }
 }
