@@ -38,42 +38,6 @@ public static class ErrorOrHttpExtensions
                 title: title
             );
         }
-
-        public Results<TSuccess1, TSuccess2, ProblemHttpResult, ValidationProblem> Problem<
-            TSuccess1,
-            TSuccess2
-        >()
-            where TSuccess1 : IResult
-            where TSuccess2 : IResult
-        {
-            if (errors.Count == 0)
-            {
-                throw new InvalidOperationException(
-                    "Problem() was called with an empty error list."
-                );
-            }
-
-            if (errors.All(error => error.Type == ErrorType.Validation))
-            {
-                var validationErrors = errors
-                    .GroupBy(error => error.Code)
-                    .ToDictionary(
-                        group => group.Key,
-                        group => group.Select(error => error.Description).ToArray()
-                    );
-
-                return TypedResults.ValidationProblem(validationErrors);
-            }
-
-            var firstError = errors[0];
-            var (statusCode, title) = firstError.Type.ToProblemDetailsParts();
-
-            return TypedResults.Problem(
-                detail: firstError.Description,
-                statusCode: statusCode,
-                title: title
-            );
-        }
     }
 
     extension(ErrorType errorType)

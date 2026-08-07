@@ -11,19 +11,9 @@ public sealed class GetAlbumByIdEndpoint : IEndpoint
     public void MapEndpoint(IEndpointRouteBuilder app)
     {
         app.MapGet(
-                "/albums/{sqid}/{titleSlug?}",
-                async Task<
-                    Results<
-                        Ok<AlbumDetailResponse>,
-                        RedirectHttpResult,
-                        ProblemHttpResult,
-                        ValidationProblem
-                    >
-                > (
+                "/albums/{sqid}",
+                async Task<Results<Ok<AlbumDetailResponse>, ProblemHttpResult, ValidationProblem>> (
                     string sqid,
-                    string? titleSlug,
-                    LinkGenerator linkGenerator,
-                    HttpContext httpContext,
                     ISender sender
                 ) =>
                 {
@@ -32,28 +22,10 @@ public sealed class GetAlbumByIdEndpoint : IEndpoint
                     );
 
                     return result.Match<
-                        Results<
-                            Ok<AlbumDetailResponse>,
-                            RedirectHttpResult,
-                            ProblemHttpResult,
-                            ValidationProblem
-                        >
+                        Results<Ok<AlbumDetailResponse>, ProblemHttpResult, ValidationProblem>
                     >(
-                        response =>
-                            titleSlug == response.TitleSlug
-                                ? TypedResults.Ok(response)
-                                : TypedResults.Redirect(
-                                    linkGenerator.GetPathByName(
-                                        httpContext,
-                                        "GetAlbumById",
-                                        new { sqid = response.Sqid, titleSlug = response.TitleSlug }
-                                    )
-                                        ?? throw new InvalidOperationException(
-                                            "Could not generate the canonical album URL."
-                                        ),
-                                    permanent: true
-                                ),
-                        errors => errors.Problem<Ok<AlbumDetailResponse>, RedirectHttpResult>()
+                        response => TypedResults.Ok(response),
+                        errors => errors.Problem<Ok<AlbumDetailResponse>>()
                     );
                 }
             )
