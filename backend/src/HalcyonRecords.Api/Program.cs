@@ -3,6 +3,7 @@ using FluentValidation;
 using HalcyonRecords.Api.Common;
 using HalcyonRecords.Api.Common.Behaviours;
 using HalcyonRecords.Api.Common.Endpoints;
+using HalcyonRecords.Api.Common.OpenApi;
 using HalcyonRecords.Api.Common.RateLimiting;
 using HalcyonRecords.Api.Common.Sqids;
 using HalcyonRecords.Api.Infrastructure;
@@ -40,7 +41,10 @@ builder.Services.AddProblemDetails(options =>
 builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
 
 builder.Services.AddApiRateLimiting(builder.Configuration);
-builder.Services.AddOpenApi();
+builder.Services.AddOpenApi(options =>
+{
+    options.AddSchemaTransformer<IntegerSchemaTransformer>();
+});
 
 var app = builder.Build();
 
