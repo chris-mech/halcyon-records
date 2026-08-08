@@ -21,7 +21,11 @@ interface WordmarkProps extends VariantProps<typeof wordmarkVariants> {
 
 function Wordmark({ variant = "header", className }: WordmarkProps) {
   return (
-    <Link href="/" data-slot="wordmark" className={cn("flex flex-col", className)}>
+    <Link
+      href="/"
+      data-slot="wordmark"
+      className={cn("flex flex-col", className)}
+    >
       <span className={cn(wordmarkVariants({ variant }))}>Halcyon Records</span>
       {variant === "header" && (
         <span className="mt-1 text-[0.5625rem] font-semibold tracking-[0.2em] text-slate-muted uppercase">

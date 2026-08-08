@@ -16,8 +16,8 @@ export default function NotFound() {
             This side&apos;s blank
           </h1>
           <p className="mx-auto mb-10 max-w-100 text-sm leading-[1.7] text-muted">
-            Whatever you were looking for isn&apos;t here — maybe it got
-            filed under the wrong genre, or maybe it never existed at all.
+            Whatever you were looking for isn&apos;t here — maybe it got filed
+            under the wrong genre, or maybe it never existed at all.
           </p>
           <div className="flex justify-center gap-3.5">
             <Link
