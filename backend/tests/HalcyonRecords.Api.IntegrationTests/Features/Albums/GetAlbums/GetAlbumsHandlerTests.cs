@@ -28,6 +28,7 @@ public class GetAlbumsHandlerTests(SqlServerContainerFixture fixture) : Integrat
 
         var item = result.Value.Items.Should().ContainSingle().Subject;
         item.Artists.Select(a => a.Name).Should().BeEquivalentTo("Artist One", "Artist Two");
+        item.Artists.Select(a => a.NameSlug).Should().BeEquivalentTo("artist-one", "artist-two");
         item.Genres.Select(g => g.Slug).Should().BeEquivalentTo("genre-one", "genre-two");
     }
 

@@ -57,7 +57,8 @@ public sealed class GetAlbumByIdHandler(
                 .AlbumArtists.OrderBy(aa => aa.Artist.Name)
                 .Select(aa => new AlbumDetailArtistResponse(
                     artistSqids.Encode(aa.Artist.Id.Value),
-                    aa.Artist.Name
+                    aa.Artist.Name,
+                    Slugifier.Slugify(aa.Artist.Name)
                 ))
                 .ToList(),
             album

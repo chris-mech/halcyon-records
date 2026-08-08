@@ -129,6 +129,7 @@ public class GetRelatedAlbumsHandlerTests(SqlServerContainerFixture fixture)
         pickedArtistMatch.Artists.Should().ContainSingle();
         pickedArtistMatch.Artists[0].Name.Should().Be("Rare Artist");
         pickedArtistMatch.Artists[0].Sqid.Should().Be(ArtistSqids.Encode(rareArtist.Id.Value));
+        pickedArtistMatch.Artists[0].NameSlug.Should().Be("rare-artist");
     }
 
     [Fact]

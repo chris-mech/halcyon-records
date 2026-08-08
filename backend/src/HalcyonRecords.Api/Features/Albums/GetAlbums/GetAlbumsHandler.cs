@@ -113,7 +113,8 @@ public sealed class GetAlbumsHandler(
                 a.IsInStock,
                 a.Artists.Select(artist => new AlbumArtistResponse(
                         artistSqids.Encode(artist.Id.Value),
-                        artist.Name
+                        artist.Name,
+                        Slugifier.Slugify(artist.Name)
                     ))
                     .ToList(),
                 a.Genres.Select(genre => new AlbumGenreResponse(genre.Name, genre.Slug)).ToList()
