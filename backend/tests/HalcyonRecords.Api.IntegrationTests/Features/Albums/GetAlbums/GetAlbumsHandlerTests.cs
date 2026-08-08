@@ -3,12 +3,15 @@ using HalcyonRecords.Api.Common.Sqids;
 using HalcyonRecords.Api.Domain;
 using HalcyonRecords.Api.Features.Albums.GetAlbums;
 using HalcyonRecords.Api.IntegrationTests.Common;
-using Sqids;
+using HalcyonRecords.Shared;
 
 namespace HalcyonRecords.Api.IntegrationTests.Features.Albums.GetAlbums;
 
 public class GetAlbumsHandlerTests(SqlServerContainerFixture fixture) : IntegrationTestBase(fixture)
 {
+    private static readonly AlbumSqidEncoder AlbumSqids = new();
+    private static readonly ArtistSqidEncoder ArtistSqids = new();
+
     private GetAlbumsHandler Handler =>
         new(DbContext, new AlbumSqidEncoder(), new ArtistSqidEncoder());
 
@@ -16,8 +19,10 @@ public class GetAlbumsHandlerTests(SqlServerContainerFixture fixture) : Integrat
     public async Task Handle_AlbumWithMultipleArtistsAndGenres_ReturnsAllOfThemNested()
     {
         var album = NewAlbum("Full Detail Album");
-        Link(album, NewArtist("Artist One"));
-        Link(album, NewArtist("Artist Two"));
+        var artistOne = NewArtist("Artist One");
+        var artistTwo = NewArtist("Artist Two");
+        Link(album, artistOne);
+        Link(album, artistTwo);
         Link(album, NewGenre("Genre One", "genre-one"));
         Link(album, NewGenre("Genre Two", "genre-two"));
 
@@ -27,8 +32,16 @@ public class GetAlbumsHandlerTests(SqlServerContainerFixture fixture) : Integrat
         var result = await Handler.Handle(CreateQuery(), CancellationToken.None);
 
         var item = result.Value.Items.Should().ContainSingle().Subject;
+        item.Sqid.Should().Be(AlbumSqids.Encode(album.Id.Value));
+        item.TitleSlug.Should().Be(Slugifier.Slugify("Full Detail Album"));
         item.Artists.Select(a => a.Name).Should().BeEquivalentTo("Artist One", "Artist Two");
         item.Artists.Select(a => a.NameSlug).Should().BeEquivalentTo("artist-one", "artist-two");
+        item.Artists.Select(a => a.Sqid)
+            .Should()
+            .BeEquivalentTo(
+                ArtistSqids.Encode(artistOne.Id.Value),
+                ArtistSqids.Encode(artistTwo.Id.Value)
+            );
         item.Genres.Select(g => g.Slug).Should().BeEquivalentTo("genre-one", "genre-two");
     }
 

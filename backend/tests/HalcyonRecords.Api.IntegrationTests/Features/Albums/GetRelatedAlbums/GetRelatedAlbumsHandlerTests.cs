@@ -4,6 +4,7 @@ using HalcyonRecords.Api.Common.Sqids;
 using HalcyonRecords.Api.Domain;
 using HalcyonRecords.Api.Features.Albums.GetRelatedAlbums;
 using HalcyonRecords.Api.IntegrationTests.Common;
+using HalcyonRecords.Shared;
 
 namespace HalcyonRecords.Api.IntegrationTests.Features.Albums.GetRelatedAlbums;
 
@@ -121,6 +122,7 @@ public class GetRelatedAlbumsHandlerTests(SqlServerContainerFixture fixture)
         foreach (var item in result.Value)
         {
             item.Sqid.Should().Be(AlbumSqids.Encode(albumsByTitle[item.Title].Id.Value));
+            item.TitleSlug.Should().Be(Slugifier.Slugify(item.Title));
             item.IsOnSale.Should().BeFalse();
             item.IsInStock.Should().BeFalse();
         }
