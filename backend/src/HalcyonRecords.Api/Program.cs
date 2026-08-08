@@ -40,6 +40,7 @@ builder.Services.AddProblemDetails(options =>
 builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
 
 builder.Services.AddApiRateLimiting(builder.Configuration);
+builder.Services.AddOpenApi();
 
 var app = builder.Build();
 
@@ -49,6 +50,8 @@ if (app.Environment.IsDevelopment())
     var dbContext = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
     await dbContext.Database.MigrateAsync();
     await DbSeeder.SeedAsync(dbContext);
+
+    app.MapOpenApi();
 }
 
 app.UseExceptionHandler();
