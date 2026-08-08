@@ -11,8 +11,8 @@ const manrope = Manrope({
 const fraunces = Fraunces({
   variable: "--font-fraunces",
   subsets: ["latin"],
-  weight: ["500"],
-  style: ["italic"],
+  weight: ["500", "600"],
+  style: ["italic", "normal"],
 });
 
 const bigShoulders = Big_Shoulders({
