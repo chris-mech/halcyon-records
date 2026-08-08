@@ -8,6 +8,6 @@ function Greeting() {
 test("renders and queries the DOM", () => {
   render(<Greeting />);
   expect(
-    screen.getByRole("heading", { name: "Halcyon Records" })
+    screen.getByRole("heading", { name: "Halcyon Records" }),
   ).toBeInTheDocument();
 });
