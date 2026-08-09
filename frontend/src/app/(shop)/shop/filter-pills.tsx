@@ -1,6 +1,6 @@
 import Link from "next/link";
 
-import { Button } from "@/components/ui/button";
+import { buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 
 import { buildShopHref, type ShopFilters } from "./search-params";
@@ -27,44 +27,36 @@ function FilterPills({ filters }: FilterPillsProps) {
 
   return (
     <div className="flex flex-wrap gap-2.5">
-      <Button
-        variant="outline"
-        render={
-          <Link
-            href={buildShopHref(filters, {
-              isNew: false,
-              isOnSale: false,
-              isStaffPick: false,
-            })}
-            aria-current={isAllActive ? "true" : undefined}
-          />
-        }
+      <Link
+        href={buildShopHref(filters, {
+          isNew: false,
+          isOnSale: false,
+          isStaffPick: false,
+        })}
+        aria-current={isAllActive ? "true" : undefined}
         className={cn(
+          buttonVariants({ variant: "outline" }),
           pillClassName,
           isAllActive ? activeClassName : inactiveClassName,
         )}
       >
         All
-      </Button>
+      </Link>
       {TOGGLE_PILLS.map(({ key, label }) => {
         const active = filters[key];
         return (
-          <Button
+          <Link
             key={key}
-            variant="outline"
-            render={
-              <Link
-                href={buildShopHref(filters, { [key]: !active })}
-                aria-current={active ? "true" : undefined}
-              />
-            }
+            href={buildShopHref(filters, { [key]: !active })}
+            aria-current={active ? "true" : undefined}
             className={cn(
+              buttonVariants({ variant: "outline" }),
               pillClassName,
               active ? activeClassName : inactiveClassName,
             )}
           >
             {label}
-          </Button>
+          </Link>
         );
       })}
     </div>

@@ -1,8 +1,9 @@
 import Link from "next/link";
 
-import { Button } from "@/components/ui/button";
+import { buttonVariants } from "@/components/ui/button";
 import { Header } from "@/components/header";
 import { Footer } from "@/components/footer";
+import { cn } from "@/lib/utils";
 
 export default function NotFound() {
   return (
@@ -21,21 +22,24 @@ export default function NotFound() {
             under the wrong genre, or maybe it never existed at all.
           </p>
           <div className="flex justify-center gap-3.5">
-            <Button
-              render={<Link href="/shop" />}
-              nativeButton={false}
-              className="h-auto px-7.5 py-3.5 text-[0.8125rem] font-bold tracking-wide uppercase"
+            <Link
+              href="/shop"
+              className={cn(
+                buttonVariants(),
+                "h-auto px-7.5 py-3.5 text-[0.8125rem] font-bold tracking-wide uppercase",
+              )}
             >
               Back to shop
-            </Button>
-            <Button
-              variant="outline"
-              render={<Link href="/" />}
-              nativeButton={false}
-              className="h-auto border-ink px-7.5 py-3.5 text-[0.8125rem] font-bold tracking-wide text-ink uppercase"
+            </Link>
+            <Link
+              href="/"
+              className={cn(
+                buttonVariants({ variant: "outline" }),
+                "h-auto border-ink px-7.5 py-3.5 text-[0.8125rem] font-bold tracking-wide text-ink uppercase",
+              )}
             >
               Go home
-            </Button>
+            </Link>
           </div>
         </div>
       </main>

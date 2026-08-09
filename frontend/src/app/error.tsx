@@ -3,9 +3,10 @@
 import { useEffect } from "react";
 import Link from "next/link";
 
-import { Button } from "@/components/ui/button";
+import { Button, buttonVariants } from "@/components/ui/button";
 import { Header } from "@/components/header";
 import { Footer } from "@/components/footer";
+import { cn } from "@/lib/utils";
 
 export default function Error({
   error,
@@ -38,14 +39,15 @@ export default function Error({
             >
               Try again
             </Button>
-            <Button
-              variant="outline"
-              render={<Link href="/" />}
-              nativeButton={false}
-              className="h-auto border-ink px-7.5 py-3.5 text-[0.8125rem] font-bold tracking-wide text-ink uppercase"
+            <Link
+              href="/"
+              className={cn(
+                buttonVariants({ variant: "outline" }),
+                "h-auto border-ink px-7.5 py-3.5 text-[0.8125rem] font-bold tracking-wide text-ink uppercase",
+              )}
             >
               Go home
-            </Button>
+            </Link>
           </div>
         </div>
       </main>

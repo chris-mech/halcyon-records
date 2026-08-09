@@ -1,6 +1,6 @@
 import Link from "next/link";
 
-import { Button } from "@/components/ui/button";
+import { buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 
 import { buildShopHref, type ShopFilters } from "./search-params";
@@ -54,14 +54,16 @@ function Pagination({ filters, totalPages }: PaginationProps) {
       className="flex flex-wrap items-center gap-2.5"
     >
       {current > 1 && (
-        <Button
-          variant="outline"
-          render={<Link href={buildShopHref(filters, { page: current - 1 })} />}
-          nativeButton={false}
-          className={cn(pagerTextClassName, "bg-paper px-4 text-ink")}
+        <Link
+          href={buildShopHref(filters, { page: current - 1 })}
+          className={cn(
+            buttonVariants({ variant: "outline" }),
+            pagerTextClassName,
+            "bg-paper px-4 text-ink",
+          )}
         >
           ← Prev
-        </Button>
+        </Link>
       )}
       {getPageNumbers(current, totalPages).map((page, index) =>
         page === "ellipsis" ? (
@@ -72,35 +74,31 @@ function Pagination({ filters, totalPages }: PaginationProps) {
             …
           </span>
         ) : (
-          <Button
+          <Link
             key={page}
-            variant="outline"
-            size="icon"
-            render={
-              <Link
-                href={buildShopHref(filters, { page })}
-                aria-current={page === current ? "page" : undefined}
-              />
-            }
-            nativeButton={false}
+            href={buildShopHref(filters, { page })}
+            aria-current={page === current ? "page" : undefined}
             className={cn(
+              buttonVariants({ variant: "outline", size: "icon" }),
               pagerTextClassName,
               page === current ? activePageClassName : inactivePageClassName,
             )}
           >
             {page}
-          </Button>
+          </Link>
         ),
       )}
       {current < totalPages && (
-        <Button
-          variant="outline"
-          render={<Link href={buildShopHref(filters, { page: current + 1 })} />}
-          nativeButton={false}
-          className={cn(pagerTextClassName, "bg-paper px-4 text-ink")}
+        <Link
+          href={buildShopHref(filters, { page: current + 1 })}
+          className={cn(
+            buttonVariants({ variant: "outline" }),
+            pagerTextClassName,
+            "bg-paper px-4 text-ink",
+          )}
         >
           Next →
-        </Button>
+        </Link>
       )}
     </nav>
   );
