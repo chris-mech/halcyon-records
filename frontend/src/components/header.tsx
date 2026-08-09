@@ -2,6 +2,7 @@ import Link from "next/link";
 import { Search } from "lucide-react";
 
 import { Wordmark } from "@/components/wordmark";
+import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 
 const navLinks = [
@@ -60,12 +61,12 @@ function Header({ variant = "full" }: HeaderProps) {
               Log in
             </Link>
             {/* Static until the cart store lands in Slice 7 */}
-            <Link
-              href="/cart"
-              className="bg-rust px-4.5 py-2.25 text-xs font-bold tracking-wide text-paper uppercase"
+            <Button
+              render={<Link href="/cart" />}
+              className="h-auto px-4.5 py-2.25 text-xs font-bold tracking-wide uppercase"
             >
               Bag (0)
-            </Link>
+            </Button>
           </div>
         </>
       ) : (

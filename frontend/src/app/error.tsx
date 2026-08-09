@@ -3,6 +3,7 @@
 import { useEffect } from "react";
 import Link from "next/link";
 
+import { Button } from "@/components/ui/button";
 import { Header } from "@/components/header";
 import { Footer } from "@/components/footer";
 
@@ -30,19 +31,20 @@ export default function Error({
             rendering. Trying again usually fixes it.
           </p>
           <div className="flex justify-center gap-3.5">
-            <button
+            <Button
               type="button"
               onClick={reset}
-              className="bg-rust px-7.5 py-3.5 text-[0.8125rem] font-bold tracking-wide text-paper uppercase"
+              className="h-auto px-7.5 py-3.5 text-[0.8125rem] font-bold tracking-wide uppercase"
             >
               Try again
-            </button>
-            <Link
-              href="/"
-              className="border border-ink px-7.5 py-3.5 text-[0.8125rem] font-bold tracking-wide text-ink uppercase"
+            </Button>
+            <Button
+              variant="outline"
+              render={<Link href="/" />}
+              className="h-auto border-ink px-7.5 py-3.5 text-[0.8125rem] font-bold tracking-wide text-ink uppercase"
             >
               Go home
-            </Link>
+            </Button>
           </div>
         </div>
       </main>

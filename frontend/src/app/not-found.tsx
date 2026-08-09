@@ -1,5 +1,6 @@
 import Link from "next/link";
 
+import { Button } from "@/components/ui/button";
 import { Header } from "@/components/header";
 import { Footer } from "@/components/footer";
 
@@ -20,18 +21,19 @@ export default function NotFound() {
             under the wrong genre, or maybe it never existed at all.
           </p>
           <div className="flex justify-center gap-3.5">
-            <Link
-              href="/shop"
-              className="bg-rust px-7.5 py-3.5 text-[0.8125rem] font-bold tracking-wide text-paper uppercase"
+            <Button
+              render={<Link href="/shop" />}
+              className="h-auto px-7.5 py-3.5 text-[0.8125rem] font-bold tracking-wide uppercase"
             >
               Back to shop
-            </Link>
-            <Link
-              href="/"
-              className="border border-ink px-7.5 py-3.5 text-[0.8125rem] font-bold tracking-wide text-ink uppercase"
+            </Button>
+            <Button
+              variant="outline"
+              render={<Link href="/" />}
+              className="h-auto border-ink px-7.5 py-3.5 text-[0.8125rem] font-bold tracking-wide text-ink uppercase"
             >
               Go home
-            </Link>
+            </Button>
           </div>
         </div>
       </main>
