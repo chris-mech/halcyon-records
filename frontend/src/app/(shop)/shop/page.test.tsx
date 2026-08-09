@@ -32,6 +32,28 @@ const album: AlbumSummary = {
   genres: [{ name: "Rock", slug: "rock" }],
 };
 
+const secondAlbum: AlbumSummary = {
+  sqid: "def456",
+  title: "Second Loaded Album",
+  titleSlug: "second-loaded-album",
+  imageUrl: null,
+  releaseDate: "2024-03-01",
+  priceInPence: 1899,
+  originalPriceInPence: null,
+  isNew: false,
+  isOnSale: false,
+  isStaffPick: false,
+  isInStock: true,
+  artists: [
+    {
+      sqid: "art2",
+      name: "Second Loaded Artist",
+      nameSlug: "second-loaded-artist",
+    },
+  ],
+  genres: [{ name: "Rock", slug: "rock" }],
+};
+
 function renderPage(searchParams: Record<string, string | string[]> = {}) {
   return ShopPage({
     params: Promise.resolve({}),
@@ -55,10 +77,28 @@ describe("ShopPage", () => {
 
     render(await renderPage());
 
-    expect(screen.getByText("1 records")).toBeInTheDocument();
+    expect(screen.getByText("1 record")).toBeInTheDocument();
     expect(
       screen.getByRole("link", { name: "Loaded Album" }),
     ).toBeInTheDocument();
+  });
+
+  test("pluralizes the record count for more than one album", async () => {
+    vi.mocked(client.GET).mockResolvedValue({
+      data: {
+        items: [album, secondAlbum],
+        page: 1,
+        pageSize: 12,
+        totalCount: 2,
+        totalPages: 1,
+      },
+      error: undefined,
+      response: new Response(),
+    });
+
+    render(await renderPage());
+
+    expect(screen.getByText("2 records")).toBeInTheDocument();
   });
 
   test("shows the empty-state message when no albums match", async () => {
