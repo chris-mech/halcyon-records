@@ -41,6 +41,7 @@ export default function Error({
             <Button
               variant="outline"
               render={<Link href="/" />}
+              nativeButton={false}
               className="h-auto border-ink px-7.5 py-3.5 text-[0.8125rem] font-bold tracking-wide text-ink uppercase"
             >
               Go home

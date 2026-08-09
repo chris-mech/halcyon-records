@@ -63,6 +63,7 @@ function Header({ variant = "full" }: HeaderProps) {
             {/* Static until the cart store lands in Slice 7 */}
             <Button
               render={<Link href="/cart" />}
+              nativeButton={false}
               className="h-auto px-4.5 py-2.25 text-xs font-bold tracking-wide uppercase"
             >
               Bag (0)

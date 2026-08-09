@@ -23,6 +23,7 @@ export default function NotFound() {
           <div className="flex justify-center gap-3.5">
             <Button
               render={<Link href="/shop" />}
+              nativeButton={false}
               className="h-auto px-7.5 py-3.5 text-[0.8125rem] font-bold tracking-wide uppercase"
             >
               Back to shop
@@ -30,6 +31,7 @@ export default function NotFound() {
             <Button
               variant="outline"
               render={<Link href="/" />}
+              nativeButton={false}
               className="h-auto border-ink px-7.5 py-3.5 text-[0.8125rem] font-bold tracking-wide text-ink uppercase"
             >
               Go home
