@@ -53,13 +53,5 @@
     "typescript": "^5",
     "vitest": "^4.1.10"
   },
-  "ignoreScripts": [
-    "sharp",
-    "unrs-resolver"
-  ],
-  "trustedDependencies": [
-    "msw",
-    "sharp",
-    "unrs-resolver"
-  ]
+  "trustedDependencies": []
 }
