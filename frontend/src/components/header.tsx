@@ -2,7 +2,9 @@ import Link from "next/link";
 import { Search } from "lucide-react";
 
 import { Wordmark } from "@/components/wordmark";
+import { buttonVariants } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { cn } from "@/lib/utils";
 
 const navLinks = [
   { href: "/shop", label: "Shop" },
@@ -62,7 +64,10 @@ function Header({ variant = "full" }: HeaderProps) {
             {/* Static until the cart store lands in Slice 7 */}
             <Link
               href="/cart"
-              className="bg-rust px-4.5 py-2.25 text-xs font-bold tracking-wide text-paper uppercase"
+              className={cn(
+                buttonVariants(),
+                "h-auto px-4.5 py-2.25 text-xs font-bold tracking-wide uppercase",
+              )}
             >
               Bag (0)
             </Link>

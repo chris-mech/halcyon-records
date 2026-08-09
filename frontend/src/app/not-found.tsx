@@ -1,7 +1,9 @@
 import Link from "next/link";
 
+import { buttonVariants } from "@/components/ui/button";
 import { Header } from "@/components/header";
 import { Footer } from "@/components/footer";
+import { cn } from "@/lib/utils";
 
 export default function NotFound() {
   return (
@@ -15,20 +17,26 @@ export default function NotFound() {
           <h1 className="mb-3.5 font-serif text-[1.625rem] font-medium italic">
             This side&apos;s blank
           </h1>
-          <p className="mx-auto mb-10 max-w-100 text-sm leading-[1.7] text-muted">
+          <p className="mx-auto mb-10 max-w-100 text-sm leading-relaxed text-muted-foreground">
             Whatever you were looking for isn&apos;t here — maybe it got filed
             under the wrong genre, or maybe it never existed at all.
           </p>
           <div className="flex justify-center gap-3.5">
             <Link
               href="/shop"
-              className="bg-rust px-7.5 py-3.5 text-[0.8125rem] font-bold tracking-wide text-paper uppercase"
+              className={cn(
+                buttonVariants(),
+                "h-auto px-7.5 py-3.5 text-[0.8125rem] font-bold tracking-wide uppercase",
+              )}
             >
               Back to shop
             </Link>
             <Link
               href="/"
-              className="border border-ink px-7.5 py-3.5 text-[0.8125rem] font-bold tracking-wide text-ink uppercase"
+              className={cn(
+                buttonVariants({ variant: "outline" }),
+                "h-auto border-ink px-7.5 py-3.5 text-[0.8125rem] font-bold tracking-wide text-ink uppercase",
+              )}
             >
               Go home
             </Link>

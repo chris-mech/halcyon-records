@@ -19,6 +19,6 @@ public sealed record AlbumDetailResponse(
     IReadOnlyList<AlbumDetailGenreResponse> Genres
 );
 
-public sealed record AlbumDetailArtistResponse(string Sqid, string Name);
+public sealed record AlbumDetailArtistResponse(string Sqid, string Name, string NameSlug);
 
 public sealed record AlbumDetailGenreResponse(string Name, string Slug);

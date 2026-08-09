@@ -1,0 +1,63 @@
+import { client } from "@/lib/api/client";
+import { ProductCard } from "@/components/product-card";
+
+import { FilterPills } from "./filter-pills";
+import { Pagination } from "./pagination";
+import { PAGE_SIZE, parseShopFilters } from "./search-params";
+import { SortSelect } from "./sort-select";
+
+export default async function ShopPage(props: PageProps<"/shop">) {
+  const filters = parseShopFilters(await props.searchParams);
+
+  const { data, error } = await client.GET("/api/albums", {
+    params: {
+      query: {
+        page: filters.page,
+        pageSize: PAGE_SIZE,
+        isNew: filters.isNew,
+        isOnSale: filters.isOnSale,
+        isStaffPick: filters.isStaffPick,
+        genres: filters.genres,
+        sort: filters.sort,
+      },
+    },
+  });
+
+  if (error) {
+    throw new Error("Failed to load albums.");
+  }
+
+  const totalPages = data.totalPages ?? Math.ceil(data.totalCount / PAGE_SIZE);
+
+  return (
+    <div className="flex flex-col gap-8 px-16 py-12">
+      <div className="flex items-baseline justify-between">
+        <h1 className="font-heading text-4xl font-black uppercase">
+          All records
+        </h1>
+        <span className="text-sm text-muted-foreground">
+          {data.totalCount} {data.totalCount === 1 ? "record" : "records"}
+        </span>
+      </div>
+
+      <div className="flex flex-wrap items-center justify-between gap-4">
+        <FilterPills filters={filters} />
+        <SortSelect filters={filters} />
+      </div>
+
+      {data.items.length === 0 ? (
+        <p className="text-sm text-muted-foreground">
+          No records match these filters.
+        </p>
+      ) : (
+        <div className="grid grid-cols-2 gap-6 sm:grid-cols-3 lg:grid-cols-4">
+          {data.items.map((album) => (
+            <ProductCard key={album.sqid} album={album} />
+          ))}
+        </div>
+      )}
+
+      <Pagination filters={filters} totalPages={totalPages} />
+    </div>
+  );
+}

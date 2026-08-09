@@ -131,7 +131,8 @@ public sealed class GetRelatedAlbumsHandler(
                 a.IsInStock,
                 a.Artists.Select(artist => new RelatedAlbumArtistResponse(
                         artistSqids.Encode(artist.Id.Value),
-                        artist.Name
+                        artist.Name,
+                        Slugifier.Slugify(artist.Name)
                     ))
                     .ToList(),
                 a.Genres.Select(genre => new RelatedAlbumGenreResponse(genre.Name, genre.Slug))

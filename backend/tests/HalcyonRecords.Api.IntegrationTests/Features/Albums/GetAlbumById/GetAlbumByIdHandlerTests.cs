@@ -64,6 +64,7 @@ public class GetAlbumByIdHandlerTests(SqlServerContainerFixture fixture)
             .Artists.Select(a => a.Sqid)
             .Should()
             .Equal(ArtistSqids.Encode(alphaBand.Id.Value), ArtistSqids.Encode(zetaBand.Id.Value));
+        response.Artists.Select(a => a.NameSlug).Should().Equal("alpha-band", "zeta-band");
         response.Genres.Select(g => g.Name).Should().Equal("Ambient", "Rock");
     }
 
