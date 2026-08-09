@@ -9,8 +9,8 @@ type AlbumSummary = components["schemas"]["AlbumSummaryResponse"];
 function buildAlbum(overrides: Partial<AlbumSummary> = {}): AlbumSummary {
   return {
     sqid: "abc123",
-    title: "Low Orbit",
-    titleSlug: "low-orbit",
+    title: "Base Album",
+    titleSlug: "base-album",
     imageUrl: null,
     releaseDate: "2024-03-01",
     priceInPence: 2400,
@@ -19,7 +19,7 @@ function buildAlbum(overrides: Partial<AlbumSummary> = {}): AlbumSummary {
     isOnSale: false,
     isStaffPick: false,
     isInStock: true,
-    artists: [{ sqid: "art1", name: "Vela Systems", nameSlug: "vela-systems" }],
+    artists: [{ sqid: "art1", name: "Base Artist", nameSlug: "base-artist" }],
     genres: [{ name: "Electronic", slug: "electronic" }],
     ...overrides,
   };
@@ -31,20 +31,20 @@ describe("ProductCard", () => {
       <ProductCard
         album={buildAlbum({
           artists: [
-            { sqid: "a1", name: "Miles Ardent", nameSlug: "miles-ardent" },
-            { sqid: "a2", name: "Nadia Ford", nameSlug: "nadia-ford" },
+            { sqid: "a1", name: "Artist One", nameSlug: "artist-one" },
+            { sqid: "a2", name: "Artist Two", nameSlug: "artist-two" },
           ],
         })}
       />,
     );
 
-    expect(screen.getByRole("link", { name: "Miles Ardent" })).toHaveAttribute(
+    expect(screen.getByRole("link", { name: "Artist One" })).toHaveAttribute(
       "href",
-      "/artists/a1/miles-ardent",
+      "/artists/a1/artist-one",
     );
-    expect(screen.getByRole("link", { name: "Nadia Ford" })).toHaveAttribute(
+    expect(screen.getByRole("link", { name: "Artist Two" })).toHaveAttribute(
       "href",
-      "/artists/a2/nadia-ford",
+      "/artists/a2/artist-two",
     );
   });
 
