@@ -15,7 +15,7 @@ export default function NotFound() {
           <h1 className="mb-3.5 font-serif text-[1.625rem] font-medium italic">
             This side&apos;s blank
           </h1>
-          <p className="mx-auto mb-10 max-w-100 text-sm leading-[1.7] text-muted">
+          <p className="mx-auto mb-10 max-w-100 text-sm leading-relaxed text-muted-foreground">
             Whatever you were looking for isn&apos;t here — maybe it got filed
             under the wrong genre, or maybe it never existed at all.
           </p>

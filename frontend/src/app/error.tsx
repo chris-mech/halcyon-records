@@ -25,7 +25,7 @@ export default function Error({
           <h1 className="mb-3.5 font-serif text-[1.625rem] font-medium italic">
             Something broke
           </h1>
-          <p className="mx-auto mb-10 max-w-100 text-sm leading-[1.7] text-muted">
+          <p className="mx-auto mb-10 max-w-100 text-sm leading-relaxed text-muted-foreground">
             That wasn&apos;t supposed to happen — the page hit an error
             rendering. Trying again usually fixes it.
           </p>
