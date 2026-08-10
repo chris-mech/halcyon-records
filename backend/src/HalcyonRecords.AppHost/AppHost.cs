@@ -13,4 +13,8 @@ builder
     .WithReference(sql)
     .WithReference(meilisearch);
 
+#pragma warning disable ASPIREJAVASCRIPT001 // Type is for evaluation purposes only and is subject to change or removal in future updates. Suppress this diagnostic to proceed.
+var frontend = builder.AddNextJsApp("frontend", "../../../frontend").WithBun();
+#pragma warning restore ASPIREJAVASCRIPT001 // Type is for evaluation purposes only and is subject to change or removal in future updates. Suppress this diagnostic to proceed.
+
 await builder.Build().RunAsync();
