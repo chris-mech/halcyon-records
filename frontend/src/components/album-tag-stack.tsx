@@ -5,7 +5,6 @@ interface AlbumTagStackProps {
   isNew: boolean;
   isOnSale: boolean;
   isStaffPick: boolean;
-  orientation?: "horizontal" | "vertical";
   className?: string;
 }
 
@@ -16,7 +15,6 @@ function AlbumTagStack({
   isNew,
   isOnSale,
   isStaffPick,
-  orientation = "horizontal",
   className,
 }: AlbumTagStackProps) {
   if (!isNew && !isOnSale && !isStaffPick) {
@@ -24,13 +22,7 @@ function AlbumTagStack({
   }
 
   return (
-    <div
-      className={cn(
-        "flex gap-1",
-        orientation === "vertical" ? "flex-col items-end" : "flex-row",
-        className,
-      )}
-    >
+    <div className={cn("flex gap-1", className)}>
       {isNew && <Badge className={tagClassName}>New</Badge>}
       {isOnSale && (
         <Badge className={cn(tagClassName, "bg-gold text-ink")}>On sale</Badge>

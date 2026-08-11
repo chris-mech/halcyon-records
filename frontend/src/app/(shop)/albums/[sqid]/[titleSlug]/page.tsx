@@ -10,6 +10,14 @@ import { cn } from "@/lib/utils";
 import { AlbumTagStack } from "@/components/album-tag-stack";
 import { ProductCard } from "@/components/product-card";
 import { buttonVariants } from "@/components/ui/button";
+import {
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbList,
+  BreadcrumbPage,
+  BreadcrumbSeparator,
+} from "@/components/ui/breadcrumb";
 
 import { PurchaseRow } from "./purchase-row";
 
@@ -45,54 +53,33 @@ export default async function AlbumDetailPage(
   }
 
   const relatedAlbums = relatedError ? [] : related;
-  const primaryGenre = album.genres[0] ?? null;
   const note = stockNote(album.unitsInStock);
   const hasMeta = album.genres.length > 0 || album.releaseDate || album.label;
 
   return (
     <>
-      <nav
-        aria-label="Breadcrumb"
-        className="px-16 pt-8 text-xs font-semibold text-muted-foreground"
-      >
-        <ol className="flex items-center gap-2">
-          <li>
-            <Link href="/shop" className="hover:text-ink">
-              Shop
-            </Link>
-          </li>
-          {primaryGenre && (
-            <>
-              <li aria-hidden className="text-line">
-                /
-              </li>
-              <li>
-                <Link
-                  href={`/genres/${primaryGenre.slug}`}
-                  className="hover:text-ink"
-                >
-                  {primaryGenre.name}
-                </Link>
-              </li>
-            </>
-          )}
-          <li aria-hidden className="text-line">
-            /
-          </li>
-          <li className="text-ink" aria-current="page">
-            {album.title}
-          </li>
-        </ol>
-      </nav>
+      <Breadcrumb className="px-16 pt-8">
+        <BreadcrumbList className="gap-2 text-xs font-semibold text-muted-foreground sm:gap-2">
+          <BreadcrumbItem>
+            <BreadcrumbLink
+              render={<Link href="/shop">Shop</Link>}
+              className="hover:text-ink"
+            />
+          </BreadcrumbItem>
+          <BreadcrumbSeparator className="text-line">/</BreadcrumbSeparator>
+          <BreadcrumbItem>
+            <BreadcrumbPage className="text-ink">{album.title}</BreadcrumbPage>
+          </BreadcrumbItem>
+        </BreadcrumbList>
+      </Breadcrumb>
 
-      <section className="mx-auto grid max-w-275 grid-cols-1 gap-12 px-16 py-10 lg:grid-cols-[0.85fr_1.15fr]">
+      <section className="mx-auto grid w-full max-w-275 grid-cols-1 gap-16 px-16 py-10 lg:grid-cols-[0.85fr_1.15fr]">
         <div className="relative">
           <AlbumTagStack
             isNew={album.isNew}
             isOnSale={album.isOnSale}
             isStaffPick={album.isStaffPick}
-            orientation="vertical"
-            className="absolute -top-3 right-6 z-10"
+            className="absolute -top-3 left-6 z-10"
           />
           <div className="relative aspect-square overflow-hidden shadow-lg">
             {album.imageUrl ? (
@@ -112,16 +99,21 @@ export default async function AlbumDetailPage(
         </div>
 
         <div className="flex flex-col">
-          {primaryGenre && (
-            <Link
-              href={`/genres/${primaryGenre.slug}`}
-              className={cn(
-                buttonVariants({ variant: "outline" }),
-                "mb-5 h-auto w-fit border-ink px-2.75 py-1 text-[0.625rem] font-bold tracking-wide text-ink uppercase",
-              )}
-            >
-              {primaryGenre.name}
-            </Link>
+          {album.genres.length > 0 && (
+            <div className="mb-5 flex flex-wrap gap-2">
+              {album.genres.map((genre) => (
+                <Link
+                  key={genre.slug}
+                  href={`/genres/${genre.slug}`}
+                  className={cn(
+                    buttonVariants({ variant: "outline" }),
+                    "h-auto w-fit border-ink px-2.75 py-1 text-[0.625rem] font-bold tracking-wide text-ink uppercase",
+                  )}
+                >
+                  {genre.name}
+                </Link>
+              ))}
+            </div>
           )}
 
           <div className="mb-2 flex flex-wrap gap-x-1 text-sm font-bold tracking-wide text-muted-foreground uppercase">
@@ -143,7 +135,7 @@ export default async function AlbumDetailPage(
           </h1>
 
           {album.description && (
-            <p className="mb-7 max-w-115 text-sm leading-relaxed text-muted-foreground">
+            <p className="mb-7 max-w-115 text-[0.9375rem] leading-[1.75] text-muted-foreground">
               {album.description}
             </p>
           )}
@@ -202,7 +194,7 @@ export default async function AlbumDetailPage(
       </section>
 
       {relatedAlbums.length > 0 && (
-        <section className="mx-auto max-w-275 px-16 pb-25">
+        <section className="mx-auto w-full max-w-275 px-16 pb-25">
           <h2 className="mb-11 text-center font-heading text-3xl font-black uppercase">
             More in this mood
           </h2>

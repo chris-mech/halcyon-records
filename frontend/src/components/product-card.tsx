@@ -25,7 +25,7 @@ function ProductCard({ album, showGenre = true }: ProductCardProps) {
         isNew={album.isNew}
         isOnSale={album.isOnSale}
         isStaffPick={album.isStaffPick}
-        className="absolute -top-1.5 right-5 z-10"
+        className="absolute -top-1.5 left-5 z-10"
       />
 
       <Link
