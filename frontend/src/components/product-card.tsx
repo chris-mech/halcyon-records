@@ -4,9 +4,9 @@ import Link from "next/link";
 import { DiscAlbum } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
 import { Card } from "@/components/ui/card";
-import { cn } from "@/lib/utils";
+import { AlbumTagStack } from "@/components/album-tag-stack";
+import { formatPrice } from "@/lib/format";
 import type { components } from "@/lib/api/schema";
 
 type AlbumSummary = components["schemas"]["AlbumSummaryResponse"];
@@ -16,39 +16,17 @@ interface ProductCardProps {
   showGenre?: boolean;
 }
 
-const currencyFormatter = new Intl.NumberFormat("en-GB", {
-  style: "currency",
-  currency: "GBP",
-});
-
-const tagClassName =
-  "h-auto px-3 py-1 text-[0.625rem] font-bold tracking-wide uppercase shadow-sm";
-
-function formatPrice(pence: number) {
-  return currencyFormatter.format(pence / 100);
-}
-
 function ProductCard({ album, showGenre = true }: ProductCardProps) {
   const albumHref = `/albums/${album.sqid}/${album.titleSlug}`;
-  const hasTags = album.isNew || album.isOnSale || album.isStaffPick;
 
   return (
     <Card className="relative gap-0 overflow-visible py-0">
-      {hasTags && (
-        <div className="absolute -top-1.5 right-5 z-10 flex flex-row gap-1">
-          {album.isNew && <Badge className={tagClassName}>New</Badge>}
-          {album.isOnSale && (
-            <Badge className={cn(tagClassName, "bg-gold text-ink")}>
-              On sale
-            </Badge>
-          )}
-          {album.isStaffPick && (
-            <Badge variant="secondary" className={tagClassName}>
-              Staff pick
-            </Badge>
-          )}
-        </div>
-      )}
+      <AlbumTagStack
+        isNew={album.isNew}
+        isOnSale={album.isOnSale}
+        isStaffPick={album.isStaffPick}
+        className="absolute -top-1.5 left-5 z-10"
+      />
 
       <Link
         href={albumHref}

@@ -1,0 +1,170 @@
+import { describe, expect, test, vi } from "vitest";
+import { render, screen } from "@testing-library/react";
+
+import { client } from "@/lib/api/client";
+import type { components } from "@/lib/api/schema";
+
+import AlbumDetailPage from "./page";
+
+vi.mock("@/lib/api/client", () => ({
+  client: { GET: vi.fn() },
+}));
+
+type AlbumDetail = components["schemas"]["AlbumDetailResponse"];
+type RelatedAlbum = components["schemas"]["RelatedAlbumResponse"];
+
+const album: AlbumDetail = {
+  sqid: "detail1",
+  title: "Full Detail Album",
+  titleSlug: "full-detail-album",
+  description: "A description used to verify detail rendering.",
+  label: "Test Label",
+  imageUrl: null,
+  releaseDate: "1999-05-01",
+  priceInPence: 1999,
+  originalPriceInPence: null,
+  isNew: false,
+  isOnSale: false,
+  isStaffPick: false,
+  unitsInStock: 10,
+  isInStock: true,
+  artists: [{ sqid: "art1", name: "Artist One", nameSlug: "artist-one" }],
+  genres: [{ name: "Genre Match 1", slug: "genre-match-1" }],
+};
+
+const relatedAlbum: RelatedAlbum = {
+  sqid: "related1",
+  title: "Related Album One",
+  titleSlug: "related-album-one",
+  imageUrl: null,
+  releaseDate: "1999-05-01",
+  priceInPence: 1599,
+  originalPriceInPence: null,
+  isNew: false,
+  isOnSale: false,
+  isStaffPick: false,
+  isInStock: true,
+  artists: [{ sqid: "art2", name: "Artist Two", nameSlug: "artist-two" }],
+  genres: [{ name: "Genre Match 1", slug: "genre-match-1" }],
+};
+
+function mockAlbumFetch(
+  overrides: Partial<AlbumDetail> = {},
+  relatedAlbums: RelatedAlbum[] = [relatedAlbum],
+) {
+  vi.mocked(client.GET).mockImplementation(async (url) => {
+    if (url === "/api/albums/{sqid}/related") {
+      return {
+        data: relatedAlbums,
+        error: undefined,
+        response: new Response(),
+      };
+    }
+    return {
+      data: { ...album, ...overrides },
+      error: undefined,
+      response: new Response(),
+    };
+  });
+}
+
+function renderPage(titleSlug = album.titleSlug) {
+  return AlbumDetailPage({
+    params: Promise.resolve({ sqid: album.sqid, titleSlug }),
+    searchParams: Promise.resolve({}),
+  });
+}
+
+describe("AlbumDetailPage", () => {
+  test("renders album detail on a successful load", async () => {
+    mockAlbumFetch();
+
+    render(await renderPage());
+
+    expect(
+      screen.getByRole("heading", { name: "Full Detail Album" }),
+    ).toBeInTheDocument();
+    expect(screen.getByText("Artist One")).toBeInTheDocument();
+    expect(screen.getByText("£19.99")).toBeInTheDocument();
+    expect(screen.getByText("Test Label")).toBeInTheDocument();
+    expect(screen.getByText("1999")).toBeInTheDocument();
+  });
+
+  test("shows a low-stock note only below the threshold", async () => {
+    mockAlbumFetch({ unitsInStock: 3 });
+
+    render(await renderPage());
+
+    expect(screen.getByText("Only 3 left in stock")).toBeInTheDocument();
+  });
+
+  test("shows no stock note when stock is healthy", async () => {
+    mockAlbumFetch({ unitsInStock: 20 });
+
+    render(await renderPage());
+
+    expect(screen.queryByText(/left in stock/)).not.toBeInTheDocument();
+  });
+
+  test("shows out of stock and disables Add to bag at zero stock", async () => {
+    mockAlbumFetch({ unitsInStock: 0, isInStock: false }, []);
+
+    render(await renderPage());
+
+    expect(screen.getByText("Out of stock")).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: "Add to bag" })).toBeDisabled();
+  });
+
+  test("redirects permanently when the URL's title slug doesn't match", async () => {
+    mockAlbumFetch();
+
+    await expect(renderPage("wrong-slug")).rejects.toMatchObject({
+      digest: `NEXT_REDIRECT;replace;/albums/${album.sqid}/${album.titleSlug};308;`,
+    });
+  });
+
+  test("calls notFound when the album fetch errors", async () => {
+    vi.mocked(client.GET).mockResolvedValue({
+      data: undefined,
+      error: { title: "Not Found", status: 404 },
+      response: new Response(),
+    });
+
+    await expect(renderPage()).rejects.toMatchObject({
+      digest: "NEXT_HTTP_ERROR_FALLBACK;404",
+    });
+  });
+
+  test("degrades gracefully when the related-albums fetch fails", async () => {
+    vi.mocked(client.GET).mockImplementation(async (url) => {
+      if (url === "/api/albums/{sqid}/related") {
+        return {
+          data: undefined,
+          error: { title: "Server Error", status: 500 },
+          response: new Response(),
+        };
+      }
+      return { data: album, error: undefined, response: new Response() };
+    });
+
+    render(await renderPage());
+
+    expect(
+      screen.getByRole("heading", { name: "Full Detail Album" }),
+    ).toBeInTheDocument();
+    expect(
+      screen.queryByRole("heading", { name: "More in this mood" }),
+    ).not.toBeInTheDocument();
+  });
+
+  test("renders the related-albums grid on success", async () => {
+    mockAlbumFetch();
+
+    render(await renderPage());
+
+    expect(
+      screen.getByRole("heading", { name: "More in this mood" }),
+    ).toBeInTheDocument();
+    expect(screen.getByText("Related Album One")).toBeInTheDocument();
+  });
+});
