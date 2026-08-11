@@ -4,52 +4,6 @@
  */
 
 export interface paths {
-  "/api/smoke-test": {
-    parameters: {
-      query?: never;
-      header?: never;
-      path?: never;
-      cookie?: never;
-    };
-    get: {
-      parameters: {
-        query: {
-          shouldFail: boolean;
-        };
-        header?: never;
-        path?: never;
-        cookie?: never;
-      };
-      requestBody?: never;
-      responses: {
-        /** @description OK */
-        200: {
-          headers: {
-            [name: string]: unknown;
-          };
-          content: {
-            "application/json": components["schemas"]["SmokeTestResponse"];
-          };
-        };
-        /** @description Bad Request */
-        400: {
-          headers: {
-            [name: string]: unknown;
-          };
-          content: {
-            "application/problem+json": components["schemas"]["HttpValidationProblemDetails"];
-          };
-        };
-      };
-    };
-    put?: never;
-    post?: never;
-    delete?: never;
-    options?: never;
-    head?: never;
-    patch?: never;
-    trace?: never;
-  };
   "/api/albums/{sqid}/related": {
     parameters: {
       query?: never;
@@ -208,9 +162,6 @@ export interface components {
       isInStock: boolean;
       artists: components["schemas"]["RelatedAlbumArtistResponse"][];
       genres: components["schemas"]["RelatedAlbumGenreResponse"][];
-    };
-    SmokeTestResponse: {
-      message: string;
     };
   };
   responses: never;
