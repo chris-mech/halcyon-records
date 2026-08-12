@@ -2,6 +2,7 @@ using System.Diagnostics;
 using FluentValidation;
 using HalcyonRecords.Api.Common;
 using HalcyonRecords.Api.Common.Behaviours;
+using HalcyonRecords.Api.Common.Caching;
 using HalcyonRecords.Api.Common.Endpoints;
 using HalcyonRecords.Api.Common.OpenApi;
 using HalcyonRecords.Api.Common.RateLimiting;
@@ -22,10 +23,13 @@ builder.Services.AddSingleton<ArtistSqidEncoder>();
 
 builder.Services.AddValidatorsFromAssemblyContaining<Program>();
 
+builder.Services.AddApiHybridCache(builder.Configuration);
+
 builder.Services.AddMediatR(config =>
 {
     config.RegisterServicesFromAssembly(typeof(Program).Assembly);
     config.AddOpenBehavior(typeof(ValidationBehaviour<,>));
+    config.AddOpenBehavior(typeof(CachingBehaviour<,>));
     config.LicenseKey = builder.Configuration["MediatR:LicenseKey"];
 });
 
