@@ -4,6 +4,38 @@
  */
 
 export interface paths {
+  "/api/artists": {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    get: operations["GetArtists"];
+    put?: never;
+    post?: never;
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  "/api/artists/{sqid}": {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    get: operations["GetArtistById"];
+    put?: never;
+    post?: never;
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
   "/api/albums/{sqid}/related": {
     parameters: {
       query?: never;
@@ -130,6 +162,56 @@ export interface components {
       artists: components["schemas"]["AlbumArtistResponse"][];
       genres: components["schemas"]["AlbumGenreResponse"][];
     };
+    ArtistAlbumArtistResponse: {
+      sqid: string;
+      name: string;
+      nameSlug: string;
+    };
+    ArtistAlbumResponse: {
+      sqid: string;
+      title: string;
+      titleSlug: string;
+      imageUrl: null | string;
+      /** Format: date */
+      releaseDate: null | string;
+      /** Format: int32 */
+      priceInPence: number;
+      /** Format: int32 */
+      originalPriceInPence: null | number;
+      isNew: boolean;
+      isOnSale: boolean;
+      isStaffPick: boolean;
+      isInStock: boolean;
+      artists: components["schemas"]["ArtistAlbumArtistResponse"][];
+      genres: components["schemas"]["ArtistGenreResponse"][];
+    };
+    ArtistDetailResponse: {
+      sqid: string;
+      name: string;
+      nameSlug: string;
+      bio: null | string;
+      origin: null | string;
+      type: null | components["schemas"]["ArtistType"];
+      /** Format: int32 */
+      sinceYear: null | number;
+      imageUrl: null | string;
+      /** Format: int32 */
+      albumCount: number;
+      genres: components["schemas"]["ArtistGenreResponse"][];
+      albums: components["schemas"]["ArtistAlbumResponse"][];
+    };
+    ArtistGenreResponse: {
+      name: string;
+      slug: string;
+    };
+    ArtistListItemResponse: {
+      sqid: string;
+      name: string;
+      nameSlug: string;
+      /** Format: int32 */
+      albumCount: number;
+    };
+    ArtistType: number;
     CoverStoryArtistResponse: {
       sqid: string;
       name: string;
@@ -218,6 +300,59 @@ export interface components {
 }
 export type $defs = Record<string, never>;
 export interface operations {
+  GetArtists: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    requestBody?: never;
+    responses: {
+      /** @description OK */
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/json": components["schemas"]["ArtistListItemResponse"][];
+        };
+      };
+    };
+  };
+  GetArtistById: {
+    parameters: {
+      query?: {
+        sort?: string;
+      };
+      header?: never;
+      path: {
+        sqid: string;
+      };
+      cookie?: never;
+    };
+    requestBody?: never;
+    responses: {
+      /** @description OK */
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/json": components["schemas"]["ArtistDetailResponse"];
+        };
+      };
+      /** @description Bad Request */
+      400: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/problem+json": components["schemas"]["HttpValidationProblemDetails"];
+        };
+      };
+    };
+  };
   GetRelatedAlbums: {
     parameters: {
       query?: never;
