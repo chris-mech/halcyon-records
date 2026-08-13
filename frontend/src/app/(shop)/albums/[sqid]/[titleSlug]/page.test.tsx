@@ -94,12 +94,15 @@ describe("AlbumDetailPage", () => {
   });
 
   test("renders a link for every genre on a multi-genre album", async () => {
-    mockAlbumFetch({
-      genres: [
-        { name: "Genre Match 1", slug: "genre-match-1" },
-        { name: "Genre Match 2", slug: "genre-match-2" },
-      ],
-    });
+    mockAlbumFetch(
+      {
+        genres: [
+          { name: "Genre Match 1", slug: "genre-match-1" },
+          { name: "Genre Match 2", slug: "genre-match-2" },
+        ],
+      },
+      [{ ...relatedAlbum, genres: [] }],
+    );
 
     render(await renderPage());
 
@@ -189,5 +192,17 @@ describe("AlbumDetailPage", () => {
       screen.getByRole("heading", { name: "More in this mood" }),
     ).toBeInTheDocument();
     expect(screen.getByText("Related Album One")).toBeInTheDocument();
+  });
+
+  test("shows genre links on related-album cards", async () => {
+    mockAlbumFetch();
+
+    render(await renderPage());
+
+    const genreLinks = screen.getAllByRole("link", { name: "Genre Match 1" });
+    expect(genreLinks.length).toBeGreaterThanOrEqual(2);
+    for (const link of genreLinks) {
+      expect(link).toHaveAttribute("href", "/genres/genre-match-1");
+    }
   });
 });

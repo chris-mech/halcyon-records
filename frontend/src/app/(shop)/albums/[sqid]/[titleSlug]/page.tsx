@@ -207,11 +207,7 @@ export async function AlbumDetailContent({
           </h2>
           <div className="grid grid-cols-2 gap-7 sm:grid-cols-3 lg:grid-cols-4">
             {relatedAlbums.map((related) => (
-              <ProductCard
-                key={related.sqid}
-                album={related}
-                showGenre={false}
-              />
+              <ProductCard key={related.sqid} album={related} />
             ))}
           </div>
         </section>
