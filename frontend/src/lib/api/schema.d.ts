@@ -20,6 +20,22 @@ export interface paths {
     patch?: never;
     trace?: never;
   };
+  "/api/albums/cover-story": {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    get: operations["GetCoverStory"];
+    put?: never;
+    post?: never;
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
   "/api/albums": {
     parameters: {
       query?: never;
@@ -114,6 +130,36 @@ export interface components {
       artists: components["schemas"]["AlbumArtistResponse"][];
       genres: components["schemas"]["AlbumGenreResponse"][];
     };
+    CoverStoryArtistResponse: {
+      sqid: string;
+      name: string;
+      nameSlug: string;
+    };
+    CoverStoryGenreResponse: {
+      name: string;
+      slug: string;
+    };
+    CoverStoryResponse: {
+      sqid: string;
+      title: string;
+      titleSlug: string;
+      description: null | string;
+      imageUrl: null | string;
+      /** Format: date */
+      releaseDate: null | string;
+      /** Format: int32 */
+      priceInPence: number;
+      /** Format: int32 */
+      originalPriceInPence: null | number;
+      isNew: boolean;
+      isOnSale: boolean;
+      isStaffPick: boolean;
+      isInStock: boolean;
+      /** Format: int32 */
+      issueNumber: number;
+      artists: components["schemas"]["CoverStoryArtistResponse"][];
+      genres: components["schemas"]["CoverStoryGenreResponse"][];
+    };
     HttpValidationProblemDetails: {
       type?: null | string;
       title?: null | string;
@@ -192,13 +238,24 @@ export interface operations {
           "application/json": components["schemas"]["RelatedAlbumResponse"][];
         };
       };
-      /** @description Bad Request */
-      400: {
+    };
+  };
+  GetCoverStory: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    requestBody?: never;
+    responses: {
+      /** @description OK */
+      200: {
         headers: {
           [name: string]: unknown;
         };
         content: {
-          "application/problem+json": components["schemas"]["HttpValidationProblemDetails"];
+          "application/json": components["schemas"]["CoverStoryResponse"];
         };
       };
     };
@@ -259,15 +316,6 @@ export interface operations {
         };
         content: {
           "application/json": components["schemas"]["AlbumDetailResponse"];
-        };
-      };
-      /** @description Bad Request */
-      400: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          "application/problem+json": components["schemas"]["HttpValidationProblemDetails"];
         };
       };
     };

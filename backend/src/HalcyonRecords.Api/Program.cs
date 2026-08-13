@@ -18,6 +18,7 @@ builder.AddSqlServerDbContext<ApplicationDbContext>("halcyonrecords");
 
 builder.Services.AddEndpoints(typeof(Program).Assembly);
 
+builder.Services.AddSingleton(TimeProvider.System);
 builder.Services.AddSingleton<AlbumSqidEncoder>();
 builder.Services.AddSingleton<ArtistSqidEncoder>();
 

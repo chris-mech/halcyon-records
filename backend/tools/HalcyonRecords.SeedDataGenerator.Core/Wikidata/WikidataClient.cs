@@ -7,7 +7,7 @@ public sealed class WikidataClient(HttpClient httpClient)
 {
     private const string SitelinksProps = "sitelinks";
 
-    private static readonly JsonSerializerOptions JsonOptions = new()
+    private static readonly JsonSerializerOptions s_jsonOptions = new()
     {
         PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
     };
@@ -23,7 +23,7 @@ public sealed class WikidataClient(HttpClient httpClient)
 
         var result = await httpClient.GetFromJsonOrNullAsync<WikidataEntitiesResponse>(
             requestUri,
-            JsonOptions,
+            s_jsonOptions,
             cancellationToken
         );
 

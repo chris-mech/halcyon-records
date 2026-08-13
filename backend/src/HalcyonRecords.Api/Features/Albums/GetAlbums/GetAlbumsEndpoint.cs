@@ -52,7 +52,10 @@ public sealed class GetAlbumsEndpoint : IEndpoint
                         >
                     >(
                         response => TypedResults.Ok(response),
-                        errors => errors.Problem<Ok<PagedResult<AlbumSummaryResponse>>>()
+                        errors =>
+                            errors.ProblemWithValidationProblem<
+                                Ok<PagedResult<AlbumSummaryResponse>>
+                            >()
                     );
                 }
             )

@@ -12,7 +12,7 @@ public sealed class GetAlbumByIdEndpoint : IEndpoint
     {
         app.MapGet(
                 "/albums/{sqid}",
-                async Task<Results<Ok<AlbumDetailResponse>, ProblemHttpResult, ValidationProblem>> (
+                async Task<Results<Ok<AlbumDetailResponse>, ProblemHttpResult>> (
                     string sqid,
                     ISender sender
                 ) =>
@@ -21,9 +21,7 @@ public sealed class GetAlbumByIdEndpoint : IEndpoint
                         new GetAlbumByIdQuery(sqid)
                     );
 
-                    return result.Match<
-                        Results<Ok<AlbumDetailResponse>, ProblemHttpResult, ValidationProblem>
-                    >(
+                    return result.Match<Results<Ok<AlbumDetailResponse>, ProblemHttpResult>>(
                         response => TypedResults.Ok(response),
                         errors => errors.Problem<Ok<AlbumDetailResponse>>()
                     );
