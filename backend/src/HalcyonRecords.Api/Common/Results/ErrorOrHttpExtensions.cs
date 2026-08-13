@@ -7,15 +7,31 @@ public static class ErrorOrHttpExtensions
 {
     extension(List<Error> errors)
     {
-        public Results<TSuccess, ProblemHttpResult, ValidationProblem> Problem<TSuccess>()
+        public Results<TSuccess, ProblemHttpResult> Problem<TSuccess>()
             where TSuccess : IResult
         {
-            if (errors.Count == 0)
+            errors.EnsureNotEmpty();
+
+            if (errors.Any(error => error.Type == ErrorType.Validation))
             {
                 throw new InvalidOperationException(
-                    "Problem() was called with an empty error list."
+                    "Problem() was called with a validation error, but this endpoint's "
+                        + "Results<> union has no ValidationProblem branch. Use "
+                        + "ProblemWithValidation() instead if this request can be validated."
                 );
             }
+
+            return errors.BuildProblem();
+        }
+
+        public Results<
+            TSuccess,
+            ProblemHttpResult,
+            ValidationProblem
+        > ProblemWithValidationProblem<TSuccess>()
+            where TSuccess : IResult
+        {
+            errors.EnsureNotEmpty();
 
             if (errors.All(error => error.Type == ErrorType.Validation))
             {
@@ -29,6 +45,21 @@ public static class ErrorOrHttpExtensions
                 return TypedResults.ValidationProblem(validationErrors);
             }
 
+            return errors.BuildProblem();
+        }
+
+        private void EnsureNotEmpty()
+        {
+            if (errors.Count == 0)
+            {
+                throw new InvalidOperationException(
+                    "Problem()/ProblemWithValidation() was called with an empty error list."
+                );
+            }
+        }
+
+        private ProblemHttpResult BuildProblem()
+        {
             var firstError = errors[0];
             var (statusCode, title) = firstError.Type.ToProblemDetailsParts();
 

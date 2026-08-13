@@ -12,24 +12,17 @@ public sealed class GetRelatedAlbumsEndpoint : IEndpoint
     {
         app.MapGet(
                 "/albums/{sqid}/related",
-                async Task<
-                    Results<
-                        Ok<IReadOnlyList<RelatedAlbumResponse>>,
-                        ProblemHttpResult,
-                        ValidationProblem
-                    >
-                > (string sqid, ISender sender) =>
+                async Task<Results<Ok<IReadOnlyList<RelatedAlbumResponse>>, ProblemHttpResult>> (
+                    string sqid,
+                    ISender sender
+                ) =>
                 {
                     ErrorOr<IReadOnlyList<RelatedAlbumResponse>> result = await sender.Send(
                         new GetRelatedAlbumsQuery(sqid)
                     );
 
                     return result.Match<
-                        Results<
-                            Ok<IReadOnlyList<RelatedAlbumResponse>>,
-                            ProblemHttpResult,
-                            ValidationProblem
-                        >
+                        Results<Ok<IReadOnlyList<RelatedAlbumResponse>>, ProblemHttpResult>
                     >(
                         response => TypedResults.Ok(response),
                         errors => errors.Problem<Ok<IReadOnlyList<RelatedAlbumResponse>>>()
