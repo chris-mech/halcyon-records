@@ -9,11 +9,10 @@ namespace HalcyonRecords.Api.IntegrationTests.Features.Albums.GetAlbums;
 
 public class GetAlbumsHandlerTests(SqlServerContainerFixture fixture) : IntegrationTestBase(fixture)
 {
-    private static readonly AlbumSqidEncoder AlbumSqids = new();
-    private static readonly ArtistSqidEncoder ArtistSqids = new();
+    private static readonly AlbumSqidEncoder s_albumSqids = new();
+    private static readonly ArtistSqidEncoder s_artistSqids = new();
 
-    private GetAlbumsHandler Handler =>
-        new(DbContext, new AlbumSqidEncoder(), new ArtistSqidEncoder());
+    private GetAlbumsHandler Handler => new(DbContext, s_albumSqids, s_artistSqids);
 
     [Fact]
     public async Task Handle_AlbumWithMultipleArtistsAndGenres_ReturnsAllOfThemNested()
@@ -32,15 +31,15 @@ public class GetAlbumsHandlerTests(SqlServerContainerFixture fixture) : Integrat
         var result = await Handler.Handle(CreateQuery(), CancellationToken.None);
 
         var item = result.Value.Items.Should().ContainSingle().Subject;
-        item.Sqid.Should().Be(AlbumSqids.Encode(album.Id.Value));
+        item.Sqid.Should().Be(s_albumSqids.Encode(album.Id.Value));
         item.TitleSlug.Should().Be(Slugifier.Slugify("Full Detail Album"));
         item.Artists.Select(a => a.Name).Should().BeEquivalentTo("Artist One", "Artist Two");
         item.Artists.Select(a => a.NameSlug).Should().BeEquivalentTo("artist-one", "artist-two");
         item.Artists.Select(a => a.Sqid)
             .Should()
             .BeEquivalentTo(
-                ArtistSqids.Encode(artistOne.Id.Value),
-                ArtistSqids.Encode(artistTwo.Id.Value)
+                s_artistSqids.Encode(artistOne.Id.Value),
+                s_artistSqids.Encode(artistTwo.Id.Value)
             );
         item.Genres.Select(g => g.Slug).Should().BeEquivalentTo("genre-one", "genre-two");
     }

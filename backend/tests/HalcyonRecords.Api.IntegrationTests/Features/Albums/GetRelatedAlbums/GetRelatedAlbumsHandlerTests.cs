@@ -11,13 +11,12 @@ namespace HalcyonRecords.Api.IntegrationTests.Features.Albums.GetRelatedAlbums;
 public class GetRelatedAlbumsHandlerTests(SqlServerContainerFixture fixture)
     : IntegrationTestBase(fixture)
 {
-    private static readonly AlbumSqidEncoder AlbumSqids = new();
-    private static readonly ArtistSqidEncoder ArtistSqids = new();
+    private static readonly AlbumSqidEncoder s_albumSqids = new();
+    private static readonly ArtistSqidEncoder s_artistSqids = new();
 
     private const int MaxResults = 4;
 
-    private GetRelatedAlbumsHandler Handler =>
-        new(DbContext, new AlbumSqidEncoder(), new ArtistSqidEncoder());
+    private GetRelatedAlbumsHandler Handler => new(DbContext, s_albumSqids, s_artistSqids);
 
     [Theory]
     [InlineData(true)]
@@ -26,7 +25,7 @@ public class GetRelatedAlbumsHandlerTests(SqlServerContainerFixture fixture)
         bool useWellFormedButUnknownSqid
     )
     {
-        var sqid = useWellFormedButUnknownSqid ? AlbumSqids.Encode(999_999) : "not-a-real-sqid";
+        var sqid = useWellFormedButUnknownSqid ? s_albumSqids.Encode(999_999) : "not-a-real-sqid";
 
         var result = await Handler.Handle(new GetRelatedAlbumsQuery(sqid), CancellationToken.None);
 
@@ -67,7 +66,7 @@ public class GetRelatedAlbumsHandlerTests(SqlServerContainerFixture fixture)
         await DbContext.SaveChangesAsync(TestContext.Current.CancellationToken);
 
         var result = await Handler.Handle(
-            new GetRelatedAlbumsQuery(AlbumSqids.Encode(current.Id.Value)),
+            new GetRelatedAlbumsQuery(s_albumSqids.Encode(current.Id.Value)),
             CancellationToken.None
         );
 
@@ -107,7 +106,7 @@ public class GetRelatedAlbumsHandlerTests(SqlServerContainerFixture fixture)
         await DbContext.SaveChangesAsync(TestContext.Current.CancellationToken);
 
         var result = await Handler.Handle(
-            new GetRelatedAlbumsQuery(AlbumSqids.Encode(current.Id.Value)),
+            new GetRelatedAlbumsQuery(s_albumSqids.Encode(current.Id.Value)),
             CancellationToken.None
         );
 
@@ -121,7 +120,7 @@ public class GetRelatedAlbumsHandlerTests(SqlServerContainerFixture fixture)
         var albumsByTitle = albums.ToDictionary(a => a.Title);
         foreach (var item in result.Value)
         {
-            item.Sqid.Should().Be(AlbumSqids.Encode(albumsByTitle[item.Title].Id.Value));
+            item.Sqid.Should().Be(s_albumSqids.Encode(albumsByTitle[item.Title].Id.Value));
             item.TitleSlug.Should().Be(Slugifier.Slugify(item.Title));
             item.IsOnSale.Should().BeFalse();
             item.IsInStock.Should().BeFalse();
@@ -130,7 +129,7 @@ public class GetRelatedAlbumsHandlerTests(SqlServerContainerFixture fixture)
         var pickedArtistMatch = result.Value.First(a => artistMatches.Any(m => m.Title == a.Title));
         pickedArtistMatch.Artists.Should().ContainSingle();
         pickedArtistMatch.Artists[0].Name.Should().Be("Rare Artist");
-        pickedArtistMatch.Artists[0].Sqid.Should().Be(ArtistSqids.Encode(rareArtist.Id.Value));
+        pickedArtistMatch.Artists[0].Sqid.Should().Be(s_artistSqids.Encode(rareArtist.Id.Value));
         pickedArtistMatch.Artists[0].NameSlug.Should().Be("rare-artist");
     }
 
@@ -159,7 +158,7 @@ public class GetRelatedAlbumsHandlerTests(SqlServerContainerFixture fixture)
         await DbContext.SaveChangesAsync(TestContext.Current.CancellationToken);
 
         var result = await Handler.Handle(
-            new GetRelatedAlbumsQuery(AlbumSqids.Encode(current.Id.Value)),
+            new GetRelatedAlbumsQuery(s_albumSqids.Encode(current.Id.Value)),
             CancellationToken.None
         );
 
@@ -187,7 +186,7 @@ public class GetRelatedAlbumsHandlerTests(SqlServerContainerFixture fixture)
         await DbContext.SaveChangesAsync(TestContext.Current.CancellationToken);
 
         var result = await Handler.Handle(
-            new GetRelatedAlbumsQuery(AlbumSqids.Encode(current.Id.Value)),
+            new GetRelatedAlbumsQuery(s_albumSqids.Encode(current.Id.Value)),
             CancellationToken.None
         );
 
@@ -205,7 +204,7 @@ public class GetRelatedAlbumsHandlerTests(SqlServerContainerFixture fixture)
         await DbContext.SaveChangesAsync(TestContext.Current.CancellationToken);
 
         var result = await Handler.Handle(
-            new GetRelatedAlbumsQuery(AlbumSqids.Encode(current.Id.Value)),
+            new GetRelatedAlbumsQuery(s_albumSqids.Encode(current.Id.Value)),
             CancellationToken.None
         );
 

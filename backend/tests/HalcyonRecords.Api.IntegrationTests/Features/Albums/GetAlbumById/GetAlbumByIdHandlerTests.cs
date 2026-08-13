@@ -11,11 +11,10 @@ namespace HalcyonRecords.Api.IntegrationTests.Features.Albums.GetAlbumById;
 public class GetAlbumByIdHandlerTests(SqlServerContainerFixture fixture)
     : IntegrationTestBase(fixture)
 {
-    private static readonly AlbumSqidEncoder AlbumSqids = new();
-    private static readonly ArtistSqidEncoder ArtistSqids = new();
+    private static readonly AlbumSqidEncoder s_albumSqids = new();
+    private static readonly ArtistSqidEncoder s_artistSqids = new();
 
-    private GetAlbumByIdHandler Handler =>
-        new(DbContext, new AlbumSqidEncoder(), new ArtistSqidEncoder());
+    private GetAlbumByIdHandler Handler => new(DbContext, s_albumSqids, s_artistSqids);
 
     [Fact]
     public async Task Handle_ExistingAlbum_ReturnsFullDetailWithOrderedArtistsAndGenres()
@@ -44,13 +43,13 @@ public class GetAlbumByIdHandlerTests(SqlServerContainerFixture fixture)
         await DbContext.SaveChangesAsync(TestContext.Current.CancellationToken);
 
         var result = await Handler.Handle(
-            new GetAlbumByIdQuery(AlbumSqids.Encode(album.Id.Value)),
+            new GetAlbumByIdQuery(s_albumSqids.Encode(album.Id.Value)),
             CancellationToken.None
         );
 
         result.IsError.Should().BeFalse();
         var response = result.Value;
-        response.Sqid.Should().Be(AlbumSqids.Encode(album.Id.Value));
+        response.Sqid.Should().Be(s_albumSqids.Encode(album.Id.Value));
         response.Title.Should().Be("Full Detail Album");
         response.TitleSlug.Should().Be(Slugifier.Slugify("Full Detail Album"));
         response.Description.Should().Be("A description");
@@ -63,7 +62,10 @@ public class GetAlbumByIdHandlerTests(SqlServerContainerFixture fixture)
         response
             .Artists.Select(a => a.Sqid)
             .Should()
-            .Equal(ArtistSqids.Encode(alphaBand.Id.Value), ArtistSqids.Encode(zetaBand.Id.Value));
+            .Equal(
+                s_artistSqids.Encode(alphaBand.Id.Value),
+                s_artistSqids.Encode(zetaBand.Id.Value)
+            );
         response.Artists.Select(a => a.NameSlug).Should().Equal("alpha-band", "zeta-band");
         response.Genres.Select(g => g.Name).Should().Equal("Ambient", "Rock");
     }
@@ -83,7 +85,7 @@ public class GetAlbumByIdHandlerTests(SqlServerContainerFixture fixture)
         await DbContext.SaveChangesAsync(TestContext.Current.CancellationToken);
 
         var result = await Handler.Handle(
-            new GetAlbumByIdQuery(AlbumSqids.Encode(album.Id.Value)),
+            new GetAlbumByIdQuery(s_albumSqids.Encode(album.Id.Value)),
             CancellationToken.None
         );
 
@@ -98,7 +100,7 @@ public class GetAlbumByIdHandlerTests(SqlServerContainerFixture fixture)
         bool useWellFormedButUnknownSqid
     )
     {
-        var sqid = useWellFormedButUnknownSqid ? AlbumSqids.Encode(999_999) : "not-a-real-sqid";
+        var sqid = useWellFormedButUnknownSqid ? s_albumSqids.Encode(999_999) : "not-a-real-sqid";
 
         var result = await Handler.Handle(new GetAlbumByIdQuery(sqid), CancellationToken.None);
 
