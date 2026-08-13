@@ -1,4 +1,5 @@
 import { Fragment, Suspense } from "react";
+import { connection } from "next/server";
 import Image from "next/image";
 import Link from "next/link";
 import { cacheLife } from "next/cache";
@@ -74,6 +75,8 @@ async function getHomepageData(): Promise<HomepageDataResult> {
 }
 
 export async function HomeContent() {
+  await connection();
+
   const result = await getHomepageData();
 
   if (!result.ok) {

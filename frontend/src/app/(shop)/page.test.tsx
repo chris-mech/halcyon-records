@@ -14,6 +14,10 @@ vi.mock("next/cache", () => ({
   cacheLife: vi.fn(),
 }));
 
+vi.mock("next/server", () => ({
+  connection: vi.fn(),
+}));
+
 type CoverStory = components["schemas"]["CoverStoryResponse"];
 type AlbumSummary = components["schemas"]["AlbumSummaryResponse"];
 
