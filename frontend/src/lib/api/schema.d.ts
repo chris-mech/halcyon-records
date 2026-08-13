@@ -4,272 +4,320 @@
  */
 
 export interface paths {
-  "/api/albums/{sqid}/related": {
-    parameters: {
-      query?: never;
-      header?: never;
-      path?: never;
-      cookie?: never;
+    "/api/albums/{sqid}/related": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["GetRelatedAlbums"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
     };
-    get: operations["GetRelatedAlbums"];
-    put?: never;
-    post?: never;
-    delete?: never;
-    options?: never;
-    head?: never;
-    patch?: never;
-    trace?: never;
-  };
-  "/api/albums": {
-    parameters: {
-      query?: never;
-      header?: never;
-      path?: never;
-      cookie?: never;
+    "/api/albums/cover-story": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["GetCoverStory"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
     };
-    get: operations["GetAlbums"];
-    put?: never;
-    post?: never;
-    delete?: never;
-    options?: never;
-    head?: never;
-    patch?: never;
-    trace?: never;
-  };
-  "/api/albums/{sqid}": {
-    parameters: {
-      query?: never;
-      header?: never;
-      path?: never;
-      cookie?: never;
+    "/api/albums": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["GetAlbums"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
     };
-    get: operations["GetAlbumById"];
-    put?: never;
-    post?: never;
-    delete?: never;
-    options?: never;
-    head?: never;
-    patch?: never;
-    trace?: never;
-  };
+    "/api/albums/{sqid}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["GetAlbumById"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
 }
 export type webhooks = Record<string, never>;
 export interface components {
-  schemas: {
-    AlbumArtistResponse: {
-      sqid: string;
-      name: string;
-      nameSlug: string;
+    schemas: {
+        AlbumArtistResponse: {
+            sqid: string;
+            name: string;
+            nameSlug: string;
+        };
+        AlbumDetailArtistResponse: {
+            sqid: string;
+            name: string;
+            nameSlug: string;
+        };
+        AlbumDetailGenreResponse: {
+            name: string;
+            slug: string;
+        };
+        AlbumDetailResponse: {
+            sqid: string;
+            title: string;
+            titleSlug: string;
+            description: null | string;
+            label: null | string;
+            imageUrl: null | string;
+            /** Format: date */
+            releaseDate: null | string;
+            /** Format: int32 */
+            priceInPence: number;
+            /** Format: int32 */
+            originalPriceInPence: null | number;
+            isNew: boolean;
+            isOnSale: boolean;
+            isStaffPick: boolean;
+            /** Format: int32 */
+            unitsInStock: number;
+            isInStock: boolean;
+            artists: components["schemas"]["AlbumDetailArtistResponse"][];
+            genres: components["schemas"]["AlbumDetailGenreResponse"][];
+        };
+        AlbumGenreResponse: {
+            name: string;
+            slug: string;
+        };
+        AlbumSummaryResponse: {
+            sqid: string;
+            title: string;
+            titleSlug: string;
+            imageUrl: null | string;
+            /** Format: date */
+            releaseDate: null | string;
+            /** Format: int32 */
+            priceInPence: number;
+            /** Format: int32 */
+            originalPriceInPence: null | number;
+            isNew: boolean;
+            isOnSale: boolean;
+            isStaffPick: boolean;
+            isInStock: boolean;
+            artists: components["schemas"]["AlbumArtistResponse"][];
+            genres: components["schemas"]["AlbumGenreResponse"][];
+        };
+        CoverStoryArtistResponse: {
+            sqid: string;
+            name: string;
+            nameSlug: string;
+        };
+        CoverStoryGenreResponse: {
+            name: string;
+            slug: string;
+        };
+        CoverStoryResponse: {
+            sqid: string;
+            title: string;
+            titleSlug: string;
+            description: null | string;
+            imageUrl: null | string;
+            /** Format: date */
+            releaseDate: null | string;
+            /** Format: int32 */
+            priceInPence: number;
+            /** Format: int32 */
+            originalPriceInPence: null | number;
+            isNew: boolean;
+            isOnSale: boolean;
+            isStaffPick: boolean;
+            isInStock: boolean;
+            /** Format: int32 */
+            issueNumber: number;
+            artists: components["schemas"]["CoverStoryArtistResponse"][];
+            genres: components["schemas"]["CoverStoryGenreResponse"][];
+        };
+        HttpValidationProblemDetails: {
+            type?: null | string;
+            title?: null | string;
+            /** Format: int32 */
+            status?: null | number;
+            detail?: null | string;
+            instance?: null | string;
+            errors?: {
+                [key: string]: string[];
+            };
+        };
+        PagedResultOfAlbumSummaryResponse: {
+            items: components["schemas"]["AlbumSummaryResponse"][];
+            /** Format: int32 */
+            page: number;
+            /** Format: int32 */
+            pageSize: number;
+            /** Format: int32 */
+            totalCount: number;
+            /** Format: int32 */
+            totalPages?: number;
+        };
+        RelatedAlbumArtistResponse: {
+            sqid: string;
+            name: string;
+            nameSlug: string;
+        };
+        RelatedAlbumGenreResponse: {
+            name: string;
+            slug: string;
+        };
+        RelatedAlbumResponse: {
+            sqid: string;
+            title: string;
+            titleSlug: string;
+            imageUrl: null | string;
+            /** Format: date */
+            releaseDate: null | string;
+            /** Format: int32 */
+            priceInPence: number;
+            /** Format: int32 */
+            originalPriceInPence: null | number;
+            isNew: boolean;
+            isOnSale: boolean;
+            isStaffPick: boolean;
+            isInStock: boolean;
+            artists: components["schemas"]["RelatedAlbumArtistResponse"][];
+            genres: components["schemas"]["RelatedAlbumGenreResponse"][];
+        };
     };
-    AlbumDetailArtistResponse: {
-      sqid: string;
-      name: string;
-      nameSlug: string;
-    };
-    AlbumDetailGenreResponse: {
-      name: string;
-      slug: string;
-    };
-    AlbumDetailResponse: {
-      sqid: string;
-      title: string;
-      titleSlug: string;
-      description: null | string;
-      label: null | string;
-      imageUrl: null | string;
-      /** Format: date */
-      releaseDate: null | string;
-      /** Format: int32 */
-      priceInPence: number;
-      /** Format: int32 */
-      originalPriceInPence: null | number;
-      isNew: boolean;
-      isOnSale: boolean;
-      isStaffPick: boolean;
-      /** Format: int32 */
-      unitsInStock: number;
-      isInStock: boolean;
-      artists: components["schemas"]["AlbumDetailArtistResponse"][];
-      genres: components["schemas"]["AlbumDetailGenreResponse"][];
-    };
-    AlbumGenreResponse: {
-      name: string;
-      slug: string;
-    };
-    AlbumSummaryResponse: {
-      sqid: string;
-      title: string;
-      titleSlug: string;
-      imageUrl: null | string;
-      /** Format: date */
-      releaseDate: null | string;
-      /** Format: int32 */
-      priceInPence: number;
-      /** Format: int32 */
-      originalPriceInPence: null | number;
-      isNew: boolean;
-      isOnSale: boolean;
-      isStaffPick: boolean;
-      isInStock: boolean;
-      artists: components["schemas"]["AlbumArtistResponse"][];
-      genres: components["schemas"]["AlbumGenreResponse"][];
-    };
-    HttpValidationProblemDetails: {
-      type?: null | string;
-      title?: null | string;
-      /** Format: int32 */
-      status?: null | number;
-      detail?: null | string;
-      instance?: null | string;
-      errors?: {
-        [key: string]: string[];
-      };
-    };
-    PagedResultOfAlbumSummaryResponse: {
-      items: components["schemas"]["AlbumSummaryResponse"][];
-      /** Format: int32 */
-      page: number;
-      /** Format: int32 */
-      pageSize: number;
-      /** Format: int32 */
-      totalCount: number;
-      /** Format: int32 */
-      totalPages?: number;
-    };
-    RelatedAlbumArtistResponse: {
-      sqid: string;
-      name: string;
-      nameSlug: string;
-    };
-    RelatedAlbumGenreResponse: {
-      name: string;
-      slug: string;
-    };
-    RelatedAlbumResponse: {
-      sqid: string;
-      title: string;
-      titleSlug: string;
-      imageUrl: null | string;
-      /** Format: date */
-      releaseDate: null | string;
-      /** Format: int32 */
-      priceInPence: number;
-      /** Format: int32 */
-      originalPriceInPence: null | number;
-      isNew: boolean;
-      isOnSale: boolean;
-      isStaffPick: boolean;
-      isInStock: boolean;
-      artists: components["schemas"]["RelatedAlbumArtistResponse"][];
-      genres: components["schemas"]["RelatedAlbumGenreResponse"][];
-    };
-  };
-  responses: never;
-  parameters: never;
-  requestBodies: never;
-  headers: never;
-  pathItems: never;
+    responses: never;
+    parameters: never;
+    requestBodies: never;
+    headers: never;
+    pathItems: never;
 }
 export type $defs = Record<string, never>;
 export interface operations {
-  GetRelatedAlbums: {
-    parameters: {
-      query?: never;
-      header?: never;
-      path: {
-        sqid: string;
-      };
-      cookie?: never;
+    GetRelatedAlbums: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                sqid: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["RelatedAlbumResponse"][];
+                };
+            };
+        };
     };
-    requestBody?: never;
-    responses: {
-      /** @description OK */
-      200: {
-        headers: {
-          [name: string]: unknown;
+    GetCoverStory: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
         };
-        content: {
-          "application/json": components["schemas"]["RelatedAlbumResponse"][];
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["CoverStoryResponse"];
+                };
+            };
         };
-      };
-      /** @description Bad Request */
-      400: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          "application/problem+json": components["schemas"]["HttpValidationProblemDetails"];
-        };
-      };
     };
-  };
-  GetAlbums: {
-    parameters: {
-      query?: {
-        page?: number;
-        pageSize?: number;
-        isNew?: boolean;
-        isOnSale?: boolean;
-        isStaffPick?: boolean;
-        inStock?: boolean;
-        genres?: string[];
-        sort?: string;
-      };
-      header?: never;
-      path?: never;
-      cookie?: never;
+    GetAlbums: {
+        parameters: {
+            query?: {
+                page?: number;
+                pageSize?: number;
+                isNew?: boolean;
+                isOnSale?: boolean;
+                isStaffPick?: boolean;
+                inStock?: boolean;
+                genres?: string[];
+                sort?: string;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PagedResultOfAlbumSummaryResponse"];
+                };
+            };
+            /** @description Bad Request */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["HttpValidationProblemDetails"];
+                };
+            };
+        };
     };
-    requestBody?: never;
-    responses: {
-      /** @description OK */
-      200: {
-        headers: {
-          [name: string]: unknown;
+    GetAlbumById: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                sqid: string;
+            };
+            cookie?: never;
         };
-        content: {
-          "application/json": components["schemas"]["PagedResultOfAlbumSummaryResponse"];
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["AlbumDetailResponse"];
+                };
+            };
         };
-      };
-      /** @description Bad Request */
-      400: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          "application/problem+json": components["schemas"]["HttpValidationProblemDetails"];
-        };
-      };
     };
-  };
-  GetAlbumById: {
-    parameters: {
-      query?: never;
-      header?: never;
-      path: {
-        sqid: string;
-      };
-      cookie?: never;
-    };
-    requestBody?: never;
-    responses: {
-      /** @description OK */
-      200: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          "application/json": components["schemas"]["AlbumDetailResponse"];
-        };
-      };
-      /** @description Bad Request */
-      400: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          "application/problem+json": components["schemas"]["HttpValidationProblemDetails"];
-        };
-      };
-    };
-  };
 }
