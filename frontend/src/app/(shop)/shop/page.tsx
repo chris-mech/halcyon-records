@@ -1,3 +1,5 @@
+import { Suspense } from "react";
+
 import { client } from "@/lib/api/client";
 import { ProductCard } from "@/components/product-card";
 
@@ -6,8 +8,10 @@ import { Pagination } from "./pagination";
 import { PAGE_SIZE, parseShopFilters } from "./search-params";
 import { SortSelect } from "./sort-select";
 
-export default async function ShopPage(props: PageProps<"/shop">) {
-  const filters = parseShopFilters(await props.searchParams);
+export async function ShopContent({
+  searchParams,
+}: Pick<PageProps<"/shop">, "searchParams">) {
+  const filters = parseShopFilters(await searchParams);
 
   const { data, error } = await client.GET("/api/albums", {
     params: {
@@ -59,5 +63,21 @@ export default async function ShopPage(props: PageProps<"/shop">) {
 
       <Pagination filters={filters} totalPages={totalPages} />
     </div>
+  );
+}
+
+function ShopSkeleton() {
+  return (
+    <div className="flex flex-1 items-center justify-center px-16 py-20 text-sm text-muted-foreground">
+      Loading…
+    </div>
+  );
+}
+
+export default function ShopPage(props: PageProps<"/shop">) {
+  return (
+    <Suspense fallback={<ShopSkeleton />}>
+      <ShopContent searchParams={props.searchParams} />
+    </Suspense>
   );
 }

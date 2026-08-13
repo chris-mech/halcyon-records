@@ -4,7 +4,7 @@ import { render, screen } from "@testing-library/react";
 import { client } from "@/lib/api/client";
 import type { components } from "@/lib/api/schema";
 
-import ShopPage from "./page";
+import { ShopContent } from "./page";
 
 vi.mock("@/lib/api/client", () => ({
   client: { GET: vi.fn() },
@@ -55,10 +55,7 @@ const secondAlbum: AlbumSummary = {
 };
 
 function renderPage(searchParams: Record<string, string | string[]> = {}) {
-  return ShopPage({
-    params: Promise.resolve({}),
-    searchParams: Promise.resolve(searchParams),
-  });
+  return ShopContent({ searchParams: Promise.resolve(searchParams) });
 }
 
 describe("ShopPage", () => {

@@ -1,7 +1,8 @@
-import { Fragment } from "react";
+import { Fragment, Suspense } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound, permanentRedirect } from "next/navigation";
+import { cacheLife } from "next/cache";
 import { DiscAlbum } from "lucide-react";
 
 import { client } from "@/lib/api/client";
@@ -21,6 +22,15 @@ import {
 
 import { PurchaseRow } from "./purchase-row";
 
+import type { components } from "@/lib/api/schema";
+
+type AlbumDetail = components["schemas"]["AlbumDetailResponse"];
+type RelatedAlbum = components["schemas"]["RelatedAlbumResponse"];
+
+type AlbumDetailResult =
+  | { found: true; album: AlbumDetail; relatedAlbums: RelatedAlbum[] }
+  | { found: false };
+
 const LOW_STOCK_THRESHOLD = 5;
 
 function stockNote(unitsInStock: number): string | null {
@@ -31,10 +41,9 @@ function stockNote(unitsInStock: number): string | null {
   return null;
 }
 
-export default async function AlbumDetailPage(
-  props: PageProps<"/albums/[sqid]/[titleSlug]">,
-) {
-  const { sqid, titleSlug } = await props.params;
+async function getAlbumData(sqid: string): Promise<AlbumDetailResult> {
+  "use cache";
+  cacheLife({ stale: 60, revalidate: 60, expire: 300 });
 
   const [
     { data: album, error: albumError },
@@ -45,14 +54,28 @@ export default async function AlbumDetailPage(
   ]);
 
   if (albumError) {
+    return { found: false };
+  }
+
+  return { found: true, album, relatedAlbums: relatedError ? [] : related };
+}
+
+export async function AlbumDetailContent({
+  params,
+}: Pick<PageProps<"/albums/[sqid]/[titleSlug]">, "params">) {
+  const { sqid, titleSlug } = await params;
+  const result = await getAlbumData(sqid);
+
+  if (!result.found) {
     notFound();
   }
+
+  const { album, relatedAlbums } = result;
 
   if (album.titleSlug !== titleSlug) {
     permanentRedirect(`/albums/${sqid}/${album.titleSlug}`);
   }
 
-  const relatedAlbums = relatedError ? [] : related;
   const note = stockNote(album.unitsInStock);
   const hasMeta = album.genres.length > 0 || album.releaseDate || album.label;
 
@@ -210,5 +233,23 @@ export default async function AlbumDetailPage(
         </section>
       )}
     </>
+  );
+}
+
+function AlbumDetailSkeleton() {
+  return (
+    <div className="flex flex-1 items-center justify-center px-16 py-20 text-sm text-muted-foreground">
+      Loading…
+    </div>
+  );
+}
+
+export default function AlbumDetailPage(
+  props: PageProps<"/albums/[sqid]/[titleSlug]">,
+) {
+  return (
+    <Suspense fallback={<AlbumDetailSkeleton />}>
+      <AlbumDetailContent params={props.params} />
+    </Suspense>
   );
 }

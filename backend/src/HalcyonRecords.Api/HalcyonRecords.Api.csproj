@@ -5,15 +5,16 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="ErrorOr" Version="2.1.1" />
-    <PackageReference Include="MediatR" Version="14.2.0" />
-    <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="10.0.10" />
     <PackageReference Include="Aspire.Microsoft.EntityFrameworkCore.SqlServer" Version="13.4.6" />
+    <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="10.0.10" />
+    <PackageReference Include="Microsoft.Extensions.Caching.Hybrid" Version="10.8.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="10.0.10">
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
-    <PackageReference Include="Sqids" Version="3.2.1" />
+    <PackageReference Include="ErrorOr" Version="2.1.1" />
     <PackageReference Include="FluentValidation.DependencyInjectionExtensions" Version="12.1.1" />
+    <PackageReference Include="MediatR" Version="14.2.0" />
+    <PackageReference Include="Sqids" Version="3.2.1" />
   </ItemGroup>
 
   <ItemGroup>

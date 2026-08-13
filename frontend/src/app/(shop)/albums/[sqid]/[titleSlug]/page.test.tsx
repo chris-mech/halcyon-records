@@ -4,10 +4,14 @@ import { render, screen } from "@testing-library/react";
 import { client } from "@/lib/api/client";
 import type { components } from "@/lib/api/schema";
 
-import AlbumDetailPage from "./page";
+import { AlbumDetailContent } from "./page";
 
 vi.mock("@/lib/api/client", () => ({
   client: { GET: vi.fn() },
+}));
+
+vi.mock("next/cache", () => ({
+  cacheLife: vi.fn(),
 }));
 
 type AlbumDetail = components["schemas"]["AlbumDetailResponse"];
@@ -69,9 +73,8 @@ function mockAlbumFetch(
 }
 
 function renderPage(titleSlug = album.titleSlug) {
-  return AlbumDetailPage({
+  return AlbumDetailContent({
     params: Promise.resolve({ sqid: album.sqid, titleSlug }),
-    searchParams: Promise.resolve({}),
   });
 }
 
@@ -88,6 +91,26 @@ describe("AlbumDetailPage", () => {
     expect(screen.getByText("£19.99")).toBeInTheDocument();
     expect(screen.getByText("Test Label")).toBeInTheDocument();
     expect(screen.getByText("1999")).toBeInTheDocument();
+  });
+
+  test("renders a link for every genre on a multi-genre album", async () => {
+    mockAlbumFetch({
+      genres: [
+        { name: "Genre Match 1", slug: "genre-match-1" },
+        { name: "Genre Match 2", slug: "genre-match-2" },
+      ],
+    });
+
+    render(await renderPage());
+
+    expect(screen.getByRole("link", { name: "Genre Match 1" })).toHaveAttribute(
+      "href",
+      "/genres/genre-match-1",
+    );
+    expect(screen.getByRole("link", { name: "Genre Match 2" })).toHaveAttribute(
+      "href",
+      "/genres/genre-match-2",
+    );
   });
 
   test("shows a low-stock note only below the threshold", async () => {

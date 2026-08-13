@@ -313,6 +313,17 @@
           "Microsoft.Extensions.Primitives": "10.0.10"
         }
       },
+      "Microsoft.Extensions.Caching.Hybrid": {
+        "type": "Transitive",
+        "resolved": "10.8.0",
+        "contentHash": "RCtCTK3eqKXx8LXqd7B8GjbTkIp4k3EgKeunaCmBJ+WA55Nva83CI2I+wVyp0S9jTG+aT6AYWQbkKOfvFOlmLA==",
+        "dependencies": {
+          "Microsoft.Extensions.Caching.Abstractions": "10.0.10",
+          "Microsoft.Extensions.Caching.Memory": "10.0.10",
+          "Microsoft.Extensions.Logging.Abstractions": "10.0.10",
+          "Microsoft.Extensions.Options": "10.0.10"
+        }
+      },
       "Microsoft.Extensions.Caching.Memory": {
         "type": "Transitive",
         "resolved": "10.0.10",
@@ -966,6 +977,7 @@
           "HalcyonRecords.Shared": "[1.0.0, )",
           "MediatR": "[14.2.0, )",
           "Microsoft.AspNetCore.OpenApi": "[10.0.10, )",
+          "Microsoft.Extensions.Caching.Hybrid": "[10.8.0, )",
           "Sqids": "[3.2.1, )"
         }
       },

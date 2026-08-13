@@ -1,4 +1,5 @@
 ﻿using ErrorOr;
+using HalcyonRecords.Api.Common.Caching;
 using HalcyonRecords.Api.Common.Contracts;
 using MediatR;
 
@@ -13,4 +14,18 @@ public sealed record GetAlbumsQuery(
     bool InStock,
     IReadOnlyList<string>? Genres,
     string Sort
-) : IRequest<ErrorOr<PagedResult<AlbumSummaryResponse>>>;
+) : IRequest<ErrorOr<PagedResult<AlbumSummaryResponse>>>, ICacheableQuery
+{
+    public string CacheKey =>
+        $"albums:list"
+        + $":p={Page}"
+        + $":ps={PageSize}"
+        + $":new={IsNew}"
+        + $":sale={IsOnSale}"
+        + $":staff={IsStaffPick}"
+        + $":stock={InStock}"
+        + $":sort={Sort}"
+        + $":genres={(Genres is { Count: > 0 } 
+            ? string.Join(',', Genres.Order(StringComparer.Ordinal)) 
+            : string.Empty)}";
+}
