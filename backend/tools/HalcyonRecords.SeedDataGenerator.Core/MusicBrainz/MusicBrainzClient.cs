@@ -9,7 +9,7 @@ public sealed class MusicBrainzClient(HttpClient httpClient)
     private const string ReleaseIncludes = "artist-credits+labels+release-groups";
     private const string ReleaseGroupIncludes = "url-rels";
 
-    private static readonly JsonSerializerOptions JsonOptions = new()
+    private static readonly JsonSerializerOptions s_jsonOptions = new()
     {
         PropertyNamingPolicy = JsonNamingPolicy.KebabCaseLower,
     };
@@ -20,7 +20,7 @@ public sealed class MusicBrainzClient(HttpClient httpClient)
     ) =>
         httpClient.GetFromJsonOrNullAsync<MusicBrainzArtist>(
             $"artist/{mbid}?inc={ArtistIncludes}&fmt=json",
-            JsonOptions,
+            s_jsonOptions,
             cancellationToken
         );
 
@@ -30,7 +30,7 @@ public sealed class MusicBrainzClient(HttpClient httpClient)
     ) =>
         httpClient.GetFromJsonOrNullAsync<MusicBrainzRelease>(
             $"release/{mbid}?inc={ReleaseIncludes}&fmt=json",
-            JsonOptions,
+            s_jsonOptions,
             cancellationToken
         );
 
@@ -40,7 +40,7 @@ public sealed class MusicBrainzClient(HttpClient httpClient)
     ) =>
         httpClient.GetFromJsonOrNullAsync<MusicBrainzReleaseGroup>(
             $"release-group/{mbid}?inc={ReleaseGroupIncludes}&fmt=json",
-            JsonOptions,
+            s_jsonOptions,
             cancellationToken
         );
 
@@ -53,7 +53,7 @@ public sealed class MusicBrainzClient(HttpClient httpClient)
 
         var result = await httpClient.GetFromJsonOrNullAsync<MusicBrainzArtistSearchResponse>(
             $"artist?query={Uri.EscapeDataString(query)}&fmt=json",
-            JsonOptions,
+            s_jsonOptions,
             cancellationToken
         );
 
@@ -72,7 +72,7 @@ public sealed class MusicBrainzClient(HttpClient httpClient)
 
         var result = await httpClient.GetFromJsonOrNullAsync<MusicBrainzReleaseSearchResponse>(
             $"release?query={Uri.EscapeDataString(query)}&fmt=json",
-            JsonOptions,
+            s_jsonOptions,
             cancellationToken
         );
 

@@ -5,7 +5,7 @@ namespace HalcyonRecords.SeedDataGenerator.Core.Wikipedia;
 
 public sealed class WikipediaClient(HttpClient httpClient)
 {
-    private static readonly JsonSerializerOptions JsonOptions = new()
+    private static readonly JsonSerializerOptions s_jsonOptions = new()
     {
         PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
     };
@@ -16,7 +16,7 @@ public sealed class WikipediaClient(HttpClient httpClient)
     ) =>
         httpClient.GetFromJsonOrNullAsync<WikipediaPageSummary>(
             $"page/summary/{Uri.EscapeDataString(title)}",
-            JsonOptions,
+            s_jsonOptions,
             cancellationToken
         );
 }

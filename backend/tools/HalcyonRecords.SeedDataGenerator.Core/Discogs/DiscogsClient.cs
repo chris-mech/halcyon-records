@@ -5,7 +5,7 @@ namespace HalcyonRecords.SeedDataGenerator.Core.Discogs;
 
 public sealed class DiscogsClient(HttpClient httpClient)
 {
-    private static readonly JsonSerializerOptions JsonOptions = new()
+    private static readonly JsonSerializerOptions s_jsonOptions = new()
     {
         PropertyNamingPolicy = JsonNamingPolicy.SnakeCaseLower,
     };
@@ -16,7 +16,7 @@ public sealed class DiscogsClient(HttpClient httpClient)
     ) =>
         httpClient.GetFromJsonOrNullAsync<DiscogsArtist>(
             $"artists/{artistId}",
-            JsonOptions,
+            s_jsonOptions,
             cancellationToken
         );
 
@@ -26,7 +26,7 @@ public sealed class DiscogsClient(HttpClient httpClient)
     ) =>
         httpClient.GetFromJsonOrNullAsync<DiscogsMaster>(
             $"masters/{masterId}",
-            JsonOptions,
+            s_jsonOptions,
             cancellationToken
         );
 
@@ -43,7 +43,7 @@ public sealed class DiscogsClient(HttpClient httpClient)
 
         var result = await httpClient.GetFromJsonOrNullAsync<DiscogsSearchResponse>(
             requestUri,
-            JsonOptions,
+            s_jsonOptions,
             cancellationToken
         );
 
