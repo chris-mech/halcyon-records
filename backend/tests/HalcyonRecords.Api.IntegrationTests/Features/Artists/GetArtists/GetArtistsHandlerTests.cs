@@ -7,7 +7,8 @@ using HalcyonRecords.Shared;
 
 namespace HalcyonRecords.Api.IntegrationTests.Features.Artists.GetArtists;
 
-public class GetArtistsHandlerTests(SqlServerContainerFixture fixture) : IntegrationTestBase(fixture)
+public class GetArtistsHandlerTests(SqlServerContainerFixture fixture)
+    : IntegrationTestBase(fixture)
 {
     private static readonly ArtistSqidEncoder s_artistSqids = new();
 
