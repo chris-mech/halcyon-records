@@ -7,10 +7,9 @@ import { DiscAlbum } from "lucide-react";
 
 import { client } from "@/lib/api/client";
 import { formatPrice } from "@/lib/format";
-import { cn } from "@/lib/utils";
 import { AlbumTagStack } from "@/components/album-tag-stack";
+import { GenrePillList } from "@/components/genre-pill-list";
 import { ProductCard } from "@/components/product-card";
-import { buttonVariants } from "@/components/ui/button";
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -122,22 +121,7 @@ export async function AlbumDetailContent({
         </div>
 
         <div className="flex flex-col">
-          {album.genres.length > 0 && (
-            <div className="mb-5 flex flex-wrap gap-2">
-              {album.genres.map((genre) => (
-                <Link
-                  key={genre.slug}
-                  href={`/genres/${genre.slug}`}
-                  className={cn(
-                    buttonVariants({ variant: "outline" }),
-                    "h-auto w-fit border-ink px-2.75 py-1 text-[0.625rem] font-bold tracking-wide text-ink uppercase",
-                  )}
-                >
-                  {genre.name}
-                </Link>
-              ))}
-            </div>
-          )}
+          <GenrePillList genres={album.genres} className="mb-5" />
 
           <div className="mb-2 flex flex-wrap gap-x-1 text-sm font-bold tracking-wide text-muted-foreground uppercase">
             {album.artists.map((artist, index) => (
