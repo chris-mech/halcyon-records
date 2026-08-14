@@ -111,6 +111,21 @@ describe("ProductCard", () => {
     );
   });
 
+  test("hides the release year by default", () => {
+    render(<ProductCard album={buildAlbum({ releaseDate: "1974-06-01" })} />);
+    expect(screen.queryByText("1974")).not.toBeInTheDocument();
+  });
+
+  test("shows the release year when showReleaseYear is true", () => {
+    render(
+      <ProductCard
+        album={buildAlbum({ releaseDate: "1974-06-01" })}
+        showReleaseYear
+      />,
+    );
+    expect(screen.getByText("1974")).toBeInTheDocument();
+  });
+
   test("renders a placeholder icon when there is no cover art", () => {
     render(<ProductCard album={buildAlbum({ imageUrl: null })} />);
     expect(screen.queryByRole("img")).not.toBeInTheDocument();
