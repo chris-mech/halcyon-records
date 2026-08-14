@@ -1,5 +1,6 @@
 ﻿using System.Text.Json;
 using HalcyonRecords.Api.Domain;
+using HalcyonRecords.Api.Infrastructure.Search;
 using HalcyonRecords.Shared;
 using Microsoft.EntityFrameworkCore;
 
@@ -11,6 +12,7 @@ public static class DbSeeder
 
     public static async Task SeedAsync(
         ApplicationDbContext dbContext,
+        MeilisearchIndexer indexer,
         CancellationToken cancellationToken = default
     )
     {
@@ -118,6 +120,8 @@ public static class DbSeeder
         dbContext.Decades.AddRange(decades);
         dbContext.Albums.AddRange(albums);
         await dbContext.SaveChangesAsync(cancellationToken);
+
+        await indexer.RebuildAsync(dbContext, cancellationToken);
     }
 
     private static async Task<List<T>> ReadSeedFileAsync<T>(

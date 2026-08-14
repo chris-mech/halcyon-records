@@ -8,6 +8,7 @@ using HalcyonRecords.Api.Common.OpenApi;
 using HalcyonRecords.Api.Common.RateLimiting;
 using HalcyonRecords.Api.Common.Sqids;
 using HalcyonRecords.Api.Infrastructure;
+using HalcyonRecords.Api.Infrastructure.Search;
 using HalcyonRecords.Api.Infrastructure.Seed;
 using Microsoft.EntityFrameworkCore;
 
@@ -45,6 +46,7 @@ builder.Services.AddProblemDetails(options =>
 });
 builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
 
+builder.Services.AddApiMeilisearch(builder.Configuration);
 builder.Services.AddApiRateLimiting(builder.Configuration);
 builder.Services.AddOpenApi(options =>
 {
@@ -58,9 +60,20 @@ if (app.Environment.IsDevelopment())
     using var scope = app.Services.CreateScope();
     var dbContext = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
     await dbContext.Database.MigrateAsync();
-    await DbSeeder.SeedAsync(dbContext);
+
+    var indexer = scope.ServiceProvider.GetRequiredService<MeilisearchIndexer>();
+    await DbSeeder.SeedAsync(dbContext, indexer);
 
     app.MapOpenApi();
+
+    app.MapPost(
+        "/api/dev/search/reindex",
+        async (ApplicationDbContext db, MeilisearchIndexer indexer, CancellationToken ct) =>
+        {
+            await indexer.RebuildAsync(db, ct);
+            return Results.Ok();
+        }
+    );
 }
 
 app.UseHttpsRedirection();

@@ -41,6 +41,15 @@
           "Microsoft.IdentityModel.JsonWebTokens": "8.14.0"
         }
       },
+      "MeiliSearch": {
+        "type": "Direct",
+        "requested": "[0.20.0, )",
+        "resolved": "0.20.0",
+        "contentHash": "vXE3+hRop/DF8a00BFQ4f/y2xdQ/14jGwQmxLjHh+tuqVl9qN+uMu5DrIAKL1qBSLFsDoYcmopf4M+nunPhMRA==",
+        "dependencies": {
+          "System.IdentityModel.Tokens.Jwt": "8.16.0"
+        }
+      },
       "Microsoft.AspNetCore.OpenApi": {
         "type": "Direct",
         "requested": "[10.0.10, )",

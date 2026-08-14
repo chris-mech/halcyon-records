@@ -228,6 +228,14 @@
         "resolved": "2.0.1",
         "contentHash": "FYv95bNT4UwcNA+G/J1oX5OpRiSUxteXaUt2BJbRSdRNiIUNbggJF69wy6mnk2wYToaanpdXZdCwVylt96MpwQ=="
       },
+      "MeiliSearch": {
+        "type": "Transitive",
+        "resolved": "0.20.0",
+        "contentHash": "vXE3+hRop/DF8a00BFQ4f/y2xdQ/14jGwQmxLjHh+tuqVl9qN+uMu5DrIAKL1qBSLFsDoYcmopf4M+nunPhMRA==",
+        "dependencies": {
+          "System.IdentityModel.Tokens.Jwt": "8.16.0"
+        }
+      },
       "Microsoft.ApplicationInsights": {
         "type": "Transitive",
         "resolved": "2.23.0",
@@ -982,6 +990,7 @@
           "HalcyonRecords.ServiceDefaults": "[1.0.0, )",
           "HalcyonRecords.Shared": "[1.0.0, )",
           "MediatR": "[14.2.0, )",
+          "Meilisearch": "[0.20.0, )",
           "Microsoft.AspNetCore.OpenApi": "[10.0.10, )",
           "Microsoft.Extensions.Caching.Hybrid": "[10.8.0, )",
           "Sqids": "[3.2.1, )"
