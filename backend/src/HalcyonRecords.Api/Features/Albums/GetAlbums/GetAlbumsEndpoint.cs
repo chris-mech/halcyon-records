@@ -27,6 +27,8 @@ public sealed class GetAlbumsEndpoint : IEndpoint
                     bool? isStaffPick,
                     bool? inStock,
                     string[]? genres,
+                    int? startYear,
+                    int? endYear,
                     string? sort,
                     ISender sender
                 ) =>
@@ -40,6 +42,8 @@ public sealed class GetAlbumsEndpoint : IEndpoint
                             isStaffPick ?? false,
                             inStock ?? false,
                             genres,
+                            startYear,
+                            endYear,
                             sort ?? nameof(AlbumSortBy.NewestFirst)
                         )
                     );

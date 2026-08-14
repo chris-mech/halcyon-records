@@ -73,6 +73,27 @@ public class GetAlbumsValidatorTests
         result.ShouldNotHaveValidationErrorFor(q => q.Genres);
     }
 
+    [Fact]
+    public void EndYear_IsInvalid_WhenLessThanStartYear()
+    {
+        var result = _validator.TestValidate(CreateQuery(startYear: 1980, endYear: 1970));
+        result.ShouldHaveValidationErrorFor(q => q.EndYear);
+    }
+
+    [Fact]
+    public void EndYear_IsValid_WhenGreaterThanOrEqualToStartYear()
+    {
+        var result = _validator.TestValidate(CreateQuery(startYear: 1970, endYear: 1979));
+        result.ShouldNotHaveValidationErrorFor(q => q.EndYear);
+    }
+
+    [Fact]
+    public void EndYear_IsValid_WhenStartYearIsNull()
+    {
+        var result = _validator.TestValidate(CreateQuery(endYear: 1969));
+        result.ShouldNotHaveValidationErrorFor(q => q.EndYear);
+    }
+
     [Theory]
     [InlineData(nameof(AlbumSortBy.NewestFirst))]
     [InlineData(nameof(AlbumSortBy.OldestFirst))]
@@ -103,6 +124,8 @@ public class GetAlbumsValidatorTests
         bool isStaffPick = false,
         bool inStock = false,
         IReadOnlyList<string>? genres = null,
+        int? startYear = null,
+        int? endYear = null,
         string sort = nameof(AlbumSortBy.NewestFirst)
     ) =>
         new(
@@ -113,6 +136,8 @@ public class GetAlbumsValidatorTests
             IsStaffPick: isStaffPick,
             InStock: inStock,
             Genres: genres,
+            StartYear: startYear,
+            EndYear: endYear,
             Sort: sort
         );
 }

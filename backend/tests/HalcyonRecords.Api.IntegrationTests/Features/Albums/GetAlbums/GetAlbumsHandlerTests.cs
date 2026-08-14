@@ -95,6 +95,25 @@ public class GetAlbumsHandlerTests(SqlServerContainerFixture fixture) : Integrat
     }
 
     [Fact]
+    public async Task Handle_YearRangeFilter_MatchesOnlyAlbumsWithinInclusiveRange()
+    {
+        DbContext.Albums.AddRange(
+            NewAlbum("Album Before Range", releaseDate: new DateOnly(1969, 1, 1)),
+            NewAlbum("Album In Range", releaseDate: new DateOnly(1975, 1, 1)),
+            NewAlbum("Album After Range", releaseDate: new DateOnly(1980, 1, 1)),
+            NewAlbum("Album With No Release Date")
+        );
+        await DbContext.SaveChangesAsync(TestContext.Current.CancellationToken);
+
+        var result = await Handler.Handle(
+            CreateQuery(startYear: 1970, endYear: 1979),
+            CancellationToken.None
+        );
+
+        result.Value.Items.Select(a => a.Title).Should().BeEquivalentTo("Album In Range");
+    }
+
+    [Fact]
     public async Task Handle_PageBeyondTotalPages_ReturnsEmptyItemsNotError()
     {
         DbContext.Albums.Add(NewAlbum("Only Album"));
@@ -205,7 +224,8 @@ public class GetAlbumsHandlerTests(SqlServerContainerFixture fixture) : Integrat
         int? originalPriceInPence = null,
         bool isNew = false,
         bool isStaffPick = false,
-        int unitsInStock = 0
+        int unitsInStock = 0,
+        DateOnly? releaseDate = null
     ) =>
         new()
         {
@@ -215,6 +235,7 @@ public class GetAlbumsHandlerTests(SqlServerContainerFixture fixture) : Integrat
             IsNew = isNew,
             IsStaffPick = isStaffPick,
             UnitsInStock = unitsInStock,
+            ReleaseDate = releaseDate,
         };
 
     private static GetAlbumsQuery CreateQuery(
@@ -225,6 +246,20 @@ public class GetAlbumsHandlerTests(SqlServerContainerFixture fixture) : Integrat
         bool isStaffPick = false,
         bool inStock = false,
         IReadOnlyList<string>? genres = null,
+        int? startYear = null,
+        int? endYear = null,
         string sort = nameof(AlbumSortBy.NewestFirst)
-    ) => new(page, pageSize, isNew, isOnSale, isStaffPick, inStock, genres, sort);
+    ) =>
+        new(
+            page,
+            pageSize,
+            isNew,
+            isOnSale,
+            isStaffPick,
+            inStock,
+            genres,
+            startYear,
+            endYear,
+            sort
+        );
 }
