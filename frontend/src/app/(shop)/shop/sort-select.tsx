@@ -10,24 +10,13 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 
-import {
-  buildShopHref,
-  type AlbumSort,
-  type ShopFilters,
-} from "./search-params";
+import { ALBUM_SORT_OPTIONS, type AlbumSort } from "@/lib/api/album-sort";
+
+import { buildShopHref, type ShopFilters } from "./search-params";
 
 interface SortSelectProps {
   filters: ShopFilters;
 }
-
-const SORT_OPTIONS: { value: AlbumSort; label: string }[] = [
-  { value: "NewestFirst", label: "Newest first" },
-  { value: "OldestFirst", label: "Oldest first" },
-  { value: "PriceAsc", label: "Price: low to high" },
-  { value: "PriceDesc", label: "Price: high to low" },
-  { value: "ArtistAZ", label: "Artist A–Z" },
-  { value: "ArtistZA", label: "Artist Z–A" },
-];
 
 function SortSelect({ filters }: SortSelectProps) {
   const router = useRouter();
@@ -42,7 +31,7 @@ function SortSelect({ filters }: SortSelectProps) {
       </label>
       <Select
         key={filters.sort}
-        items={SORT_OPTIONS}
+        items={ALBUM_SORT_OPTIONS}
         defaultValue={filters.sort}
         onValueChange={(value) =>
           router.push(buildShopHref(filters, { sort: value as AlbumSort }))
@@ -55,7 +44,7 @@ function SortSelect({ filters }: SortSelectProps) {
           <SelectValue />
         </SelectTrigger>
         <SelectContent>
-          {SORT_OPTIONS.map(({ value, label }) => (
+          {ALBUM_SORT_OPTIONS.map(({ value, label }) => (
             <SelectItem key={value} value={value}>
               {label}
             </SelectItem>

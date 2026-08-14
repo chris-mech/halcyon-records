@@ -1,7 +1,8 @@
 import { describe, expect, test } from "vitest";
 import { render, screen } from "@testing-library/react";
 
-import { Pagination, getPageNumbers } from "./pagination";
+import { Pagination } from "./pagination";
+import { getPageNumbers } from "@/lib/pagination";
 import type { ShopFilters } from "./search-params";
 
 const baseFilters: ShopFilters = {
