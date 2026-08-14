@@ -11,6 +11,7 @@ public class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options
     public DbSet<Album> Albums => Set<Album>();
     public DbSet<Artist> Artists => Set<Artist>();
     public DbSet<Genre> Genres => Set<Genre>();
+    public DbSet<Decade> Decades => Set<Decade>();
     public DbSet<AlbumArtist> AlbumArtists => Set<AlbumArtist>();
     public DbSet<AlbumGenre> AlbumGenres => Set<AlbumGenre>();
 

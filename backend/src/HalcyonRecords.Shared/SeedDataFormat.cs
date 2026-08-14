@@ -8,6 +8,7 @@ public static class SeedDataFileNames
     public const string Artists = "SampleArtists.json";
     public const string Genres = "SampleGenres.json";
     public const string Albums = "SampleAlbums.json";
+    public const string Decades = "SampleDecades.json";
 }
 
 public static class SeedDataJsonOptions

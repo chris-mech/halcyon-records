@@ -1,0 +1,58 @@
+[
+  {
+    "slug": "2020s",
+    "label": "2020s",
+    "startYear": 2020,
+    "endYear": 2029,
+    "description": "The current decade, still being written — whatever's newest in the crates lives here.",
+    "imageUrl": "https://picsum.photos/seed/decade-2020s/400/300"
+  },
+  {
+    "slug": "2010s",
+    "label": "2010s",
+    "startYear": 2010,
+    "endYear": 2019,
+    "description": "Streaming took over, but the records that mattered still got pressed on wax.",
+    "imageUrl": "https://picsum.photos/seed/decade-2010s/400/300"
+  },
+  {
+    "slug": "2000s",
+    "label": "2000s",
+    "startYear": 2000,
+    "endYear": 2009,
+    "description": "The decade vinyl was supposed to be dead — instead it just went quiet for a while.",
+    "imageUrl": "https://picsum.photos/seed/decade-2000s/400/300"
+  },
+  {
+    "slug": "1990s",
+    "label": "1990s",
+    "startYear": 1990,
+    "endYear": 1999,
+    "description": "Grunge, golden-age hip-hop, and the last decade before the CD really took hold.",
+    "imageUrl": "https://picsum.photos/seed/decade-1990s/400/300"
+  },
+  {
+    "slug": "1980s",
+    "label": "1980s",
+    "startYear": 1980,
+    "endYear": 1989,
+    "description": "Bigger drums, brighter synths, and sleeves that were half the point.",
+    "imageUrl": "https://picsum.photos/seed/decade-1980s/400/300"
+  },
+  {
+    "slug": "1970s",
+    "label": "1970s",
+    "startYear": 1970,
+    "endYear": 1979,
+    "description": "Everything in the catalogue pressed or released between 1970 and 1979 — the decade the record shop as we know it took shape.",
+    "imageUrl": "https://picsum.photos/seed/decade-1970s/400/300"
+  },
+  {
+    "slug": "1960s-earlier",
+    "label": "1960s & earlier",
+    "startYear": null,
+    "endYear": 1969,
+    "description": "Everything that came before — the roots most of what's upstairs in the shop grew out of.",
+    "imageUrl": "https://picsum.photos/seed/decade-earlier/400/300"
+  }
+]

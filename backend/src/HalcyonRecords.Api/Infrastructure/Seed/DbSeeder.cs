@@ -27,6 +27,10 @@ public static class DbSeeder
             SeedDataFileNames.Genres,
             cancellationToken
         );
+        var decadeEntries = await ReadSeedFileAsync<DecadeSeedEntry>(
+            SeedDataFileNames.Decades,
+            cancellationToken
+        );
         var albumEntries = await ReadSeedFileAsync<AlbumSeedEntry>(
             SeedDataFileNames.Albums,
             cancellationToken
@@ -52,10 +56,23 @@ public static class DbSeeder
                 Name = entry.Name,
                 Slug = entry.Slug.Value,
                 Description = entry.Description,
+                ImageUrl = entry.ImageUrl,
             })
             .ToList();
 
         var genresBySlug = genres.ToDictionary(genre => genre.Slug);
+
+        var decades = decadeEntries
+            .Select(entry => new Decade
+            {
+                Slug = entry.Slug,
+                Label = entry.Label,
+                StartYear = entry.StartYear,
+                EndYear = entry.EndYear,
+                Description = entry.Description,
+                ImageUrl = entry.ImageUrl,
+            })
+            .ToList();
 
         var albums = albumEntries
             .Select(entry =>
@@ -98,6 +115,7 @@ public static class DbSeeder
 
         dbContext.Artists.AddRange(artists);
         dbContext.Genres.AddRange(genres);
+        dbContext.Decades.AddRange(decades);
         dbContext.Albums.AddRange(albums);
         await dbContext.SaveChangesAsync(cancellationToken);
     }
