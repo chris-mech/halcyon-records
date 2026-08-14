@@ -20,5 +20,7 @@ public sealed class GenreConfiguration : IEntityTypeConfiguration<Genre>
 
         builder.Property(g => g.Slug).HasMaxLength(200);
         builder.HasIndex(g => g.Slug).IsUnique();
+
+        builder.Property(g => g.ImageUrl).HasMaxLength(500);
     }
 }

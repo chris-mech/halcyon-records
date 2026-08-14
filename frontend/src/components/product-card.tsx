@@ -14,10 +14,18 @@ type AlbumSummary = components["schemas"]["AlbumSummaryResponse"];
 interface ProductCardProps {
   album: AlbumSummary;
   showGenre?: boolean;
+  showReleaseYear?: boolean;
 }
 
-function ProductCard({ album, showGenre = true }: ProductCardProps) {
+function ProductCard({
+  album,
+  showGenre = true,
+  showReleaseYear = false,
+}: ProductCardProps) {
   const albumHref = `/albums/${album.sqid}/${album.titleSlug}`;
+  const releaseYear = album.releaseDate
+    ? new Date(album.releaseDate).getFullYear()
+    : null;
 
   return (
     <Card className="relative gap-0 overflow-visible py-0">
@@ -77,6 +85,11 @@ function ProductCard({ album, showGenre = true }: ProductCardProps) {
                 </Fragment>
               ))}
             </>
+          )}
+          {showReleaseYear && releaseYear != null && (
+            <span className="text-[0.6875rem] font-semibold text-muted-foreground">
+              {releaseYear}
+            </span>
           )}
         </div>
 

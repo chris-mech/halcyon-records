@@ -48,6 +48,20 @@ public sealed class GetAlbumsHandler(
             );
         }
 
+        if (query.StartYear is not null)
+        {
+            albums = albums.Where(a =>
+                a.ReleaseDate != null && a.ReleaseDate.Value.Year >= query.StartYear
+            );
+        }
+
+        if (query.EndYear is not null)
+        {
+            albums = albums.Where(a =>
+                a.ReleaseDate != null && a.ReleaseDate.Value.Year <= query.EndYear
+            );
+        }
+
         var sort = Enum.Parse<AlbumSortBy>(query.Sort);
 
         albums = sort switch

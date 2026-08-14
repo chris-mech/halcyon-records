@@ -147,6 +147,35 @@ namespace HalcyonRecords.Api.Infrastructure.Migrations
                         });
                 });
 
+            modelBuilder.Entity("HalcyonRecords.Api.Domain.Decade", b =>
+                {
+                    b.Property<string>("Slug")
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("EndYear")
+                        .HasColumnType("int");
+
+                    b.Property<string>("ImageUrl")
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
+
+                    b.Property<string>("Label")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<int?>("StartYear")
+                        .HasColumnType("int");
+
+                    b.HasKey("Slug");
+
+                    b.ToTable("Decades", (string)null);
+                });
+
             modelBuilder.Entity("HalcyonRecords.Api.Domain.Genre", b =>
                 {
                     b.Property<int>("Id")
@@ -157,6 +186,10 @@ namespace HalcyonRecords.Api.Infrastructure.Migrations
 
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ImageUrl")
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
 
                     b.Property<string>("Name")
                         .IsRequired()

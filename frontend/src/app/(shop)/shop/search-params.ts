@@ -1,20 +1,4 @@
-export type AlbumSort =
-  | "NewestFirst"
-  | "OldestFirst"
-  | "PriceAsc"
-  | "PriceDesc"
-  | "ArtistAZ"
-  | "ArtistZA";
-
-// TODO: remove hardcoded enum after openapi fix
-const ALBUM_SORTS: readonly AlbumSort[] = [
-  "NewestFirst",
-  "OldestFirst",
-  "PriceAsc",
-  "PriceDesc",
-  "ArtistAZ",
-  "ArtistZA",
-];
+import { ALBUM_SORTS, type AlbumSort } from "@/lib/api/album-sort";
 
 const DEFAULT_SORT: AlbumSort = "NewestFirst";
 

@@ -4,6 +4,70 @@
  */
 
 export interface paths {
+  "/api/genres": {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    get: operations["GetGenres"];
+    put?: never;
+    post?: never;
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  "/api/genres/{slug}": {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    get: operations["GetGenreBySlug"];
+    put?: never;
+    post?: never;
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  "/api/decades": {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    get: operations["GetDecades"];
+    put?: never;
+    post?: never;
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  "/api/decades/{slug}": {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    get: operations["GetDecadeBySlug"];
+    put?: never;
+    post?: never;
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
   "/api/artists": {
     parameters: {
       query?: never;
@@ -242,6 +306,43 @@ export interface components {
       artists: components["schemas"]["CoverStoryArtistResponse"][];
       genres: components["schemas"]["CoverStoryGenreResponse"][];
     };
+    DecadeDetailResponse: {
+      slug: string;
+      label: string;
+      /** Format: int32 */
+      startYear: null | number;
+      /** Format: int32 */
+      endYear: null | number;
+      description: null | string;
+      /** Format: int32 */
+      albumCount: number;
+    };
+    DecadeListItemResponse: {
+      slug: string;
+      label: string;
+      /** Format: int32 */
+      startYear: null | number;
+      /** Format: int32 */
+      endYear: null | number;
+      imageUrl: null | string;
+      /** Format: int32 */
+      albumCount: number;
+    };
+    GenreDetailResponse: {
+      name: string;
+      slug: string;
+      description: null | string;
+      /** Format: int32 */
+      albumCount: number;
+    };
+    GenreListItemResponse: {
+      name: string;
+      slug: string;
+      description: null | string;
+      imageUrl: null | string;
+      /** Format: int32 */
+      albumCount: number;
+    };
     HttpValidationProblemDetails: {
       type?: null | string;
       title?: null | string;
@@ -300,6 +401,90 @@ export interface components {
 }
 export type $defs = Record<string, never>;
 export interface operations {
+  GetGenres: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    requestBody?: never;
+    responses: {
+      /** @description OK */
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/json": components["schemas"]["GenreListItemResponse"][];
+        };
+      };
+    };
+  };
+  GetGenreBySlug: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path: {
+        slug: string;
+      };
+      cookie?: never;
+    };
+    requestBody?: never;
+    responses: {
+      /** @description OK */
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/json": components["schemas"]["GenreDetailResponse"];
+        };
+      };
+    };
+  };
+  GetDecades: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    requestBody?: never;
+    responses: {
+      /** @description OK */
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/json": components["schemas"]["DecadeListItemResponse"][];
+        };
+      };
+    };
+  };
+  GetDecadeBySlug: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path: {
+        slug: string;
+      };
+      cookie?: never;
+    };
+    requestBody?: never;
+    responses: {
+      /** @description OK */
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/json": components["schemas"]["DecadeDetailResponse"];
+        };
+      };
+    };
+  };
   GetArtists: {
     parameters: {
       query?: never;
@@ -405,6 +590,8 @@ export interface operations {
         isStaffPick?: boolean;
         inStock?: boolean;
         genres?: string[];
+        startYear?: number;
+        endYear?: number;
         sort?: string;
       };
       header?: never;

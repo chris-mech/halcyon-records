@@ -63,4 +63,10 @@ public static class DomainErrors
                 description: $"'{name}' produced an empty slug."
             );
     }
+
+    public static class Decade
+    {
+        public static Error NotFound(string detail) =>
+            Error.NotFound(code: "Decade.NotFound", description: detail);
+    }
 }

@@ -13,6 +13,8 @@ public sealed record GetAlbumsQuery(
     bool IsStaffPick,
     bool InStock,
     IReadOnlyList<string>? Genres,
+    int? StartYear,
+    int? EndYear,
     string Sort
 ) : IRequest<ErrorOr<PagedResult<AlbumSummaryResponse>>>, ICacheableQuery
 {
@@ -27,5 +29,7 @@ public sealed record GetAlbumsQuery(
         + $":sort={Sort}"
         + $":genres={(Genres is { Count: > 0 } 
             ? string.Join(',', Genres.Order(StringComparer.Ordinal)) 
-            : string.Empty)}";
+            : string.Empty)}"
+        + $":start={StartYear}"
+        + $":end={EndYear}";
 }

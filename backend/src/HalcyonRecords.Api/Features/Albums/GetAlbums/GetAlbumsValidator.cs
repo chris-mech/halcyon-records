@@ -18,5 +18,10 @@ public sealed class GetAlbumsValidator : AbstractValidator<GetAlbumsQuery>
         RuleFor(x => x.Sort)
             .IsEnumName(typeof(AlbumSortBy), caseSensitive: true)
             .WithMessage("'{PropertyValue}' is not a valid sort option.");
+
+        RuleFor(x => x.EndYear)
+            .GreaterThanOrEqualTo(x => x.StartYear)
+            .WithMessage("'EndYear' must be greater than or equal to 'StartYear'.")
+            .When(x => x.StartYear is not null && x.EndYear is not null);
     }
 }

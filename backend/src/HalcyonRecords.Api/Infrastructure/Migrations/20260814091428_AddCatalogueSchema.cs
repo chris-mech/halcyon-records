@@ -98,6 +98,35 @@ namespace HalcyonRecords.Api.Infrastructure.Migrations
             );
 
             migrationBuilder.CreateTable(
+                name: "Decades",
+                columns: table => new
+                {
+                    Slug = table.Column<string>(
+                        type: "nvarchar(50)",
+                        maxLength: 50,
+                        nullable: false
+                    ),
+                    Label = table.Column<string>(
+                        type: "nvarchar(50)",
+                        maxLength: 50,
+                        nullable: false
+                    ),
+                    StartYear = table.Column<int>(type: "int", nullable: true),
+                    EndYear = table.Column<int>(type: "int", nullable: true),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ImageUrl = table.Column<string>(
+                        type: "nvarchar(500)",
+                        maxLength: 500,
+                        nullable: true
+                    ),
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Decades", x => x.Slug);
+                }
+            );
+
+            migrationBuilder.CreateTable(
                 name: "Genres",
                 columns: table => new
                 {
@@ -115,6 +144,11 @@ namespace HalcyonRecords.Api.Infrastructure.Migrations
                         nullable: false
                     ),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ImageUrl = table.Column<string>(
+                        type: "nvarchar(500)",
+                        maxLength: 500,
+                        nullable: true
+                    ),
                 },
                 constraints: table =>
                 {
@@ -210,6 +244,8 @@ namespace HalcyonRecords.Api.Infrastructure.Migrations
             migrationBuilder.DropTable(name: "AlbumArtists");
 
             migrationBuilder.DropTable(name: "AlbumGenres");
+
+            migrationBuilder.DropTable(name: "Decades");
 
             migrationBuilder.DropTable(name: "Artists");
 
