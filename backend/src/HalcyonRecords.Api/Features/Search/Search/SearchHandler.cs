@@ -1,5 +1,6 @@
 ﻿using ErrorOr;
 using HalcyonRecords.Api.Common.Sqids;
+using HalcyonRecords.Api.Domain.Ids;
 using HalcyonRecords.Api.Infrastructure;
 using HalcyonRecords.Api.Infrastructure.Search;
 using HalcyonRecords.Shared;
@@ -52,9 +53,9 @@ public sealed class SearchHandler(
         {
             var genreFilter = string.Join(
                 " OR ",
-                bestMatchGenres.Select(genre => $"Genres = '{EscapeFilterValue(genre)}'")
+                bestMatchGenres.Select(genre => $"genres = '{EscapeFilterValue(genre)}'")
             );
-            var exclusionFilter = string.Join(" AND ", bestMatchIds.Select(id => $"Id != {id}"));
+            var exclusionFilter = string.Join(" AND ", bestMatchIds.Select(id => $"id != {id}"));
 
             var suggestionsResult = await index.SearchAsync<AlbumSearchDocument>(
                 string.Empty,
@@ -69,10 +70,10 @@ public sealed class SearchHandler(
             suggestionIds = suggestionsResult.Hits.Select(hit => hit.Id).ToArray();
         }
 
-        var albumIds = bestMatchIds.Concat(suggestionIds).ToArray();
+        var albumIds = bestMatchIds.Concat(suggestionIds).Select(id => new AlbumId(id)).ToArray();
 
         var rows = await dbContext
-            .Albums.Where(a => albumIds.Contains(a.Id.Value))
+            .Albums.Where(a => albumIds.Contains(a.Id))
             .Select(a => new
             {
                 a.Id,

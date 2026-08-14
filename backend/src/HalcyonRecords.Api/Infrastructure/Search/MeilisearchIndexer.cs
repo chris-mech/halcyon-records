@@ -1,4 +1,5 @@
-﻿using HalcyonRecords.Api.Infrastructure;
+﻿using System.Text.Json.Serialization;
+using HalcyonRecords.Api.Infrastructure;
 using Meilisearch;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
@@ -6,18 +7,18 @@ using Microsoft.Extensions.Options;
 namespace HalcyonRecords.Api.Infrastructure.Search;
 
 public sealed record AlbumSearchDocument(
-    int Id,
-    string Title,
-    IReadOnlyList<string> Artists,
-    IReadOnlyList<string> Genres
+    [property: JsonPropertyName("id")] int Id,
+    [property: JsonPropertyName("title")] string Title,
+    [property: JsonPropertyName("artists")] IReadOnlyList<string> Artists,
+    [property: JsonPropertyName("genres")] IReadOnlyList<string> Genres
 );
 
 public sealed class MeilisearchIndexer(MeilisearchClient client, IOptions<SearchOptions> options)
 {
     private const double TaskTimeoutMs = 30_000;
 
-    private static readonly string[] s_searchableAttributes = ["Title", "Artists", "Genres"];
-    private static readonly string[] s_filterableAttributes = ["Genres"];
+    private static readonly string[] s_searchableAttributes = ["title", "artists", "genres"];
+    private static readonly string[] s_filterableAttributes = ["genres", "id"];
 
     public async Task RebuildAsync(
         ApplicationDbContext dbContext,
@@ -60,7 +61,7 @@ public sealed class MeilisearchIndexer(MeilisearchClient client, IOptions<Search
             () =>
                 index.AddDocumentsAsync(
                     documents,
-                    primaryKey: "Id",
+                    primaryKey: "id",
                     cancellationToken: cancellationToken
                 ),
             cancellationToken
