@@ -12,7 +12,7 @@ public abstract class IntegrationTestBase(SqlServerContainerFixture fixture) : I
                 .Options
         );
 
-    public async ValueTask InitializeAsync() => await fixture.ResetAsync();
+    public virtual async ValueTask InitializeAsync() => await fixture.ResetAsync();
 
     public ValueTask DisposeAsync() => DbContext.DisposeAsync();
 }

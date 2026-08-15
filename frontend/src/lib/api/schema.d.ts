@@ -4,6 +4,71 @@
  */
 
 export interface paths {
+  "/api/dev/search/reindex": {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    get?: never;
+    put?: never;
+    post: {
+      parameters: {
+        query?: never;
+        header?: never;
+        path?: never;
+        cookie?: never;
+      };
+      requestBody?: never;
+      responses: {
+        /** @description OK */
+        200: {
+          headers: {
+            [name: string]: unknown;
+          };
+          content?: never;
+        };
+      };
+    };
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  "/api/search": {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    get: operations["Search"];
+    put?: never;
+    post?: never;
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  "/api/search/suggestions": {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    get: operations["GetSearchSuggestions"];
+    put?: never;
+    post?: never;
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
   "/api/genres": {
     parameters: {
       query?: never;
@@ -392,6 +457,40 @@ export interface components {
       artists: components["schemas"]["RelatedAlbumArtistResponse"][];
       genres: components["schemas"]["RelatedAlbumGenreResponse"][];
     };
+    SearchAlbumArtistResponse: {
+      sqid: string;
+      name: string;
+      nameSlug: string;
+    };
+    SearchAlbumGenreResponse: {
+      name: string;
+      slug: string;
+    };
+    SearchAlbumResponse: {
+      sqid: string;
+      title: string;
+      titleSlug: string;
+      imageUrl: null | string;
+      /** Format: date */
+      releaseDate: null | string;
+      /** Format: int32 */
+      priceInPence: number;
+      /** Format: int32 */
+      originalPriceInPence: null | number;
+      isNew: boolean;
+      isOnSale: boolean;
+      isStaffPick: boolean;
+      isInStock: boolean;
+      artists: components["schemas"]["SearchAlbumArtistResponse"][];
+      genres: components["schemas"]["SearchAlbumGenreResponse"][];
+    };
+    SearchResponse: {
+      bestMatches: components["schemas"]["SearchAlbumResponse"][];
+      suggestions: components["schemas"]["SearchAlbumResponse"][];
+      suggestedTerms: string[];
+      /** Format: int32 */
+      totalCount: number;
+    };
   };
   responses: never;
   parameters: never;
@@ -401,6 +500,57 @@ export interface components {
 }
 export type $defs = Record<string, never>;
 export interface operations {
+  Search: {
+    parameters: {
+      query?: {
+        q?: string;
+      };
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    requestBody?: never;
+    responses: {
+      /** @description OK */
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/json": components["schemas"]["SearchResponse"];
+        };
+      };
+      /** @description Bad Request */
+      400: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/problem+json": components["schemas"]["HttpValidationProblemDetails"];
+        };
+      };
+    };
+  };
+  GetSearchSuggestions: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    requestBody?: never;
+    responses: {
+      /** @description OK */
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/json": string[];
+        };
+      };
+    };
+  };
   GetGenres: {
     parameters: {
       query?: never;

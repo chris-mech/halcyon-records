@@ -7,7 +7,11 @@ using HalcyonRecords.Api.Common.Endpoints;
 using HalcyonRecords.Api.Common.OpenApi;
 using HalcyonRecords.Api.Common.RateLimiting;
 using HalcyonRecords.Api.Common.Sqids;
+using HalcyonRecords.Api.Features.Albums.GetRelatedAlbums;
+using HalcyonRecords.Api.Features.Search;
+using HalcyonRecords.Api.Features.Search.Search;
 using HalcyonRecords.Api.Infrastructure;
+using HalcyonRecords.Api.Infrastructure.Search;
 using HalcyonRecords.Api.Infrastructure.Seed;
 using Microsoft.EntityFrameworkCore;
 
@@ -21,6 +25,7 @@ builder.Services.AddEndpoints(typeof(Program).Assembly);
 builder.Services.AddSingleton(TimeProvider.System);
 builder.Services.AddSingleton<AlbumSqidEncoder>();
 builder.Services.AddSingleton<ArtistSqidEncoder>();
+builder.Services.AddSingleton<SuggestedTermsProvider>();
 
 builder.Services.AddValidatorsFromAssemblyContaining<Program>();
 
@@ -45,11 +50,19 @@ builder.Services.AddProblemDetails(options =>
 });
 builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
 
+builder.Services.AddApiMeilisearch(builder.Configuration);
 builder.Services.AddApiRateLimiting(builder.Configuration);
 builder.Services.AddOpenApi(options =>
 {
     options.AddSchemaTransformer<IntegerSchemaTransformer>();
 });
+
+builder.Services.Configure<SearchOptions>(
+    builder.Configuration.GetSection(SearchOptions.SectionName)
+);
+builder.Services.Configure<RelatedAlbumsOptions>(
+    builder.Configuration.GetSection(RelatedAlbumsOptions.SectionName)
+);
 
 var app = builder.Build();
 
@@ -58,9 +71,22 @@ if (app.Environment.IsDevelopment())
     using var scope = app.Services.CreateScope();
     var dbContext = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
     await dbContext.Database.MigrateAsync();
+
     await DbSeeder.SeedAsync(dbContext);
 
+    var indexer = scope.ServiceProvider.GetRequiredService<MeilisearchIndexer>();
+    await indexer.RebuildAsync(dbContext);
+
     app.MapOpenApi();
+
+    app.MapPost(
+        "/api/dev/search/reindex",
+        async (ApplicationDbContext db, MeilisearchIndexer indexer, CancellationToken ct) =>
+        {
+            await indexer.RebuildAsync(db, ct);
+            return Results.Ok();
+        }
+    );
 }
 
 app.UseHttpsRedirection();

@@ -6,17 +6,17 @@ using HalcyonRecords.Api.Infrastructure;
 using HalcyonRecords.Shared;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 
 namespace HalcyonRecords.Api.Features.Albums.GetRelatedAlbums;
 
 public sealed class GetRelatedAlbumsHandler(
     ApplicationDbContext dbContext,
     AlbumSqidEncoder albumSqids,
-    ArtistSqidEncoder artistSqids
+    ArtistSqidEncoder artistSqids,
+    IOptions<RelatedAlbumsOptions> relatedAlbumsOptions
 ) : IRequestHandler<GetRelatedAlbumsQuery, ErrorOr<IReadOnlyList<RelatedAlbumResponse>>>
 {
-    private const int MaxResults = 4;
-
     public async Task<ErrorOr<IReadOnlyList<RelatedAlbumResponse>>> Handle(
         GetRelatedAlbumsQuery query,
         CancellationToken cancellationToken
@@ -49,7 +49,7 @@ public sealed class GetRelatedAlbumsHandler(
 
         async Task FillRemainingAsync(IQueryable<Album> candidates)
         {
-            if (selectedIds.Count >= MaxResults)
+            if (selectedIds.Count >= relatedAlbumsOptions.Value.MaxResults)
             {
                 return;
             }
@@ -57,7 +57,7 @@ public sealed class GetRelatedAlbumsHandler(
             var ids = await candidates
                 .Where(a => a.Id != currentId && !selectedIds.Contains(a.Id))
                 .Select(a => a.Id)
-                .Take(MaxResults - selectedIds.Count)
+                .Take(relatedAlbumsOptions.Value.MaxResults - selectedIds.Count)
                 .ToListAsync(cancellationToken);
 
             selectedIds.AddRange(ids);

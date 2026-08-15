@@ -5,6 +5,7 @@ using HalcyonRecords.Api.Domain;
 using HalcyonRecords.Api.Features.Albums.GetRelatedAlbums;
 using HalcyonRecords.Api.IntegrationTests.Common;
 using HalcyonRecords.Shared;
+using Microsoft.Extensions.Options;
 
 namespace HalcyonRecords.Api.IntegrationTests.Features.Albums.GetRelatedAlbums;
 
@@ -16,7 +17,8 @@ public class GetRelatedAlbumsHandlerTests(SqlServerContainerFixture fixture)
 
     private const int MaxResults = 4;
 
-    private GetRelatedAlbumsHandler Handler => new(DbContext, s_albumSqids, s_artistSqids);
+    private GetRelatedAlbumsHandler Handler =>
+        new(DbContext, s_albumSqids, s_artistSqids, Options.Create(new RelatedAlbumsOptions()));
 
     [Theory]
     [InlineData(true)]
