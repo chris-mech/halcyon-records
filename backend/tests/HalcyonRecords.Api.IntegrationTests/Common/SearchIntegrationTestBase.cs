@@ -12,7 +12,7 @@ public abstract class SearchIntegrationTestBase(
     protected MeilisearchClient MeilisearchClient => meilisearchFixture.Client;
 
     protected MeilisearchIndexer Indexer { get; } =
-        new(meilisearchFixture.Client, Options.Create(new SearchOptions()));
+        new(meilisearchFixture.Client, Options.Create(new MeilisearchIndexOptions()));
 
     public override async ValueTask InitializeAsync()
     {

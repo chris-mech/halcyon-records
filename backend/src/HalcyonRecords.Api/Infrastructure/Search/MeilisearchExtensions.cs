@@ -2,7 +2,7 @@
 
 namespace HalcyonRecords.Api.Infrastructure.Search;
 
-public static class SearchExtensions
+public static class MeilisearchExtensions
 {
     private const string HttpClientName = "meilisearch";
 
@@ -10,7 +10,9 @@ public static class SearchExtensions
     {
         public IServiceCollection AddApiMeilisearch(IConfiguration configuration)
         {
-            services.Configure<SearchOptions>(configuration.GetSection(SearchOptions.SectionName));
+            services.Configure<MeilisearchIndexOptions>(
+                configuration.GetSection(MeilisearchIndexOptions.SectionName)
+            );
 
             services.AddHttpClient(HttpClientName);
 

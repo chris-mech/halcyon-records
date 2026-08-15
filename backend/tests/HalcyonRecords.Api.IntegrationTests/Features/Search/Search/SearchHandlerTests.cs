@@ -1,4 +1,3 @@
-﻿using ErrorOr;
 using FluentAssertions;
 using HalcyonRecords.Api.Common.Sqids;
 using HalcyonRecords.Api.Domain;
@@ -20,6 +19,7 @@ public class SearchHandlerTests(
     private SearchHandler Handler =>
         new(
             MeilisearchClient,
+            Options.Create(new MeilisearchIndexOptions()),
             Options.Create(new SearchOptions()),
             DbContext,
             s_albumSqids,
@@ -59,7 +59,7 @@ public class SearchHandlerTests(
         result
             .Value.Suggestions.Should()
             .NotContain(a => a.Title == "Search Different Genre Album");
-        result.Value.TotalCount.Should().Be(2);
+        result.Value.TotalCount.Should().Be(1);
     }
 
     [Fact]
@@ -82,6 +82,59 @@ public class SearchHandlerTests(
         result.Value.BestMatches.Should().BeEmpty();
         result.Value.Suggestions.Should().BeEmpty();
         result.Value.TotalCount.Should().Be(0);
+        result.Value.SuggestedTerms.Should().HaveCount(3);
+        result
+            .Value.SuggestedTerms.Should()
+            .OnlyContain(term =>
+                term == "Search Unrelated Title Album"
+                || term == "Search Filler Artist"
+                || term == "Search Filler Genre"
+            );
+    }
+
+    [Fact]
+    public async Task Handle_NoMatch_WithLargerCatalog_ReturnsSuggestedTermsFromMixedPool()
+    {
+        var genreOne = NewGenre("Search Mix Genre One", "search-mix-genre-one");
+        var genreTwo = NewGenre("Search Mix Genre Two", "search-mix-genre-two");
+        var genreThree = NewGenre("Search Mix Genre Three", "search-mix-genre-three");
+
+        var albumOne = NewAlbum("Search Mix Album One");
+        Link(albumOne, NewArtist("Search Mix Artist One"));
+        Link(albumOne, genreOne);
+
+        var albumTwo = NewAlbum("Search Mix Album Two");
+        Link(albumTwo, NewArtist("Search Mix Artist Two"));
+        Link(albumTwo, genreTwo);
+
+        var albumThree = NewAlbum("Search Mix Album Three");
+        Link(albumThree, NewArtist("Search Mix Artist Three"));
+        Link(albumThree, genreThree);
+
+        DbContext.Albums.AddRange(albumOne, albumTwo, albumThree);
+        await DbContext.SaveChangesAsync(TestContext.Current.CancellationToken);
+        await Indexer.RebuildAsync(DbContext, TestContext.Current.CancellationToken);
+
+        var result = await Handler.Handle(
+            new SearchQuery("nonexistentquery"),
+            CancellationToken.None
+        );
+
+        var seededPool = new[]
+        {
+            "Search Mix Album One",
+            "Search Mix Album Two",
+            "Search Mix Album Three",
+            "Search Mix Artist One",
+            "Search Mix Artist Two",
+            "Search Mix Artist Three",
+            "Search Mix Genre One",
+            "Search Mix Genre Two",
+            "Search Mix Genre Three",
+        };
+
+        result.Value.SuggestedTerms.Should().HaveCount(3);
+        result.Value.SuggestedTerms.Should().OnlyContain(term => seededPool.Contains(term));
     }
 
     [Fact]

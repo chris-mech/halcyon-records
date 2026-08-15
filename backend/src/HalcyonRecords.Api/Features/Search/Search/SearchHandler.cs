@@ -14,6 +14,7 @@ namespace HalcyonRecords.Api.Features.Search.Search;
 
 public sealed class SearchHandler(
     MeilisearchClient meilisearchClient,
+    IOptions<MeilisearchIndexOptions> indexOptions,
     IOptions<SearchOptions> searchOptions,
     ApplicationDbContext dbContext,
     AlbumSqidEncoder albumSqids,
@@ -25,13 +26,12 @@ public sealed class SearchHandler(
         CancellationToken cancellationToken
     )
     {
-        var index = meilisearchClient.Index(searchOptions.Value.IndexName);
+        var index = meilisearchClient.Index(indexOptions.Value.IndexName);
 
         var bestMatchResult = await index.SearchAsync<AlbumSearchDocument>(
             query.Q,
             new MeiliSearchQuery
             {
-                Limit = searchOptions.Value.BestMatchLimit,
                 RankingScoreThreshold = searchOptions.Value.BestMatchRankingScoreThreshold,
             },
             cancellationToken
@@ -41,7 +41,37 @@ public sealed class SearchHandler(
 
         if (bestMatchDocuments.Count == 0)
         {
-            return new SearchResponse(BestMatches: [], Suggestions: [], TotalCount: 0);
+            var titleCandidates = await dbContext
+                .Albums.OrderBy(_ => Guid.NewGuid())
+                .Select(a => a.Title)
+                .Take(searchOptions.Value.SuggestedTermCount)
+                .ToListAsync(cancellationToken);
+
+            var artistCandidates = await dbContext
+                .Artists.OrderBy(_ => Guid.NewGuid())
+                .Select(a => a.Name)
+                .Take(searchOptions.Value.SuggestedTermCount)
+                .ToListAsync(cancellationToken);
+
+            var genreCandidates = await dbContext
+                .Genres.OrderBy(_ => Guid.NewGuid())
+                .Select(g => g.Name)
+                .Take(searchOptions.Value.SuggestedTermCount)
+                .ToListAsync(cancellationToken);
+
+            var suggestedTerms = titleCandidates
+                .Concat(artistCandidates)
+                .Concat(genreCandidates)
+                .OrderBy(_ => Guid.NewGuid())
+                .Take(searchOptions.Value.SuggestedTermCount)
+                .ToList();
+
+            return new SearchResponse(
+                BestMatches: [],
+                Suggestions: [],
+                SuggestedTerms: suggestedTerms,
+                TotalCount: 0
+            );
         }
 
         var bestMatchIds = bestMatchDocuments.Select(d => d.Id).ToList();
@@ -130,7 +160,12 @@ public sealed class SearchHandler(
         var bestMatches = bestMatchIds.Select(ToResponse).OfType<SearchAlbumResponse>().ToList();
         var suggestions = suggestionIds.Select(ToResponse).OfType<SearchAlbumResponse>().ToList();
 
-        return new SearchResponse(bestMatches, suggestions, bestMatches.Count + suggestions.Count);
+        return new SearchResponse(
+            BestMatches: bestMatches,
+            Suggestions: suggestions,
+            SuggestedTerms: [],
+            TotalCount: bestMatches.Count
+        );
     }
 
     private static string EscapeFilterValue(string value) => value.Replace("'", "\\'");

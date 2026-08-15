@@ -3,6 +3,7 @@
 public sealed record SearchResponse(
     IReadOnlyList<SearchAlbumResponse> BestMatches,
     IReadOnlyList<SearchAlbumResponse> Suggestions,
+    IReadOnlyList<string> SuggestedTerms,
     int TotalCount
 );
 

@@ -7,6 +7,8 @@ using HalcyonRecords.Api.Common.Endpoints;
 using HalcyonRecords.Api.Common.OpenApi;
 using HalcyonRecords.Api.Common.RateLimiting;
 using HalcyonRecords.Api.Common.Sqids;
+using HalcyonRecords.Api.Features.Albums.GetRelatedAlbums;
+using HalcyonRecords.Api.Features.Search.Search;
 using HalcyonRecords.Api.Infrastructure;
 using HalcyonRecords.Api.Infrastructure.Search;
 using HalcyonRecords.Api.Infrastructure.Seed;
@@ -52,6 +54,13 @@ builder.Services.AddOpenApi(options =>
 {
     options.AddSchemaTransformer<IntegerSchemaTransformer>();
 });
+
+builder.Services.Configure<SearchOptions>(
+    builder.Configuration.GetSection(SearchOptions.SectionName)
+);
+builder.Services.Configure<RelatedAlbumsOptions>(
+    builder.Configuration.GetSection(RelatedAlbumsOptions.SectionName)
+);
 
 var app = builder.Build();
 
