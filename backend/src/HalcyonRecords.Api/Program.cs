@@ -8,6 +8,7 @@ using HalcyonRecords.Api.Common.OpenApi;
 using HalcyonRecords.Api.Common.RateLimiting;
 using HalcyonRecords.Api.Common.Sqids;
 using HalcyonRecords.Api.Features.Albums.GetRelatedAlbums;
+using HalcyonRecords.Api.Features.Search;
 using HalcyonRecords.Api.Features.Search.Search;
 using HalcyonRecords.Api.Infrastructure;
 using HalcyonRecords.Api.Infrastructure.Search;
@@ -24,6 +25,7 @@ builder.Services.AddEndpoints(typeof(Program).Assembly);
 builder.Services.AddSingleton(TimeProvider.System);
 builder.Services.AddSingleton<AlbumSqidEncoder>();
 builder.Services.AddSingleton<ArtistSqidEncoder>();
+builder.Services.AddSingleton<SuggestedTermsProvider>();
 
 builder.Services.AddValidatorsFromAssemblyContaining<Program>();
 

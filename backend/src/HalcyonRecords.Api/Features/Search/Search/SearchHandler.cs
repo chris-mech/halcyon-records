@@ -18,7 +18,8 @@ public sealed class SearchHandler(
     IOptions<SearchOptions> searchOptions,
     ApplicationDbContext dbContext,
     AlbumSqidEncoder albumSqids,
-    ArtistSqidEncoder artistSqids
+    ArtistSqidEncoder artistSqids,
+    SuggestedTermsProvider suggestedTermsProvider
 ) : IRequestHandler<SearchQuery, ErrorOr<SearchResponse>>
 {
     public async Task<ErrorOr<SearchResponse>> Handle(
@@ -41,30 +42,10 @@ public sealed class SearchHandler(
 
         if (bestMatchDocuments.Count == 0)
         {
-            var titleCandidates = await dbContext
-                .Albums.OrderBy(_ => Guid.NewGuid())
-                .Select(a => a.Title)
-                .Take(searchOptions.Value.SuggestedTermCount)
-                .ToListAsync(cancellationToken);
-
-            var artistCandidates = await dbContext
-                .Artists.OrderBy(_ => Guid.NewGuid())
-                .Select(a => a.Name)
-                .Take(searchOptions.Value.SuggestedTermCount)
-                .ToListAsync(cancellationToken);
-
-            var genreCandidates = await dbContext
-                .Genres.OrderBy(_ => Guid.NewGuid())
-                .Select(g => g.Name)
-                .Take(searchOptions.Value.SuggestedTermCount)
-                .ToListAsync(cancellationToken);
-
-            var suggestedTerms = titleCandidates
-                .Concat(artistCandidates)
-                .Concat(genreCandidates)
-                .OrderBy(_ => Guid.NewGuid())
-                .Take(searchOptions.Value.SuggestedTermCount)
-                .ToList();
+            var suggestedTerms = await suggestedTermsProvider.GetRandomTermsAsync(
+                dbContext,
+                cancellationToken
+            );
 
             return new SearchResponse(
                 BestMatches: [],

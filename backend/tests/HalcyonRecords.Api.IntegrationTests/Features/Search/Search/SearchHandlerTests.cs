@@ -1,6 +1,7 @@
 ﻿using FluentAssertions;
 using HalcyonRecords.Api.Common.Sqids;
 using HalcyonRecords.Api.Domain;
+using HalcyonRecords.Api.Features.Search;
 using HalcyonRecords.Api.Features.Search.Search;
 using HalcyonRecords.Api.Infrastructure.Search;
 using HalcyonRecords.Api.IntegrationTests.Common;
@@ -23,7 +24,8 @@ public class SearchHandlerTests(
             Options.Create(new SearchOptions()),
             DbContext,
             s_albumSqids,
-            s_artistSqids
+            s_artistSqids,
+            new SuggestedTermsProvider(Options.Create(new SearchOptions()))
         );
 
     [Fact]
