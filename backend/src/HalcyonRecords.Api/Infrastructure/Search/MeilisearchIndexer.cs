@@ -1,5 +1,4 @@
 ﻿using System.Text.Json.Serialization;
-using HalcyonRecords.Api.Infrastructure;
 using Meilisearch;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
@@ -10,14 +9,24 @@ public sealed record AlbumSearchDocument(
     [property: JsonPropertyName("id")] int Id,
     [property: JsonPropertyName("title")] string Title,
     [property: JsonPropertyName("artists")] IReadOnlyList<string> Artists,
-    [property: JsonPropertyName("genres")] IReadOnlyList<string> Genres
+    [property: JsonPropertyName("genres")] IReadOnlyList<string> Genres,
+    [property: JsonPropertyName("releaseYear")] string? ReleaseYear
 );
 
-public sealed class MeilisearchIndexer(MeilisearchClient client, IOptions<SearchOptions> options)
+public sealed class MeilisearchIndexer(
+    MeilisearchClient client,
+    IOptions<MeilisearchIndexOptions> options
+)
 {
     private const double TaskTimeoutMs = 30_000;
 
-    private static readonly string[] s_searchableAttributes = ["title", "artists", "genres"];
+    private static readonly string[] s_searchableAttributes =
+    [
+        "title",
+        "artists",
+        "genres",
+        "releaseYear",
+    ];
     private static readonly string[] s_filterableAttributes = ["genres", "id"];
 
     public async Task RebuildAsync(
@@ -43,6 +52,7 @@ public sealed class MeilisearchIndexer(MeilisearchClient client, IOptions<Search
             {
                 a.Id,
                 a.Title,
+                a.ReleaseDate,
                 Artists = a.AlbumArtists.Select(aa => aa.Artist.Name),
                 Genres = a.AlbumGenres.Select(ag => ag.Genre.Name),
             })
@@ -53,7 +63,8 @@ public sealed class MeilisearchIndexer(MeilisearchClient client, IOptions<Search
             a.Id.Value,
             a.Title,
             a.Artists.ToList(),
-            a.Genres.ToList()
+            a.Genres.ToList(),
+            a.ReleaseDate.HasValue ? a.ReleaseDate.Value.Year.ToString() : null
         ));
 
         await RunAndWaitAsync(

@@ -1,4 +1,4 @@
-using FluentAssertions;
+﻿using FluentAssertions;
 using HalcyonRecords.Api.Common.Sqids;
 using HalcyonRecords.Api.Domain;
 using HalcyonRecords.Api.Features.Search.Search;
@@ -60,6 +60,86 @@ public class SearchHandlerTests(
             .Value.Suggestions.Should()
             .NotContain(a => a.Title == "Search Different Genre Album");
         result.Value.TotalCount.Should().Be(1);
+    }
+
+    [Fact]
+    public async Task Handle_ReleaseYearOnly_ReturnsOnlyMatchingYearAlbum()
+    {
+        var matchingAlbum = NewAlbum("Search Release Year Match Album");
+        matchingAlbum.ReleaseDate = new DateOnly(1994, 3, 15);
+        Link(matchingAlbum, NewArtist("Search Release Year Match Artist"));
+        Link(
+            matchingAlbum,
+            NewGenre("Search Release Year Match Genre", "search-release-year-match-genre")
+        );
+
+        var otherYearAlbum = NewAlbum("Search Release Year Other Album");
+        otherYearAlbum.ReleaseDate = new DateOnly(2010, 6, 1);
+        Link(otherYearAlbum, NewArtist("Search Release Year Other Artist"));
+        Link(
+            otherYearAlbum,
+            NewGenre("Search Release Year Other Genre", "search-release-year-other-genre")
+        );
+
+        DbContext.Albums.AddRange(matchingAlbum, otherYearAlbum);
+        await DbContext.SaveChangesAsync(TestContext.Current.CancellationToken);
+        await Indexer.RebuildAsync(DbContext, TestContext.Current.CancellationToken);
+
+        var result = await Handler.Handle(new SearchQuery("1994"), CancellationToken.None);
+
+        result.IsError.Should().BeFalse();
+        result
+            .Value.BestMatches.Should()
+            .ContainSingle(a => a.Title == "Search Release Year Match Album");
+        result
+            .Value.BestMatches.Should()
+            .NotContain(a => a.Title == "Search Release Year Other Album");
+    }
+
+    [Fact]
+    public async Task Handle_GenreAndReleaseYear_ReturnsMatchingAlbum()
+    {
+        var album = NewAlbum("Search Release Year Combo Album");
+        album.ReleaseDate = new DateOnly(1994, 3, 15);
+        Link(album, NewArtist("Search Release Year Combo Artist"));
+        Link(album, NewGenre("Search Release Year Combo Genre", "search-release-year-combo-genre"));
+
+        DbContext.Albums.Add(album);
+        await DbContext.SaveChangesAsync(TestContext.Current.CancellationToken);
+        await Indexer.RebuildAsync(DbContext, TestContext.Current.CancellationToken);
+
+        var result = await Handler.Handle(
+            new SearchQuery("Search Release Year Combo Genre 1994"),
+            CancellationToken.None
+        );
+
+        result.IsError.Should().BeFalse();
+        result
+            .Value.BestMatches.Should()
+            .ContainSingle(a => a.Title == "Search Release Year Combo Album");
+    }
+
+    [Fact]
+    public async Task Handle_ReleaseYearOnly_WithSharedYear_ReturnsAllAlbumsFromThatYear()
+    {
+        var firstAlbum = NewAlbum("Search Shared Year Album One");
+        firstAlbum.ReleaseDate = new DateOnly(1994, 1, 10);
+        Link(firstAlbum, NewArtist("Search Shared Year Artist One"));
+        Link(firstAlbum, NewGenre("Search Shared Year Genre One", "search-shared-year-genre-one"));
+
+        var secondAlbum = NewAlbum("Search Shared Year Album Two");
+        secondAlbum.ReleaseDate = new DateOnly(1994, 9, 20);
+        Link(secondAlbum, NewArtist("Search Shared Year Artist Two"));
+        Link(secondAlbum, NewGenre("Search Shared Year Genre Two", "search-shared-year-genre-two"));
+
+        DbContext.Albums.AddRange(firstAlbum, secondAlbum);
+        await DbContext.SaveChangesAsync(TestContext.Current.CancellationToken);
+        await Indexer.RebuildAsync(DbContext, TestContext.Current.CancellationToken);
+
+        var result = await Handler.Handle(new SearchQuery("1994"), CancellationToken.None);
+
+        result.IsError.Should().BeFalse();
+        result.Value.BestMatches.Should().HaveCount(2);
     }
 
     [Fact]
