@@ -70,8 +70,10 @@ if (app.Environment.IsDevelopment())
     var dbContext = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
     await dbContext.Database.MigrateAsync();
 
+    await DbSeeder.SeedAsync(dbContext);
+
     var indexer = scope.ServiceProvider.GetRequiredService<MeilisearchIndexer>();
-    await DbSeeder.SeedAsync(dbContext, indexer);
+    await indexer.RebuildAsync(dbContext);
 
     app.MapOpenApi();
 

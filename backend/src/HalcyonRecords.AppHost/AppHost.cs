@@ -6,7 +6,7 @@ var sql = builder
     .WithDataVolume()
     .AddDatabase("halcyonrecords");
 
-var meilisearch = builder.AddMeilisearch("meilisearch");
+var meilisearch = builder.AddMeilisearch("meilisearch").WithDataVolume();
 
 var api = builder
     .AddProject<Projects.HalcyonRecords_Api>("api")
