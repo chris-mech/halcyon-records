@@ -69,4 +69,13 @@ public static class DomainErrors
         public static Error NotFound(string detail) =>
             Error.NotFound(code: "Decade.NotFound", description: detail);
     }
+
+    public static class Auth
+    {
+        public static Error EmailAlreadyRegistered(string email) =>
+            Error.Conflict(
+                code: "Auth.EmailAlreadyRegistered",
+                description: $"An account with email '{email}' already exists."
+            );
+    }
 }
