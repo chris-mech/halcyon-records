@@ -66,7 +66,8 @@ public static class ErrorOrHttpExtensions
             return TypedResults.Problem(
                 detail: firstError.Description,
                 statusCode: statusCode,
-                title: title
+                title: title,
+                extensions: new Dictionary<string, object?> { ["code"] = firstError.Code }
             );
         }
     }
