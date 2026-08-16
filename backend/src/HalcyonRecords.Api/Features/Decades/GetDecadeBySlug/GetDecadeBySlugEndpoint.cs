@@ -27,6 +27,7 @@ public sealed class GetDecadeBySlugEndpoint : IEndpoint
                     );
                 }
             )
-            .WithName("GetDecadeBySlug");
+            .WithName("GetDecadeBySlug")
+            .ProducesProblem(StatusCodes.Status404NotFound);
     }
 }

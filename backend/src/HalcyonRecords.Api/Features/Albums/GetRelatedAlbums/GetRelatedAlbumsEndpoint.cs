@@ -29,6 +29,7 @@ public sealed class GetRelatedAlbumsEndpoint : IEndpoint
                     );
                 }
             )
-            .WithName("GetRelatedAlbums");
+            .WithName("GetRelatedAlbums")
+            .ProducesProblem(StatusCodes.Status404NotFound);
     }
 }
