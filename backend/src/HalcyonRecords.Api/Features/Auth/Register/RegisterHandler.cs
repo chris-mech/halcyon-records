@@ -60,7 +60,7 @@ public sealed class RegisterHandler(
                 ExpiresAt = refreshExpiresAt,
             }
         );
-        await dbContext.SaveChangesAsync(cancellationToken);
+        await dbContext.SaveChangesAsync(CancellationToken.None);
 
         return new RegisterResponse(accessToken, rawRefreshToken, expiresAt);
     }

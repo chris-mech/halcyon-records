@@ -38,7 +38,7 @@ public sealed class LoginHandler(
                 ExpiresAt = refreshExpiresAt,
             }
         );
-        await dbContext.SaveChangesAsync(cancellationToken);
+        await dbContext.SaveChangesAsync(CancellationToken.None);
 
         return new LoginResponse(accessToken, rawRefreshToken, expiresAt);
     }
