@@ -56,6 +56,7 @@ namespace HalcyonRecords.Api.Infrastructure.Migrations
                         type: "datetimeoffset",
                         nullable: false
                     ),
+                    PublicId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     UserName = table.Column<string>(
                         type: "nvarchar(256)",
                         maxLength: 256,
@@ -312,6 +313,13 @@ namespace HalcyonRecords.Api.Infrastructure.Migrations
                 name: "EmailIndex",
                 table: "AspNetUsers",
                 column: "NormalizedEmail"
+            );
+
+            migrationBuilder.CreateIndex(
+                name: "IX_AspNetUsers_PublicId",
+                table: "AspNetUsers",
+                column: "PublicId",
+                unique: true
             );
 
             migrationBuilder.CreateIndex(

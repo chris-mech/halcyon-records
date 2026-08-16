@@ -310,6 +310,9 @@ namespace HalcyonRecords.Api.Infrastructure.Migrations
                     b.Property<bool>("PhoneNumberConfirmed")
                         .HasColumnType("bit");
 
+                    b.Property<Guid>("PublicId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<DateTimeOffset>("RegisteredAt")
                         .HasColumnType("datetimeoffset");
 
@@ -332,6 +335,9 @@ namespace HalcyonRecords.Api.Infrastructure.Migrations
                         .IsUnique()
                         .HasDatabaseName("UserNameIndex")
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
+
+                    b.HasIndex("PublicId")
+                        .IsUnique();
 
                     b.ToTable("AspNetUsers", (string)null);
                 });

@@ -1,5 +1,4 @@
-﻿using System.Globalization;
-using System.Security.Claims;
+﻿using System.Security.Claims;
 using ErrorOr;
 using HalcyonRecords.Api.Common.Endpoints;
 using HalcyonRecords.Api.Common.Results;
@@ -20,13 +19,12 @@ public sealed class GetCurrentUserEndpoint : IEndpoint
                     ISender sender
                 ) =>
                 {
-                    var userId = int.Parse(
-                        claimsPrincipal.FindFirstValue(JwtRegisteredClaimNames.Sub)!,
-                        CultureInfo.InvariantCulture
+                    var publicId = Guid.Parse(
+                        claimsPrincipal.FindFirstValue(JwtRegisteredClaimNames.Sub)!
                     );
 
                     ErrorOr<CurrentUserResponse> result = await sender.Send(
-                        new GetCurrentUserQuery(userId)
+                        new GetCurrentUserQuery(publicId)
                     );
 
                     return result.Match<Results<Ok<CurrentUserResponse>, ProblemHttpResult>>(

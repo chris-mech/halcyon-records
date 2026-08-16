@@ -2,6 +2,7 @@
 using HalcyonRecords.Api.Infrastructure;
 using HalcyonRecords.Shared;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 
 namespace HalcyonRecords.Api.Features.Auth.GetCurrentUser;
 
@@ -13,14 +14,17 @@ public sealed class GetCurrentUserHandler(ApplicationDbContext dbContext)
         CancellationToken cancellationToken
     )
     {
-        var user = await dbContext.Users.FindAsync([query.UserId], cancellationToken);
+        var user = await dbContext.Users.FirstOrDefaultAsync(
+            u => u.PublicId == query.PublicId,
+            cancellationToken
+        );
         if (user is null)
         {
             return DomainErrors.Auth.UserNotFound();
         }
 
         return new CurrentUserResponse(
-            user.Id,
+            user.PublicId,
             user.Email!,
             user.FirstName,
             user.LastName,

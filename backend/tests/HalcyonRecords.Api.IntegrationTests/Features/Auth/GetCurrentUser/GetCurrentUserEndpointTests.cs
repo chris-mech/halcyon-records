@@ -74,6 +74,7 @@ public class GetCurrentUserEndpointTests(SqlServerContainerFixture fixture) : IA
         response.StatusCode.Should().Be(HttpStatusCode.OK);
         var body = await response.Content.ReadFromJsonAsync<CurrentUserResponse>();
         body!.Email.Should().Be("endpoint-current-user@test.invalid");
+        body.Id.Should().Be(user.PublicId);
     }
 
     private async Task<User> CreateUserAsync(string email, string firstName, string lastName)

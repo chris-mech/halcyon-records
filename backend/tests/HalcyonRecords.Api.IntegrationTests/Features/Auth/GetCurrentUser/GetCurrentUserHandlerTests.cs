@@ -30,12 +30,12 @@ public class GetCurrentUserHandlerTests(SqlServerContainerFixture fixture)
         var user = await UserManager.FindByEmailAsync("current-user@test.invalid");
 
         var result = await Handler.Handle(
-            new GetCurrentUserQuery(user!.Id),
+            new GetCurrentUserQuery(user!.PublicId),
             TestContext.Current.CancellationToken
         );
 
         result.IsError.Should().BeFalse();
-        result.Value.Id.Should().Be(user.Id);
+        result.Value.Id.Should().Be(user.PublicId);
         result.Value.Email.Should().Be("current-user@test.invalid");
         result.Value.FirstName.Should().Be("Current");
         result.Value.LastName.Should().Be("User Test");
@@ -45,7 +45,7 @@ public class GetCurrentUserHandlerTests(SqlServerContainerFixture fixture)
     public async Task Handle_UnknownUserId_ReturnsNotFoundError()
     {
         var result = await Handler.Handle(
-            new GetCurrentUserQuery(-1),
+            new GetCurrentUserQuery(Guid.NewGuid()),
             TestContext.Current.CancellationToken
         );
 

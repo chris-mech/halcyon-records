@@ -1,7 +1,7 @@
 ﻿namespace HalcyonRecords.Api.Features.Auth.GetCurrentUser;
 
 public sealed record CurrentUserResponse(
-    int Id,
+    Guid Id,
     string Email,
     string FirstName,
     string LastName,

@@ -1,5 +1,4 @@
-﻿using System.Globalization;
-using System.Security.Claims;
+﻿using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Text;
 using HalcyonRecords.Api.Domain;
@@ -20,10 +19,7 @@ public sealed class JwtTokenService(IOptions<JwtOptions> options, TimeProvider t
         var descriptor = new SecurityTokenDescriptor
         {
             Subject = new ClaimsIdentity([
-                new Claim(
-                    JwtRegisteredClaimNames.Sub,
-                    user.Id.ToString(CultureInfo.InvariantCulture)
-                ),
+                new Claim(JwtRegisteredClaimNames.Sub, user.PublicId.ToString()),
                 new Claim(JwtRegisteredClaimNames.Email, user.Email!),
                 new Claim(ClaimTypes.GivenName, user.FirstName),
                 new Claim(ClaimTypes.Surname, user.LastName),
