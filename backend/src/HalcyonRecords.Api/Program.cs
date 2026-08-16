@@ -103,3 +103,5 @@ app.MapDefaultEndpoints();
 app.MapEndpoints();
 
 await app.RunAsync();
+
+public partial class Program;

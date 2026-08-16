@@ -89,5 +89,11 @@ public static class DomainErrors
                 code: "Auth.InvalidRefreshToken",
                 description: "The refresh token is invalid, expired, or has already been used."
             );
+
+        public static Error UserNotFound() =>
+            Error.NotFound(
+                code: "Auth.UserNotFound",
+                description: "The authenticated user no longer exists."
+            );
     }
 }

@@ -44,6 +44,7 @@ public static class AuthExtensions
                 .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer(bearerOptions =>
                 {
+                    bearerOptions.MapInboundClaims = false;
                     bearerOptions.TokenValidationParameters = new TokenValidationParameters
                     {
                         ValidIssuer = jwtOptions.Issuer,
