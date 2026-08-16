@@ -1,3 +1,7 @@
 ﻿namespace HalcyonRecords.Api.Features.Auth.Refresh;
 
-public sealed record RefreshResponse(string AccessToken, string RefreshToken, DateTimeOffset ExpiresAt);
+public sealed record RefreshResponse(
+    string AccessToken,
+    string RefreshToken,
+    DateTimeOffset ExpiresAt
+);

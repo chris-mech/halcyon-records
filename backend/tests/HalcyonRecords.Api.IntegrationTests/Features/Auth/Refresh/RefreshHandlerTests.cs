@@ -7,7 +7,8 @@ using Microsoft.EntityFrameworkCore;
 
 namespace HalcyonRecords.Api.IntegrationTests.Features.Auth.Refresh;
 
-public class RefreshHandlerTests(SqlServerContainerFixture fixture) : AuthIntegrationTestBase(fixture)
+public class RefreshHandlerTests(SqlServerContainerFixture fixture)
+    : AuthIntegrationTestBase(fixture)
 {
     private RefreshHandler Handler => new(JwtTokenService, DbContext, TimeProvider);
 

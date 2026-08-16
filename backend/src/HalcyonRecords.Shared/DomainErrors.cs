@@ -85,9 +85,9 @@ public static class DomainErrors
             );
 
         public static Error InvalidRefreshToken() =>
-    Error.Unauthorized(
-        code: "Auth.InvalidRefreshToken",
-        description: "The refresh token is invalid, expired, or has already been used."
-    );
+            Error.Unauthorized(
+                code: "Auth.InvalidRefreshToken",
+                description: "The refresh token is invalid, expired, or has already been used."
+            );
     }
 }
