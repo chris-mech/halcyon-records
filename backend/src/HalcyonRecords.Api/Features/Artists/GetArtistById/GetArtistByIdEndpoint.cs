@@ -29,6 +29,9 @@ public sealed class GetArtistByIdEndpoint : IEndpoint
                 }
             )
             .WithName("GetArtistById")
-            .ProducesProblem(StatusCodes.Status404NotFound);
+            .Produces<DomainProblemDetails>(
+                StatusCodes.Status404NotFound,
+                "application/problem+json"
+            );
     }
 }

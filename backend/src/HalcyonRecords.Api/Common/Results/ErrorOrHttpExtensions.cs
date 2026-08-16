@@ -64,9 +64,13 @@ public static class ErrorOrHttpExtensions
             var (statusCode, title) = firstError.Type.ToProblemDetailsParts();
 
             return TypedResults.Problem(
-                detail: firstError.Description,
-                statusCode: statusCode,
-                title: title
+                new DomainProblemDetails
+                {
+                    Detail = firstError.Description,
+                    Status = statusCode,
+                    Title = title,
+                    Code = firstError.Code,
+                }
             );
         }
     }

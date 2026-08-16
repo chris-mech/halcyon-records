@@ -28,6 +28,9 @@ public sealed class GetAlbumByIdEndpoint : IEndpoint
                 }
             )
             .WithName("GetAlbumById")
-            .ProducesProblem(StatusCodes.Status404NotFound);
+            .Produces<DomainProblemDetails>(
+                StatusCodes.Status404NotFound,
+                "application/problem+json"
+            );
     }
 }
