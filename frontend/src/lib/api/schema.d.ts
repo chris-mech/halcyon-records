@@ -133,6 +133,86 @@ export interface paths {
     patch?: never;
     trace?: never;
   };
+  "/api/auth/register": {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    get?: never;
+    put?: never;
+    post: operations["Register"];
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  "/api/auth/refresh": {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    get?: never;
+    put?: never;
+    post: operations["Refresh"];
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  "/api/auth/logout": {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    get?: never;
+    put?: never;
+    post: operations["Logout"];
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  "/api/auth/login": {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    get?: never;
+    put?: never;
+    post: operations["Login"];
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  "/api/auth/me": {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    get: operations["GetCurrentUser"];
+    put?: never;
+    post?: never;
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
   "/api/artists": {
     parameters: {
       query?: never;
@@ -371,6 +451,15 @@ export interface components {
       artists: components["schemas"]["CoverStoryArtistResponse"][];
       genres: components["schemas"]["CoverStoryGenreResponse"][];
     };
+    CurrentUserResponse: {
+      /** Format: uuid */
+      id: string;
+      email: string;
+      firstName: string;
+      lastName: string;
+      /** Format: date-time */
+      registeredAt: string;
+    };
     DecadeDetailResponse: {
       slug: string;
       label: string;
@@ -392,6 +481,15 @@ export interface components {
       imageUrl: null | string;
       /** Format: int32 */
       albumCount: number;
+    };
+    DomainProblemDetails: {
+      type?: null | string;
+      title?: null | string;
+      /** Format: int32 */
+      status?: null | number;
+      detail?: null | string;
+      instance?: null | string;
+      code: string;
     };
     GenreDetailResponse: {
       name: string;
@@ -419,6 +517,19 @@ export interface components {
         [key: string]: string[];
       };
     };
+    LoginRequest: {
+      email: string;
+      password: string;
+    };
+    LoginResponse: {
+      accessToken: string;
+      refreshToken: string;
+      /** Format: date-time */
+      expiresAt: string;
+    };
+    LogoutRequest: {
+      refreshToken: string;
+    };
     PagedResultOfAlbumSummaryResponse: {
       items: components["schemas"]["AlbumSummaryResponse"][];
       /** Format: int32 */
@@ -429,6 +540,21 @@ export interface components {
       totalCount: number;
       /** Format: int32 */
       totalPages?: number;
+    };
+    RefreshRequest: {
+      refreshToken: string;
+    };
+    RefreshResponse: {
+      accessToken: string;
+      refreshToken: string;
+      /** Format: date-time */
+      expiresAt: string;
+    };
+    RegisterRequest: {
+      firstName: string;
+      lastName: string;
+      email: string;
+      password: string;
     };
     RelatedAlbumArtistResponse: {
       sqid: string;
@@ -591,6 +717,15 @@ export interface operations {
           "application/json": components["schemas"]["GenreDetailResponse"];
         };
       };
+      /** @description Not Found */
+      404: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/problem+json": components["schemas"]["DomainProblemDetails"];
+        };
+      };
     };
   };
   GetDecades: {
@@ -631,6 +766,199 @@ export interface operations {
         };
         content: {
           "application/json": components["schemas"]["DecadeDetailResponse"];
+        };
+      };
+      /** @description Not Found */
+      404: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/problem+json": components["schemas"]["DomainProblemDetails"];
+        };
+      };
+    };
+  };
+  Register: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    requestBody: {
+      content: {
+        "application/json": components["schemas"]["RegisterRequest"];
+      };
+    };
+    responses: {
+      /** @description OK */
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content?: never;
+      };
+      /** @description Bad Request */
+      400: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/problem+json": components["schemas"]["HttpValidationProblemDetails"];
+        };
+      };
+      /** @description Conflict */
+      409: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/problem+json": components["schemas"]["DomainProblemDetails"];
+        };
+      };
+    };
+  };
+  Refresh: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    requestBody: {
+      content: {
+        "application/json": components["schemas"]["RefreshRequest"];
+      };
+    };
+    responses: {
+      /** @description OK */
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/json": components["schemas"]["RefreshResponse"];
+        };
+      };
+      /** @description Bad Request */
+      400: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/problem+json": components["schemas"]["HttpValidationProblemDetails"];
+        };
+      };
+      /** @description Unauthorized */
+      401: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/problem+json": components["schemas"]["DomainProblemDetails"];
+        };
+      };
+    };
+  };
+  Logout: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    requestBody: {
+      content: {
+        "application/json": components["schemas"]["LogoutRequest"];
+      };
+    };
+    responses: {
+      /** @description No Content */
+      204: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content?: never;
+      };
+      /** @description Bad Request */
+      400: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/problem+json": components["schemas"]["HttpValidationProblemDetails"];
+        };
+      };
+    };
+  };
+  Login: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    requestBody: {
+      content: {
+        "application/json": components["schemas"]["LoginRequest"];
+      };
+    };
+    responses: {
+      /** @description OK */
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/json": components["schemas"]["LoginResponse"];
+        };
+      };
+      /** @description Bad Request */
+      400: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/problem+json": components["schemas"]["HttpValidationProblemDetails"];
+        };
+      };
+      /** @description Unauthorized */
+      401: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/problem+json": components["schemas"]["DomainProblemDetails"];
+        };
+      };
+    };
+  };
+  GetCurrentUser: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    requestBody?: never;
+    responses: {
+      /** @description OK */
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/json": components["schemas"]["CurrentUserResponse"];
+        };
+      };
+      /** @description Not Found */
+      404: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/problem+json": components["schemas"]["DomainProblemDetails"];
         };
       };
     };
@@ -686,6 +1014,15 @@ export interface operations {
           "application/problem+json": components["schemas"]["HttpValidationProblemDetails"];
         };
       };
+      /** @description Not Found */
+      404: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/problem+json": components["schemas"]["DomainProblemDetails"];
+        };
+      };
     };
   };
   GetRelatedAlbums: {
@@ -708,6 +1045,15 @@ export interface operations {
           "application/json": components["schemas"]["RelatedAlbumResponse"][];
         };
       };
+      /** @description Not Found */
+      404: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/problem+json": components["schemas"]["DomainProblemDetails"];
+        };
+      };
     };
   };
   GetCoverStory: {
@@ -726,6 +1072,15 @@ export interface operations {
         };
         content: {
           "application/json": components["schemas"]["CoverStoryResponse"];
+        };
+      };
+      /** @description Not Found */
+      404: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/problem+json": components["schemas"]["DomainProblemDetails"];
         };
       };
     };
@@ -788,6 +1143,15 @@ export interface operations {
         };
         content: {
           "application/json": components["schemas"]["AlbumDetailResponse"];
+        };
+      };
+      /** @description Not Found */
+      404: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/problem+json": components["schemas"]["DomainProblemDetails"];
         };
       };
     };
