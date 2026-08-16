@@ -21,8 +21,8 @@ public sealed class JwtTokenService(IOptions<JwtOptions> options, TimeProvider t
             Subject = new ClaimsIdentity([
                 new Claim(JwtRegisteredClaimNames.Sub, user.PublicId.ToString()),
                 new Claim(JwtRegisteredClaimNames.Email, user.Email!),
-                new Claim(ClaimTypes.GivenName, user.FirstName),
-                new Claim(ClaimTypes.Surname, user.LastName),
+                new Claim(JwtRegisteredClaimNames.GivenName, user.FirstName),
+                new Claim(JwtRegisteredClaimNames.FamilyName, user.LastName),
             ]),
             Expires = expiresAt.UtcDateTime,
             Issuer = _options.Issuer,
