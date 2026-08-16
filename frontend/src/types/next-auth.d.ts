@@ -1,6 +1,6 @@
-import type { DefaultSession } from "next-auth";
+export {};
 
-declare module "next-auth" {
+declare module "@auth/core/types" {
   interface User {
     id: string;
     firstName: string;
@@ -15,7 +15,7 @@ declare module "next-auth" {
       id: string;
       firstName: string;
       lastName: string;
-    } & DefaultSession["user"];
+    };
     error?: "RefreshError";
   }
 }

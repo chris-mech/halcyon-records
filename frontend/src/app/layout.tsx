@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { Big_Shoulders, Fraunces, Manrope } from "next/font/google";
+import { SessionProvider } from "next-auth/react";
 import "./globals.css";
 import { cn } from "@/lib/utils";
 
@@ -48,7 +49,9 @@ export default function RootLayout({
         "font-sans",
       )}
     >
-      <body className="flex min-h-full flex-col">{children}</body>
+      <body className="flex min-h-full flex-col">
+        <SessionProvider>{children}</SessionProvider>
+      </body>
     </html>
   );
 }
