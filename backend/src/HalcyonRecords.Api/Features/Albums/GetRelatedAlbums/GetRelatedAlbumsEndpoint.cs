@@ -30,6 +30,9 @@ public sealed class GetRelatedAlbumsEndpoint : IEndpoint
                 }
             )
             .WithName("GetRelatedAlbums")
-            .ProducesProblem(StatusCodes.Status404NotFound);
+            .Produces<DomainProblemDetails>(
+                StatusCodes.Status404NotFound,
+                "application/problem+json"
+            );
     }
 }
