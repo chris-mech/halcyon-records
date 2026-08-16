@@ -4,7 +4,7 @@ import type { components } from "@/lib/api/schema";
 
 import type { RegisterFormValues } from "./schemas";
 
-type RegisterError =
+export type RegisterError =
   | components["schemas"]["HttpValidationProblemDetails"]
   | components["schemas"]["DomainProblemDetails"];
 
