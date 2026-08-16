@@ -77,5 +77,11 @@ public static class DomainErrors
                 code: "Auth.EmailAlreadyRegistered",
                 description: $"An account with email '{email}' already exists."
             );
+
+        public static Error InvalidCredentials() =>
+            Error.Unauthorized(
+                code: "Auth.InvalidCredentials",
+                description: "The email or password is incorrect."
+            );
     }
 }
