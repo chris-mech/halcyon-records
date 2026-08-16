@@ -11,8 +11,7 @@ public class GetCurrentUserHandlerTests(SqlServerContainerFixture fixture)
 {
     private GetCurrentUserHandler Handler => new(DbContext);
 
-    private RegisterHandler RegisterHandler =>
-        new(UserManager, JwtTokenService, DbContext, TimeProvider);
+    private RegisterHandler RegisterHandler => new(UserManager, TimeProvider);
 
     [Fact]
     public async Task Handle_ExistingUser_ReturnsUserDetails()

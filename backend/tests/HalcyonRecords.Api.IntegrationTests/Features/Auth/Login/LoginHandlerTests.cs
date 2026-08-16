@@ -11,8 +11,7 @@ public class LoginHandlerTests(SqlServerContainerFixture fixture) : AuthIntegrat
 {
     private LoginHandler Handler => new(UserManager, JwtTokenService, DbContext, TimeProvider);
 
-    private RegisterHandler RegisterHandler =>
-        new(UserManager, JwtTokenService, DbContext, TimeProvider);
+    private RegisterHandler RegisterHandler => new(UserManager, TimeProvider);
 
     [Fact]
     public async Task Handle_ValidCredentials_ReturnsTokens()

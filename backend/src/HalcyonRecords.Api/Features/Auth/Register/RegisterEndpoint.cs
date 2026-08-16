@@ -12,12 +12,12 @@ public sealed class RegisterEndpoint : IEndpoint
     {
         app.MapPost(
                 "/auth/register",
-                async Task<Results<Ok<RegisterResponse>, ProblemHttpResult, ValidationProblem>> (
+                async Task<Results<Ok, ProblemHttpResult, ValidationProblem>> (
                     RegisterRequest request,
                     ISender sender
                 ) =>
                 {
-                    ErrorOr<RegisterResponse> result = await sender.Send(
+                    ErrorOr<Success> result = await sender.Send(
                         new RegisterCommand(
                             request.FirstName,
                             request.LastName,
@@ -26,11 +26,9 @@ public sealed class RegisterEndpoint : IEndpoint
                         )
                     );
 
-                    return result.Match<
-                        Results<Ok<RegisterResponse>, ProblemHttpResult, ValidationProblem>
-                    >(
-                        response => TypedResults.Ok(response),
-                        errors => errors.ProblemWithValidationProblem<Ok<RegisterResponse>>()
+                    return result.Match<Results<Ok, ProblemHttpResult, ValidationProblem>>(
+                        _ => TypedResults.Ok(),
+                        errors => errors.ProblemWithValidationProblem<Ok>()
                     );
                 }
             )

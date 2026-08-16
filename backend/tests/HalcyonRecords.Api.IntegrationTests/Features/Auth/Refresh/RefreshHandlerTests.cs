@@ -1,5 +1,6 @@
 ﻿using ErrorOr;
 using FluentAssertions;
+using HalcyonRecords.Api.Features.Auth.Login;
 using HalcyonRecords.Api.Features.Auth.Refresh;
 using HalcyonRecords.Api.Features.Auth.Register;
 using HalcyonRecords.Api.IntegrationTests.Common;
@@ -12,31 +13,51 @@ public class RefreshHandlerTests(SqlServerContainerFixture fixture)
 {
     private RefreshHandler Handler => new(JwtTokenService, DbContext, TimeProvider);
 
-    private RegisterHandler RegisterHandler =>
-        new(UserManager, JwtTokenService, DbContext, TimeProvider);
+    private RegisterHandler RegisterHandler => new(UserManager, TimeProvider);
+
+    private LoginHandler LoginHandler => new(UserManager, JwtTokenService, DbContext, TimeProvider);
+
+    private async Task<string> RegisterAndLoginAsync(
+        string firstName,
+        string lastName,
+        string email,
+        string password,
+        CancellationToken cancellationToken
+    )
+    {
+        await RegisterHandler.Handle(
+            new RegisterCommand(firstName, lastName, email, password),
+            cancellationToken
+        );
+
+        var loginResult = await LoginHandler.Handle(
+            new LoginCommand(email, password),
+            cancellationToken
+        );
+
+        return loginResult.Value.RefreshToken;
+    }
 
     [Fact]
     public async Task Handle_ValidToken_ReturnsNewTokensAndRotatesOldOne()
     {
-        var registerResult = await RegisterHandler.Handle(
-            new RegisterCommand(
-                "Valid",
-                "Refresh User",
-                "valid-refresh@test.invalid",
-                "ValidPassword123!"
-            ),
+        var refreshToken = await RegisterAndLoginAsync(
+            "Valid",
+            "Refresh User",
+            "valid-refresh@test.invalid",
+            "ValidPassword123!",
             TestContext.Current.CancellationToken
         );
 
         var result = await Handler.Handle(
-            new RefreshCommand(registerResult.Value.RefreshToken),
+            new RefreshCommand(refreshToken),
             TestContext.Current.CancellationToken
         );
 
         result.IsError.Should().BeFalse();
-        result.Value.RefreshToken.Should().NotBe(registerResult.Value.RefreshToken);
+        result.Value.RefreshToken.Should().NotBe(refreshToken);
 
-        var oldTokenHash = JwtTokenService.HashToken(registerResult.Value.RefreshToken);
+        var oldTokenHash = JwtTokenService.HashToken(refreshToken);
         var oldToken = await DbContext.RefreshTokens.SingleAsync(
             rt => rt.TokenHash == oldTokenHash,
             TestContext.Current.CancellationToken
@@ -62,20 +83,18 @@ public class RefreshHandlerTests(SqlServerContainerFixture fixture)
     [Fact]
     public async Task Handle_ExpiredToken_ReturnsUnauthorizedError()
     {
-        var registerResult = await RegisterHandler.Handle(
-            new RegisterCommand(
-                "Expired",
-                "Refresh User",
-                "expired-refresh@test.invalid",
-                "ValidPassword123!"
-            ),
+        var refreshToken = await RegisterAndLoginAsync(
+            "Expired",
+            "Refresh User",
+            "expired-refresh@test.invalid",
+            "ValidPassword123!",
             TestContext.Current.CancellationToken
         );
 
         TimeProvider.Advance(TimeSpan.FromDays(31));
 
         var result = await Handler.Handle(
-            new RefreshCommand(registerResult.Value.RefreshToken),
+            new RefreshCommand(refreshToken),
             TestContext.Current.CancellationToken
         );
 
@@ -86,18 +105,16 @@ public class RefreshHandlerTests(SqlServerContainerFixture fixture)
     [Fact]
     public async Task Handle_ReusedToken_RevokesEntireDescendantFamily()
     {
-        var registerResult = await RegisterHandler.Handle(
-            new RegisterCommand(
-                "Reuse",
-                "Detection User",
-                "reuse-detection@test.invalid",
-                "ValidPassword123!"
-            ),
+        var refreshToken = await RegisterAndLoginAsync(
+            "Reuse",
+            "Detection User",
+            "reuse-detection@test.invalid",
+            "ValidPassword123!",
             TestContext.Current.CancellationToken
         );
 
         var firstRefresh = await Handler.Handle(
-            new RefreshCommand(registerResult.Value.RefreshToken),
+            new RefreshCommand(refreshToken),
             TestContext.Current.CancellationToken
         );
         var secondRefresh = await Handler.Handle(
@@ -106,7 +123,7 @@ public class RefreshHandlerTests(SqlServerContainerFixture fixture)
         );
 
         var reuseResult = await Handler.Handle(
-            new RefreshCommand(registerResult.Value.RefreshToken),
+            new RefreshCommand(refreshToken),
             TestContext.Current.CancellationToken
         );
 
