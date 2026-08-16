@@ -83,5 +83,11 @@ public static class DomainErrors
                 code: "Auth.InvalidCredentials",
                 description: "The email or password is incorrect."
             );
+
+        public static Error InvalidRefreshToken() =>
+    Error.Unauthorized(
+        code: "Auth.InvalidRefreshToken",
+        description: "The refresh token is invalid, expired, or has already been used."
+    );
     }
 }
