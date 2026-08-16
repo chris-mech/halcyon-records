@@ -30,6 +30,9 @@ public sealed class LoginEndpoint : IEndpoint
                 }
             )
             .WithName("Login")
-            .ProducesProblem(StatusCodes.Status401Unauthorized);
+            .Produces<DomainProblemDetails>(
+                StatusCodes.Status401Unauthorized,
+                "application/problem+json"
+            );
     }
 }

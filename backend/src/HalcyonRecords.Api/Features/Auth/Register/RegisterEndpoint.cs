@@ -33,6 +33,9 @@ public sealed class RegisterEndpoint : IEndpoint
                 }
             )
             .WithName("Register")
-            .ProducesProblem(StatusCodes.Status409Conflict);
+            .Produces<DomainProblemDetails>(
+                StatusCodes.Status409Conflict,
+                "application/problem+json"
+            );
     }
 }

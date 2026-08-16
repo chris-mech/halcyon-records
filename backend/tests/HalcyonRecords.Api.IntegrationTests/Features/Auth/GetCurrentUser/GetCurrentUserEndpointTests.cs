@@ -2,6 +2,7 @@
 using System.Net.Http.Headers;
 using System.Net.Http.Json;
 using FluentAssertions;
+using HalcyonRecords.Api.Common.Results;
 using HalcyonRecords.Api.Domain;
 using HalcyonRecords.Api.Features.Auth.GetCurrentUser;
 using HalcyonRecords.Api.Infrastructure.Auth;
@@ -75,6 +76,31 @@ public class GetCurrentUserEndpointTests(SqlServerContainerFixture fixture) : IA
         var body = await response.Content.ReadFromJsonAsync<CurrentUserResponse>();
         body!.Email.Should().Be("endpoint-current-user@test.invalid");
         body.Id.Should().Be(user.PublicId);
+    }
+
+    [Fact]
+    public async Task Get_UserDeletedAfterTokenIssued_ReturnsNotFoundWithCode()
+    {
+        var user = await CreateUserAsync("endpoint-deleted-user@test.invalid", "Deleted", "User");
+        var (accessToken, _) = JwtTokenService.GenerateAccessToken(user);
+
+        using var scope = _factory.Services.CreateScope();
+        var userManager = scope.ServiceProvider.GetRequiredService<UserManager<User>>();
+        await userManager.DeleteAsync(user);
+
+        using var client = _factory.CreateClient();
+        client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(
+            "Bearer",
+            accessToken
+        );
+
+        var response = await client.GetAsync(new Uri("/api/auth/me", UriKind.Relative));
+
+        response.StatusCode.Should().Be(HttpStatusCode.NotFound);
+        var problem = await response.Content.ReadFromJsonAsync<DomainProblemDetails>();
+        problem!.Code.Should().Be("Auth.UserNotFound");
+        problem.Status.Should().Be((int)HttpStatusCode.NotFound);
+        problem.Title.Should().Be("Not Found");
     }
 
     private async Task<User> CreateUserAsync(string email, string firstName, string lastName)
