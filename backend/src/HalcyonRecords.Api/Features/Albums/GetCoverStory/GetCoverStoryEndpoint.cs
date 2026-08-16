@@ -25,6 +25,9 @@ public sealed class GetCoverStoryEndpoint : IEndpoint
                 }
             )
             .WithName("GetCoverStory")
-            .ProducesProblem(StatusCodes.Status404NotFound);
+            .Produces<DomainProblemDetails>(
+                StatusCodes.Status404NotFound,
+                "application/problem+json"
+            );
     }
 }
