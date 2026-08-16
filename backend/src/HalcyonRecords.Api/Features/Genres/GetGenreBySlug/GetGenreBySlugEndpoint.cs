@@ -27,6 +27,7 @@ public sealed class GetGenreBySlugEndpoint : IEndpoint
                     );
                 }
             )
-            .WithName("GetGenreBySlug");
+            .WithName("GetGenreBySlug")
+            .ProducesProblem(StatusCodes.Status404NotFound);
     }
 }

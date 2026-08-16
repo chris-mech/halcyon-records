@@ -28,6 +28,7 @@ public sealed class GetArtistByIdEndpoint : IEndpoint
                     );
                 }
             )
-            .WithName("GetArtistById");
+            .WithName("GetArtistById")
+            .ProducesProblem(StatusCodes.Status404NotFound);
     }
 }

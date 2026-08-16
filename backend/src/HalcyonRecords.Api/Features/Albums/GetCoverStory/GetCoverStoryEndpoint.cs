@@ -24,6 +24,7 @@ public sealed class GetCoverStoryEndpoint : IEndpoint
                     );
                 }
             )
-            .WithName("GetCoverStory");
+            .WithName("GetCoverStory")
+            .ProducesProblem(StatusCodes.Status404NotFound);
     }
 }
