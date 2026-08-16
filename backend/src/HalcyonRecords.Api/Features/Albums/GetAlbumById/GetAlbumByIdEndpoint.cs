@@ -27,6 +27,7 @@ public sealed class GetAlbumByIdEndpoint : IEndpoint
                     );
                 }
             )
-            .WithName("GetAlbumById");
+            .WithName("GetAlbumById")
+            .ProducesProblem(StatusCodes.Status404NotFound);
     }
 }
