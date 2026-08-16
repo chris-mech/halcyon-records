@@ -34,6 +34,7 @@ public sealed class GetCurrentUserEndpoint : IEndpoint
                 }
             )
             .WithName("GetCurrentUser")
-            .RequireAuthorization();
+            .RequireAuthorization()
+            .ProducesProblem(StatusCodes.Status404NotFound);
     }
 }

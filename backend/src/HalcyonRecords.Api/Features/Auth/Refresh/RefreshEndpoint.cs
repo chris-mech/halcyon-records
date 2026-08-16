@@ -29,6 +29,7 @@ public sealed class RefreshEndpoint : IEndpoint
                     );
                 }
             )
-            .WithName("Refresh");
+            .WithName("Refresh")
+            .ProducesProblem(StatusCodes.Status401Unauthorized);
     }
 }

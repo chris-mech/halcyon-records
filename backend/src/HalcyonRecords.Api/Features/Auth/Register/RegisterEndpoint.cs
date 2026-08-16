@@ -32,6 +32,7 @@ public sealed class RegisterEndpoint : IEndpoint
                     );
                 }
             )
-            .WithName("Register");
+            .WithName("Register")
+            .ProducesProblem(StatusCodes.Status409Conflict);
     }
 }
