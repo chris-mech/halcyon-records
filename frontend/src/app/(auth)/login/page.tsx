@@ -75,6 +75,7 @@ export default function LoginPage() {
                     {...field}
                     id={field.name}
                     type="email"
+                    autoComplete="email"
                     placeholder="you@email.com"
                     className="bg-background"
                     aria-invalid={fieldState.invalid}
@@ -98,6 +99,7 @@ export default function LoginPage() {
                     {...field}
                     id={field.name}
                     type="password"
+                    autoComplete="current-password"
                     placeholder="••••••••"
                     className="bg-background"
                     aria-invalid={fieldState.invalid}

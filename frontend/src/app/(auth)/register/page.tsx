@@ -100,6 +100,7 @@ export default function RegisterPage() {
                       {...field}
                       id={field.name}
                       type="text"
+                      autoComplete="given-name"
                       className="bg-background"
                       aria-invalid={fieldState.invalid}
                     />
@@ -122,6 +123,7 @@ export default function RegisterPage() {
                       {...field}
                       id={field.name}
                       type="text"
+                      autoComplete="family-name"
                       className="bg-background"
                       aria-invalid={fieldState.invalid}
                     />
@@ -145,6 +147,7 @@ export default function RegisterPage() {
                     {...field}
                     id={field.name}
                     type="email"
+                    autoComplete="email"
                     placeholder="you@email.com"
                     className="bg-background"
                     aria-invalid={fieldState.invalid}
@@ -168,6 +171,7 @@ export default function RegisterPage() {
                     {...field}
                     id={field.name}
                     type="password"
+                    autoComplete="new-password"
                     placeholder="••••••••"
                     className="bg-background"
                     aria-invalid={fieldState.invalid}
@@ -191,6 +195,7 @@ export default function RegisterPage() {
                     {...field}
                     id={field.name}
                     type="password"
+                    autoComplete="new-password"
                     placeholder="••••••••"
                     className="bg-background"
                     aria-invalid={fieldState.invalid}
