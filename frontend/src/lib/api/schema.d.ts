@@ -4,1123 +4,1123 @@
  */
 
 export interface paths {
-    "/api/search": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get: operations["Search"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
+  "/api/search": {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
     };
-    "/api/search/suggestions": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get: operations["GetSearchSuggestions"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
+    get: operations["Search"];
+    put?: never;
+    post?: never;
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  "/api/search/suggestions": {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
     };
-    "/api/genres": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get: operations["GetGenres"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
+    get: operations["GetSearchSuggestions"];
+    put?: never;
+    post?: never;
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  "/api/genres": {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
     };
-    "/api/genres/{slug}": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get: operations["GetGenreBySlug"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
+    get: operations["GetGenres"];
+    put?: never;
+    post?: never;
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  "/api/genres/{slug}": {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
     };
-    "/api/decades": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get: operations["GetDecades"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
+    get: operations["GetGenreBySlug"];
+    put?: never;
+    post?: never;
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  "/api/decades": {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
     };
-    "/api/decades/{slug}": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get: operations["GetDecadeBySlug"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
+    get: operations["GetDecades"];
+    put?: never;
+    post?: never;
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  "/api/decades/{slug}": {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
     };
-    "/api/auth/register": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put?: never;
-        post: operations["Register"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
+    get: operations["GetDecadeBySlug"];
+    put?: never;
+    post?: never;
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  "/api/auth/register": {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
     };
-    "/api/auth/refresh": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put?: never;
-        post: operations["Refresh"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
+    get?: never;
+    put?: never;
+    post: operations["Register"];
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  "/api/auth/refresh": {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
     };
-    "/api/auth/logout": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put?: never;
-        post: operations["Logout"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
+    get?: never;
+    put?: never;
+    post: operations["Refresh"];
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  "/api/auth/logout": {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
     };
-    "/api/auth/login": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put?: never;
-        post: operations["Login"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
+    get?: never;
+    put?: never;
+    post: operations["Logout"];
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  "/api/auth/login": {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
     };
-    "/api/auth/me": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get: operations["GetCurrentUser"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
+    get?: never;
+    put?: never;
+    post: operations["Login"];
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  "/api/auth/me": {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
     };
-    "/api/artists": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get: operations["GetArtists"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
+    get: operations["GetCurrentUser"];
+    put?: never;
+    post?: never;
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  "/api/artists": {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
     };
-    "/api/artists/{sqid}": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get: operations["GetArtistById"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
+    get: operations["GetArtists"];
+    put?: never;
+    post?: never;
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  "/api/artists/{sqid}": {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
     };
-    "/api/albums/{sqid}/related": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get: operations["GetRelatedAlbums"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
+    get: operations["GetArtistById"];
+    put?: never;
+    post?: never;
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  "/api/albums/{sqid}/related": {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
     };
-    "/api/albums/cover-story": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get: operations["GetCoverStory"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
+    get: operations["GetRelatedAlbums"];
+    put?: never;
+    post?: never;
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  "/api/albums/cover-story": {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
     };
-    "/api/albums": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get: operations["GetAlbums"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
+    get: operations["GetCoverStory"];
+    put?: never;
+    post?: never;
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  "/api/albums": {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
     };
-    "/api/albums/{sqid}": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get: operations["GetAlbumById"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
+    get: operations["GetAlbums"];
+    put?: never;
+    post?: never;
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  "/api/albums/{sqid}": {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
     };
+    get: operations["GetAlbumById"];
+    put?: never;
+    post?: never;
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
 }
 export type webhooks = Record<string, never>;
 export interface components {
-    schemas: {
-        AlbumArtistResponse: {
-            sqid: string;
-            name: string;
-            nameSlug: string;
-        };
-        AlbumDetailArtistResponse: {
-            sqid: string;
-            name: string;
-            nameSlug: string;
-        };
-        AlbumDetailGenreResponse: {
-            name: string;
-            slug: string;
-        };
-        AlbumDetailResponse: {
-            sqid: string;
-            title: string;
-            titleSlug: string;
-            description: null | string;
-            label: null | string;
-            imageUrl: null | string;
-            /** Format: date */
-            releaseDate: null | string;
-            /** Format: int32 */
-            priceInPence: number;
-            /** Format: int32 */
-            originalPriceInPence: null | number;
-            isNew: boolean;
-            isOnSale: boolean;
-            isStaffPick: boolean;
-            /** Format: int32 */
-            unitsInStock: number;
-            isInStock: boolean;
-            artists: components["schemas"]["AlbumDetailArtistResponse"][];
-            genres: components["schemas"]["AlbumDetailGenreResponse"][];
-        };
-        AlbumGenreResponse: {
-            name: string;
-            slug: string;
-        };
-        AlbumSummaryResponse: {
-            sqid: string;
-            title: string;
-            titleSlug: string;
-            imageUrl: null | string;
-            /** Format: date */
-            releaseDate: null | string;
-            /** Format: int32 */
-            priceInPence: number;
-            /** Format: int32 */
-            originalPriceInPence: null | number;
-            isNew: boolean;
-            isOnSale: boolean;
-            isStaffPick: boolean;
-            isInStock: boolean;
-            artists: components["schemas"]["AlbumArtistResponse"][];
-            genres: components["schemas"]["AlbumGenreResponse"][];
-        };
-        ArtistAlbumArtistResponse: {
-            sqid: string;
-            name: string;
-            nameSlug: string;
-        };
-        ArtistAlbumResponse: {
-            sqid: string;
-            title: string;
-            titleSlug: string;
-            imageUrl: null | string;
-            /** Format: date */
-            releaseDate: null | string;
-            /** Format: int32 */
-            priceInPence: number;
-            /** Format: int32 */
-            originalPriceInPence: null | number;
-            isNew: boolean;
-            isOnSale: boolean;
-            isStaffPick: boolean;
-            isInStock: boolean;
-            artists: components["schemas"]["ArtistAlbumArtistResponse"][];
-            genres: components["schemas"]["ArtistGenreResponse"][];
-        };
-        ArtistDetailResponse: {
-            sqid: string;
-            name: string;
-            nameSlug: string;
-            bio: null | string;
-            origin: null | string;
-            type: null | components["schemas"]["ArtistType"];
-            /** Format: int32 */
-            sinceYear: null | number;
-            imageUrl: null | string;
-            /** Format: int32 */
-            albumCount: number;
-            genres: components["schemas"]["ArtistGenreResponse"][];
-            albums: components["schemas"]["ArtistAlbumResponse"][];
-        };
-        ArtistGenreResponse: {
-            name: string;
-            slug: string;
-        };
-        ArtistListItemResponse: {
-            sqid: string;
-            name: string;
-            nameSlug: string;
-            /** Format: int32 */
-            albumCount: number;
-        };
-        ArtistType: number;
-        CoverStoryArtistResponse: {
-            sqid: string;
-            name: string;
-            nameSlug: string;
-        };
-        CoverStoryGenreResponse: {
-            name: string;
-            slug: string;
-        };
-        CoverStoryResponse: {
-            sqid: string;
-            title: string;
-            titleSlug: string;
-            description: null | string;
-            imageUrl: null | string;
-            /** Format: date */
-            releaseDate: null | string;
-            /** Format: int32 */
-            priceInPence: number;
-            /** Format: int32 */
-            originalPriceInPence: null | number;
-            isNew: boolean;
-            isOnSale: boolean;
-            isStaffPick: boolean;
-            isInStock: boolean;
-            /** Format: int32 */
-            issueNumber: number;
-            artists: components["schemas"]["CoverStoryArtistResponse"][];
-            genres: components["schemas"]["CoverStoryGenreResponse"][];
-        };
-        CurrentUserResponse: {
-            /** Format: uuid */
-            id: string;
-            email: string;
-            firstName: string;
-            lastName: string;
-            /** Format: date-time */
-            registeredAt: string;
-        };
-        DecadeDetailResponse: {
-            slug: string;
-            label: string;
-            /** Format: int32 */
-            startYear: null | number;
-            /** Format: int32 */
-            endYear: null | number;
-            description: null | string;
-            /** Format: int32 */
-            albumCount: number;
-        };
-        DecadeListItemResponse: {
-            slug: string;
-            label: string;
-            /** Format: int32 */
-            startYear: null | number;
-            /** Format: int32 */
-            endYear: null | number;
-            imageUrl: null | string;
-            /** Format: int32 */
-            albumCount: number;
-        };
-        DomainProblemDetails: {
-            type?: null | string;
-            title?: null | string;
-            /** Format: int32 */
-            status?: null | number;
-            detail?: null | string;
-            instance?: null | string;
-            code: string;
-        };
-        GenreDetailResponse: {
-            name: string;
-            slug: string;
-            description: null | string;
-            /** Format: int32 */
-            albumCount: number;
-        };
-        GenreListItemResponse: {
-            name: string;
-            slug: string;
-            description: null | string;
-            imageUrl: null | string;
-            /** Format: int32 */
-            albumCount: number;
-        };
-        HttpValidationProblemDetails: {
-            type?: null | string;
-            title?: null | string;
-            /** Format: int32 */
-            status?: null | number;
-            detail?: null | string;
-            instance?: null | string;
-            errors?: {
-                [key: string]: string[];
-            };
-        };
-        LoginRequest: {
-            email: string;
-            password: string;
-        };
-        LoginResponse: {
-            accessToken: string;
-            refreshToken: string;
-            /** Format: date-time */
-            expiresAt: string;
-        };
-        LogoutRequest: {
-            refreshToken: string;
-        };
-        PagedResultOfAlbumSummaryResponse: {
-            items: components["schemas"]["AlbumSummaryResponse"][];
-            /** Format: int32 */
-            page: number;
-            /** Format: int32 */
-            pageSize: number;
-            /** Format: int32 */
-            totalCount: number;
-            /** Format: int32 */
-            totalPages?: number;
-        };
-        RefreshRequest: {
-            refreshToken: string;
-        };
-        RefreshResponse: {
-            accessToken: string;
-            refreshToken: string;
-            /** Format: date-time */
-            expiresAt: string;
-        };
-        RegisterRequest: {
-            firstName: string;
-            lastName: string;
-            email: string;
-            password: string;
-        };
-        RelatedAlbumArtistResponse: {
-            sqid: string;
-            name: string;
-            nameSlug: string;
-        };
-        RelatedAlbumGenreResponse: {
-            name: string;
-            slug: string;
-        };
-        RelatedAlbumResponse: {
-            sqid: string;
-            title: string;
-            titleSlug: string;
-            imageUrl: null | string;
-            /** Format: date */
-            releaseDate: null | string;
-            /** Format: int32 */
-            priceInPence: number;
-            /** Format: int32 */
-            originalPriceInPence: null | number;
-            isNew: boolean;
-            isOnSale: boolean;
-            isStaffPick: boolean;
-            isInStock: boolean;
-            artists: components["schemas"]["RelatedAlbumArtistResponse"][];
-            genres: components["schemas"]["RelatedAlbumGenreResponse"][];
-        };
-        SearchAlbumArtistResponse: {
-            sqid: string;
-            name: string;
-            nameSlug: string;
-        };
-        SearchAlbumGenreResponse: {
-            name: string;
-            slug: string;
-        };
-        SearchAlbumResponse: {
-            sqid: string;
-            title: string;
-            titleSlug: string;
-            imageUrl: null | string;
-            /** Format: date */
-            releaseDate: null | string;
-            /** Format: int32 */
-            priceInPence: number;
-            /** Format: int32 */
-            originalPriceInPence: null | number;
-            isNew: boolean;
-            isOnSale: boolean;
-            isStaffPick: boolean;
-            isInStock: boolean;
-            artists: components["schemas"]["SearchAlbumArtistResponse"][];
-            genres: components["schemas"]["SearchAlbumGenreResponse"][];
-        };
-        SearchResponse: {
-            bestMatches: components["schemas"]["SearchAlbumResponse"][];
-            suggestions: components["schemas"]["SearchAlbumResponse"][];
-            suggestedTerms: string[];
-            /** Format: int32 */
-            totalCount: number;
-        };
+  schemas: {
+    AlbumArtistResponse: {
+      sqid: string;
+      name: string;
+      nameSlug: string;
     };
-    responses: never;
-    parameters: never;
-    requestBodies: never;
-    headers: never;
-    pathItems: never;
+    AlbumDetailArtistResponse: {
+      sqid: string;
+      name: string;
+      nameSlug: string;
+    };
+    AlbumDetailGenreResponse: {
+      name: string;
+      slug: string;
+    };
+    AlbumDetailResponse: {
+      sqid: string;
+      title: string;
+      titleSlug: string;
+      description: null | string;
+      label: null | string;
+      imageUrl: null | string;
+      /** Format: date */
+      releaseDate: null | string;
+      /** Format: int32 */
+      priceInPence: number;
+      /** Format: int32 */
+      originalPriceInPence: null | number;
+      isNew: boolean;
+      isOnSale: boolean;
+      isStaffPick: boolean;
+      /** Format: int32 */
+      unitsInStock: number;
+      isInStock: boolean;
+      artists: components["schemas"]["AlbumDetailArtistResponse"][];
+      genres: components["schemas"]["AlbumDetailGenreResponse"][];
+    };
+    AlbumGenreResponse: {
+      name: string;
+      slug: string;
+    };
+    AlbumSummaryResponse: {
+      sqid: string;
+      title: string;
+      titleSlug: string;
+      imageUrl: null | string;
+      /** Format: date */
+      releaseDate: null | string;
+      /** Format: int32 */
+      priceInPence: number;
+      /** Format: int32 */
+      originalPriceInPence: null | number;
+      isNew: boolean;
+      isOnSale: boolean;
+      isStaffPick: boolean;
+      isInStock: boolean;
+      artists: components["schemas"]["AlbumArtistResponse"][];
+      genres: components["schemas"]["AlbumGenreResponse"][];
+    };
+    ArtistAlbumArtistResponse: {
+      sqid: string;
+      name: string;
+      nameSlug: string;
+    };
+    ArtistAlbumResponse: {
+      sqid: string;
+      title: string;
+      titleSlug: string;
+      imageUrl: null | string;
+      /** Format: date */
+      releaseDate: null | string;
+      /** Format: int32 */
+      priceInPence: number;
+      /** Format: int32 */
+      originalPriceInPence: null | number;
+      isNew: boolean;
+      isOnSale: boolean;
+      isStaffPick: boolean;
+      isInStock: boolean;
+      artists: components["schemas"]["ArtistAlbumArtistResponse"][];
+      genres: components["schemas"]["ArtistGenreResponse"][];
+    };
+    ArtistDetailResponse: {
+      sqid: string;
+      name: string;
+      nameSlug: string;
+      bio: null | string;
+      origin: null | string;
+      type: null | components["schemas"]["ArtistType"];
+      /** Format: int32 */
+      sinceYear: null | number;
+      imageUrl: null | string;
+      /** Format: int32 */
+      albumCount: number;
+      genres: components["schemas"]["ArtistGenreResponse"][];
+      albums: components["schemas"]["ArtistAlbumResponse"][];
+    };
+    ArtistGenreResponse: {
+      name: string;
+      slug: string;
+    };
+    ArtistListItemResponse: {
+      sqid: string;
+      name: string;
+      nameSlug: string;
+      /** Format: int32 */
+      albumCount: number;
+    };
+    ArtistType: number;
+    CoverStoryArtistResponse: {
+      sqid: string;
+      name: string;
+      nameSlug: string;
+    };
+    CoverStoryGenreResponse: {
+      name: string;
+      slug: string;
+    };
+    CoverStoryResponse: {
+      sqid: string;
+      title: string;
+      titleSlug: string;
+      description: null | string;
+      imageUrl: null | string;
+      /** Format: date */
+      releaseDate: null | string;
+      /** Format: int32 */
+      priceInPence: number;
+      /** Format: int32 */
+      originalPriceInPence: null | number;
+      isNew: boolean;
+      isOnSale: boolean;
+      isStaffPick: boolean;
+      isInStock: boolean;
+      /** Format: int32 */
+      issueNumber: number;
+      artists: components["schemas"]["CoverStoryArtistResponse"][];
+      genres: components["schemas"]["CoverStoryGenreResponse"][];
+    };
+    CurrentUserResponse: {
+      /** Format: uuid */
+      id: string;
+      email: string;
+      firstName: string;
+      lastName: string;
+      /** Format: date-time */
+      registeredAt: string;
+    };
+    DecadeDetailResponse: {
+      slug: string;
+      label: string;
+      /** Format: int32 */
+      startYear: null | number;
+      /** Format: int32 */
+      endYear: null | number;
+      description: null | string;
+      /** Format: int32 */
+      albumCount: number;
+    };
+    DecadeListItemResponse: {
+      slug: string;
+      label: string;
+      /** Format: int32 */
+      startYear: null | number;
+      /** Format: int32 */
+      endYear: null | number;
+      imageUrl: null | string;
+      /** Format: int32 */
+      albumCount: number;
+    };
+    DomainProblemDetails: {
+      type?: null | string;
+      title?: null | string;
+      /** Format: int32 */
+      status?: null | number;
+      detail?: null | string;
+      instance?: null | string;
+      code: string;
+    };
+    GenreDetailResponse: {
+      name: string;
+      slug: string;
+      description: null | string;
+      /** Format: int32 */
+      albumCount: number;
+    };
+    GenreListItemResponse: {
+      name: string;
+      slug: string;
+      description: null | string;
+      imageUrl: null | string;
+      /** Format: int32 */
+      albumCount: number;
+    };
+    HttpValidationProblemDetails: {
+      type?: null | string;
+      title?: null | string;
+      /** Format: int32 */
+      status?: null | number;
+      detail?: null | string;
+      instance?: null | string;
+      errors?: {
+        [key: string]: string[];
+      };
+    };
+    LoginRequest: {
+      email: string;
+      password: string;
+    };
+    LoginResponse: {
+      accessToken: string;
+      refreshToken: string;
+      /** Format: date-time */
+      expiresAt: string;
+    };
+    LogoutRequest: {
+      refreshToken: string;
+    };
+    PagedResultOfAlbumSummaryResponse: {
+      items: components["schemas"]["AlbumSummaryResponse"][];
+      /** Format: int32 */
+      page: number;
+      /** Format: int32 */
+      pageSize: number;
+      /** Format: int32 */
+      totalCount: number;
+      /** Format: int32 */
+      totalPages?: number;
+    };
+    RefreshRequest: {
+      refreshToken: string;
+    };
+    RefreshResponse: {
+      accessToken: string;
+      refreshToken: string;
+      /** Format: date-time */
+      expiresAt: string;
+    };
+    RegisterRequest: {
+      firstName: string;
+      lastName: string;
+      email: string;
+      password: string;
+    };
+    RelatedAlbumArtistResponse: {
+      sqid: string;
+      name: string;
+      nameSlug: string;
+    };
+    RelatedAlbumGenreResponse: {
+      name: string;
+      slug: string;
+    };
+    RelatedAlbumResponse: {
+      sqid: string;
+      title: string;
+      titleSlug: string;
+      imageUrl: null | string;
+      /** Format: date */
+      releaseDate: null | string;
+      /** Format: int32 */
+      priceInPence: number;
+      /** Format: int32 */
+      originalPriceInPence: null | number;
+      isNew: boolean;
+      isOnSale: boolean;
+      isStaffPick: boolean;
+      isInStock: boolean;
+      artists: components["schemas"]["RelatedAlbumArtistResponse"][];
+      genres: components["schemas"]["RelatedAlbumGenreResponse"][];
+    };
+    SearchAlbumArtistResponse: {
+      sqid: string;
+      name: string;
+      nameSlug: string;
+    };
+    SearchAlbumGenreResponse: {
+      name: string;
+      slug: string;
+    };
+    SearchAlbumResponse: {
+      sqid: string;
+      title: string;
+      titleSlug: string;
+      imageUrl: null | string;
+      /** Format: date */
+      releaseDate: null | string;
+      /** Format: int32 */
+      priceInPence: number;
+      /** Format: int32 */
+      originalPriceInPence: null | number;
+      isNew: boolean;
+      isOnSale: boolean;
+      isStaffPick: boolean;
+      isInStock: boolean;
+      artists: components["schemas"]["SearchAlbumArtistResponse"][];
+      genres: components["schemas"]["SearchAlbumGenreResponse"][];
+    };
+    SearchResponse: {
+      bestMatches: components["schemas"]["SearchAlbumResponse"][];
+      suggestions: components["schemas"]["SearchAlbumResponse"][];
+      suggestedTerms: string[];
+      /** Format: int32 */
+      totalCount: number;
+    };
+  };
+  responses: never;
+  parameters: never;
+  requestBodies: never;
+  headers: never;
+  pathItems: never;
 }
 export type $defs = Record<string, never>;
 export interface operations {
-    Search: {
-        parameters: {
-            query?: {
-                q?: string;
-            };
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["SearchResponse"];
-                };
-            };
-            /** @description Bad Request */
-            400: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/problem+json": components["schemas"]["HttpValidationProblemDetails"];
-                };
-            };
-        };
+  Search: {
+    parameters: {
+      query?: {
+        q?: string;
+      };
+      header?: never;
+      path?: never;
+      cookie?: never;
     };
-    GetSearchSuggestions: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
+    requestBody?: never;
+    responses: {
+      /** @description OK */
+      200: {
+        headers: {
+          [name: string]: unknown;
         };
-        requestBody?: never;
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": string[];
-                };
-            };
+        content: {
+          "application/json": components["schemas"]["SearchResponse"];
         };
+      };
+      /** @description Bad Request */
+      400: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/problem+json": components["schemas"]["HttpValidationProblemDetails"];
+        };
+      };
     };
-    GetGenres: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["GenreListItemResponse"][];
-                };
-            };
-        };
+  };
+  GetSearchSuggestions: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
     };
-    GetGenreBySlug: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                slug: string;
-            };
-            cookie?: never;
+    requestBody?: never;
+    responses: {
+      /** @description OK */
+      200: {
+        headers: {
+          [name: string]: unknown;
         };
-        requestBody?: never;
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["GenreDetailResponse"];
-                };
-            };
-            /** @description Not Found */
-            404: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/problem+json": components["schemas"]["DomainProblemDetails"];
-                };
-            };
+        content: {
+          "application/json": string[];
         };
+      };
     };
-    GetDecades: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["DecadeListItemResponse"][];
-                };
-            };
-        };
+  };
+  GetGenres: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
     };
-    GetDecadeBySlug: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                slug: string;
-            };
-            cookie?: never;
+    requestBody?: never;
+    responses: {
+      /** @description OK */
+      200: {
+        headers: {
+          [name: string]: unknown;
         };
-        requestBody?: never;
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["DecadeDetailResponse"];
-                };
-            };
-            /** @description Not Found */
-            404: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/problem+json": components["schemas"]["DomainProblemDetails"];
-                };
-            };
+        content: {
+          "application/json": components["schemas"]["GenreListItemResponse"][];
         };
+      };
     };
-    Register: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody: {
-            content: {
-                "application/json": components["schemas"]["RegisterRequest"];
-            };
-        };
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content?: never;
-            };
-            /** @description Bad Request */
-            400: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/problem+json": components["schemas"]["HttpValidationProblemDetails"];
-                };
-            };
-            /** @description Conflict */
-            409: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/problem+json": components["schemas"]["DomainProblemDetails"];
-                };
-            };
-        };
+  };
+  GetGenreBySlug: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path: {
+        slug: string;
+      };
+      cookie?: never;
     };
-    Refresh: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
+    requestBody?: never;
+    responses: {
+      /** @description OK */
+      200: {
+        headers: {
+          [name: string]: unknown;
         };
-        requestBody: {
-            content: {
-                "application/json": components["schemas"]["RefreshRequest"];
-            };
+        content: {
+          "application/json": components["schemas"]["GenreDetailResponse"];
         };
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["RefreshResponse"];
-                };
-            };
-            /** @description Bad Request */
-            400: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/problem+json": components["schemas"]["HttpValidationProblemDetails"];
-                };
-            };
-            /** @description Unauthorized */
-            401: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/problem+json": components["schemas"]["DomainProblemDetails"];
-                };
-            };
+      };
+      /** @description Not Found */
+      404: {
+        headers: {
+          [name: string]: unknown;
         };
+        content: {
+          "application/problem+json": components["schemas"]["DomainProblemDetails"];
+        };
+      };
     };
-    Logout: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody: {
-            content: {
-                "application/json": components["schemas"]["LogoutRequest"];
-            };
-        };
-        responses: {
-            /** @description No Content */
-            204: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content?: never;
-            };
-            /** @description Bad Request */
-            400: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/problem+json": components["schemas"]["HttpValidationProblemDetails"];
-                };
-            };
-        };
+  };
+  GetDecades: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
     };
-    Login: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
+    requestBody?: never;
+    responses: {
+      /** @description OK */
+      200: {
+        headers: {
+          [name: string]: unknown;
         };
-        requestBody: {
-            content: {
-                "application/json": components["schemas"]["LoginRequest"];
-            };
+        content: {
+          "application/json": components["schemas"]["DecadeListItemResponse"][];
         };
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["LoginResponse"];
-                };
-            };
-            /** @description Bad Request */
-            400: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/problem+json": components["schemas"]["HttpValidationProblemDetails"];
-                };
-            };
-            /** @description Unauthorized */
-            401: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/problem+json": components["schemas"]["DomainProblemDetails"];
-                };
-            };
-        };
+      };
     };
-    GetCurrentUser: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["CurrentUserResponse"];
-                };
-            };
-            /** @description Not Found */
-            404: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/problem+json": components["schemas"]["DomainProblemDetails"];
-                };
-            };
-        };
+  };
+  GetDecadeBySlug: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path: {
+        slug: string;
+      };
+      cookie?: never;
     };
-    GetArtists: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
+    requestBody?: never;
+    responses: {
+      /** @description OK */
+      200: {
+        headers: {
+          [name: string]: unknown;
         };
-        requestBody?: never;
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ArtistListItemResponse"][];
-                };
-            };
+        content: {
+          "application/json": components["schemas"]["DecadeDetailResponse"];
         };
+      };
+      /** @description Not Found */
+      404: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/problem+json": components["schemas"]["DomainProblemDetails"];
+        };
+      };
     };
-    GetArtistById: {
-        parameters: {
-            query?: {
-                sort?: string;
-            };
-            header?: never;
-            path: {
-                sqid: string;
-            };
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ArtistDetailResponse"];
-                };
-            };
-            /** @description Bad Request */
-            400: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/problem+json": components["schemas"]["HttpValidationProblemDetails"];
-                };
-            };
-            /** @description Not Found */
-            404: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/problem+json": components["schemas"]["DomainProblemDetails"];
-                };
-            };
-        };
+  };
+  Register: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
     };
-    GetRelatedAlbums: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                sqid: string;
-            };
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["RelatedAlbumResponse"][];
-                };
-            };
-            /** @description Not Found */
-            404: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/problem+json": components["schemas"]["DomainProblemDetails"];
-                };
-            };
-        };
+    requestBody: {
+      content: {
+        "application/json": components["schemas"]["RegisterRequest"];
+      };
     };
-    GetCoverStory: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
+    responses: {
+      /** @description OK */
+      200: {
+        headers: {
+          [name: string]: unknown;
         };
-        requestBody?: never;
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["CoverStoryResponse"];
-                };
-            };
-            /** @description Not Found */
-            404: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/problem+json": components["schemas"]["DomainProblemDetails"];
-                };
-            };
+        content?: never;
+      };
+      /** @description Bad Request */
+      400: {
+        headers: {
+          [name: string]: unknown;
         };
+        content: {
+          "application/problem+json": components["schemas"]["HttpValidationProblemDetails"];
+        };
+      };
+      /** @description Conflict */
+      409: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/problem+json": components["schemas"]["DomainProblemDetails"];
+        };
+      };
     };
-    GetAlbums: {
-        parameters: {
-            query?: {
-                page?: number;
-                pageSize?: number;
-                isNew?: boolean;
-                isOnSale?: boolean;
-                isStaffPick?: boolean;
-                inStock?: boolean;
-                genres?: string[];
-                startYear?: number;
-                endYear?: number;
-                sort?: string;
-            };
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["PagedResultOfAlbumSummaryResponse"];
-                };
-            };
-            /** @description Bad Request */
-            400: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/problem+json": components["schemas"]["HttpValidationProblemDetails"];
-                };
-            };
-        };
+  };
+  Refresh: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
     };
-    GetAlbumById: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                sqid: string;
-            };
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["AlbumDetailResponse"];
-                };
-            };
-            /** @description Not Found */
-            404: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/problem+json": components["schemas"]["DomainProblemDetails"];
-                };
-            };
-        };
+    requestBody: {
+      content: {
+        "application/json": components["schemas"]["RefreshRequest"];
+      };
     };
+    responses: {
+      /** @description OK */
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/json": components["schemas"]["RefreshResponse"];
+        };
+      };
+      /** @description Bad Request */
+      400: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/problem+json": components["schemas"]["HttpValidationProblemDetails"];
+        };
+      };
+      /** @description Unauthorized */
+      401: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/problem+json": components["schemas"]["DomainProblemDetails"];
+        };
+      };
+    };
+  };
+  Logout: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    requestBody: {
+      content: {
+        "application/json": components["schemas"]["LogoutRequest"];
+      };
+    };
+    responses: {
+      /** @description No Content */
+      204: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content?: never;
+      };
+      /** @description Bad Request */
+      400: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/problem+json": components["schemas"]["HttpValidationProblemDetails"];
+        };
+      };
+    };
+  };
+  Login: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    requestBody: {
+      content: {
+        "application/json": components["schemas"]["LoginRequest"];
+      };
+    };
+    responses: {
+      /** @description OK */
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/json": components["schemas"]["LoginResponse"];
+        };
+      };
+      /** @description Bad Request */
+      400: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/problem+json": components["schemas"]["HttpValidationProblemDetails"];
+        };
+      };
+      /** @description Unauthorized */
+      401: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/problem+json": components["schemas"]["DomainProblemDetails"];
+        };
+      };
+    };
+  };
+  GetCurrentUser: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    requestBody?: never;
+    responses: {
+      /** @description OK */
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/json": components["schemas"]["CurrentUserResponse"];
+        };
+      };
+      /** @description Not Found */
+      404: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/problem+json": components["schemas"]["DomainProblemDetails"];
+        };
+      };
+    };
+  };
+  GetArtists: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    requestBody?: never;
+    responses: {
+      /** @description OK */
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/json": components["schemas"]["ArtistListItemResponse"][];
+        };
+      };
+    };
+  };
+  GetArtistById: {
+    parameters: {
+      query?: {
+        sort?: string;
+      };
+      header?: never;
+      path: {
+        sqid: string;
+      };
+      cookie?: never;
+    };
+    requestBody?: never;
+    responses: {
+      /** @description OK */
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/json": components["schemas"]["ArtistDetailResponse"];
+        };
+      };
+      /** @description Bad Request */
+      400: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/problem+json": components["schemas"]["HttpValidationProblemDetails"];
+        };
+      };
+      /** @description Not Found */
+      404: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/problem+json": components["schemas"]["DomainProblemDetails"];
+        };
+      };
+    };
+  };
+  GetRelatedAlbums: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path: {
+        sqid: string;
+      };
+      cookie?: never;
+    };
+    requestBody?: never;
+    responses: {
+      /** @description OK */
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/json": components["schemas"]["RelatedAlbumResponse"][];
+        };
+      };
+      /** @description Not Found */
+      404: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/problem+json": components["schemas"]["DomainProblemDetails"];
+        };
+      };
+    };
+  };
+  GetCoverStory: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    requestBody?: never;
+    responses: {
+      /** @description OK */
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/json": components["schemas"]["CoverStoryResponse"];
+        };
+      };
+      /** @description Not Found */
+      404: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/problem+json": components["schemas"]["DomainProblemDetails"];
+        };
+      };
+    };
+  };
+  GetAlbums: {
+    parameters: {
+      query?: {
+        page?: number;
+        pageSize?: number;
+        isNew?: boolean;
+        isOnSale?: boolean;
+        isStaffPick?: boolean;
+        inStock?: boolean;
+        genres?: string[];
+        startYear?: number;
+        endYear?: number;
+        sort?: string;
+      };
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    requestBody?: never;
+    responses: {
+      /** @description OK */
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/json": components["schemas"]["PagedResultOfAlbumSummaryResponse"];
+        };
+      };
+      /** @description Bad Request */
+      400: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/problem+json": components["schemas"]["HttpValidationProblemDetails"];
+        };
+      };
+    };
+  };
+  GetAlbumById: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path: {
+        sqid: string;
+      };
+      cookie?: never;
+    };
+    requestBody?: never;
+    responses: {
+      /** @description OK */
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/json": components["schemas"]["AlbumDetailResponse"];
+        };
+      };
+      /** @description Not Found */
+      404: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/problem+json": components["schemas"]["DomainProblemDetails"];
+        };
+      };
+    };
+  };
 }
