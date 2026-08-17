@@ -18,6 +18,7 @@ public sealed record SearchAlbumResponse(
     bool IsNew,
     bool IsOnSale,
     bool IsStaffPick,
+    int UnitsInStock,
     bool IsInStock,
     IReadOnlyList<SearchAlbumArtistResponse> Artists,
     IReadOnlyList<SearchAlbumGenreResponse> Genres
