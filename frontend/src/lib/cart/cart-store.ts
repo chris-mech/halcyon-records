@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import { create } from "zustand";
 import { createJSONStorage, persist } from "zustand/middleware";
 
@@ -91,5 +92,21 @@ function selectCartTotalQuantity(state: CartState): number {
   return state.items.reduce((total, item) => total + item.quantity, 0);
 }
 
-export { useCartStore, selectCartTotalQuantity };
+function useCartHydrated(): boolean {
+  const [hydrated, setHydrated] = useState(() =>
+    useCartStore.persist.hasHydrated(),
+  );
+
+  useEffect(() => {
+    if (hydrated) {
+      return;
+    }
+
+    return useCartStore.persist.onFinishHydration(() => setHydrated(true));
+  }, [hydrated]);
+
+  return hydrated;
+}
+
+export { useCartStore, selectCartTotalQuantity, useCartHydrated };
 export type { CartItem };

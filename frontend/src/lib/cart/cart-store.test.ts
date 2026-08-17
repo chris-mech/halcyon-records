@@ -1,6 +1,11 @@
-import { beforeEach, describe, expect, test } from "vitest";
+import { beforeEach, describe, expect, test, vi } from "vitest";
+import { act, renderHook } from "@testing-library/react";
 
-import { selectCartTotalQuantity, useCartStore } from "./cart-store";
+import {
+  selectCartTotalQuantity,
+  useCartHydrated,
+  useCartStore,
+} from "./cart-store";
 import type { CartItem } from "./cart-store";
 
 function cartItem(overrides: Partial<CartItem> = {}): CartItem {
@@ -26,6 +31,7 @@ function cartItem(overrides: Partial<CartItem> = {}): CartItem {
 }
 
 beforeEach(() => {
+  vi.restoreAllMocks();
   useCartStore.setState({ items: [] });
   localStorage.clear();
 });
@@ -119,5 +125,34 @@ describe("useCartStore", () => {
     });
 
     expect(selectCartTotalQuantity(useCartStore.getState())).toBe(5);
+  });
+
+  describe("useCartHydrated", () => {
+    test("returns true immediately once already hydrated", () => {
+      vi.spyOn(useCartStore.persist, "hasHydrated").mockReturnValue(true);
+
+      const { result } = renderHook(() => useCartHydrated());
+
+      expect(result.current).toBe(true);
+    });
+
+    test("flips to true once hydration finishes", () => {
+      vi.spyOn(useCartStore.persist, "hasHydrated").mockReturnValue(false);
+      let finishHydration: (() => void) | undefined;
+      vi.spyOn(useCartStore.persist, "onFinishHydration").mockImplementation(
+        (callback) => {
+          finishHydration = () => callback(useCartStore.getState());
+          return () => {};
+        },
+      );
+
+      const { result } = renderHook(() => useCartHydrated());
+
+      expect(result.current).toBe(false);
+
+      act(() => finishHydration?.());
+
+      expect(result.current).toBe(true);
+    });
   });
 });
