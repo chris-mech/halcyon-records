@@ -2,6 +2,7 @@ import { describe, expect, test, vi } from "vitest";
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { signIn } from "next-auth/react";
 
+import { syncCart } from "@/lib/cart/sync-cart";
 import RegisterPage from "./page";
 import { registerAction } from "./actions";
 
@@ -17,6 +18,10 @@ vi.mock("next-auth/react", () => ({
 
 vi.mock("./actions", () => ({
   registerAction: vi.fn(),
+}));
+
+vi.mock("@/lib/cart/sync-cart", () => ({
+  syncCart: vi.fn(),
 }));
 
 function fillField(label: string, value: string) {
@@ -114,6 +119,7 @@ describe("RegisterPage", () => {
       password: "Str0ng!Pass",
       redirect: false,
     });
+    expect(syncCart).toHaveBeenCalled();
   });
 
   test("redirects to login if sign-in fails right after a successful registration", async () => {
