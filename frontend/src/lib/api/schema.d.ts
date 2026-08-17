@@ -391,6 +391,8 @@ export interface components {
       isNew: boolean;
       isOnSale: boolean;
       isStaffPick: boolean;
+      /** Format: int32 */
+      unitsInStock: number;
       isInStock: boolean;
       artists: components["schemas"]["ArtistAlbumArtistResponse"][];
       genres: components["schemas"]["ArtistGenreResponse"][];
@@ -630,6 +632,8 @@ export interface components {
       isNew: boolean;
       isOnSale: boolean;
       isStaffPick: boolean;
+      /** Format: int32 */
+      unitsInStock: number;
       isInStock: boolean;
       artists: components["schemas"]["SearchAlbumArtistResponse"][];
       genres: components["schemas"]["SearchAlbumGenreResponse"][];
