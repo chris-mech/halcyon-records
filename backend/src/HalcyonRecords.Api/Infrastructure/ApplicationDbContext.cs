@@ -17,12 +17,15 @@ public class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options
     public DbSet<AlbumArtist> AlbumArtists => Set<AlbumArtist>();
     public DbSet<AlbumGenre> AlbumGenres => Set<AlbumGenre>();
     public DbSet<RefreshToken> RefreshTokens => Set<RefreshToken>();
+    public DbSet<Cart> Carts => Set<Cart>();
+    public DbSet<CartItem> CartItems => Set<CartItem>();
 
     protected override void ConfigureConventions(ModelConfigurationBuilder configurationBuilder)
     {
         configurationBuilder.Properties<AlbumId>().HaveConversion<AlbumIdConverter>();
         configurationBuilder.Properties<ArtistId>().HaveConversion<ArtistIdConverter>();
         configurationBuilder.Properties<GenreId>().HaveConversion<GenreIdConverter>();
+        configurationBuilder.Properties<CartId>().HaveConversion<CartIdConverter>();
     }
 
     protected override void OnModelCreating(ModelBuilder builder)
