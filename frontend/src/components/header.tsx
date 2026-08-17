@@ -1,8 +1,12 @@
+"use client";
+
+import { useEffect } from "react";
 import Link from "next/link";
 import { Search } from "lucide-react";
+import { signOut, useSession } from "next-auth/react";
 
 import { Wordmark } from "@/components/wordmark";
-import { buttonVariants } from "@/components/ui/button";
+import { Button, buttonVariants } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
 
@@ -18,6 +22,14 @@ interface HeaderProps {
 }
 
 function Header({ variant = "full" }: HeaderProps) {
+  const { data: session, status } = useSession();
+
+  useEffect(() => {
+    if (session?.error === "RefreshError") {
+      void signOut();
+    }
+  }, [session?.error]);
+
   return (
     <header className="flex items-center justify-between gap-8 bg-slate px-16 py-5">
       <Wordmark variant="header" />
@@ -54,13 +66,27 @@ function Header({ variant = "full" }: HeaderProps) {
             </ul>
           </nav>
           <div className="flex shrink-0 items-center gap-5">
-            {/* Static until next-auth session state lands in Slice 6 */}
-            <Link
-              href="/login"
-              className="text-sm font-semibold text-slate-muted hover:text-paper"
-            >
-              Log in
-            </Link>
+            {status === "authenticated" ? (
+              <>
+                <span className="text-sm font-semibold text-paper">
+                  {session.user.firstName}
+                </span>
+                <Button
+                  variant="ghost"
+                  onClick={() => signOut()}
+                  className="h-auto p-0 text-sm font-semibold text-slate-muted hover:bg-transparent hover:text-paper"
+                >
+                  Log out
+                </Button>
+              </>
+            ) : (
+              <Link
+                href="/login"
+                className="text-sm font-semibold text-slate-muted hover:text-paper"
+              >
+                Log in
+              </Link>
+            )}
             {/* Static until the cart store lands in Slice 7 */}
             <Link
               href="/cart"

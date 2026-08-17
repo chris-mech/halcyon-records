@@ -1,7 +1,10 @@
 import type { Metadata, Viewport } from "next";
 import { Big_Shoulders, Fraunces, Manrope } from "next/font/google";
+import { SessionProvider } from "next-auth/react";
+import { Suspense } from "react";
 import "./globals.css";
 import { cn } from "@/lib/utils";
+import { AuthSessionProvider } from "@/components/auth-session-provider";
 
 const manrope = Manrope({
   variable: "--font-manrope",
@@ -48,7 +51,11 @@ export default function RootLayout({
         "font-sans",
       )}
     >
-      <body className="flex min-h-full flex-col">{children}</body>
+      <body className="flex min-h-full flex-col">
+        <Suspense fallback={<SessionProvider>{children}</SessionProvider>}>
+          <AuthSessionProvider>{children}</AuthSessionProvider>
+        </Suspense>
+      </body>
     </html>
   );
 }

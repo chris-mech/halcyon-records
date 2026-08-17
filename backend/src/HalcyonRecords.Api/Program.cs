@@ -11,6 +11,7 @@ using HalcyonRecords.Api.Features.Albums.GetRelatedAlbums;
 using HalcyonRecords.Api.Features.Search;
 using HalcyonRecords.Api.Features.Search.Search;
 using HalcyonRecords.Api.Infrastructure;
+using HalcyonRecords.Api.Infrastructure.Auth;
 using HalcyonRecords.Api.Infrastructure.Search;
 using HalcyonRecords.Api.Infrastructure.Seed;
 using Microsoft.EntityFrameworkCore;
@@ -52,6 +53,8 @@ builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
 
 builder.Services.AddApiMeilisearch(builder.Configuration);
 builder.Services.AddApiRateLimiting(builder.Configuration);
+builder.Services.AddApiAuth(builder.Configuration);
+
 builder.Services.AddOpenApi(options =>
 {
     options.AddSchemaTransformer<IntegerSchemaTransformer>();
@@ -80,20 +83,26 @@ if (app.Environment.IsDevelopment())
     app.MapOpenApi();
 
     app.MapPost(
-        "/api/dev/search/reindex",
-        async (ApplicationDbContext db, MeilisearchIndexer indexer, CancellationToken ct) =>
-        {
-            await indexer.RebuildAsync(db, ct);
-            return Results.Ok();
-        }
-    );
+            "/api/dev/search/reindex",
+            async (ApplicationDbContext db, MeilisearchIndexer indexer, CancellationToken ct) =>
+            {
+                await indexer.RebuildAsync(db, ct);
+                return Results.Ok();
+            }
+        )
+        .ExcludeFromDescription();
 }
 
 app.UseHttpsRedirection();
 app.UseExceptionHandler();
 app.UseRateLimiter();
 
+app.UseAuthentication();
+app.UseAuthorization();
+
 app.MapDefaultEndpoints();
 app.MapEndpoints();
 
 await app.RunAsync();
+
+public partial class Program;

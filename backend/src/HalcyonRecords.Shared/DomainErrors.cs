@@ -69,4 +69,31 @@ public static class DomainErrors
         public static Error NotFound(string detail) =>
             Error.NotFound(code: "Decade.NotFound", description: detail);
     }
+
+    public static class Auth
+    {
+        public static Error EmailAlreadyRegistered(string email) =>
+            Error.Conflict(
+                code: "Auth.EmailAlreadyRegistered",
+                description: $"An account with email '{email}' already exists."
+            );
+
+        public static Error InvalidCredentials() =>
+            Error.Unauthorized(
+                code: "Auth.InvalidCredentials",
+                description: "The email or password is incorrect."
+            );
+
+        public static Error InvalidRefreshToken() =>
+            Error.Unauthorized(
+                code: "Auth.InvalidRefreshToken",
+                description: "The refresh token is invalid, expired, or has already been used."
+            );
+
+        public static Error UserNotFound() =>
+            Error.NotFound(
+                code: "Auth.UserNotFound",
+                description: "The authenticated user no longer exists."
+            );
+    }
 }
