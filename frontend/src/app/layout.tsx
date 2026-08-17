@@ -5,6 +5,7 @@ import { Suspense } from "react";
 import "./globals.css";
 import { cn } from "@/lib/utils";
 import { AuthSessionProvider } from "@/components/auth-session-provider";
+import { Toaster } from "@/components/ui/toast";
 
 const manrope = Manrope({
   variable: "--font-manrope",
@@ -55,6 +56,7 @@ export default function RootLayout({
         <Suspense fallback={<SessionProvider>{children}</SessionProvider>}>
           <AuthSessionProvider>{children}</AuthSessionProvider>
         </Suspense>
+        <Toaster />
       </body>
     </html>
   );
