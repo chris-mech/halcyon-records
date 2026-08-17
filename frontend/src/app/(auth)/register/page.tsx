@@ -78,6 +78,7 @@ export default function RegisterPage() {
         </CardHeader>
         <form
           onSubmit={form.handleSubmit(onSubmit)}
+          method="post"
           noValidate
           className="flex flex-col gap-(--card-spacing)"
         >

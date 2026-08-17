@@ -19,6 +19,12 @@ function submit() {
 }
 
 describe("LoginPage", () => {
+  test("submits via POST so a pre-hydration native submit can never leak credentials into the URL", () => {
+    const { container } = render(<LoginPage />);
+
+    expect(container.querySelector("form")).toHaveAttribute("method", "post");
+  });
+
   test("shows validation errors when submitted empty", async () => {
     render(<LoginPage />);
 
