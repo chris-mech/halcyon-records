@@ -4,14 +4,20 @@ import { useState } from "react";
 import { Minus, Plus } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
+import { AddToBagButton } from "@/components/add-to-bag-button";
+
+import type { components } from "@/lib/api/schema";
+
+type AlbumDetail = components["schemas"]["AlbumDetailResponse"];
 
 interface PurchaseRowProps {
-  isInStock: boolean;
-  maxQuantity: number;
+  album: AlbumDetail;
 }
 
-function PurchaseRow({ isInStock, maxQuantity }: PurchaseRowProps) {
+function PurchaseRow({ album }: PurchaseRowProps) {
   const [quantity, setQuantity] = useState(1);
+  const isInStock = album.isInStock;
+  const maxQuantity = album.unitsInStock;
 
   return (
     <div className="mb-9 flex items-center gap-4">
@@ -45,13 +51,11 @@ function PurchaseRow({ isInStock, maxQuantity }: PurchaseRowProps) {
           <Plus aria-hidden className="size-3.5" />
         </Button>
       </div>
-      <Button
-        type="button"
-        disabled={!isInStock}
+      <AddToBagButton
+        album={album}
+        quantity={quantity}
         className="h-11 flex-1 px-8.5 text-[0.8125rem] font-bold tracking-wide uppercase"
-      >
-        Add to bag
-      </Button>
+      />
     </div>
   );
 }
