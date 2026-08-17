@@ -24,7 +24,11 @@ function fixtureAlbum(
     unitsInStock: 3,
     isInStock: true,
     artists: [
-      { sqid: "fixture-artist", name: "Fixture Artist", nameSlug: "fixture-artist" },
+      {
+        sqid: "fixture-artist",
+        name: "Fixture Artist",
+        nameSlug: "fixture-artist",
+      },
     ],
     ...overrides,
   };

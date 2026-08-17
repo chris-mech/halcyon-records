@@ -33,8 +33,7 @@ function AddToBagButton({
 }: AddToBagButtonProps) {
   const inCartQuantity = useCartStore(
     (state) =>
-      state.items.find((item) => item.albumSqid === album.sqid)?.quantity ??
-      0,
+      state.items.find((item) => item.albumSqid === album.sqid)?.quantity ?? 0,
   );
   const addItem = useCartStore((state) => state.addItem);
 
