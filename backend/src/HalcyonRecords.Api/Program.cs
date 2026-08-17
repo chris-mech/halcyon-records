@@ -83,13 +83,14 @@ if (app.Environment.IsDevelopment())
     app.MapOpenApi();
 
     app.MapPost(
-        "/api/dev/search/reindex",
-        async (ApplicationDbContext db, MeilisearchIndexer indexer, CancellationToken ct) =>
-        {
-            await indexer.RebuildAsync(db, ct);
-            return Results.Ok();
-        }
-    );
+            "/api/dev/search/reindex",
+            async (ApplicationDbContext db, MeilisearchIndexer indexer, CancellationToken ct) =>
+            {
+                await indexer.RebuildAsync(db, ct);
+                return Results.Ok();
+            }
+        )
+        .ExcludeFromDescription();
 }
 
 app.UseHttpsRedirection();
