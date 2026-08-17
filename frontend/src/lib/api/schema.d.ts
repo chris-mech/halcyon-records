@@ -100,6 +100,38 @@ export interface paths {
     patch?: never;
     trace?: never;
   };
+  "/api/cart/sync": {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    get?: never;
+    put?: never;
+    post: operations["SyncCart"];
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  "/api/cart": {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    get: operations["GetCart"];
+    put?: never;
+    post?: never;
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
   "/api/auth/register": {
     parameters: {
       query?: never;
@@ -334,6 +366,8 @@ export interface components {
       isNew: boolean;
       isOnSale: boolean;
       isStaffPick: boolean;
+      /** Format: int32 */
+      unitsInStock: number;
       isInStock: boolean;
       artists: components["schemas"]["AlbumArtistResponse"][];
       genres: components["schemas"]["AlbumGenreResponse"][];
@@ -388,6 +422,27 @@ export interface components {
       albumCount: number;
     };
     ArtistType: number;
+    CartItemArtistResponse: {
+      sqid: string;
+      name: string;
+      nameSlug: string;
+    };
+    CartItemResponse: {
+      albumSqid: string;
+      title: string;
+      titleSlug: string;
+      imageUrl: null | string;
+      /** Format: int32 */
+      priceInPence: number;
+      /** Format: int32 */
+      originalPriceInPence: null | number;
+      /** Format: int32 */
+      quantity: number;
+      /** Format: int32 */
+      unitsInStock: number;
+      isInStock: boolean;
+      artists: components["schemas"]["CartItemArtistResponse"][];
+    };
     CoverStoryArtistResponse: {
       sqid: string;
       name: string;
@@ -546,6 +601,8 @@ export interface components {
       isNew: boolean;
       isOnSale: boolean;
       isStaffPick: boolean;
+      /** Format: int32 */
+      unitsInStock: number;
       isInStock: boolean;
       artists: components["schemas"]["RelatedAlbumArtistResponse"][];
       genres: components["schemas"]["RelatedAlbumGenreResponse"][];
@@ -583,6 +640,14 @@ export interface components {
       suggestedTerms: string[];
       /** Format: int32 */
       totalCount: number;
+    };
+    SyncCartItemRequest: {
+      albumSqid: string;
+      /** Format: int32 */
+      quantity: number;
+    };
+    SyncCartRequest: {
+      items: components["schemas"]["SyncCartItemRequest"][];
     };
   };
   responses: never;
@@ -733,6 +798,66 @@ export interface operations {
         };
         content: {
           "application/json": components["schemas"]["DecadeDetailResponse"];
+        };
+      };
+      /** @description Not Found */
+      404: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/problem+json": components["schemas"]["DomainProblemDetails"];
+        };
+      };
+    };
+  };
+  SyncCart: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    requestBody: {
+      content: {
+        "application/json": components["schemas"]["SyncCartRequest"];
+      };
+    };
+    responses: {
+      /** @description No Content */
+      204: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content?: never;
+      };
+      /** @description Bad Request */
+      400: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/problem+json": components["schemas"]["HttpValidationProblemDetails"];
+        };
+      };
+    };
+  };
+  GetCart: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    requestBody?: never;
+    responses: {
+      /** @description OK */
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/json": components["schemas"]["CartItemResponse"][];
         };
       };
       /** @description Not Found */
