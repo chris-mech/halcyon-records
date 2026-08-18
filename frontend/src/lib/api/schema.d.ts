@@ -469,6 +469,8 @@ export interface components {
       isNew: boolean;
       isOnSale: boolean;
       isStaffPick: boolean;
+      /** Format: int32 */
+      unitsInStock: number;
       isInStock: boolean;
       /** Format: int32 */
       issueNumber: number;
