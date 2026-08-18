@@ -22,6 +22,7 @@ interface AddToBagButtonProps {
   album: CartEligibleAlbum;
   quantity?: number;
   variant?: VariantProps<typeof buttonVariants>["variant"];
+  size?: VariantProps<typeof buttonVariants>["size"];
   className?: string;
 }
 
@@ -29,6 +30,7 @@ function AddToBagButton({
   album,
   quantity = 1,
   variant,
+  size,
   className,
 }: AddToBagButtonProps) {
   const inCartQuantity = useCartStore(
@@ -61,6 +63,7 @@ function AddToBagButton({
     <Button
       type="button"
       variant={variant}
+      size={size}
       disabled={disabled}
       onClick={handleClick}
       className={className}

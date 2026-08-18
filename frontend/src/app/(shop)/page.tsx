@@ -9,7 +9,7 @@ import { client } from "@/lib/api/client";
 import { formatPrice } from "@/lib/format";
 import { GenrePillList } from "@/components/genre-pill-list";
 import { ShadowStackHeading } from "@/components/shadow-stack-heading";
-import { Button } from "@/components/ui/button";
+import { AddToBagButton } from "@/components/add-to-bag-button";
 import type { components } from "@/lib/api/schema";
 
 import { AlbumGridSection } from "./album-grid-section";
@@ -176,9 +176,7 @@ export async function HomeContent() {
           )}
 
           <div className="flex items-center gap-6">
-            <Button type="button" size="lg" disabled={!coverStory.isInStock}>
-              Add to bag
-            </Button>
+            <AddToBagButton album={coverStory} size="lg" />
             <span className="text-sm font-semibold text-muted-foreground">
               {formatPrice(coverStory.priceInPence)}
             </span>
