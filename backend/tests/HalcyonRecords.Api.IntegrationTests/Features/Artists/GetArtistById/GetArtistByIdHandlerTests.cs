@@ -57,7 +57,9 @@ public class GetArtistByIdHandlerTests(SqlServerContainerFixture fixture)
         response.ImageUrl.Should().Be("https://example.com/artist.jpg");
         response.AlbumCount.Should().Be(1);
         response.Genres.Should().ContainSingle(g => g.Name == "Rock");
-        response.Albums.Should().ContainSingle(a => a.Title == "Solo Album" && a.UnitsInStock == 12);
+        response
+            .Albums.Should()
+            .ContainSingle(a => a.Title == "Solo Album" && a.UnitsInStock == 12);
     }
 
     [Theory]

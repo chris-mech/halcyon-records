@@ -56,7 +56,9 @@ public class SearchHandlerTests(
         );
 
         result.IsError.Should().BeFalse();
-        result.Value.BestMatches.Should().ContainSingle(a => a.Title == "Search Title Match Album" && a.UnitsInStock == 8);
+        result
+            .Value.BestMatches.Should()
+            .ContainSingle(a => a.Title == "Search Title Match Album" && a.UnitsInStock == 8);
         result.Value.Suggestions.Should().ContainSingle(a => a.Title == "Search Same Genre Album");
         result
             .Value.Suggestions.Should()
@@ -256,5 +258,10 @@ public class SearchHandlerTests(
     private static Genre NewGenre(string name, string slug) => new() { Name = name, Slug = slug };
 
     private static Album NewAlbum(string title, int unitsInStock = 0) =>
-        new() { Title = title, PriceInPence = 1000, UnitsInStock = unitsInStock };
+        new()
+        {
+            Title = title,
+            PriceInPence = 1000,
+            UnitsInStock = unitsInStock,
+        };
 }
