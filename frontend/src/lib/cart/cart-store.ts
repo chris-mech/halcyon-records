@@ -1,6 +1,10 @@
 import { useEffect, useState } from "react";
 import { create } from "zustand";
-import { createJSONStorage, persist } from "zustand/middleware";
+import {
+  createJSONStorage,
+  persist,
+  type StateStorage,
+} from "zustand/middleware";
 
 import type { components } from "@/lib/api/schema";
 
@@ -13,6 +17,12 @@ interface CartState {
   removeItem: (albumSqid: string) => void;
   setItems: (items: CartItem[]) => void;
 }
+
+const noopStorage: StateStorage = {
+  getItem: () => null,
+  setItem: () => {},
+  removeItem: () => {},
+};
 
 const useCartStore = create<CartState>()(
   persist(
@@ -82,8 +92,11 @@ const useCartStore = create<CartState>()(
     }),
     {
       name: "halcyon-cart",
-      storage: createJSONStorage(() => localStorage),
+      storage: createJSONStorage(() =>
+        typeof window === "undefined" ? noopStorage : localStorage,
+      ),
       partialize: (state) => ({ items: state.items }),
+      skipHydration: true,
     },
   ),
 );
@@ -93,17 +106,23 @@ function selectCartTotalQuantity(state: CartState): number {
 }
 
 function useCartHydrated(): boolean {
-  const [hydrated, setHydrated] = useState(() =>
-    useCartStore.persist.hasHydrated(),
-  );
+  const [hydrated, setHydrated] = useState(false);
 
   useEffect(() => {
-    if (hydrated) {
-      return;
-    }
+    const unsubHydrate = useCartStore.persist.onHydrate(() =>
+      setHydrated(false),
+    );
+    const unsubFinishHydration = useCartStore.persist.onFinishHydration(() =>
+      setHydrated(true),
+    );
 
-    return useCartStore.persist.onFinishHydration(() => setHydrated(true));
-  }, [hydrated]);
+    useCartStore.persist.rehydrate();
+
+    return () => {
+      unsubHydrate();
+      unsubFinishHydration();
+    };
+  }, []);
 
   return hydrated;
 }
