@@ -47,6 +47,7 @@ const relatedAlbum: RelatedAlbum = {
   isNew: false,
   isOnSale: false,
   isStaffPick: false,
+  unitsInStock: 10,
   isInStock: true,
   artists: [{ sqid: "art2", name: "Artist Two", nameSlug: "artist-two" }],
   genres: [{ name: "Genre Match 1", slug: "genre-match-1" }],

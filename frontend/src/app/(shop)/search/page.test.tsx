@@ -23,6 +23,7 @@ const album: SearchAlbum = {
   isNew: false,
   isOnSale: false,
   isStaffPick: false,
+  unitsInStock: 10,
   isInStock: true,
   artists: [{ sqid: "art1", name: "Loaded Artist", nameSlug: "loaded-artist" }],
   genres: [{ name: "Rock", slug: "rock" }],
