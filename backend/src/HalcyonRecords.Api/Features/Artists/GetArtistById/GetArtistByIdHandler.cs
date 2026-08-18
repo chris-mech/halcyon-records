@@ -75,6 +75,7 @@ public sealed class GetArtistByIdHandler(
                 a.OriginalPriceInPence,
                 a.IsNew,
                 a.IsStaffPick,
+                a.UnitsInStock,
                 IsInStock = a.UnitsInStock > 0,
                 Artists = a
                     .AlbumArtists.OrderBy(aa => aa.Artist.Name)
@@ -98,6 +99,7 @@ public sealed class GetArtistByIdHandler(
                 a.IsNew,
                 a.OriginalPriceInPence is not null,
                 a.IsStaffPick,
+                a.UnitsInStock,
                 a.IsInStock,
                 a.Artists.Select(artist => new ArtistAlbumArtistResponse(
                         artistSqids.Encode(artist.Id.Value),

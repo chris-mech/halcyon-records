@@ -3,8 +3,8 @@ import Image from "next/image";
 import Link from "next/link";
 import { DiscAlbum } from "lucide-react";
 
-import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
+import { AddToBagButton } from "@/components/add-to-bag-button";
 import { AlbumTagStack } from "@/components/album-tag-stack";
 import { formatPrice } from "@/lib/format";
 import type { components } from "@/lib/api/schema";
@@ -111,14 +111,11 @@ function ProductCard({
               {formatPrice(album.priceInPence)}
             </span>
           </p>
-          <Button
-            type="button"
+          <AddToBagButton
+            album={album}
             variant="link"
-            disabled={!album.isInStock}
             className="h-auto p-0 text-[0.6875rem] font-bold tracking-wide text-slate uppercase"
-          >
-            Add to bag
-          </Button>
+          />
         </div>
       </div>
     </Card>

@@ -164,10 +164,7 @@ export async function AlbumDetailContent({
             </p>
           )}
 
-          <PurchaseRow
-            isInStock={album.isInStock}
-            maxQuantity={album.unitsInStock}
-          />
+          <PurchaseRow album={album} />
 
           {hasMeta && (
             <dl className="border-t border-line pt-5">

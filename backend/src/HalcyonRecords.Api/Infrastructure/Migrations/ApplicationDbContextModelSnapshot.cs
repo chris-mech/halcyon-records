@@ -147,6 +147,46 @@ namespace HalcyonRecords.Api.Infrastructure.Migrations
                         });
                 });
 
+            modelBuilder.Entity("HalcyonRecords.Api.Domain.Cart", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId")
+                        .IsUnique();
+
+                    b.ToTable("Carts");
+                });
+
+            modelBuilder.Entity("HalcyonRecords.Api.Domain.CartItem", b =>
+                {
+                    b.Property<int>("CartId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("AlbumId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Quantity")
+                        .HasColumnType("int");
+
+                    b.HasKey("CartId", "AlbumId");
+
+                    b.HasIndex("AlbumId");
+
+                    b.ToTable("CartItems", null, t =>
+                        {
+                            t.HasCheckConstraint("CK_CartItems_Quantity_Positive", "Quantity > 0");
+                        });
+                });
+
             modelBuilder.Entity("HalcyonRecords.Api.Domain.Decade", b =>
                 {
                     b.Property<string>("Slug")
@@ -513,6 +553,34 @@ namespace HalcyonRecords.Api.Infrastructure.Migrations
                     b.Navigation("Genre");
                 });
 
+            modelBuilder.Entity("HalcyonRecords.Api.Domain.Cart", b =>
+                {
+                    b.HasOne("HalcyonRecords.Api.Domain.User", null)
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("HalcyonRecords.Api.Domain.CartItem", b =>
+                {
+                    b.HasOne("HalcyonRecords.Api.Domain.Album", "Album")
+                        .WithMany()
+                        .HasForeignKey("AlbumId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("HalcyonRecords.Api.Domain.Cart", "Cart")
+                        .WithMany("CartItems")
+                        .HasForeignKey("CartId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Album");
+
+                    b.Navigation("Cart");
+                });
+
             modelBuilder.Entity("HalcyonRecords.Api.Domain.RefreshToken", b =>
                 {
                     b.HasOne("HalcyonRecords.Api.Domain.RefreshToken", null)
@@ -588,6 +656,11 @@ namespace HalcyonRecords.Api.Infrastructure.Migrations
             modelBuilder.Entity("HalcyonRecords.Api.Domain.Artist", b =>
                 {
                     b.Navigation("AlbumArtists");
+                });
+
+            modelBuilder.Entity("HalcyonRecords.Api.Domain.Cart", b =>
+                {
+                    b.Navigation("CartItems");
                 });
 
             modelBuilder.Entity("HalcyonRecords.Api.Domain.Genre", b =>

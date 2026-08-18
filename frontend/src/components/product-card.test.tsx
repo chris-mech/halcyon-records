@@ -18,6 +18,7 @@ function buildAlbum(overrides: Partial<AlbumSummary> = {}): AlbumSummary {
     isNew: false,
     isOnSale: false,
     isStaffPick: false,
+    unitsInStock: 10,
     isInStock: true,
     artists: [{ sqid: "art1", name: "Base Artist", nameSlug: "base-artist" }],
     genres: [{ name: "Electronic", slug: "electronic" }],

@@ -29,7 +29,7 @@ public class GetArtistByIdHandlerTests(SqlServerContainerFixture fixture)
             ImageUrl = "https://example.com/artist.jpg",
         };
 
-        var album = NewAlbum("Solo Album");
+        var album = NewAlbum("Solo Album", unitsInStock: 12);
         Link(album, artist);
         Link(album, NewGenre("Rock", "rock"));
 
@@ -57,7 +57,9 @@ public class GetArtistByIdHandlerTests(SqlServerContainerFixture fixture)
         response.ImageUrl.Should().Be("https://example.com/artist.jpg");
         response.AlbumCount.Should().Be(1);
         response.Genres.Should().ContainSingle(g => g.Name == "Rock");
-        response.Albums.Should().ContainSingle(a => a.Title == "Solo Album");
+        response
+            .Albums.Should()
+            .ContainSingle(a => a.Title == "Solo Album" && a.UnitsInStock == 12);
     }
 
     [Theory]
@@ -202,12 +204,14 @@ public class GetArtistByIdHandlerTests(SqlServerContainerFixture fixture)
     private static Album NewAlbum(
         string title,
         int priceInPence = 1000,
-        DateOnly? releaseDate = null
+        DateOnly? releaseDate = null,
+        int unitsInStock = 0
     ) =>
         new()
         {
             Title = title,
             PriceInPence = priceInPence,
             ReleaseDate = releaseDate,
+            UnitsInStock = unitsInStock,
         };
 }

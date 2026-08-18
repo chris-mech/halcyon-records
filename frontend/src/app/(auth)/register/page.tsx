@@ -6,6 +6,7 @@ import { Controller, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { signIn } from "next-auth/react";
 
+import { syncCart } from "@/lib/cart/sync-cart";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -62,6 +63,7 @@ export default function RegisterPage() {
       return;
     }
 
+    await syncCart();
     router.push("/");
   }
 

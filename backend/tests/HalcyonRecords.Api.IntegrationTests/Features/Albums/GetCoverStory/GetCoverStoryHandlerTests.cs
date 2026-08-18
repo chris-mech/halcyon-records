@@ -52,7 +52,9 @@ public class GetCoverStoryHandlerTests(SqlServerContainerFixture fixture)
     {
         var picks = Enumerable
             .Range(1, 3)
-            .Select(i => NewAlbum($"Staff Pick {i}", isStaffPick: true))
+            .Select(i =>
+                NewAlbum($"Staff Pick {i}", isStaffPick: true, unitsInStock: i == 1 ? 7 : 0)
+            )
             .ToList();
         DbContext.Albums.AddRange(picks);
         await DbContext.SaveChangesAsync(TestContext.Current.CancellationToken);
@@ -62,6 +64,7 @@ public class GetCoverStoryHandlerTests(SqlServerContainerFixture fixture)
 
         result.Value.Title.Should().Be("Staff Pick 1");
         result.Value.IssueNumber.Should().Be(1);
+        result.Value.UnitsInStock.Should().Be(7);
     }
 
     [Fact]
@@ -121,7 +124,8 @@ public class GetCoverStoryHandlerTests(SqlServerContainerFixture fixture)
     private static Album NewAlbum(
         string title,
         DateOnly? releaseDate = null,
-        bool isStaffPick = false
+        bool isStaffPick = false,
+        int unitsInStock = 0
     ) =>
         new()
         {
@@ -129,5 +133,6 @@ public class GetCoverStoryHandlerTests(SqlServerContainerFixture fixture)
             PriceInPence = 1000,
             ReleaseDate = releaseDate,
             IsStaffPick = isStaffPick,
+            UnitsInStock = unitsInStock,
         };
 }

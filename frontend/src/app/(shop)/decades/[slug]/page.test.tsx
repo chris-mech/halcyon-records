@@ -67,6 +67,7 @@ const albums: PagedAlbums = {
       isNew: false,
       isOnSale: false,
       isStaffPick: false,
+      unitsInStock: 10,
       isInStock: true,
       artists: [{ sqid: "art1", name: "Artist One", nameSlug: "artist-one" }],
       genres: [{ name: "Genre Match 1", slug: "genre-match-1" }],

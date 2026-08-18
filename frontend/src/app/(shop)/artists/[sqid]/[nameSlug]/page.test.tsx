@@ -47,6 +47,7 @@ const artist: ArtistDetail = {
       isNew: false,
       isOnSale: false,
       isStaffPick: false,
+      unitsInStock: 10,
       isInStock: true,
       artists: [
         {

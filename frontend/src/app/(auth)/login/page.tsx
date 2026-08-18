@@ -6,6 +6,7 @@ import { Controller, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { signIn } from "next-auth/react";
 
+import { syncCart } from "@/lib/cart/sync-cart";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -39,8 +40,10 @@ export default function LoginPage() {
       return;
     }
 
+    await syncCart();
     router.push("/");
   }
+
   return (
     <div className="flex flex-1 items-center justify-center px-16 py-16">
       <Card className="w-full max-w-105 border-border">

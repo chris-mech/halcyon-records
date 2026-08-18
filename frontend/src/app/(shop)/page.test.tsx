@@ -1,5 +1,5 @@
 import { describe, expect, test, vi } from "vitest";
-import { render, screen } from "@testing-library/react";
+import { render, screen, within } from "@testing-library/react";
 
 import { client } from "@/lib/api/client";
 import type { components } from "@/lib/api/schema";
@@ -21,29 +21,33 @@ vi.mock("next/server", () => ({
 type CoverStory = components["schemas"]["CoverStoryResponse"];
 type AlbumSummary = components["schemas"]["AlbumSummaryResponse"];
 
-const coverStory: CoverStory = {
-  sqid: "cover1",
-  title: "Cover Story Album",
-  titleSlug: "cover-story-album",
-  description: "A pull-quote used to verify cover-story rendering.",
-  imageUrl: null,
-  releaseDate: "2001-02-01",
-  priceInPence: 3200,
-  originalPriceInPence: null,
-  isNew: false,
-  isOnSale: false,
-  isStaffPick: true,
-  isInStock: true,
-  issueNumber: 14,
-  artists: [
-    {
-      sqid: "art1",
-      name: "Cover Story Artist",
-      nameSlug: "cover-story-artist",
-    },
-  ],
-  genres: [{ name: "Genre Match 1", slug: "genre-match-1" }],
-};
+function buildCoverStory(overrides: Partial<CoverStory> = {}): CoverStory {
+  return {
+    sqid: "cover1",
+    title: "Cover Story Album",
+    titleSlug: "cover-story-album",
+    description: "A pull-quote used to verify cover-story rendering.",
+    imageUrl: null,
+    releaseDate: "2001-02-01",
+    priceInPence: 3200,
+    originalPriceInPence: null,
+    isNew: false,
+    isOnSale: false,
+    isStaffPick: true,
+    unitsInStock: 10,
+    isInStock: true,
+    issueNumber: 14,
+    artists: [
+      {
+        sqid: "art1",
+        name: "Cover Story Artist",
+        nameSlug: "cover-story-artist",
+      },
+    ],
+    genres: [{ name: "Genre Match 1", slug: "genre-match-1" }],
+    ...overrides,
+  };
+}
 
 function buildAlbum(overrides: Partial<AlbumSummary> = {}): AlbumSummary {
   return {
@@ -57,6 +61,7 @@ function buildAlbum(overrides: Partial<AlbumSummary> = {}): AlbumSummary {
     isNew: false,
     isOnSale: false,
     isStaffPick: false,
+    unitsInStock: 10,
     isInStock: true,
     artists: [{ sqid: "art1", name: "Base Artist", nameSlug: "base-artist" }],
     genres: [{ name: "Electronic", slug: "electronic" }],
@@ -65,6 +70,7 @@ function buildAlbum(overrides: Partial<AlbumSummary> = {}): AlbumSummary {
 }
 
 function mockHomepageFetch({
+  coverStory = buildCoverStory(),
   newArrivals = [
     buildAlbum({ sqid: "new1", title: "New Arrival Album", isNew: true }),
   ],
@@ -73,6 +79,7 @@ function mockHomepageFetch({
   ],
   coverStoryError = false,
 }: {
+  coverStory?: CoverStory;
   newArrivals?: AlbumSummary[];
   onSaleAlbums?: AlbumSummary[];
   coverStoryError?: boolean;
@@ -148,6 +155,22 @@ describe("HomePage", () => {
     expect(
       screen.getByRole("heading", { name: "On sale" }),
     ).toBeInTheDocument();
+  });
+
+  test("disables the cover story's Add to bag when it's out of stock", async () => {
+    mockHomepageFetch({
+      coverStory: buildCoverStory({ unitsInStock: 0, isInStock: false }),
+    });
+
+    render(await HomeContent());
+
+    const coverStorySection = screen
+      .getByRole("heading", { name: "Cover Story Album" })
+      .closest("section")!;
+
+    expect(
+      within(coverStorySection).getByRole("button", { name: /add to bag/i }),
+    ).toBeDisabled();
   });
 
   test("throws when the cover-story fetch fails", async () => {
