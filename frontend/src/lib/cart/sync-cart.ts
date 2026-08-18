@@ -14,26 +14,35 @@ async function waitForCartHydration(): Promise<void> {
   });
 }
 
+async function pushLocalCart(
+  items: CartItem[],
+  { force = false }: { force?: boolean } = {},
+): Promise<boolean> {
+  if (items.length === 0 && !force) {
+    return true;
+  }
+
+  const response = await fetch("/api/cart/sync", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      items: items.map((item) => ({
+        albumSqid: item.albumSqid,
+        quantity: item.quantity,
+      })),
+    }),
+  });
+
+  return response.ok;
+}
+
 async function syncCart(): Promise<void> {
   await waitForCartHydration();
 
   const { items, setItems } = useCartStore.getState();
 
-  if (items.length > 0) {
-    const syncResponse = await fetch("/api/cart/sync", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        items: items.map((item) => ({
-          albumSqid: item.albumSqid,
-          quantity: item.quantity,
-        })),
-      }),
-    });
-
-    if (!syncResponse.ok) {
-      return;
-    }
+  if (!(await pushLocalCart(items))) {
+    return;
   }
 
   const cartResponse = await fetch("/api/cart");
@@ -46,4 +55,11 @@ async function syncCart(): Promise<void> {
   setItems(cartItems);
 }
 
-export { syncCart };
+async function syncCartOnLogout(): Promise<void> {
+  await waitForCartHydration();
+
+  await pushLocalCart(useCartStore.getState().items, { force: true });
+  useCartStore.getState().setItems([]);
+}
+
+export { syncCart, syncCartOnLogout };

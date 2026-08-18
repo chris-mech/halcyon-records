@@ -2,7 +2,7 @@ import { beforeEach, describe, expect, test, vi } from "vitest";
 
 import { useCartStore } from "./cart-store";
 import type { CartItem } from "./cart-store";
-import { syncCart } from "./sync-cart";
+import { syncCart, syncCartOnLogout } from "./sync-cart";
 
 function cartItem(overrides: Partial<CartItem> = {}): CartItem {
   return {
@@ -105,5 +105,46 @@ describe("syncCart", () => {
     await syncPromise;
 
     expect(fetch).toHaveBeenCalled();
+  });
+});
+
+describe("syncCartOnLogout", () => {
+  test("pushes the local cart to the server, then clears it locally", async () => {
+    const localItems = [cartItem({ quantity: 2 })];
+    useCartStore.setState({ items: localItems });
+    vi.mocked(fetch).mockResolvedValueOnce(fetchResponse(true));
+
+    await syncCartOnLogout();
+
+    expect(fetch).toHaveBeenCalledWith("/api/cart/sync", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        items: [{ albumSqid: "sync-cart-album", quantity: 2 }],
+      }),
+    });
+    expect(useCartStore.getState().items).toEqual([]);
+  });
+
+  test("clears the local cart even when the push fails", async () => {
+    useCartStore.setState({ items: [cartItem({ quantity: 2 })] });
+    vi.mocked(fetch).mockResolvedValueOnce(fetchResponse(false));
+
+    await syncCartOnLogout();
+
+    expect(useCartStore.getState().items).toEqual([]);
+  });
+
+  test("pushes an empty cart to the server too, so a just-emptied bag doesn't leave stale items behind", async () => {
+    vi.mocked(fetch).mockResolvedValueOnce(fetchResponse(true));
+
+    await syncCartOnLogout();
+
+    expect(fetch).toHaveBeenCalledWith("/api/cart/sync", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ items: [] }),
+    });
+    expect(useCartStore.getState().items).toEqual([]);
   });
 });

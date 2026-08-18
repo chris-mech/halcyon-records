@@ -8,6 +8,12 @@ import { signOut, useSession } from "next-auth/react";
 import { Wordmark } from "@/components/wordmark";
 import { Button, buttonVariants } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import {
+  selectCartTotalQuantity,
+  useCartHydrated,
+  useCartStore,
+} from "@/lib/cart/cart-store";
+import { syncCartOnLogout } from "@/lib/cart/sync-cart";
 import { cn } from "@/lib/utils";
 
 const navLinks = [
@@ -23,10 +29,12 @@ interface HeaderProps {
 
 function Header({ variant = "full" }: HeaderProps) {
   const { data: session, status } = useSession();
+  const hydrated = useCartHydrated();
+  const totalQuantity = useCartStore(selectCartTotalQuantity);
 
   useEffect(() => {
     if (session?.error === "RefreshError") {
-      void signOut();
+      void syncCartOnLogout().then(() => signOut());
     }
   }, [session?.error]);
 
@@ -73,7 +81,7 @@ function Header({ variant = "full" }: HeaderProps) {
                 </span>
                 <Button
                   variant="ghost"
-                  onClick={() => signOut()}
+                  onClick={() => void syncCartOnLogout().then(() => signOut())}
                   className="h-auto p-0 text-sm font-semibold text-slate-muted hover:bg-transparent hover:text-paper"
                 >
                   Log out
@@ -87,7 +95,6 @@ function Header({ variant = "full" }: HeaderProps) {
                 Log in
               </Link>
             )}
-            {/* Static until the cart store lands in Slice 7 */}
             <Link
               href="/cart"
               className={cn(
@@ -95,7 +102,7 @@ function Header({ variant = "full" }: HeaderProps) {
                 "h-auto px-4.5 py-2.25 text-xs font-bold tracking-wide uppercase",
               )}
             >
-              Bag (0)
+              Bag ({hydrated ? totalQuantity : 0})
             </Link>
           </div>
         </>
