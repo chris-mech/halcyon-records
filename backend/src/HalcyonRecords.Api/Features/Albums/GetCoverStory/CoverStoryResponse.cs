@@ -12,6 +12,7 @@ public sealed record CoverStoryResponse(
     bool IsNew,
     bool IsOnSale,
     bool IsStaffPick,
+    int UnitsInStock,
     bool IsInStock,
     int IssueNumber,
     IReadOnlyList<CoverStoryArtistResponse> Artists,

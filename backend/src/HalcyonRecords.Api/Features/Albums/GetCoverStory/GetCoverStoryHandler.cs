@@ -79,6 +79,7 @@ public sealed class GetCoverStoryHandler(
             album.IsNew,
             album.OriginalPriceInPence is not null,
             album.IsStaffPick,
+            album.UnitsInStock,
             album.UnitsInStock > 0,
             weekIndex + 1,
             album
