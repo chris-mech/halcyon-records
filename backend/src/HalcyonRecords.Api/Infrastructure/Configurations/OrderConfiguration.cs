@@ -13,8 +13,9 @@ public sealed class OrderConfiguration : IEntityTypeConfiguration<Order>
         builder.Property(o => o.OrderNumber).HasMaxLength(20);
         builder.HasIndex(o => o.OrderNumber).IsUnique();
 
-        builder.HasIndex(o => o.IdempotencyKey).IsUnique();
+        builder.Property(o => o.Status).HasConversion<string>().HasMaxLength(20);
 
+        builder.HasIndex(o => o.IdempotencyKey).IsUnique();
         builder
             .HasOne<User>()
             .WithMany()

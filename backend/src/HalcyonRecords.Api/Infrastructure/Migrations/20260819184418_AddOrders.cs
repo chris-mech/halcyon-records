@@ -31,6 +31,11 @@ namespace HalcyonRecords.Api.Infrastructure.Migrations
                         type: "datetimeoffset",
                         nullable: false
                     ),
+                    Status = table.Column<string>(
+                        type: "nvarchar(20)",
+                        maxLength: 20,
+                        nullable: false
+                    ),
                 },
                 constraints: table =>
                 {

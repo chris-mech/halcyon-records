@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace HalcyonRecords.Api.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20260818220906_AddOrders")]
+    [Migration("20260819184418_AddOrders")]
     partial class AddOrders
     {
         /// <inheritdoc />
@@ -278,6 +278,11 @@ namespace HalcyonRecords.Api.Infrastructure.Migrations
 
                     b.Property<DateTimeOffset>("PlacedAt")
                         .HasColumnType("datetimeoffset");
+
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
 
                     b.Property<int>("TotalInPence")
                         .HasColumnType("int");
