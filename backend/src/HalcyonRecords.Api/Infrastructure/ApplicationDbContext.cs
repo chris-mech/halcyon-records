@@ -19,6 +19,8 @@ public class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options
     public DbSet<RefreshToken> RefreshTokens => Set<RefreshToken>();
     public DbSet<Cart> Carts => Set<Cart>();
     public DbSet<CartItem> CartItems => Set<CartItem>();
+    public DbSet<Order> Orders => Set<Order>();
+    public DbSet<OrderItem> OrderItems => Set<OrderItem>();
 
     protected override void ConfigureConventions(ModelConfigurationBuilder configurationBuilder)
     {
@@ -26,11 +28,13 @@ public class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options
         configurationBuilder.Properties<ArtistId>().HaveConversion<ArtistIdConverter>();
         configurationBuilder.Properties<GenreId>().HaveConversion<GenreIdConverter>();
         configurationBuilder.Properties<CartId>().HaveConversion<CartIdConverter>();
+        configurationBuilder.Properties<OrderId>().HaveConversion<OrderIdConverter>();
     }
 
     protected override void OnModelCreating(ModelBuilder builder)
     {
         base.OnModelCreating(builder);
         builder.ApplyConfigurationsFromAssembly(typeof(ApplicationDbContext).Assembly);
+        builder.HasSequence<int>("OrderNumberSequence").StartsAt(1).IncrementsBy(1);
     }
 }
