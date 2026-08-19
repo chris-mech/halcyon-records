@@ -32,4 +32,6 @@ public sealed record GetAlbumsQuery(
             : string.Empty)}"
         + $":start={StartYear}"
         + $":end={EndYear}";
+
+    public IReadOnlyCollection<string> Tags => ["albums"];
 }

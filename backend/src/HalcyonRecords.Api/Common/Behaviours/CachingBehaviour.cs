@@ -33,6 +33,7 @@ public sealed class CachingBehaviour<TRequest, TResult>(HybridCache cache)
                     )
                     : new CachedResult<TResult>(result.Value, null);
             },
+            tags: request.Tags,
             cancellationToken: cancellationToken
         );
 

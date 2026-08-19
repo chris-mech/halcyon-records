@@ -7,4 +7,6 @@ namespace HalcyonRecords.Api.Features.Albums.GetCoverStory;
 public sealed record GetCoverStoryQuery : IRequest<ErrorOr<CoverStoryResponse>>, ICacheableQuery
 {
     public string CacheKey => "albums:cover-story";
+
+    public IReadOnlyCollection<string> Tags => ["albums"];
 }

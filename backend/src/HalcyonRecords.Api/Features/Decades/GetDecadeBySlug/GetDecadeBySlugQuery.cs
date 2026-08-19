@@ -9,4 +9,6 @@ public sealed record GetDecadeBySlugQuery(string Slug)
         ICacheableQuery
 {
     public string CacheKey => $"decades:bySlug:{Slug}";
+
+    public IReadOnlyCollection<string> Tags => [];
 }

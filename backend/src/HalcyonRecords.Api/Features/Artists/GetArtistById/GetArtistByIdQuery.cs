@@ -9,4 +9,6 @@ public sealed record GetArtistByIdQuery(string Sqid, string Sort)
         ICacheableQuery
 {
     public string CacheKey => $"artists:byId:{Sqid}:sort={Sort}";
+
+    public IReadOnlyCollection<string> Tags => ["albums"];
 }

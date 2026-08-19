@@ -9,4 +9,6 @@ public sealed record GetGenresQuery
         ICacheableQuery
 {
     public string CacheKey => "genres:list";
+
+    public IReadOnlyCollection<string> Tags => [];
 }

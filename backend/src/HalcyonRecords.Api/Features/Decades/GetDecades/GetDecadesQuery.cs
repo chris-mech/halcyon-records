@@ -9,4 +9,6 @@ public sealed record GetDecadesQuery
         ICacheableQuery
 {
     public string CacheKey => "decades:list";
+
+    public IReadOnlyCollection<string> Tags => [];
 }

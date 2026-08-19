@@ -9,4 +9,6 @@ public sealed record GetAlbumByIdQuery(string Sqid)
         ICacheableQuery
 {
     public string CacheKey => $"albums:byId:{Sqid}";
+
+    public IReadOnlyCollection<string> Tags => [$"album:{Sqid}"];
 }

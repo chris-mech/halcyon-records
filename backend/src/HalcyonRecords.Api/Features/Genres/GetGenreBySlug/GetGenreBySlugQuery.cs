@@ -9,4 +9,6 @@ public sealed record GetGenreBySlugQuery(string Slug)
         ICacheableQuery
 {
     public string CacheKey => $"genres:bySlug:{Slug}";
+
+    public IReadOnlyCollection<string> Tags => [];
 }
