@@ -54,27 +54,32 @@ public sealed class RefreshHandler(
         var (rawRefreshToken, newTokenHash, refreshExpiresAt) =
             jwtTokenService.GenerateRefreshToken();
 
-        await using var transaction = await dbContext.Database.BeginTransactionAsync(
-            cancellationToken
-        );
+        var strategy = dbContext.Database.CreateExecutionStrategy();
 
-        var newToken = new RefreshToken
+        return await strategy.ExecuteAsync<ErrorOr<RefreshResponse>>(async () =>
         {
-            TokenHash = newTokenHash,
-            UserId = user.Id,
-            CreatedAt = now,
-            ExpiresAt = refreshExpiresAt,
-        };
-        dbContext.RefreshTokens.Add(newToken);
-        await dbContext.SaveChangesAsync(cancellationToken);
+            await using var transaction = await dbContext.Database.BeginTransactionAsync(
+                cancellationToken
+            );
 
-        token.RevokedAt = now;
-        token.ReplacedByTokenId = newToken.Id;
-        await dbContext.SaveChangesAsync(cancellationToken);
+            var newToken = new RefreshToken
+            {
+                TokenHash = newTokenHash,
+                UserId = user.Id,
+                CreatedAt = now,
+                ExpiresAt = refreshExpiresAt,
+            };
+            dbContext.RefreshTokens.Add(newToken);
+            await dbContext.SaveChangesAsync(cancellationToken);
 
-        await transaction.CommitAsync(CancellationToken.None);
+            token.RevokedAt = now;
+            token.ReplacedByTokenId = newToken.Id;
+            await dbContext.SaveChangesAsync(cancellationToken);
 
-        return new RefreshResponse(accessToken, rawRefreshToken, expiresAt);
+            await transaction.CommitAsync(CancellationToken.None);
+
+            return new RefreshResponse(accessToken, rawRefreshToken, expiresAt);
+        });
     }
 
     private async Task RevokeDescendantsAsync(

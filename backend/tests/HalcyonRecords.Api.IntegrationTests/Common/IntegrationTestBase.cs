@@ -8,7 +8,10 @@ public abstract class IntegrationTestBase(SqlServerContainerFixture fixture) : I
     protected ApplicationDbContext DbContext { get; } =
         new ApplicationDbContext(
             new DbContextOptionsBuilder<ApplicationDbContext>()
-                .UseSqlServer(fixture.ConnectionString)
+                .UseSqlServer(
+                    fixture.ConnectionString,
+                    sqlOptions => sqlOptions.EnableRetryOnFailure()
+                )
                 .Options
         );
 
