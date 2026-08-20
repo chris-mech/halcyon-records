@@ -320,7 +320,10 @@ public class CreateOrderHandlerTests(SqlServerContainerFixture fixture)
     private ApplicationDbContext NewDbContext() =>
         new(
             new DbContextOptionsBuilder<ApplicationDbContext>()
-                .UseSqlServer(fixture.ConnectionString)
+                .UseSqlServer(
+                    fixture.ConnectionString,
+                    sqlOptions => sqlOptions.EnableRetryOnFailure()
+                )
                 .Options
         );
 

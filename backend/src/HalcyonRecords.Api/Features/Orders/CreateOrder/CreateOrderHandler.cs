@@ -54,88 +54,95 @@ public sealed class CreateOrderHandler(
             return DomainErrors.Order.CartEmpty();
         }
 
-        await using var transaction = await dbContext.Database.BeginTransactionAsync(
-            cancellationToken
-        );
+        var strategy = dbContext.Database.CreateExecutionStrategy();
 
-        var orderItems = new List<OrderItem>();
-        var totalInPence = 0;
-
-        foreach (var cartItem in cart.CartItems)
+        return await strategy.ExecuteAsync<ErrorOr<CreateOrderResponse>>(async () =>
         {
-            var rowsAffected = await dbContext
-                .Albums.Where(a => a.Id == cartItem.AlbumId && a.UnitsInStock >= cartItem.Quantity)
-                .ExecuteUpdateAsync(
-                    setters =>
-                        setters.SetProperty(
-                            a => a.UnitsInStock,
-                            a => a.UnitsInStock - cartItem.Quantity
-                        ),
-                    cancellationToken
-                );
+            await using var transaction = await dbContext.Database.BeginTransactionAsync(
+                cancellationToken
+            );
 
-            if (rowsAffected == 0)
+            var orderItems = new List<OrderItem>();
+            var totalInPence = 0;
+
+            foreach (var cartItem in cart.CartItems)
             {
-                await transaction.RollbackAsync(CancellationToken.None);
-                return DomainErrors.Order.InsufficientStock(cartItem.Album.Title);
+                var rowsAffected = await dbContext
+                    .Albums.Where(a =>
+                        a.Id == cartItem.AlbumId && a.UnitsInStock >= cartItem.Quantity
+                    )
+                    .ExecuteUpdateAsync(
+                        setters =>
+                            setters.SetProperty(
+                                a => a.UnitsInStock,
+                                a => a.UnitsInStock - cartItem.Quantity
+                            ),
+                        cancellationToken
+                    );
+
+                if (rowsAffected == 0)
+                {
+                    await transaction.RollbackAsync(CancellationToken.None);
+                    return DomainErrors.Order.InsufficientStock(cartItem.Album.Title);
+                }
+
+                orderItems.Add(
+                    new OrderItem
+                    {
+                        AlbumId = cartItem.AlbumId,
+                        Album = cartItem.Album,
+                        Quantity = cartItem.Quantity,
+                        PriceAtPurchaseInPence = cartItem.Album.PriceInPence,
+                    }
+                );
+                totalInPence += cartItem.Album.PriceInPence * cartItem.Quantity;
             }
 
-            orderItems.Add(
-                new OrderItem
-                {
-                    AlbumId = cartItem.AlbumId,
-                    Album = cartItem.Album,
-                    Quantity = cartItem.Quantity,
-                    PriceAtPurchaseInPence = cartItem.Album.PriceInPence,
-                }
-            );
-            totalInPence += cartItem.Album.PriceInPence * cartItem.Quantity;
-        }
+            var sequenceValue = (
+                await dbContext
+                    .Database.SqlQueryRaw<int>("SELECT NEXT VALUE FOR OrderNumberSequence")
+                    .ToListAsync(cancellationToken)
+            )[0];
 
-        var sequenceValue = (
+            var order = new Order
+            {
+                UserId = user.Id,
+                OrderNumber = FormatOrderNumber(sequenceValue),
+                IdempotencyKey = command.IdempotencyKey,
+                ContactFirstName = command.ContactFirstName,
+                ContactLastName = command.ContactLastName,
+                ContactEmail = command.ContactEmail,
+                TotalInPence = totalInPence,
+                PlacedAt = timeProvider.GetUtcNow(),
+                OrderItems = orderItems,
+            };
+            dbContext.Orders.Add(order);
             await dbContext
-                .Database.SqlQueryRaw<int>("SELECT NEXT VALUE FOR OrderNumberSequence")
-                .ToListAsync(cancellationToken)
-        )[0];
+                .CartItems.Where(ci => ci.CartId == cart.Id)
+                .ExecuteDeleteAsync(cancellationToken);
 
-        var order = new Order
-        {
-            UserId = user.Id,
-            OrderNumber = FormatOrderNumber(sequenceValue),
-            IdempotencyKey = command.IdempotencyKey,
-            ContactFirstName = command.ContactFirstName,
-            ContactLastName = command.ContactLastName,
-            ContactEmail = command.ContactEmail,
-            TotalInPence = totalInPence,
-            PlacedAt = timeProvider.GetUtcNow(),
-            OrderItems = orderItems,
-        };
-        dbContext.Orders.Add(order);
-        await dbContext
-            .CartItems.Where(ci => ci.CartId == cart.Id)
-            .ExecuteDeleteAsync(cancellationToken);
+            try
+            {
+                await dbContext.SaveChangesAsync(cancellationToken);
+            }
+            catch (DbUpdateException ex) when (IsIdempotencyKeyConflict(ex))
+            {
+                await transaction.RollbackAsync(CancellationToken.None);
+                var winningOrder = await OrdersWithItemsAndAlbums()
+                    .FirstAsync(o => o.IdempotencyKey == command.IdempotencyKey, cancellationToken);
+                return ToResponse(winningOrder);
+            }
 
-        try
-        {
-            await dbContext.SaveChangesAsync(cancellationToken);
-        }
-        catch (DbUpdateException ex) when (IsIdempotencyKeyConflict(ex))
-        {
-            await transaction.RollbackAsync(CancellationToken.None);
-            var winningOrder = await OrdersWithItemsAndAlbums()
-                .FirstAsync(o => o.IdempotencyKey == command.IdempotencyKey, cancellationToken);
-            return ToResponse(winningOrder);
-        }
+            await transaction.CommitAsync(CancellationToken.None);
 
-        await transaction.CommitAsync(CancellationToken.None);
+            var tags = orderItems
+                .Select(oi => $"album:{albumSqids.Encode(oi.AlbumId.Value)}")
+                .Append("albums")
+                .ToList();
+            await cache.RemoveByTagAsync(tags, CancellationToken.None);
 
-        var tags = orderItems
-            .Select(oi => $"album:{albumSqids.Encode(oi.AlbumId.Value)}")
-            .Append("albums")
-            .ToList();
-        await cache.RemoveByTagAsync(tags, CancellationToken.None);
-
-        return ToResponse(order);
+            return ToResponse(order);
+        });
     }
 
     private string FormatOrderNumber(int sequenceValue) =>
