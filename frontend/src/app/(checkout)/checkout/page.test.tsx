@@ -5,30 +5,28 @@ import { useSession } from "next-auth/react";
 import { useCartStore } from "@/lib/cart/cart-store";
 import type { CartItem } from "@/lib/cart/cart-store";
 
-import CartPage from "./page";
+import CheckoutPage from "./page";
 
 vi.mock("next-auth/react", () => ({
   useSession: vi.fn(),
 }));
 
+vi.mock("next/navigation", () => ({
+  useRouter: () => ({ push: vi.fn() }),
+}));
+
 function fixtureItem(overrides: Partial<CartItem> = {}): CartItem {
   return {
-    albumSqid: "cart-page-album",
-    title: "Cart Page Fixture Album",
-    titleSlug: "cart-page-fixture-album",
+    albumSqid: "checkout-page-album",
+    title: "Checkout Page Fixture Album",
+    titleSlug: "checkout-page-fixture-album",
     imageUrl: null,
     priceInPence: 2000,
     originalPriceInPence: null,
     quantity: 1,
     unitsInStock: 5,
     isInStock: true,
-    artists: [
-      {
-        sqid: "fixture-artist",
-        name: "Fixture Artist",
-        nameSlug: "fixture-artist",
-      },
-    ],
+    artists: [],
     ...overrides,
   };
 }
@@ -42,41 +40,25 @@ beforeEach(() => {
   });
 });
 
-describe("CartPage", () => {
+describe("CheckoutPage", () => {
   test("shows the empty state when the cart has no items", () => {
-    render(<CartPage />);
+    render(<CheckoutPage />);
 
     expect(screen.getByText("Your bag is empty")).toBeInTheDocument();
-    expect(
-      screen.getByRole("link", { name: "Start browsing" }),
-    ).toHaveAttribute("href", "/shop");
   });
 
-  test("shows bag rows and a subtotal when the cart has items", () => {
-    useCartStore.setState({
-      items: [
-        fixtureItem({ albumSqid: "album-a", priceInPence: 2000, quantity: 1 }),
-        fixtureItem({ albumSqid: "album-b", priceInPence: 1000, quantity: 2 }),
-      ],
-    });
-
-    render(<CartPage />);
-
-    expect(screen.getByText("3 items")).toBeInTheDocument();
-    expect(screen.getAllByText("£40.00")).toHaveLength(2);
-  });
-
-  test("shows the login note for an anonymous user", () => {
+  test("shows the login gate and step when unauthenticated", () => {
     useCartStore.setState({ items: [fixtureItem()] });
 
-    render(<CartPage />);
+    const { container } = render(<CheckoutPage />);
 
-    expect(
-      screen.getByText("You'll need to log in to complete checkout"),
-    ).toBeInTheDocument();
+    expect(screen.getByText("Log in to check out")).toBeInTheDocument();
+    expect(container.querySelector('[aria-current="step"]')).toHaveTextContent(
+      "Log in",
+    );
   });
 
-  test("hides the login note for an authenticated user", () => {
+  test("shows the checkout form and step when authenticated", () => {
     useCartStore.setState({ items: [fixtureItem()] });
     vi.mocked(useSession).mockReturnValue({
       status: "authenticated",
@@ -92,10 +74,11 @@ describe("CartPage", () => {
       update: vi.fn(),
     });
 
-    render(<CartPage />);
+    const { container } = render(<CheckoutPage />);
 
-    expect(
-      screen.queryByText("You'll need to log in to complete checkout"),
-    ).not.toBeInTheDocument();
+    expect(screen.getByText("Order summary")).toBeInTheDocument();
+    expect(container.querySelector('[aria-current="step"]')).toHaveTextContent(
+      "Checkout",
+    );
   });
 });

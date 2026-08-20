@@ -43,6 +43,7 @@ describe("Header", () => {
           id: "11111111-1111-1111-1111-111111111111",
           firstName: "Given Name Session",
           lastName: "Family Name Session",
+          email: "given-name-session@test.invalid",
         },
         expires: "2099-01-01T00:00:00.000Z",
       },
@@ -64,6 +65,7 @@ describe("Header", () => {
           id: "11111111-1111-1111-1111-111111111111",
           firstName: "Given Name Session",
           lastName: "Family Name Session",
+          email: "given-name-session@test.invalid",
         },
         error: "RefreshError",
         expires: "2099-01-01T00:00:00.000Z",
@@ -103,5 +105,36 @@ describe("Header", () => {
     render(<Header />);
 
     expect(screen.getByRole("link", { name: "Bag (2)" })).toBeInTheDocument();
+  });
+
+  test("shows a Back to shop link in the stripped variant by default", () => {
+    vi.mocked(useSession).mockReturnValue({
+      data: null,
+      status: "unauthenticated",
+      update: vi.fn(),
+    });
+
+    render(<Header variant="stripped" />);
+
+    expect(
+      screen.getByRole("link", { name: "← Back to shop" }),
+    ).toHaveAttribute("href", "/shop");
+  });
+
+  test("shows a custom back link when backHref and backLabel are given", () => {
+    vi.mocked(useSession).mockReturnValue({
+      data: null,
+      status: "unauthenticated",
+      update: vi.fn(),
+    });
+
+    render(
+      <Header variant="stripped" backHref="/cart" backLabel="← Back to bag" />,
+    );
+
+    expect(screen.getByRole("link", { name: "← Back to bag" })).toHaveAttribute(
+      "href",
+      "/cart",
+    );
   });
 });

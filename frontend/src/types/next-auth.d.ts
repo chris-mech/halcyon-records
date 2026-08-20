@@ -5,6 +5,7 @@ declare module "@auth/core/types" {
     id: string;
     firstName: string;
     lastName: string;
+    email: string;
     accessToken: string;
     refreshToken: string;
     expiresAt: number;
@@ -15,6 +16,7 @@ declare module "@auth/core/types" {
       id: string;
       firstName: string;
       lastName: string;
+      email: string;
     };
     error?: "RefreshError";
   }
@@ -25,6 +27,7 @@ declare module "@auth/core/jwt" {
     id: string;
     firstName: string;
     lastName: string;
+    email: string;
     accessToken: string;
     refreshToken: string;
     expiresAt: number;

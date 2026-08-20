@@ -25,9 +25,15 @@ const navLinks = [
 
 interface HeaderProps {
   variant?: "full" | "stripped";
+  backHref?: string;
+  backLabel?: string;
 }
 
-function Header({ variant = "full" }: HeaderProps) {
+function Header({
+  variant = "full",
+  backHref = "/shop",
+  backLabel = "← Back to shop",
+}: HeaderProps) {
   const { data: session, status } = useSession();
   const hydrated = useCartHydrated();
   const totalQuantity = useCartStore(selectCartTotalQuantity);
@@ -108,10 +114,10 @@ function Header({ variant = "full" }: HeaderProps) {
         </>
       ) : (
         <Link
-          href="/shop"
+          href={backHref}
           className="text-xs font-semibold tracking-wide text-paper uppercase"
         >
-          ← Back to shop
+          {backLabel}
         </Link>
       )}
     </header>

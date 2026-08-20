@@ -90,6 +90,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
         token.id = user.id;
         token.firstName = user.firstName;
         token.lastName = user.lastName;
+        token.email = user.email;
         token.accessToken = user.accessToken;
         token.refreshToken = user.refreshToken;
         token.expiresAt = user.expiresAt;
@@ -117,6 +118,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
       session.user.id = token.id;
       session.user.firstName = token.firstName;
       session.user.lastName = token.lastName;
+      session.user.email = token.email;
       session.error = token.error;
       return session;
     },
