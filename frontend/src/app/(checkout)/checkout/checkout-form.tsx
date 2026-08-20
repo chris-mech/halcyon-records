@@ -46,6 +46,13 @@ function CheckoutForm() {
   async function onSubmit(values: CheckoutContactFormValues) {
     idempotencyKeyRef.current ??= crypto.randomUUID();
 
+    if (!(await syncCart())) {
+      form.setError("root.serverError", {
+        message: "Couldn't refresh your bag. Please try again.",
+      });
+      return;
+    }
+
     const response = await fetch("/api/orders", {
       method: "POST",
       headers: { "Content-Type": "application/json" },

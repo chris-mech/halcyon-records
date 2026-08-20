@@ -36,23 +36,24 @@ async function pushLocalCart(
   return response.ok;
 }
 
-async function syncCart(): Promise<void> {
+async function syncCart(): Promise<boolean> {
   await waitForCartHydration();
 
   const { items, setItems } = useCartStore.getState();
 
   if (!(await pushLocalCart(items))) {
-    return;
+    return false;
   }
 
   const cartResponse = await fetch("/api/cart");
 
   if (!cartResponse.ok) {
-    return;
+    return false;
   }
 
   const cartItems: CartItem[] = await cartResponse.json();
   setItems(cartItems);
+  return true;
 }
 
 async function syncCartOnLogout(): Promise<void> {

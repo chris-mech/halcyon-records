@@ -39,7 +39,7 @@ describe("syncCart", () => {
       .mockResolvedValueOnce(fetchResponse(true))
       .mockResolvedValueOnce(fetchResponse(true, serverCart));
 
-    await syncCart();
+    expect(await syncCart()).toBe(true);
 
     expect(fetch).toHaveBeenNthCalledWith(1, "/api/cart/sync", {
       method: "POST",
@@ -56,7 +56,7 @@ describe("syncCart", () => {
     const serverCart = [cartItem({ quantity: 3 })];
     vi.mocked(fetch).mockResolvedValueOnce(fetchResponse(true, serverCart));
 
-    await syncCart();
+    expect(await syncCart()).toBe(true);
 
     expect(fetch).toHaveBeenCalledTimes(1);
     expect(fetch).toHaveBeenCalledWith("/api/cart");
@@ -68,7 +68,7 @@ describe("syncCart", () => {
     useCartStore.setState({ items: localItems });
     vi.mocked(fetch).mockResolvedValueOnce(fetchResponse(false));
 
-    await syncCart();
+    expect(await syncCart()).toBe(false);
 
     expect(fetch).toHaveBeenCalledTimes(1);
     expect(useCartStore.getState().items).toEqual(localItems);
@@ -81,7 +81,7 @@ describe("syncCart", () => {
       .mockResolvedValueOnce(fetchResponse(true))
       .mockResolvedValueOnce(fetchResponse(false));
 
-    await syncCart();
+    expect(await syncCart()).toBe(false);
 
     expect(useCartStore.getState().items).toEqual(localItems);
   });

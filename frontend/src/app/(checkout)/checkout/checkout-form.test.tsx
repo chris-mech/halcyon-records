@@ -54,6 +54,7 @@ function submit() {
 
 beforeEach(() => {
   push.mockClear();
+  vi.mocked(syncCart).mockResolvedValue(true);
   useCartStore.setState({
     items: [fixtureItem({ priceInPence: 2000, quantity: 1 })],
   });
@@ -92,6 +93,35 @@ describe("CheckoutForm", () => {
         name: "Place order (demo — no charge) — £20.00",
       }),
     ).toBeInTheDocument();
+  });
+
+  test("syncs the cart before submitting the order", async () => {
+    vi.mocked(fetch).mockResolvedValue(
+      fetchResponse(true, { orderNumber: "ORD-000001" }, 201),
+    );
+    render(<CheckoutForm />);
+
+    submit();
+
+    await waitFor(() => expect(fetch).toHaveBeenCalled());
+
+    expect(syncCart).toHaveBeenCalled();
+    expect(vi.mocked(syncCart).mock.invocationCallOrder[0]).toBeLessThan(
+      vi.mocked(fetch).mock.invocationCallOrder[0],
+    );
+  });
+
+  test("shows an error and does not submit the order when the cart sync fails", async () => {
+    vi.mocked(syncCart).mockResolvedValueOnce(false);
+    render(<CheckoutForm />);
+
+    submit();
+
+    expect(
+      await screen.findByText("Couldn't refresh your bag. Please try again."),
+    ).toBeInTheDocument();
+    expect(fetch).not.toHaveBeenCalled();
+    expect(push).not.toHaveBeenCalled();
   });
 
   test("submits the order, clears the cart, and redirects to the confirmation page", async () => {
