@@ -15,6 +15,7 @@ function fixtureToken(overrides: Partial<JWT> = {}): JWT {
     id: "11111111-1111-1111-1111-111111111111",
     firstName: "Fixture",
     lastName: "User",
+    email: "fixture@example.test",
     accessToken: "fixture-access-token",
     refreshToken: "fixture-refresh-token",
     expiresAt: Date.now() + 60_000,
