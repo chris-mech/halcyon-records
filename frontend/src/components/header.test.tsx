@@ -54,6 +54,9 @@ describe("Header", () => {
     render(<Header />);
 
     expect(screen.getByText("Given Name Session")).toBeInTheDocument();
+    expect(
+      screen.getByRole("link", { name: "Given Name Session" }),
+    ).toHaveAttribute("href", "/account");
     fireEvent.click(screen.getByRole("button", { name: "Log out" }));
     await waitFor(() => expect(signOut).toHaveBeenCalled());
   });

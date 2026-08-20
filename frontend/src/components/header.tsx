@@ -82,9 +82,12 @@ function Header({
           <div className="flex shrink-0 items-center gap-5">
             {status === "authenticated" ? (
               <>
-                <span className="text-sm font-semibold text-paper">
+                <Link
+                  href="/account"
+                  className="text-sm font-semibold text-paper hover:underline"
+                >
                   {session.user.firstName}
-                </span>
+                </Link>
                 <Button
                   variant="ghost"
                   onClick={() => void syncCartOnLogout().then(() => signOut())}
