@@ -3,10 +3,10 @@ import { describe, expect, test, vi } from "vitest";
 import { client } from "@/lib/api/client";
 import { requireAccessToken } from "@/lib/auth/require-access-token";
 
-import { POST } from "./route";
+import { GET, POST } from "./route";
 
 vi.mock("@/lib/api/client", () => ({
-  client: { POST: vi.fn() },
+  client: { GET: vi.fn(), POST: vi.fn() },
 }));
 
 vi.mock("@/lib/auth/require-access-token", () => ({
@@ -26,6 +26,44 @@ const validBody = {
   contactEmail: "order-contact@test.invalid",
   idempotencyKey: "fixture-idempotency-key",
 };
+
+describe("GET /api/orders", () => {
+  test("returns 401 when there is no authenticated access token", async () => {
+    vi.mocked(requireAccessToken).mockResolvedValue(null);
+
+    const response = await GET(new Request("https://example.test/api/orders"));
+
+    expect(response.status).toBe(401);
+    expect(client.GET).not.toHaveBeenCalled();
+  });
+
+  test("forwards the bearer token and page params, returning the backend's paged orders", async () => {
+    vi.mocked(requireAccessToken).mockResolvedValue("fixture-access-token");
+    const paged = {
+      items: [],
+      page: 2,
+      pageSize: 5,
+      totalCount: 0,
+      totalPages: 0,
+    };
+    vi.mocked(client.GET).mockResolvedValue({
+      data: paged,
+      error: undefined,
+      response: new Response(null, { status: 200 }),
+    });
+
+    const response = await GET(
+      new Request("https://example.test/api/orders?page=2&pageSize=5"),
+    );
+
+    expect(client.GET).toHaveBeenCalledWith("/api/orders", {
+      headers: { Authorization: "Bearer fixture-access-token" },
+      params: { query: { page: 2, pageSize: 5 } },
+    });
+    expect(response.status).toBe(200);
+    await expect(response.json()).resolves.toEqual(paged);
+  });
+});
 
 describe("POST /api/orders", () => {
   test("returns 401 when there is no authenticated access token", async () => {

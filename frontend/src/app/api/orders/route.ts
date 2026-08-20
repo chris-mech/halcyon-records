@@ -5,6 +5,29 @@ import type { components } from "@/lib/api/schema";
 
 type CreateOrderRequest = components["schemas"]["CreateOrderRequest"];
 
+export async function GET(request: Request) {
+  const accessToken = await requireAccessToken(request);
+
+  if (!accessToken) {
+    return Response.json({ detail: "Not authenticated." }, { status: 401 });
+  }
+
+  const { searchParams } = new URL(request.url);
+  const page = Number(searchParams.get("page")) || undefined;
+  const pageSize = Number(searchParams.get("pageSize")) || undefined;
+
+  const { data, error, response } = await client.GET("/api/orders", {
+    headers: { Authorization: `Bearer ${accessToken}` },
+    params: { query: { page, pageSize } },
+  });
+
+  if (error) {
+    return Response.json(error, { status: response.status });
+  }
+
+  return Response.json(data);
+}
+
 export async function POST(request: Request) {
   const accessToken = await requireAccessToken(request);
 
