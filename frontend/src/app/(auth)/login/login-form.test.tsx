@@ -3,7 +3,7 @@ import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { signIn } from "next-auth/react";
 
 import { syncCart } from "@/lib/cart/sync-cart";
-import LoginPage from "./page";
+import { LoginForm } from "./login-form";
 
 const push = vi.fn();
 
@@ -23,15 +23,15 @@ function submit() {
   fireEvent.click(screen.getByRole("button", { name: "Log in" }));
 }
 
-describe("LoginPage", () => {
+describe("LoginForm", () => {
   test("submits via POST so a pre-hydration native submit can never leak credentials into the URL", () => {
-    const { container } = render(<LoginPage />);
+    const { container } = render(<LoginForm />);
 
     expect(container.querySelector("form")).toHaveAttribute("method", "post");
   });
 
   test("shows validation errors when submitted empty", async () => {
-    render(<LoginPage />);
+    render(<LoginForm />);
 
     submit();
 
@@ -50,7 +50,7 @@ describe("LoginPage", () => {
       ok: false,
       url: null,
     });
-    render(<LoginPage />);
+    render(<LoginForm />);
 
     fireEvent.change(screen.getByLabelText("Email"), {
       target: { value: "user@example.com" },
@@ -66,7 +66,7 @@ describe("LoginPage", () => {
     expect(push).not.toHaveBeenCalled();
   });
 
-  test("navigates home on successful login", async () => {
+  test("navigates home on successful login when no next path is given", async () => {
     vi.mocked(signIn).mockResolvedValue({
       error: undefined,
       code: undefined,
@@ -74,7 +74,7 @@ describe("LoginPage", () => {
       ok: true,
       url: "/",
     });
-    render(<LoginPage />);
+    render(<LoginForm />);
 
     fireEvent.change(screen.getByLabelText("Email"), {
       target: { value: "user@example.com" },
@@ -91,5 +91,34 @@ describe("LoginPage", () => {
       redirect: false,
     });
     expect(syncCart).toHaveBeenCalled();
+  });
+
+  test("navigates to the given next path on successful login", async () => {
+    vi.mocked(signIn).mockResolvedValue({
+      error: undefined,
+      code: undefined,
+      status: 200,
+      ok: true,
+      url: "/",
+    });
+    render(<LoginForm next="/checkout" />);
+
+    fireEvent.change(screen.getByLabelText("Email"), {
+      target: { value: "user@example.com" },
+    });
+    fireEvent.change(screen.getByLabelText("Password"), {
+      target: { value: "correct-password" },
+    });
+    submit();
+
+    await waitFor(() => expect(push).toHaveBeenCalledWith("/checkout"));
+  });
+
+  test("carries the next path into the create-account link", () => {
+    render(<LoginForm next="/checkout" />);
+
+    expect(
+      screen.getByRole("link", { name: "Create an account" }),
+    ).toHaveAttribute("href", "/register?next=%2Fcheckout");
   });
 });
