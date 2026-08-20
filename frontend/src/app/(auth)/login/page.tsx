@@ -1,5 +1,6 @@
 import { Suspense } from "react";
 
+import { safeNextPath } from "@/lib/safe-next-path";
 import { LoginForm } from "./login-form";
 
 async function LoginPageContent({
@@ -7,7 +8,7 @@ async function LoginPageContent({
 }: Pick<PageProps<"/login">, "searchParams">) {
   const { next } = await searchParams;
 
-  return <LoginForm next={typeof next === "string" ? next : undefined} />;
+  return <LoginForm next={safeNextPath(next)} />;
 }
 
 export default function LoginPage(props: PageProps<"/login">) {

@@ -1,5 +1,6 @@
 import { Suspense } from "react";
 
+import { safeNextPath } from "@/lib/safe-next-path";
 import { RegisterForm } from "./register-form";
 
 async function RegisterPageContent({
@@ -7,7 +8,7 @@ async function RegisterPageContent({
 }: Pick<PageProps<"/register">, "searchParams">) {
   const { next } = await searchParams;
 
-  return <RegisterForm next={typeof next === "string" ? next : undefined} />;
+  return <RegisterForm next={safeNextPath(next)} />;
 }
 
 export default function RegisterPage(props: PageProps<"/register">) {
