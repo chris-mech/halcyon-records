@@ -23,7 +23,13 @@ public sealed class CreateOrderEndpoint : IEndpoint
                     );
 
                     ErrorOr<CreateOrderResponse> result = await sender.Send(
-                        new CreateOrderCommand(publicId, request.IdempotencyKey)
+                        new CreateOrderCommand(
+                            publicId,
+                            request.ContactFirstName,
+                            request.ContactLastName,
+                            request.ContactEmail,
+                            request.IdempotencyKey
+                        )
                     );
 
                     return result.Match<

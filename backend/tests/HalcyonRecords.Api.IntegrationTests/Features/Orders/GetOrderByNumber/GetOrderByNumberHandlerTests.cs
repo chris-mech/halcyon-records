@@ -82,6 +82,9 @@ public class GetOrderByNumberHandlerTests(SqlServerContainerFixture fixture)
 
         result.IsError.Should().BeFalse();
         result.Value.OrderNumber.Should().Be(order.OrderNumber);
+        result.Value.ContactFirstName.Should().Be("Order");
+        result.Value.ContactLastName.Should().Be("Contact");
+        result.Value.ContactEmail.Should().Be("order-contact@test.invalid");
         result.Value.Status.Should().Be(nameof(OrderStatus.Placed));
         result.Value.TotalInPence.Should().Be(3000);
         var item = result.Value.Items.Should().ContainSingle().Subject;
@@ -99,6 +102,9 @@ public class GetOrderByNumberHandlerTests(SqlServerContainerFixture fixture)
             UserId = user.Id,
             OrderNumber = $"TEST-{Guid.NewGuid().ToString("N")[..10]}",
             IdempotencyKey = Guid.NewGuid(),
+            ContactFirstName = "Order",
+            ContactLastName = "Contact",
+            ContactEmail = "order-contact@test.invalid",
             TotalInPence = album.PriceInPence * quantity,
             PlacedAt = DateTimeOffset.UtcNow,
             OrderItems =

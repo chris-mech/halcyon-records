@@ -26,6 +26,9 @@ namespace HalcyonRecords.Api.Infrastructure.Migrations
                         nullable: false
                     ),
                     IdempotencyKey = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    ContactFirstName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ContactLastName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ContactEmail = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     TotalInPence = table.Column<int>(type: "int", nullable: false),
                     PlacedAt = table.Column<DateTimeOffset>(
                         type: "datetimeoffset",

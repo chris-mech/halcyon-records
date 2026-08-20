@@ -4,6 +4,9 @@ public sealed record OrderDetailResponse(
     string OrderNumber,
     DateTimeOffset PlacedAt,
     string Status,
+    string ContactFirstName,
+    string ContactLastName,
+    string ContactEmail,
     int TotalInPence,
     IReadOnlyList<OrderDetailItemResponse> Items
 );

@@ -30,7 +30,7 @@ public class CreateOrderHandlerTests(SqlServerContainerFixture fixture)
     public async Task Handle_UnknownPublicId_ReturnsNotFoundError()
     {
         var result = await Handler.Handle(
-            new CreateOrderCommand(Guid.NewGuid(), Guid.NewGuid()),
+            NewCommand(Guid.NewGuid(), Guid.NewGuid()),
             TestContext.Current.CancellationToken
         );
 
@@ -44,7 +44,7 @@ public class CreateOrderHandlerTests(SqlServerContainerFixture fixture)
         var user = await CreateUserAsync("create-order-empty-cart@test.invalid");
 
         var result = await Handler.Handle(
-            new CreateOrderCommand(user.PublicId, Guid.NewGuid()),
+            NewCommand(user.PublicId, Guid.NewGuid()),
             TestContext.Current.CancellationToken
         );
 
@@ -62,7 +62,7 @@ public class CreateOrderHandlerTests(SqlServerContainerFixture fixture)
         await AddToCartAsync(user, album, 2);
 
         var result = await Handler.Handle(
-            new CreateOrderCommand(user.PublicId, Guid.NewGuid()),
+            NewCommand(user.PublicId, Guid.NewGuid()),
             TestContext.Current.CancellationToken
         );
 
@@ -101,7 +101,7 @@ public class CreateOrderHandlerTests(SqlServerContainerFixture fixture)
         await AddToCartAsync(user, soldOutAlbum, 2);
 
         var result = await Handler.Handle(
-            new CreateOrderCommand(user.PublicId, Guid.NewGuid()),
+            NewCommand(user.PublicId, Guid.NewGuid()),
             TestContext.Current.CancellationToken
         );
 
@@ -120,6 +120,39 @@ public class CreateOrderHandlerTests(SqlServerContainerFixture fixture)
     }
 
     [Fact]
+    public async Task Handle_ValidCart_PersistsContactDetails()
+    {
+        var user = await CreateUserAsync("create-order-contact-details@test.invalid");
+        var album = NewAlbum("Contact Details Album", unitsInStock: 5, priceInPence: 1000);
+        DbContext.Albums.Add(album);
+        await DbContext.SaveChangesAsync(TestContext.Current.CancellationToken);
+        await AddToCartAsync(user, album, 1);
+
+        var result = await Handler.Handle(
+            new CreateOrderCommand(
+                user.PublicId,
+                "Gift",
+                "Recipient",
+                "gift-recipient@test.invalid",
+                Guid.NewGuid()
+            ),
+            TestContext.Current.CancellationToken
+        );
+
+        result.IsError.Should().BeFalse();
+
+        var order = await DbContext
+            .Orders.AsNoTracking()
+            .FirstAsync(
+                o => o.OrderNumber == result.Value.OrderNumber,
+                TestContext.Current.CancellationToken
+            );
+        order.ContactFirstName.Should().Be("Gift");
+        order.ContactLastName.Should().Be("Recipient");
+        order.ContactEmail.Should().Be("gift-recipient@test.invalid");
+    }
+
+    [Fact]
     public async Task Handle_SameIdempotencyKeyRetried_ReturnsSameOrderWithoutCreatingDuplicate()
     {
         var user = await CreateUserAsync("create-order-idempotent-retry@test.invalid");
@@ -130,12 +163,12 @@ public class CreateOrderHandlerTests(SqlServerContainerFixture fixture)
         await AddToCartAsync(user, album, 1);
 
         var first = await Handler.Handle(
-            new CreateOrderCommand(user.PublicId, idempotencyKey),
+            NewCommand(user.PublicId, idempotencyKey),
             TestContext.Current.CancellationToken
         );
 
         var second = await Handler.Handle(
-            new CreateOrderCommand(user.PublicId, idempotencyKey),
+            NewCommand(user.PublicId, idempotencyKey),
             TestContext.Current.CancellationToken
         );
 
@@ -175,11 +208,11 @@ public class CreateOrderHandlerTests(SqlServerContainerFixture fixture)
         );
 
         var task1 = handler1.Handle(
-            new CreateOrderCommand(user.PublicId, idempotencyKey),
+            NewCommand(user.PublicId, idempotencyKey),
             TestContext.Current.CancellationToken
         );
         var task2 = handler2.Handle(
-            new CreateOrderCommand(user.PublicId, idempotencyKey),
+            NewCommand(user.PublicId, idempotencyKey),
             TestContext.Current.CancellationToken
         );
         var results = await Task.WhenAll(task1, task2);
@@ -216,11 +249,11 @@ public class CreateOrderHandlerTests(SqlServerContainerFixture fixture)
         );
 
         var task1 = handler1.Handle(
-            new CreateOrderCommand(buyerOne.PublicId, Guid.NewGuid()),
+            NewCommand(buyerOne.PublicId, Guid.NewGuid()),
             TestContext.Current.CancellationToken
         );
         var task2 = handler2.Handle(
-            new CreateOrderCommand(buyerTwo.PublicId, Guid.NewGuid()),
+            NewCommand(buyerTwo.PublicId, Guid.NewGuid()),
             TestContext.Current.CancellationToken
         );
         var results = await Task.WhenAll(task1, task2);
@@ -262,7 +295,7 @@ public class CreateOrderHandlerTests(SqlServerContainerFixture fixture)
         );
 
         var result = await Handler.Handle(
-            new CreateOrderCommand(user.PublicId, Guid.NewGuid()),
+            NewCommand(user.PublicId, Guid.NewGuid()),
             TestContext.Current.CancellationToken
         );
         result.IsError.Should().BeFalse();
@@ -290,6 +323,9 @@ public class CreateOrderHandlerTests(SqlServerContainerFixture fixture)
                 .UseSqlServer(fixture.ConnectionString)
                 .Options
         );
+
+    private static CreateOrderCommand NewCommand(Guid publicId, Guid idempotencyKey) =>
+        new(publicId, "Order", "Contact", "order-contact@test.invalid", idempotencyKey);
 
     private async Task AddToCartAsync(User user, Album album, int quantity)
     {

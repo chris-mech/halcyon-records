@@ -42,6 +42,9 @@ public sealed class GetOrderByNumberHandler(
             order.OrderNumber,
             order.PlacedAt,
             order.Status.ToString(),
+            order.ContactFirstName,
+            order.ContactLastName,
+            order.ContactEmail,
             order.TotalInPence,
             order
                 .OrderItems.Select(oi => new OrderDetailItemResponse(

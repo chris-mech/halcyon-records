@@ -134,6 +134,9 @@ public class GetOrdersHandlerTests(SqlServerContainerFixture fixture)
             UserId = user.Id,
             OrderNumber = $"TEST-{Guid.NewGuid().ToString("N")[..10]}",
             IdempotencyKey = Guid.NewGuid(),
+            ContactFirstName = "Order",
+            ContactLastName = "Contact",
+            ContactEmail = "order-contact@test.invalid",
             TotalInPence = album.PriceInPence * quantity,
             PlacedAt = placedAt ?? DateTimeOffset.UtcNow,
             OrderItems =
