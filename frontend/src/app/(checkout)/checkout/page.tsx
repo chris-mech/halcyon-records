@@ -46,7 +46,7 @@ export default function CheckoutPage() {
 
   return (
     <>
-      <div className="mx-auto max-w-275 px-16 pt-9">
+      <div className="mx-auto w-full max-w-275 px-16 pt-9">
         <StepIndicator
           currentStep={status === "authenticated" ? "checkout" : "login"}
         />

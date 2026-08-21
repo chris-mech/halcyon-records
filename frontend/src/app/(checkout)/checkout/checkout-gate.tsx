@@ -14,7 +14,7 @@ import { cn } from "@/lib/utils";
 
 function CheckoutGate() {
   return (
-    <div className="mx-auto max-w-105 px-16 py-16">
+    <div className="mx-auto w-full max-w-105 px-16 py-16">
       <Card className="border-line text-center">
         <CardHeader>
           <div className="mx-auto mb-2 flex size-13 items-center justify-center rounded-full border border-line">

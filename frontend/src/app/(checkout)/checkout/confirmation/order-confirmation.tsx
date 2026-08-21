@@ -62,7 +62,7 @@ function OrderConfirmation({ orderNumber }: OrderConfirmationProps) {
 
   if (state.status === "not-found") {
     return (
-      <div className="mx-auto max-w-105 px-16 py-16 text-center">
+      <div className="mx-auto w-full max-w-105 px-16 py-16 text-center">
         <p className="text-sm text-muted-foreground">
           We couldn&apos;t find that order.
         </p>
@@ -72,7 +72,7 @@ function OrderConfirmation({ orderNumber }: OrderConfirmationProps) {
 
   if (state.status === "error") {
     return (
-      <div className="mx-auto max-w-105 px-16 py-16 text-center">
+      <div className="mx-auto w-full max-w-105 px-16 py-16 text-center">
         <p className="text-sm text-muted-foreground">
           Something went wrong loading your order. Please try again.
         </p>
@@ -83,7 +83,7 @@ function OrderConfirmation({ orderNumber }: OrderConfirmationProps) {
   const { order } = state;
 
   return (
-    <div className="mx-auto max-w-160 px-16 py-16 text-center">
+    <div className="mx-auto w-full max-w-160 px-16 py-16 text-center">
       <div className="mx-auto mb-6 flex size-13 items-center justify-center rounded-full border border-line">
         <CheckCircle2 aria-hidden className="size-6 text-rust" />
       </div>

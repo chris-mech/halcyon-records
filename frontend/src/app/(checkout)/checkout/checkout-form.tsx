@@ -88,7 +88,7 @@ function CheckoutForm() {
   }
 
   return (
-    <div className="mx-auto max-w-275 px-16 py-9 pb-25">
+    <div className="mx-auto w-full max-w-275 px-16 py-9 pb-25">
       <form
         onSubmit={form.handleSubmit(onSubmit)}
         method="post"

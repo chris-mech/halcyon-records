@@ -5,7 +5,7 @@ import { cn } from "@/lib/utils";
 
 function NotFoundContent() {
   return (
-    <div className="mx-auto max-w-160 px-16 pt-30 pb-35 text-center">
+    <div className="mx-auto w-full max-w-160 px-16 pt-30 pb-35 text-center">
       <div className="mb-6 font-heading text-[7.5rem] leading-none font-black uppercase">
         404
       </div>

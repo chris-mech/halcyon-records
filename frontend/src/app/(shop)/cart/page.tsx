@@ -78,7 +78,7 @@ export default function CartPage() {
   );
 
   return (
-    <div className="mx-auto max-w-275 px-16 py-11">
+    <div className="mx-auto w-full max-w-275 px-16 py-11">
       <div className="mb-8 flex items-baseline justify-between">
         <h1 className="font-serif text-4xl font-medium italic">Your bag</h1>
         <span className="text-sm font-semibold text-muted-foreground">
