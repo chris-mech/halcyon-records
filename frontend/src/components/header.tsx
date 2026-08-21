@@ -62,7 +62,7 @@ function Header({
               type="search"
               name="q"
               placeholder="Search artists, albums, genres…"
-              className="h-auto border-paper/25 bg-paper/10 py-2.5 pr-4 pl-9 text-sm text-paper shadow-none placeholder:text-slate-muted"
+              className="h-auto border-paper/25 bg-slate-plaque py-2.5 pr-4 pl-9 text-sm text-paper shadow-none placeholder:text-slate-muted"
             />
           </form>
           <nav className="shrink-0">
