@@ -7,6 +7,12 @@ var jwtSigningKey = builder.AddParameter(
     persist: true
 );
 var mediatrLicenseKey = builder.AddParameter("mediatr-license-key", secret: true);
+var authSecret = builder.AddParameter(
+    "auth-secret",
+    new GenerateParameterDefault { MinLength = 32 },
+    secret: true,
+    persist: true
+);
 
 var sql = builder
     .AddSqlServer("sql")
@@ -26,7 +32,13 @@ var api = builder
     .WithEnvironment("MediatR__LicenseKey", mediatrLicenseKey);
 
 #pragma warning disable ASPIREJAVASCRIPT001 // Type is for evaluation purposes only and is subject to change or removal in future updates. Suppress this diagnostic to proceed.
-builder.AddNextJsApp("frontend", "../../../frontend").WithBun().WithReference(api).WaitFor(api);
+builder
+    .AddNextJsApp("frontend", "../../../frontend")
+    .WithBun()
+    .WithHttpEndpoint(port: 3000)
+    .WithReference(api)
+    .WaitFor(api)
+    .WithEnvironment("AUTH_SECRET", authSecret);
 #pragma warning restore ASPIREJAVASCRIPT001 // Type is for evaluation purposes only and is subject to change or removal in future updates. Suppress this diagnostic to proceed.
 
 await builder.Build().RunAsync();
