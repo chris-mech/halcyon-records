@@ -32,7 +32,6 @@ function OrderHistory({ page }: OrderHistoryProps) {
 
   useEffect(() => {
     let cancelled = false;
-    setState({ status: "loading" });
 
     fetch(`/api/orders?page=${page}&pageSize=${PAGE_SIZE}`)
       .then(async (response) => {

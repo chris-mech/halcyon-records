@@ -18,9 +18,11 @@ export async function AccountContent({
     );
   }
 
+  const pageNumber = Number(page) || 1;
+
   return (
     <AccountShell active="orders">
-      <OrderHistory page={Number(page) || 1} />
+      <OrderHistory key={pageNumber} page={pageNumber} />
     </AccountShell>
   );
 }
