@@ -111,6 +111,20 @@ describe("syncCart", () => {
 
     expect(fetch).toHaveBeenCalled();
   });
+
+  test("dedupes overlapping calls into a single in-flight request", async () => {
+    useCartStore.setState({ items: [cartItem({ quantity: 2 })] });
+    const serverCart = [cartItem({ quantity: 2 })];
+    vi.mocked(fetch)
+      .mockResolvedValueOnce(fetchResponse(true))
+      .mockResolvedValueOnce(fetchResponse(true, serverCart));
+
+    const [first, second] = await Promise.all([syncCart(), syncCart()]);
+
+    expect(first).toBe(true);
+    expect(second).toBe(true);
+    expect(fetch).toHaveBeenCalledTimes(2);
+  });
 });
 
 describe("mergeCartAtLogin", () => {

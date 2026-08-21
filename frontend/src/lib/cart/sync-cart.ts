@@ -41,7 +41,22 @@ async function pullServerCart(): Promise<boolean> {
   return true;
 }
 
+let inFlightSync: Promise<boolean> | null = null;
+
 async function syncCart(): Promise<boolean> {
+  if (inFlightSync) {
+    return inFlightSync;
+  }
+
+  inFlightSync = performSync();
+  try {
+    return await inFlightSync;
+  } finally {
+    inFlightSync = null;
+  }
+}
+
+async function performSync(): Promise<boolean> {
   await waitForCartHydration();
 
   const { items } = useCartStore.getState();
