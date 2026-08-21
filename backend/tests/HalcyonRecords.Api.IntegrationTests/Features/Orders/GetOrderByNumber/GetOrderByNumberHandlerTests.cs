@@ -12,9 +12,9 @@ public class GetOrderByNumberHandlerTests(SqlServerContainerFixture fixture)
     : AuthIntegrationTestBase(fixture)
 {
     private static readonly AlbumSqidEncoder s_albumSqids = new();
+    private static readonly ArtistSqidEncoder s_artistSqids = new();
 
-    private GetOrderByNumberHandler Handler => new(DbContext, s_albumSqids);
-
+    private GetOrderByNumberHandler Handler => new(DbContext, s_albumSqids, s_artistSqids);
     private RegisterHandler RegisterHandler => new(UserManager, TimeProvider);
 
     [Fact]
@@ -71,6 +71,8 @@ public class GetOrderByNumberHandlerTests(SqlServerContainerFixture fixture)
             priceInPence: 1500,
             imageUrl: "https://example.test/cover.jpg"
         );
+        var artist = new Artist { Name = "Own Detail Artist" };
+        album.AlbumArtists.Add(new AlbumArtist { Album = album, Artist = artist });
         DbContext.Albums.Add(album);
         await DbContext.SaveChangesAsync(TestContext.Current.CancellationToken);
         var order = await AddOrderAsync(user, album, quantity: 2);
@@ -93,6 +95,10 @@ public class GetOrderByNumberHandlerTests(SqlServerContainerFixture fixture)
         item.ImageUrl.Should().Be("https://example.test/cover.jpg");
         item.Quantity.Should().Be(2);
         item.PriceAtPurchaseInPence.Should().Be(1500);
+        var itemArtist = item.Artists.Should().ContainSingle().Subject;
+        itemArtist.Sqid.Should().Be(s_artistSqids.Encode(artist.Id.Value));
+        itemArtist.Name.Should().Be("Own Detail Artist");
+        itemArtist.NameSlug.Should().Be(Slugifier.Slugify("Own Detail Artist"));
     }
 
     private async Task<Order> AddOrderAsync(User user, Album album, int quantity = 1)

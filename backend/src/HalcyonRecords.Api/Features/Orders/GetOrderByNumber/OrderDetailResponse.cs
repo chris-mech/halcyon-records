@@ -15,7 +15,10 @@ public sealed record OrderDetailItemResponse(
     string AlbumSqid,
     string Title,
     string TitleSlug,
+    IReadOnlyList<OrderDetailItemArtistResponse> Artists,
     string? ImageUrl,
     int Quantity,
     int PriceAtPurchaseInPence
 );
+
+public sealed record OrderDetailItemArtistResponse(string Sqid, string Name, string NameSlug);
