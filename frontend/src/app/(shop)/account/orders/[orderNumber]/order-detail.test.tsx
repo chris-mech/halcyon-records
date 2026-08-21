@@ -28,6 +28,13 @@ const order: Order = {
       albumSqid: "detail-album",
       title: "Order Detail Fixture Album",
       titleSlug: "order-detail-fixture-album",
+      artists: [
+        {
+          sqid: "detail-artist",
+          name: "Order Detail Fixture Artist",
+          nameSlug: "order-detail-fixture-artist",
+        },
+      ],
       imageUrl: null,
       quantity: 2,
       priceAtPurchaseInPence: 2000,
@@ -46,7 +53,9 @@ describe("OrderDetail", () => {
     render(<OrderDetail orderNumber="ORD-000001" />);
 
     expect(await screen.findByText("Order ORD-000001")).toBeInTheDocument();
+    expect(screen.getByText("Placed")).toBeInTheDocument();
     expect(screen.getByText("Order Detail Fixture Album")).toBeInTheDocument();
+    expect(screen.getByText("Order Detail Fixture Artist")).toBeInTheDocument();
     expect(screen.getByText("Order Contact")).toBeInTheDocument();
     expect(screen.getByText("order-contact@test.invalid")).toBeInTheDocument();
     expect(fetch).toHaveBeenCalledWith("/api/orders/ORD-000001");

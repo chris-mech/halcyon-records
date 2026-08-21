@@ -28,6 +28,7 @@ const order: OrderDetail = {
       albumSqid: "confirmation-album",
       title: "Confirmation Fixture Album",
       titleSlug: "confirmation-fixture-album",
+      artists: [],
       imageUrl: null,
       quantity: 2,
       priceAtPurchaseInPence: 2000,
