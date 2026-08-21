@@ -219,6 +219,7 @@ jobs:
         run: bun run test:e2e
         env:
           Parameters__mediatr_license_key: ${{ secrets.MEDIATR_LICENSE_KEY }}
+          RateLimiting__PermitLimit: "1000"
 
       - name: Upload Playwright report
         if: failure()
