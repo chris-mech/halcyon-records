@@ -90,7 +90,9 @@ function CheckoutForm() {
   return (
     <div className="mx-auto w-full max-w-275 px-16 py-9 pb-25">
       <form
-        onSubmit={form.handleSubmit(onSubmit)}
+        onSubmit={(event) => {
+          void form.handleSubmit(onSubmit)(event);
+        }}
         method="post"
         noValidate
         className="grid grid-cols-[1.4fr_1fr] items-start gap-14"
