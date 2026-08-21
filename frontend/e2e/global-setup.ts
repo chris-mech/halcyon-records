@@ -19,9 +19,17 @@ async function globalSetup(): Promise<void> {
   });
 
   for (const route of WARM_UP_ROUTES) {
+    const start = Date.now();
     try {
-      await context.get(route, { timeout: 60_000 });
-    } catch {}
+      const response = await context.get(route, { timeout: 60_000 });
+      console.log(
+        `[warm-up] ${route} -> ${response.status()} (${Date.now() - start}ms)`,
+      );
+    } catch (error) {
+      console.log(
+        `[warm-up] ${route} -> failed after ${Date.now() - start}ms: ${error}`,
+      );
+    }
   }
 
   await context.dispose();
