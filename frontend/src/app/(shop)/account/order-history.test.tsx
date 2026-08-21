@@ -48,8 +48,7 @@ describe("OrderHistory", () => {
 
     render(<OrderHistory page={1} />);
 
-    expect(await screen.findByText("Order history")).toBeInTheDocument();
-    expect(screen.getByText("Order ORD-000001")).toBeInTheDocument();
+    expect(await screen.findByText("Order ORD-000001")).toBeInTheDocument();
     expect(fetch).toHaveBeenCalledWith("/api/orders?page=1&pageSize=10");
   });
 

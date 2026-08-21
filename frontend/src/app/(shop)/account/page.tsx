@@ -4,6 +4,7 @@ import { redirect } from "next/navigation";
 import { auth } from "@/auth";
 
 import { OrderHistory } from "./order-history";
+import { AccountShell } from "./account-shell";
 
 export async function AccountContent({
   searchParams,
@@ -17,7 +18,11 @@ export async function AccountContent({
     );
   }
 
-  return <OrderHistory page={Number(page) || 1} />;
+  return (
+    <AccountShell active="orders">
+      <OrderHistory page={Number(page) || 1} />
+    </AccountShell>
+  );
 }
 
 function AccountSkeleton() {

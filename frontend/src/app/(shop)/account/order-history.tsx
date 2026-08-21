@@ -7,13 +7,6 @@ import { PackageOpen } from "lucide-react";
 
 import { EmptyState } from "@/components/empty-state";
 import { buttonVariants } from "@/components/ui/button";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
 import { formatPrice } from "@/lib/format";
 import { cn } from "@/lib/utils";
 
@@ -63,23 +56,16 @@ function OrderHistory({ page }: OrderHistoryProps) {
   }, [page]);
 
   if (state.status === "loading") {
-    return (
-      <div className="flex flex-1 items-center justify-center px-16 py-20 text-sm text-muted-foreground">
-        Loading…
-      </div>
-    );
+    return <div className="py-16 text-sm text-muted-foreground">Loading…</div>;
   }
 
   if (state.status === "error") {
     return (
-      <div className="mx-auto max-w-105 px-16 py-16 text-center">
-        <p className="text-sm text-muted-foreground">
-          Something went wrong loading your orders. Please try again.
-        </p>
+      <div className="py-16 text-center text-sm text-muted-foreground">
+        Something went wrong loading your orders. Please try again.
       </div>
     );
   }
-
   const { result } = state;
   const totalPages =
     result.totalPages ?? Math.ceil(result.totalCount / PAGE_SIZE);
@@ -107,66 +93,63 @@ function OrderHistory({ page }: OrderHistoryProps) {
   }
 
   return (
-    <div className="mx-auto max-w-275 px-16 py-11">
-      <h1 className="mb-8 font-serif text-4xl font-medium italic">
-        Order history
-      </h1>
-
-      <div className="mb-8 flex flex-col gap-4">
+    <div>
+      <div className="border-t border-line">
         {result.items.map((order) => (
-          <Link
-            key={order.orderNumber}
-            href={`/account/orders/${order.orderNumber}`}
-          >
-            <Card className="border-line transition-colors hover:border-ink">
-              <CardHeader>
-                <CardTitle className="font-serif text-lg font-medium italic">
-                  Order {order.orderNumber}
-                </CardTitle>
-                <CardDescription>
-                  {order.status} · placed{" "}
-                  {new Date(order.placedAt).toLocaleDateString("en-GB", {
-                    day: "numeric",
-                    month: "long",
-                    year: "numeric",
-                  })}
-                </CardDescription>
-              </CardHeader>
-              <CardContent>
-                <div className="flex items-center gap-3">
-                  <div className="flex -space-x-3">
-                    {order.items.slice(0, 4).map((item) => (
-                      <div
-                        key={item.albumSqid}
-                        className="relative size-12 shrink-0 border border-paper bg-slate-muted/40"
-                      >
-                        {item.imageUrl && (
-                          <Image
-                            src={item.imageUrl}
-                            alt=""
-                            fill
-                            sizes="48px"
-                            className="object-cover"
-                          />
-                        )}
-                      </div>
-                    ))}
-                  </div>
-                  <div className="flex-1 text-sm text-muted-foreground">
-                    {order.items.length}{" "}
-                    {order.items.length === 1 ? "item" : "items"}
-                  </div>
-                  <p className="text-sm font-semibold">
-                    {formatPrice(order.totalInPence)}
-                  </p>
+          <div key={order.orderNumber} className="border-b border-line py-6">
+            <div className="mb-4 flex items-baseline justify-between">
+              <span className="text-sm font-bold">
+                Order {order.orderNumber}
+              </span>
+              <span className="text-xs text-muted-foreground">
+                {new Date(order.placedAt).toLocaleDateString("en-GB", {
+                  day: "numeric",
+                  month: "long",
+                  year: "numeric",
+                })}
+              </span>
+            </div>
+
+            <div className="mb-4 flex gap-3">
+              {order.items.slice(0, 4).map((item) => (
+                <div
+                  key={item.albumSqid}
+                  className="relative size-12 shrink-0 bg-slate-muted/40"
+                >
+                  {item.imageUrl && (
+                    <Image
+                      src={item.imageUrl}
+                      alt=""
+                      fill
+                      sizes="48px"
+                      className="object-cover"
+                    />
+                  )}
                 </div>
-              </CardContent>
-            </Card>
-          </Link>
+              ))}
+            </div>
+
+            <div className="flex items-center justify-between">
+              <span className="text-[0.6875rem] font-bold tracking-wide text-slate uppercase">
+                {order.status}
+              </span>
+              <p className="text-sm font-bold">
+                {formatPrice(order.totalInPence)}
+              </p>
+              <Link
+                href={`/account/orders/${order.orderNumber}`}
+                className="border-b-2 border-ink pb-0.5 text-xs font-bold tracking-wide text-ink uppercase"
+              >
+                View order
+              </Link>
+            </div>
+          </div>
         ))}
       </div>
 
-      <OrdersPagination page={page} totalPages={totalPages} />
+      <div className="pt-8">
+        <OrdersPagination page={page} totalPages={totalPages} />
+      </div>
     </div>
   );
 }
