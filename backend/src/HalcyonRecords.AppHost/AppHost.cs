@@ -26,7 +26,12 @@ var api = builder
     .WithEnvironment("MediatR__LicenseKey", mediatrLicenseKey);
 
 #pragma warning disable ASPIREJAVASCRIPT001 // Type is for evaluation purposes only and is subject to change or removal in future updates. Suppress this diagnostic to proceed.
-builder.AddNextJsApp("frontend", "../../../frontend").WithBun().WithReference(api).WaitFor(api);
+builder
+    .AddNextJsApp("frontend", "../../../frontend")
+    .WithBun()
+    .WithHttpEndpoint(port: 3000)
+    .WithReference(api)
+    .WaitFor(api);
 #pragma warning restore ASPIREJAVASCRIPT001 // Type is for evaluation purposes only and is subject to change or removal in future updates. Suppress this diagnostic to proceed.
 
 await builder.Build().RunAsync();
