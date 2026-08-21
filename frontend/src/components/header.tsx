@@ -25,9 +25,15 @@ const navLinks = [
 
 interface HeaderProps {
   variant?: "full" | "stripped";
+  backHref?: string;
+  backLabel?: string;
 }
 
-function Header({ variant = "full" }: HeaderProps) {
+function Header({
+  variant = "full",
+  backHref = "/shop",
+  backLabel = "← Back to shop",
+}: HeaderProps) {
   const { data: session, status } = useSession();
   const hydrated = useCartHydrated();
   const totalQuantity = useCartStore(selectCartTotalQuantity);
@@ -76,9 +82,12 @@ function Header({ variant = "full" }: HeaderProps) {
           <div className="flex shrink-0 items-center gap-5">
             {status === "authenticated" ? (
               <>
-                <span className="text-sm font-semibold text-paper">
+                <Link
+                  href="/account"
+                  className="text-sm font-semibold text-paper hover:underline"
+                >
                   {session.user.firstName}
-                </span>
+                </Link>
                 <Button
                   variant="ghost"
                   onClick={() => void syncCartOnLogout().then(() => signOut())}
@@ -108,10 +117,10 @@ function Header({ variant = "full" }: HeaderProps) {
         </>
       ) : (
         <Link
-          href="/shop"
+          href={backHref}
           className="text-xs font-semibold tracking-wide text-paper uppercase"
         >
-          ← Back to shop
+          {backLabel}
         </Link>
       )}
     </header>

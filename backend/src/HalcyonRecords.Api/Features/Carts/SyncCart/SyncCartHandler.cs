@@ -5,6 +5,7 @@ using HalcyonRecords.Api.Domain.Ids;
 using HalcyonRecords.Api.Infrastructure;
 using HalcyonRecords.Shared;
 using MediatR;
+using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 
 namespace HalcyonRecords.Api.Features.Carts.SyncCart;
@@ -12,6 +13,8 @@ namespace HalcyonRecords.Api.Features.Carts.SyncCart;
 public sealed class SyncCartHandler(ApplicationDbContext dbContext, AlbumSqidEncoder albumSqids)
     : IRequestHandler<SyncCartCommand, ErrorOr<Success>>
 {
+    private const int MaxAttempts = 3;
+
     public async Task<ErrorOr<Success>> Handle(
         SyncCartCommand command,
         CancellationToken cancellationToken
@@ -44,39 +47,51 @@ public sealed class SyncCartHandler(ApplicationDbContext dbContext, AlbumSqidEnc
             .GroupBy(x => x.AlbumId)
             .ToDictionary(g => g.Key, g => g.Sum(x => x.Quantity));
 
-        var cart = await dbContext
-            .Carts.Include(c => c.CartItems)
-            .FirstOrDefaultAsync(c => c.UserId == user.Id, cancellationToken);
-
-        if (cart is null)
+        for (var attempt = 1; ; attempt++)
         {
-            cart = new Cart { UserId = user.Id };
-            dbContext.Carts.Add(cart);
-        }
+            var cart = await dbContext
+                .Carts.Include(c => c.CartItems)
+                .FirstOrDefaultAsync(c => c.UserId == user.Id, cancellationToken);
 
-        var itemsToRemove = cart
-            .CartItems.Where(item => !incoming.ContainsKey(item.AlbumId))
-            .ToList();
-        foreach (var itemToRemove in itemsToRemove)
-        {
-            cart.CartItems.Remove(itemToRemove);
-        }
-
-        foreach (var (albumId, quantity) in incoming)
-        {
-            var existingItem = cart.CartItems.FirstOrDefault(ci => ci.AlbumId == albumId);
-            if (existingItem is not null)
+            if (cart is null)
             {
-                existingItem.Quantity = quantity;
+                cart = new Cart { UserId = user.Id };
+                dbContext.Carts.Add(cart);
             }
-            else
+
+            var itemsToRemove = cart
+                .CartItems.Where(item => !incoming.ContainsKey(item.AlbumId))
+                .ToList();
+            foreach (var itemToRemove in itemsToRemove)
             {
-                cart.CartItems.Add(new CartItem { AlbumId = albumId, Quantity = quantity });
+                cart.CartItems.Remove(itemToRemove);
+            }
+
+            foreach (var (albumId, quantity) in incoming)
+            {
+                var existingItem = cart.CartItems.FirstOrDefault(ci => ci.AlbumId == albumId);
+                if (existingItem is not null)
+                {
+                    existingItem.Quantity = quantity;
+                }
+                else
+                {
+                    cart.CartItems.Add(new CartItem { AlbumId = albumId, Quantity = quantity });
+                }
+            }
+
+            try
+            {
+                await dbContext.SaveChangesAsync(cancellationToken);
+                return Result.Success;
+            }
+            catch (DbUpdateException ex) when (IsDuplicateKeyViolation(ex) && attempt < MaxAttempts)
+            {
+                dbContext.ChangeTracker.Clear();
             }
         }
-
-        await dbContext.SaveChangesAsync(cancellationToken);
-
-        return Result.Success;
     }
+
+    private static bool IsDuplicateKeyViolation(DbUpdateException ex) =>
+        ex.InnerException is SqlException { Number: 2601 or 2627 };
 }

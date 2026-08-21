@@ -3,6 +3,7 @@ using HalcyonRecords.Api.Common.Endpoints;
 using HalcyonRecords.Api.Common.Results;
 using MediatR;
 using Microsoft.AspNetCore.Http.HttpResults;
+using Created = Microsoft.AspNetCore.Http.HttpResults.Created;
 
 namespace HalcyonRecords.Api.Features.Auth.Register;
 
@@ -12,7 +13,7 @@ public sealed class RegisterEndpoint : IEndpoint
     {
         app.MapPost(
                 "/auth/register",
-                async Task<Results<Ok, ProblemHttpResult, ValidationProblem>> (
+                async Task<Results<Created, ProblemHttpResult, ValidationProblem>> (
                     RegisterRequest request,
                     ISender sender
                 ) =>
@@ -26,9 +27,9 @@ public sealed class RegisterEndpoint : IEndpoint
                         )
                     );
 
-                    return result.Match<Results<Ok, ProblemHttpResult, ValidationProblem>>(
-                        _ => TypedResults.Ok(),
-                        errors => errors.ProblemWithValidationProblem<Ok>()
+                    return result.Match<Results<Created, ProblemHttpResult, ValidationProblem>>(
+                        _ => TypedResults.Created(),
+                        errors => errors.ProblemWithValidationProblem<Created>()
                     );
                 }
             )

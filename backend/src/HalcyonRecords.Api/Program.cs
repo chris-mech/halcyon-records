@@ -12,6 +12,7 @@ using HalcyonRecords.Api.Features.Search;
 using HalcyonRecords.Api.Features.Search.Search;
 using HalcyonRecords.Api.Infrastructure;
 using HalcyonRecords.Api.Infrastructure.Auth;
+using HalcyonRecords.Api.Infrastructure.Options;
 using HalcyonRecords.Api.Infrastructure.Search;
 using HalcyonRecords.Api.Infrastructure.Seed;
 using Microsoft.EntityFrameworkCore;
@@ -66,6 +67,7 @@ builder.Services.Configure<SearchOptions>(
 builder.Services.Configure<RelatedAlbumsOptions>(
     builder.Configuration.GetSection(RelatedAlbumsOptions.SectionName)
 );
+builder.Services.Configure<ShopOptions>(builder.Configuration.GetSection(ShopOptions.SectionName));
 
 var app = builder.Build();
 

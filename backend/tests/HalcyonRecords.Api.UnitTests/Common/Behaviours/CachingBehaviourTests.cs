@@ -14,17 +14,33 @@ public class CachingBehaviourTests
 {
     public sealed record DummyRequest(string CacheKey)
         : IRequest<ErrorOr<DummyResponse>>,
-            ICacheableQuery;
+            ICacheableQuery
+    {
+        public IReadOnlyCollection<string> Tags => [];
+    }
 
     public sealed record DummyResponse(string Value);
 
     public sealed record PagedRequest(string CacheKey)
         : IRequest<ErrorOr<PagedResult<DummyResponse>>>,
-            ICacheableQuery;
+            ICacheableQuery
+    {
+        public IReadOnlyCollection<string> Tags => [];
+    }
 
     public sealed record ListRequest(string CacheKey)
         : IRequest<ErrorOr<IReadOnlyList<DummyResponse>>>,
-            ICacheableQuery;
+            ICacheableQuery
+    {
+        public IReadOnlyCollection<string> Tags => [];
+    }
+
+    public sealed record TaggedRequest(string CacheKey, string Tag)
+        : IRequest<ErrorOr<DummyResponse>>,
+            ICacheableQuery
+    {
+        public IReadOnlyCollection<string> Tags => [Tag];
+    }
 
     private static HybridCache NewCache()
     {
@@ -101,5 +117,23 @@ public class CachingBehaviourTests
         var result = await behaviour.Handle(request, next, CancellationToken.None);
 
         result.Value.Should().BeEquivalentTo(items);
+    }
+
+    [Fact]
+    public async Task Handle_EvictsCachedEntry_WhenItsTagIsRemoved()
+    {
+        var cache = NewCache();
+        var behaviour = new CachingBehaviour<TaggedRequest, DummyResponse>(cache);
+        var next = Substitute.For<RequestHandlerDelegate<ErrorOr<DummyResponse>>>();
+        next.Invoke(Arg.Any<CancellationToken>())
+            .Returns(new DummyResponse("first"), new DummyResponse("second"));
+
+        var request = new TaggedRequest("cache-test-tagged-key", "dummy-tag");
+        await behaviour.Handle(request, next, CancellationToken.None);
+        await cache.RemoveByTagAsync("dummy-tag", TestContext.Current.CancellationToken);
+        var afterEviction = await behaviour.Handle(request, next, CancellationToken.None);
+
+        afterEviction.Value.Should().Be(new DummyResponse("second"));
+        await next.Received(2).Invoke(Arg.Any<CancellationToken>());
     }
 }

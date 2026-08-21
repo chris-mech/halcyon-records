@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useSession } from "next-auth/react";
+import { useEffect } from "react";
 import { ShoppingBag } from "lucide-react";
 
 import { buttonVariants } from "@/components/ui/button";
@@ -13,13 +14,14 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { EmptyState } from "@/components/empty-state";
-import { formatPrice } from "@/lib/format";
-import { cn } from "@/lib/utils";
+import { syncCart } from "@/lib/cart/sync-cart";
 import {
   selectCartTotalQuantity,
   useCartHydrated,
   useCartStore,
 } from "@/lib/cart/cart-store";
+import { formatPrice } from "@/lib/format";
+import { cn } from "@/lib/utils";
 
 import { CartRow } from "./cart-row";
 
@@ -28,6 +30,21 @@ export default function CartPage() {
   const items = useCartStore((state) => state.items);
   const totalQuantity = useCartStore(selectCartTotalQuantity);
   const { status } = useSession();
+
+  useEffect(() => {
+    if (status !== "authenticated") {
+      return;
+    }
+
+    void syncCart();
+
+    function handleFocus() {
+      void syncCart();
+    }
+
+    window.addEventListener("focus", handleFocus);
+    return () => window.removeEventListener("focus", handleFocus);
+  }, [status]);
 
   if (!hydrated) {
     return null;
@@ -61,7 +78,7 @@ export default function CartPage() {
   );
 
   return (
-    <div className="mx-auto max-w-275 px-16 py-11">
+    <div className="mx-auto w-full max-w-275 px-16 py-11">
       <div className="mb-8 flex items-baseline justify-between">
         <h1 className="font-serif text-4xl font-medium italic">Your bag</h1>
         <span className="text-sm font-semibold text-muted-foreground">

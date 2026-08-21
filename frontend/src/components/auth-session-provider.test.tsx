@@ -28,6 +28,7 @@ describe("AuthSessionProvider", () => {
         id: "11111111-1111-1111-1111-111111111111",
         firstName: "Session Primed",
         lastName: "User",
+        email: "session.primed@example.test",
       },
       expires: "2099-01-01T00:00:00.000Z",
     });

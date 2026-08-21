@@ -1,14 +1,19 @@
 import { beforeEach, describe, expect, test, vi } from "vitest";
-import { render, screen } from "@testing-library/react";
+import { fireEvent, render, screen } from "@testing-library/react";
 import { useSession } from "next-auth/react";
 
 import { useCartStore } from "@/lib/cart/cart-store";
 import type { CartItem } from "@/lib/cart/cart-store";
+import { syncCart } from "@/lib/cart/sync-cart";
 
 import CartPage from "./page";
 
 vi.mock("next-auth/react", () => ({
   useSession: vi.fn(),
+}));
+
+vi.mock("@/lib/cart/sync-cart", () => ({
+  syncCart: vi.fn(),
 }));
 
 function fixtureItem(overrides: Partial<CartItem> = {}): CartItem {
@@ -35,6 +40,7 @@ function fixtureItem(overrides: Partial<CartItem> = {}): CartItem {
 
 beforeEach(() => {
   useCartStore.setState({ items: [] });
+  vi.mocked(syncCart).mockClear();
   vi.mocked(useSession).mockReturnValue({
     status: "unauthenticated",
     data: null,
@@ -81,7 +87,12 @@ describe("CartPage", () => {
     vi.mocked(useSession).mockReturnValue({
       status: "authenticated",
       data: {
-        user: { id: "1", firstName: "Fixture", lastName: "User" },
+        user: {
+          id: "1",
+          firstName: "Fixture",
+          lastName: "User",
+          email: "fixture-user@test.invalid",
+        },
         expires: "2099-01-01T00:00:00.000Z",
       },
       update: vi.fn(),
@@ -92,5 +103,54 @@ describe("CartPage", () => {
     expect(
       screen.queryByText("You'll need to log in to complete checkout"),
     ).not.toBeInTheDocument();
+  });
+
+  test("syncs the cart on mount when authenticated", () => {
+    vi.mocked(useSession).mockReturnValue({
+      status: "authenticated",
+      data: {
+        user: {
+          id: "1",
+          firstName: "Fixture",
+          lastName: "User",
+          email: "fixture-user@test.invalid",
+        },
+        expires: "2099-01-01T00:00:00.000Z",
+      },
+      update: vi.fn(),
+    });
+
+    render(<CartPage />);
+
+    expect(syncCart).toHaveBeenCalledTimes(1);
+  });
+
+  test("does not sync when signed out", () => {
+    render(<CartPage />);
+
+    expect(syncCart).not.toHaveBeenCalled();
+  });
+
+  test("re-syncs when the window regains focus", () => {
+    vi.mocked(useSession).mockReturnValue({
+      status: "authenticated",
+      data: {
+        user: {
+          id: "1",
+          firstName: "Fixture",
+          lastName: "User",
+          email: "fixture-user@test.invalid",
+        },
+        expires: "2099-01-01T00:00:00.000Z",
+      },
+      update: vi.fn(),
+    });
+
+    render(<CartPage />);
+    expect(syncCart).toHaveBeenCalledTimes(1);
+
+    fireEvent(window, new Event("focus"));
+
+    expect(syncCart).toHaveBeenCalledTimes(2);
   });
 });

@@ -2,7 +2,7 @@ import { beforeEach, describe, expect, test, vi } from "vitest";
 
 import { useCartStore } from "./cart-store";
 import type { CartItem } from "./cart-store";
-import { syncCart, syncCartOnLogout } from "./sync-cart";
+import { mergeCartAtLogin, syncCart, syncCartOnLogout } from "./sync-cart";
 
 function cartItem(overrides: Partial<CartItem> = {}): CartItem {
   return {
@@ -39,7 +39,7 @@ describe("syncCart", () => {
       .mockResolvedValueOnce(fetchResponse(true))
       .mockResolvedValueOnce(fetchResponse(true, serverCart));
 
-    await syncCart();
+    expect(await syncCart()).toBe(true);
 
     expect(fetch).toHaveBeenNthCalledWith(1, "/api/cart/sync", {
       method: "POST",
@@ -52,15 +52,20 @@ describe("syncCart", () => {
     expect(useCartStore.getState().items).toEqual(serverCart);
   });
 
-  test("skips the push and just hydrates when the local cart is empty", async () => {
-    const serverCart = [cartItem({ quantity: 3 })];
-    vi.mocked(fetch).mockResolvedValueOnce(fetchResponse(true, serverCart));
+  test("pushes an empty local cart too, so a just-emptied bag overwrites a stale server cart", async () => {
+    const serverCart: CartItem[] = [];
+    vi.mocked(fetch)
+      .mockResolvedValueOnce(fetchResponse(true))
+      .mockResolvedValueOnce(fetchResponse(true, serverCart));
 
-    await syncCart();
+    expect(await syncCart()).toBe(true);
 
-    expect(fetch).toHaveBeenCalledTimes(1);
-    expect(fetch).toHaveBeenCalledWith("/api/cart");
-    expect(useCartStore.getState().items).toEqual(serverCart);
+    expect(fetch).toHaveBeenNthCalledWith(1, "/api/cart/sync", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ items: [] }),
+    });
+    expect(fetch).toHaveBeenNthCalledWith(2, "/api/cart");
   });
 
   test("leaves the local cart untouched when the push fails", async () => {
@@ -68,7 +73,7 @@ describe("syncCart", () => {
     useCartStore.setState({ items: localItems });
     vi.mocked(fetch).mockResolvedValueOnce(fetchResponse(false));
 
-    await syncCart();
+    expect(await syncCart()).toBe(false);
 
     expect(fetch).toHaveBeenCalledTimes(1);
     expect(useCartStore.getState().items).toEqual(localItems);
@@ -81,7 +86,7 @@ describe("syncCart", () => {
       .mockResolvedValueOnce(fetchResponse(true))
       .mockResolvedValueOnce(fetchResponse(false));
 
-    await syncCart();
+    expect(await syncCart()).toBe(false);
 
     expect(useCartStore.getState().items).toEqual(localItems);
   });
@@ -105,6 +110,53 @@ describe("syncCart", () => {
     await syncPromise;
 
     expect(fetch).toHaveBeenCalled();
+  });
+
+  test("dedupes overlapping calls into a single in-flight request", async () => {
+    useCartStore.setState({ items: [cartItem({ quantity: 2 })] });
+    const serverCart = [cartItem({ quantity: 2 })];
+    vi.mocked(fetch)
+      .mockResolvedValueOnce(fetchResponse(true))
+      .mockResolvedValueOnce(fetchResponse(true, serverCart));
+
+    const [first, second] = await Promise.all([syncCart(), syncCart()]);
+
+    expect(first).toBe(true);
+    expect(second).toBe(true);
+    expect(fetch).toHaveBeenCalledTimes(2);
+  });
+});
+
+describe("mergeCartAtLogin", () => {
+  test("pushes the local cart, then hydrates from the authoritative server cart, when local has items", async () => {
+    useCartStore.setState({ items: [cartItem({ quantity: 2 })] });
+    const serverCart = [cartItem({ quantity: 5 })];
+    vi.mocked(fetch)
+      .mockResolvedValueOnce(fetchResponse(true))
+      .mockResolvedValueOnce(fetchResponse(true, serverCart));
+
+    expect(await mergeCartAtLogin()).toBe(true);
+
+    expect(fetch).toHaveBeenNthCalledWith(1, "/api/cart/sync", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        items: [{ albumSqid: "sync-cart-album", quantity: 2 }],
+      }),
+    });
+    expect(fetch).toHaveBeenNthCalledWith(2, "/api/cart");
+    expect(useCartStore.getState().items).toEqual(serverCart);
+  });
+
+  test("skips the push and just hydrates when the local cart is empty", async () => {
+    const serverCart = [cartItem({ quantity: 3 })];
+    vi.mocked(fetch).mockResolvedValueOnce(fetchResponse(true, serverCart));
+
+    expect(await mergeCartAtLogin()).toBe(true);
+
+    expect(fetch).toHaveBeenCalledTimes(1);
+    expect(fetch).toHaveBeenCalledWith("/api/cart");
+    expect(useCartStore.getState().items).toEqual(serverCart);
   });
 });
 

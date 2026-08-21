@@ -22,6 +22,8 @@ namespace HalcyonRecords.Api.Infrastructure.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
+            modelBuilder.HasSequence<int>("OrderNumberSequence");
+
             modelBuilder.Entity("HalcyonRecords.Api.Domain.Album", b =>
                 {
                     b.Property<int>("Id")
@@ -252,6 +254,85 @@ namespace HalcyonRecords.Api.Infrastructure.Migrations
                     b.ToTable("Genres", null, t =>
                         {
                             t.HasCheckConstraint("CK_Genres_Name_NotEmpty", "LEN(Name) > 0");
+                        });
+                });
+
+            modelBuilder.Entity("HalcyonRecords.Api.Domain.Order", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("ContactEmail")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ContactFirstName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ContactLastName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid>("IdempotencyKey")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("OrderNumber")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
+
+                    b.Property<DateTimeOffset>("PlacedAt")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
+
+                    b.Property<int>("TotalInPence")
+                        .HasColumnType("int");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("IdempotencyKey")
+                        .IsUnique();
+
+                    b.HasIndex("OrderNumber")
+                        .IsUnique();
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Orders");
+                });
+
+            modelBuilder.Entity("HalcyonRecords.Api.Domain.OrderItem", b =>
+                {
+                    b.Property<int>("OrderId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("AlbumId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("PriceAtPurchaseInPence")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Quantity")
+                        .HasColumnType("int");
+
+                    b.HasKey("OrderId", "AlbumId");
+
+                    b.HasIndex("AlbumId");
+
+                    b.ToTable("OrderItems", null, t =>
+                        {
+                            t.HasCheckConstraint("CK_OrderItems_Quantity_Positive", "Quantity > 0");
                         });
                 });
 
@@ -581,6 +662,34 @@ namespace HalcyonRecords.Api.Infrastructure.Migrations
                     b.Navigation("Cart");
                 });
 
+            modelBuilder.Entity("HalcyonRecords.Api.Domain.Order", b =>
+                {
+                    b.HasOne("HalcyonRecords.Api.Domain.User", null)
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("HalcyonRecords.Api.Domain.OrderItem", b =>
+                {
+                    b.HasOne("HalcyonRecords.Api.Domain.Album", "Album")
+                        .WithMany()
+                        .HasForeignKey("AlbumId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("HalcyonRecords.Api.Domain.Order", "Order")
+                        .WithMany("OrderItems")
+                        .HasForeignKey("OrderId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Album");
+
+                    b.Navigation("Order");
+                });
+
             modelBuilder.Entity("HalcyonRecords.Api.Domain.RefreshToken", b =>
                 {
                     b.HasOne("HalcyonRecords.Api.Domain.RefreshToken", null)
@@ -666,6 +775,11 @@ namespace HalcyonRecords.Api.Infrastructure.Migrations
             modelBuilder.Entity("HalcyonRecords.Api.Domain.Genre", b =>
                 {
                     b.Navigation("AlbumGenres");
+                });
+
+            modelBuilder.Entity("HalcyonRecords.Api.Domain.Order", b =>
+                {
+                    b.Navigation("OrderItems");
                 });
 #pragma warning restore 612, 618
         }

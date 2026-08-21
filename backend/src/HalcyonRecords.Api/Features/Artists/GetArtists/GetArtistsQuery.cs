@@ -9,4 +9,6 @@ public sealed record GetArtistsQuery
         ICacheableQuery
 {
     public string CacheKey => "artists:list";
+
+    public IReadOnlyCollection<string> Tags => [];
 }

@@ -9,4 +9,6 @@ public sealed record GetRelatedAlbumsQuery(string Sqid)
         ICacheableQuery
 {
     public string CacheKey => $"albums:related:{Sqid}";
+
+    public IReadOnlyCollection<string> Tags => ["albums"];
 }

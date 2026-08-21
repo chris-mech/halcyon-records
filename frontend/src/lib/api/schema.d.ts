@@ -36,6 +36,38 @@ export interface paths {
     patch?: never;
     trace?: never;
   };
+  "/api/orders": {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    get: operations["GetOrders"];
+    put?: never;
+    post: operations["CreateOrder"];
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  "/api/orders/{orderNumber}": {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    get: operations["GetOrderByNumber"];
+    put?: never;
+    post?: never;
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
   "/api/genres": {
     parameters: {
       query?: never;
@@ -477,6 +509,31 @@ export interface components {
       artists: components["schemas"]["CoverStoryArtistResponse"][];
       genres: components["schemas"]["CoverStoryGenreResponse"][];
     };
+    CreateOrderItemResponse: {
+      albumSqid: string;
+      title: string;
+      titleSlug: string;
+      imageUrl: null | string;
+      /** Format: int32 */
+      quantity: number;
+      /** Format: int32 */
+      priceAtPurchaseInPence: number;
+    };
+    CreateOrderRequest: {
+      contactFirstName: string;
+      contactLastName: string;
+      contactEmail: string;
+      /** Format: uuid */
+      idempotencyKey: string;
+    };
+    CreateOrderResponse: {
+      orderNumber: string;
+      /** Format: date-time */
+      placedAt: string;
+      /** Format: int32 */
+      totalInPence: number;
+      items: components["schemas"]["CreateOrderItemResponse"][];
+    };
     CurrentUserResponse: {
       /** Format: uuid */
       id: string;
@@ -556,8 +613,62 @@ export interface components {
     LogoutRequest: {
       refreshToken: string;
     };
+    OrderDetailItemArtistResponse: {
+      sqid: string;
+      name: string;
+      nameSlug: string;
+    };
+    OrderDetailItemResponse: {
+      albumSqid: string;
+      title: string;
+      titleSlug: string;
+      artists: components["schemas"]["OrderDetailItemArtistResponse"][];
+      imageUrl: null | string;
+      /** Format: int32 */
+      quantity: number;
+      /** Format: int32 */
+      priceAtPurchaseInPence: number;
+    };
+    OrderDetailResponse: {
+      orderNumber: string;
+      /** Format: date-time */
+      placedAt: string;
+      status: string;
+      contactFirstName: string;
+      contactLastName: string;
+      contactEmail: string;
+      /** Format: int32 */
+      totalInPence: number;
+      items: components["schemas"]["OrderDetailItemResponse"][];
+    };
+    OrderSummaryItemResponse: {
+      albumSqid: string;
+      title: string;
+      titleSlug: string;
+      imageUrl: null | string;
+    };
+    OrderSummaryResponse: {
+      orderNumber: string;
+      /** Format: date-time */
+      placedAt: string;
+      status: string;
+      /** Format: int32 */
+      totalInPence: number;
+      items: components["schemas"]["OrderSummaryItemResponse"][];
+    };
     PagedResultOfAlbumSummaryResponse: {
       items: components["schemas"]["AlbumSummaryResponse"][];
+      /** Format: int32 */
+      page: number;
+      /** Format: int32 */
+      pageSize: number;
+      /** Format: int32 */
+      totalCount: number;
+      /** Format: int32 */
+      totalPages?: number;
+    };
+    PagedResultOfOrderSummaryResponse: {
+      items: components["schemas"]["OrderSummaryResponse"][];
       /** Format: int32 */
       page: number;
       /** Format: int32 */
@@ -711,6 +822,102 @@ export interface operations {
         };
         content: {
           "application/json": string[];
+        };
+      };
+    };
+  };
+  GetOrders: {
+    parameters: {
+      query?: {
+        page?: number;
+        pageSize?: number;
+      };
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    requestBody?: never;
+    responses: {
+      /** @description OK */
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/json": components["schemas"]["PagedResultOfOrderSummaryResponse"];
+        };
+      };
+      /** @description Bad Request */
+      400: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/problem+json": components["schemas"]["HttpValidationProblemDetails"];
+        };
+      };
+    };
+  };
+  CreateOrder: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    requestBody: {
+      content: {
+        "application/json": components["schemas"]["CreateOrderRequest"];
+      };
+    };
+    responses: {
+      /** @description Created */
+      201: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/json": components["schemas"]["CreateOrderResponse"];
+        };
+      };
+      /** @description Bad Request */
+      400: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/problem+json": components["schemas"]["HttpValidationProblemDetails"];
+        };
+      };
+    };
+  };
+  GetOrderByNumber: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path: {
+        orderNumber: string;
+      };
+      cookie?: never;
+    };
+    requestBody?: never;
+    responses: {
+      /** @description OK */
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/json": components["schemas"]["OrderDetailResponse"];
+        };
+      };
+      /** @description Not Found */
+      404: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/problem+json": components["schemas"]["DomainProblemDetails"];
         };
       };
     };
@@ -890,8 +1097,8 @@ export interface operations {
       };
     };
     responses: {
-      /** @description OK */
-      200: {
+      /** @description Created */
+      201: {
         headers: {
           [name: string]: unknown;
         };

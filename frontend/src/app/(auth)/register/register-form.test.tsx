@@ -2,8 +2,8 @@ import { describe, expect, test, vi } from "vitest";
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { signIn } from "next-auth/react";
 
-import { syncCart } from "@/lib/cart/sync-cart";
-import RegisterPage from "./page";
+import { mergeCartAtLogin } from "@/lib/cart/sync-cart";
+import { RegisterForm } from "./register-form";
 import { registerAction } from "./actions";
 
 const push = vi.fn();
@@ -21,7 +21,7 @@ vi.mock("./actions", () => ({
 }));
 
 vi.mock("@/lib/cart/sync-cart", () => ({
-  syncCart: vi.fn(),
+  mergeCartAtLogin: vi.fn(),
 }));
 
 function fillField(label: string, value: string) {
@@ -40,15 +40,15 @@ function fillValidForm() {
   fillField("Confirm password", "Str0ng!Pass");
 }
 
-describe("RegisterPage", () => {
+describe("RegisterForm", () => {
   test("submits via POST so a pre-hydration native submit can never leak credentials into the URL", () => {
-    const { container } = render(<RegisterPage />);
+    const { container } = render(<RegisterForm />);
 
     expect(container.querySelector("form")).toHaveAttribute("method", "post");
   });
 
   test("shows validation errors when submitted empty", async () => {
-    render(<RegisterPage />);
+    render(<RegisterForm />);
 
     submit();
 
@@ -59,7 +59,7 @@ describe("RegisterPage", () => {
   });
 
   test("shows a mismatch error when the passwords don't match", async () => {
-    render(<RegisterPage />);
+    render(<RegisterForm />);
 
     fillField("First name", "Given Name Field");
     fillField("Last name", "Family Name Field");
@@ -82,7 +82,7 @@ describe("RegisterPage", () => {
         detail: "An account with this email already exists.",
       },
     });
-    render(<RegisterPage />);
+    render(<RegisterForm />);
 
     fillValidForm();
     submit();
@@ -93,7 +93,7 @@ describe("RegisterPage", () => {
     expect(signIn).not.toHaveBeenCalled();
   });
 
-  test("signs in and navigates home on successful registration", async () => {
+  test("signs in and navigates home on successful registration when no next path is given", async () => {
     vi.mocked(registerAction).mockResolvedValue({ success: true });
     vi.mocked(signIn).mockResolvedValue({
       error: undefined,
@@ -102,7 +102,7 @@ describe("RegisterPage", () => {
       ok: true,
       url: "/",
     });
-    render(<RegisterPage />);
+    render(<RegisterForm />);
 
     fillValidForm();
     submit();
@@ -119,10 +119,27 @@ describe("RegisterPage", () => {
       password: "Str0ng!Pass",
       redirect: false,
     });
-    expect(syncCart).toHaveBeenCalled();
+    expect(mergeCartAtLogin).toHaveBeenCalled();
   });
 
-  test("redirects to login if sign-in fails right after a successful registration", async () => {
+  test("navigates to the given next path on successful registration", async () => {
+    vi.mocked(registerAction).mockResolvedValue({ success: true });
+    vi.mocked(signIn).mockResolvedValue({
+      error: undefined,
+      code: undefined,
+      status: 200,
+      ok: true,
+      url: "/",
+    });
+    render(<RegisterForm next="/checkout" />);
+
+    fillValidForm();
+    submit();
+
+    await waitFor(() => expect(push).toHaveBeenCalledWith("/checkout"));
+  });
+
+  test("redirects to login with the next path if sign-in fails right after registration", async () => {
     vi.mocked(registerAction).mockResolvedValue({ success: true });
     vi.mocked(signIn).mockResolvedValue({
       error: "CredentialsSignin",
@@ -131,11 +148,22 @@ describe("RegisterPage", () => {
       ok: false,
       url: null,
     });
-    render(<RegisterPage />);
+    render(<RegisterForm next="/checkout" />);
 
     fillValidForm();
     submit();
 
-    await waitFor(() => expect(push).toHaveBeenCalledWith("/login"));
+    await waitFor(() =>
+      expect(push).toHaveBeenCalledWith("/login?next=%2Fcheckout"),
+    );
+  });
+
+  test("carries the next path into the log-in link", () => {
+    render(<RegisterForm next="/checkout" />);
+
+    expect(screen.getByRole("link", { name: "Log in" })).toHaveAttribute(
+      "href",
+      "/login?next=%2Fcheckout",
+    );
   });
 });

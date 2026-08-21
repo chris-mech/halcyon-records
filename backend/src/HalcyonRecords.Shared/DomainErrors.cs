@@ -96,4 +96,22 @@ public static class DomainErrors
                 description: "The authenticated user no longer exists."
             );
     }
+
+    public static class Order
+    {
+        public static Error NotFound(string detail) =>
+            Error.NotFound(code: "Order.NotFound", description: detail);
+
+        public static Error CartEmpty() =>
+            Error.Validation(
+                code: "Order.CartEmpty",
+                description: "Your bag is empty — add something before checking out."
+            );
+
+        public static Error InsufficientStock(string title) =>
+            Error.Conflict(
+                code: "Order.InsufficientStock",
+                description: $"Sorry, '{title}' just sold out."
+            );
+    }
 }

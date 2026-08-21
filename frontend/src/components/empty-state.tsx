@@ -9,7 +9,7 @@ interface EmptyStateProps {
 
 function EmptyState({ icon, heading, description, children }: EmptyStateProps) {
   return (
-    <div className="mx-auto max-w-120 px-16 py-20 text-center">
+    <div className="mx-auto w-full max-w-120 px-16 py-20 text-center">
       <div className="mx-auto mb-7 flex size-14 items-center justify-center rounded-full border border-line">
         {icon}
       </div>

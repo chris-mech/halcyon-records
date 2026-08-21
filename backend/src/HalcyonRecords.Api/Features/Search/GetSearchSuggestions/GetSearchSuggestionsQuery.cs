@@ -9,4 +9,6 @@ public sealed record GetSearchSuggestionsQuery
         ICacheableQuery
 {
     public string CacheKey => "search:suggestions";
+
+    public IReadOnlyCollection<string> Tags => [];
 }

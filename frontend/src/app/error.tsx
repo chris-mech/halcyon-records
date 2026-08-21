@@ -23,7 +23,7 @@ export default function Error({
     <>
       <Header />
       <main className="flex flex-1 flex-col">
-        <div className="mx-auto max-w-160 px-16 pt-30 pb-35 text-center">
+        <div className="mx-auto w-full max-w-160 px-16 pt-30 pb-35 text-center">
           <h1 className="mb-3.5 font-serif text-[1.625rem] font-medium italic">
             Something broke
           </h1>
