@@ -125,7 +125,7 @@ public sealed class CreateOrderHandler(
             {
                 await dbContext.SaveChangesAsync(cancellationToken);
             }
-            catch (DbUpdateException ex) when (IsIdempotencyKeyConflict(ex))
+            catch (DbUpdateException ex) when (IsDuplicateKeyViolation(ex))
             {
                 await transaction.RollbackAsync(CancellationToken.None);
                 var winningOrder = await OrdersWithItemsAndAlbums()
@@ -148,7 +148,7 @@ public sealed class CreateOrderHandler(
     private string FormatOrderNumber(int sequenceValue) =>
         $"{shopOptions.Value.OrderNumberPrefix}-{sequenceValue.ToString().PadLeft(shopOptions.Value.OrderNumberPadding, '0')}";
 
-    private static bool IsIdempotencyKeyConflict(DbUpdateException ex) =>
+    private static bool IsDuplicateKeyViolation(DbUpdateException ex) =>
         ex.InnerException is SqlException { Number: 2601 or 2627 };
 
     private IQueryable<Order> OrdersWithItemsAndAlbums() =>

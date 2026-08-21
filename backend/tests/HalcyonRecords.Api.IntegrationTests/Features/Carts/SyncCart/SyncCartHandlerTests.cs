@@ -3,6 +3,7 @@ using HalcyonRecords.Api.Common.Sqids;
 using HalcyonRecords.Api.Domain;
 using HalcyonRecords.Api.Features.Auth.Register;
 using HalcyonRecords.Api.Features.Carts.SyncCart;
+using HalcyonRecords.Api.Infrastructure;
 using HalcyonRecords.Api.IntegrationTests.Common;
 using Microsoft.EntityFrameworkCore;
 
@@ -167,6 +168,79 @@ public class SyncCartHandlerTests(SqlServerContainerFixture fixture)
             .ToListAsync(TestContext.Current.CancellationToken);
         items.Should().ContainSingle(ci => ci.AlbumId == album.Id);
     }
+
+    [Fact]
+    public async Task Handle_ConcurrentSyncsForSameNewItemOnExistingCart_BothSucceedWithoutDuplicateRow()
+    {
+        var user = await CreateUserAsync("sync-concurrent-new-item@test.invalid");
+        var album = NewAlbum("Sync Concurrent New Item Album");
+        DbContext.Albums.Add(album);
+        await DbContext.SaveChangesAsync(TestContext.Current.CancellationToken);
+        DbContext.Carts.Add(new Cart { UserId = user.Id });
+        await DbContext.SaveChangesAsync(TestContext.Current.CancellationToken);
+
+        var sqid = s_albumSqids.Encode(album.Id.Value);
+        await using var dbContext2 = NewDbContext();
+        var handler1 = Handler;
+        var handler2 = new SyncCartHandler(dbContext2, s_albumSqids);
+
+        var task1 = handler1.Handle(
+            new SyncCartCommand(user.PublicId, [new SyncCartItem(sqid, 1)]),
+            TestContext.Current.CancellationToken
+        );
+        var task2 = handler2.Handle(
+            new SyncCartCommand(user.PublicId, [new SyncCartItem(sqid, 1)]),
+            TestContext.Current.CancellationToken
+        );
+        var results = await Task.WhenAll(task1, task2);
+
+        results.Should().OnlyContain(r => !r.IsError);
+        var items = await DbContext
+            .CartItems.Where(ci => ci.Cart.UserId == user.Id)
+            .ToListAsync(TestContext.Current.CancellationToken);
+        items.Should().ContainSingle(ci => ci.AlbumId == album.Id && ci.Quantity == 1);
+    }
+
+    [Fact]
+    public async Task Handle_ConcurrentFirstSyncsWithNoExistingCart_BothSucceedWithoutDuplicateCart()
+    {
+        var user = await CreateUserAsync("sync-concurrent-first-sync@test.invalid");
+        var album = NewAlbum("Sync Concurrent First Sync Album");
+        DbContext.Albums.Add(album);
+        await DbContext.SaveChangesAsync(TestContext.Current.CancellationToken);
+
+        var sqid = s_albumSqids.Encode(album.Id.Value);
+        await using var dbContext2 = NewDbContext();
+        var handler1 = Handler;
+        var handler2 = new SyncCartHandler(dbContext2, s_albumSqids);
+
+        var task1 = handler1.Handle(
+            new SyncCartCommand(user.PublicId, [new SyncCartItem(sqid, 1)]),
+            TestContext.Current.CancellationToken
+        );
+        var task2 = handler2.Handle(
+            new SyncCartCommand(user.PublicId, [new SyncCartItem(sqid, 1)]),
+            TestContext.Current.CancellationToken
+        );
+        var results = await Task.WhenAll(task1, task2);
+
+        results.Should().OnlyContain(r => !r.IsError);
+        var cartCount = await DbContext.Carts.CountAsync(
+            c => c.UserId == user.Id,
+            TestContext.Current.CancellationToken
+        );
+        cartCount.Should().Be(1);
+    }
+
+    private ApplicationDbContext NewDbContext() =>
+        new(
+            new DbContextOptionsBuilder<ApplicationDbContext>()
+                .UseSqlServer(
+                    fixture.ConnectionString,
+                    sqlOptions => sqlOptions.EnableRetryOnFailure()
+                )
+                .Options
+        );
 
     private async Task<User> CreateUserAsync(string email)
     {
