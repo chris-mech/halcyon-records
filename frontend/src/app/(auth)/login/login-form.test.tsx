@@ -2,7 +2,7 @@ import { describe, expect, test, vi } from "vitest";
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { signIn } from "next-auth/react";
 
-import { syncCart } from "@/lib/cart/sync-cart";
+import { mergeCartAtLogin } from "@/lib/cart/sync-cart";
 import { LoginForm } from "./login-form";
 
 const push = vi.fn();
@@ -16,7 +16,7 @@ vi.mock("next-auth/react", () => ({
 }));
 
 vi.mock("@/lib/cart/sync-cart", () => ({
-  syncCart: vi.fn(),
+  mergeCartAtLogin: vi.fn(),
 }));
 
 function submit() {
@@ -90,7 +90,7 @@ describe("LoginForm", () => {
       password: "correct-password",
       redirect: false,
     });
-    expect(syncCart).toHaveBeenCalled();
+    expect(mergeCartAtLogin).toHaveBeenCalled();
   });
 
   test("navigates to the given next path on successful login", async () => {

@@ -14,14 +14,7 @@ async function waitForCartHydration(): Promise<void> {
   });
 }
 
-async function pushLocalCart(
-  items: CartItem[],
-  { force = false }: { force?: boolean } = {},
-): Promise<boolean> {
-  if (items.length === 0 && !force) {
-    return true;
-  }
-
+async function pushLocalCart(items: CartItem[]): Promise<boolean> {
   const response = await fetch("/api/cart/sync", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
@@ -36,15 +29,7 @@ async function pushLocalCart(
   return response.ok;
 }
 
-async function syncCart(): Promise<boolean> {
-  await waitForCartHydration();
-
-  const { items, setItems } = useCartStore.getState();
-
-  if (!(await pushLocalCart(items))) {
-    return false;
-  }
-
+async function pullServerCart(): Promise<boolean> {
   const cartResponse = await fetch("/api/cart");
 
   if (!cartResponse.ok) {
@@ -52,15 +37,43 @@ async function syncCart(): Promise<boolean> {
   }
 
   const cartItems: CartItem[] = await cartResponse.json();
-  setItems(cartItems);
+  useCartStore.getState().setItems(cartItems);
   return true;
+}
+
+async function syncCart(): Promise<boolean> {
+  await waitForCartHydration();
+
+  const { items } = useCartStore.getState();
+
+  if (!(await pushLocalCart(items))) {
+    return false;
+  }
+
+  return pullServerCart();
+}
+
+async function mergeCartAtLogin(): Promise<boolean> {
+  await waitForCartHydration();
+
+  const { items } = useCartStore.getState();
+
+  if (items.length === 0) {
+    return pullServerCart();
+  }
+
+  if (!(await pushLocalCart(items))) {
+    return false;
+  }
+
+  return pullServerCart();
 }
 
 async function syncCartOnLogout(): Promise<void> {
   await waitForCartHydration();
 
-  await pushLocalCart(useCartStore.getState().items, { force: true });
+  await pushLocalCart(useCartStore.getState().items);
   useCartStore.getState().setItems([]);
 }
 
-export { syncCart, syncCartOnLogout };
+export { syncCart, mergeCartAtLogin, syncCartOnLogout };

@@ -2,7 +2,7 @@ import { describe, expect, test, vi } from "vitest";
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { signIn } from "next-auth/react";
 
-import { syncCart } from "@/lib/cart/sync-cart";
+import { mergeCartAtLogin } from "@/lib/cart/sync-cart";
 import { RegisterForm } from "./register-form";
 import { registerAction } from "./actions";
 
@@ -21,7 +21,7 @@ vi.mock("./actions", () => ({
 }));
 
 vi.mock("@/lib/cart/sync-cart", () => ({
-  syncCart: vi.fn(),
+  mergeCartAtLogin: vi.fn(),
 }));
 
 function fillField(label: string, value: string) {
@@ -119,7 +119,7 @@ describe("RegisterForm", () => {
       password: "Str0ng!Pass",
       redirect: false,
     });
-    expect(syncCart).toHaveBeenCalled();
+    expect(mergeCartAtLogin).toHaveBeenCalled();
   });
 
   test("navigates to the given next path on successful registration", async () => {
