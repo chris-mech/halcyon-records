@@ -7,13 +7,13 @@
 @theme {
   --color-parchment: oklch(0.982 0.008 91.482);
   --color-paper: oklch(0.994 0.004 91.445);
-  --color-slate: oklch(0.554 0.039 241.968);
+  --color-slate: oklch(0.53 0.039 241.968);
   --color-slate-muted: oklch(0.99 0.011 226.004);
   --color-slate-deep: oklch(0.37 0.026 237.591);
   --color-slate-plaque: oklch(0.463 0.026 239.942);
   --color-ink: oklch(0.237 0.009 75.182);
   --color-ink-muted: oklch(0.503 0.024 81.693);
-  --color-rust: oklch(0.575 0.146 34.717);
+  --color-rust: oklch(0.47 0.146 34.717);
   --color-gold: oklch(0.728 0.138 89.726);
   --color-line: oklch(0.798 0.046 88.537);
 }
