@@ -196,6 +196,25 @@ jobs:
       - name: Install Playwright browsers
         run: bunx playwright install --with-deps chromium
 
+      - name: Install mkcert
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libnss3-tools
+          curl -JLO "https://dl.filippo.io/mkcert/latest?for=linux/amd64"
+          chmod +x mkcert-v*-linux-amd64
+          sudo mv mkcert-v*-linux-amd64 /usr/local/bin/mkcert
+
+      - name: Generate dev HTTPS certificate
+        working-directory: backend
+        run: |
+          mkcert -install
+          mkdir -p src/HalcyonRecords.Api/certs
+          mkcert -pkcs12 -p12-file src/HalcyonRecords.Api/certs/kestrel.pfx localhost 127.0.0.1 ::1
+
+      - name: Set Kestrel cert password
+        working-directory: backend
+        run: dotnet user-secrets set "Kestrel:Certificates:Default:Password" "changeit" --project src/HalcyonRecords.Api/HalcyonRecords.Api.csproj
+      
       - name: Run E2E tests
         run: bun run test:e2e
         env:
