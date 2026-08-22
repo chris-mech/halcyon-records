@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Diagnostics;
+﻿using HalcyonRecords.Api.Common.Logging;
+using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.WebUtilities;
 
@@ -15,7 +16,7 @@ public sealed class GlobalExceptionHandler(
         CancellationToken cancellationToken
     )
     {
-        logger.LogError(exception, "An unhandled exception occurred while processing the request.");
+        logger.UnhandledException(exception);
 
         var (statusCode, title, detail) = exception.ToProblemDetailsParts();
 

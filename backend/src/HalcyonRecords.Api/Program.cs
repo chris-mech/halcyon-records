@@ -7,15 +7,19 @@ using HalcyonRecords.Api.Common.Endpoints;
 using HalcyonRecords.Api.Common.OpenApi;
 using HalcyonRecords.Api.Common.RateLimiting;
 using HalcyonRecords.Api.Common.Sqids;
+using HalcyonRecords.Api.Domain;
 using HalcyonRecords.Api.Features.Albums.GetRelatedAlbums;
 using HalcyonRecords.Api.Features.Search;
 using HalcyonRecords.Api.Features.Search.Search;
 using HalcyonRecords.Api.Infrastructure;
 using HalcyonRecords.Api.Infrastructure.Auth;
+using HalcyonRecords.Api.Infrastructure.BackgroundJobs;
 using HalcyonRecords.Api.Infrastructure.Options;
 using HalcyonRecords.Api.Infrastructure.Search;
 using HalcyonRecords.Api.Infrastructure.Seed;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.AddServiceDefaults();
@@ -69,7 +73,11 @@ builder.Services.Configure<RelatedAlbumsOptions>(
 );
 builder.Services.Configure<ShopOptions>(builder.Configuration.GetSection(ShopOptions.SectionName));
 
+builder.Services.AddApiBackgroundJobs(builder.Configuration);
+
 var app = builder.Build();
+
+app.UseApiBackgroundJobs();
 
 if (app.Environment.IsDevelopment())
 {
@@ -77,7 +85,10 @@ if (app.Environment.IsDevelopment())
     var dbContext = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
     await dbContext.Database.MigrateAsync();
 
-    await DbSeeder.SeedAsync(dbContext);
+    var userManager = scope.ServiceProvider.GetRequiredService<UserManager<User>>();
+    var shopOptions = scope.ServiceProvider.GetRequiredService<IOptions<ShopOptions>>();
+    var timeProvider = scope.ServiceProvider.GetRequiredService<TimeProvider>();
+    await DbSeeder.SeedAsync(dbContext, userManager, shopOptions, timeProvider);
 
     var indexer = scope.ServiceProvider.GetRequiredService<MeilisearchIndexer>();
     await indexer.RebuildAsync(dbContext);
@@ -93,6 +104,8 @@ if (app.Environment.IsDevelopment())
             }
         )
         .ExcludeFromDescription();
+
+    app.MapBackgroundJobsDevEndpoints();
 }
 
 app.UseHttpsRedirection();

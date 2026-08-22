@@ -14,6 +14,10 @@ public sealed class AlbumConfiguration : IEntityTypeConfiguration<Album>
             {
                 t.HasCheckConstraint("CK_Albums_Title_NotEmpty", "LEN(Title) > 0");
                 t.HasCheckConstraint("CK_Albums_UnitsInStock_NotNegative", "UnitsInStock >= 0");
+                t.HasCheckConstraint(
+                    "CK_Albums_RestockUnitsInStock_NotNegative",
+                    "RestockUnitsInStock >= 0"
+                );
                 t.HasCheckConstraint("CK_Albums_PriceInPence_NotNegative", "PriceInPence >= 0");
                 t.HasCheckConstraint(
                     "CK_Albums_OriginalPriceInPence_GreaterThanPrice",

@@ -50,6 +50,8 @@ public sealed class RefreshHandler(
             return DomainErrors.Auth.InvalidRefreshToken();
         }
 
+        user.LastActiveAt = now;
+
         var (accessToken, expiresAt) = jwtTokenService.GenerateAccessToken(user);
         var (rawRefreshToken, newTokenHash, refreshExpiresAt) =
             jwtTokenService.GenerateRefreshToken();

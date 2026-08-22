@@ -132,6 +132,11 @@ public sealed class CreateOrderHandler(
                     .FirstAsync(o => o.IdempotencyKey == command.IdempotencyKey, cancellationToken);
                 return ToResponse(winningOrder);
             }
+            catch (DbUpdateException ex) when (IsForeignKeyViolation(ex))
+            {
+                await transaction.RollbackAsync(CancellationToken.None);
+                return DomainErrors.Auth.UserNotFound();
+            }
 
             await transaction.CommitAsync(CancellationToken.None);
 
@@ -150,6 +155,9 @@ public sealed class CreateOrderHandler(
 
     private static bool IsDuplicateKeyViolation(DbUpdateException ex) =>
         ex.InnerException is SqlException { Number: 2601 or 2627 };
+
+    private static bool IsForeignKeyViolation(DbUpdateException ex) =>
+        ex.InnerException is SqlException { Number: 547 };
 
     private IQueryable<Order> OrdersWithItemsAndAlbums() =>
         dbContext.Orders.Include(o => o.OrderItems).ThenInclude(oi => oi.Album).AsNoTracking();
