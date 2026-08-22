@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { Controller, useForm } from "react-hook-form";
@@ -20,6 +21,9 @@ import { Field, FieldError, FieldLabel } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
 import { loginSchema, type LoginFormValues } from "@/lib/auth/schemas";
 
+const SHOWCASE_ACCOUNT_EMAIL = "demo@halcyonrecords.example";
+const SHOWCASE_ACCOUNT_PASSWORD = "DemoPassword123!";
+
 const fieldLabelClassName =
   "text-[0.6875rem] font-extrabold tracking-[0.08em] text-muted-foreground uppercase";
 
@@ -29,6 +33,7 @@ interface LoginFormProps {
 
 function LoginForm({ next }: LoginFormProps) {
   const router = useRouter();
+  const [isDemoSubmitting, setIsDemoSubmitting] = useState(false);
   const form = useForm<LoginFormValues>({
     resolver: zodResolver(loginSchema),
     defaultValues: { email: "", password: "" },
@@ -38,8 +43,12 @@ function LoginForm({ next }: LoginFormProps) {
     ? `/register?next=${encodeURIComponent(next)}`
     : "/register";
 
-  async function onSubmit(values: LoginFormValues) {
-    const result = await signIn("credentials", { ...values, redirect: false });
+  async function loginWith(email: string, password: string) {
+    const result = await signIn("credentials", {
+      email,
+      password,
+      redirect: false,
+    });
 
     if (result.error) {
       form.setError("root.serverError", {
@@ -50,6 +59,16 @@ function LoginForm({ next }: LoginFormProps) {
 
     await mergeCartAtLogin();
     router.push(next ?? "/");
+  }
+
+  async function onSubmit(values: LoginFormValues) {
+    await loginWith(values.email, values.password);
+  }
+
+  async function onDemoLogin() {
+    setIsDemoSubmitting(true);
+    await loginWith(SHOWCASE_ACCOUNT_EMAIL, SHOWCASE_ACCOUNT_PASSWORD);
+    setIsDemoSubmitting(false);
   }
 
   return (
@@ -128,6 +147,23 @@ function LoginForm({ next }: LoginFormProps) {
             >
               {form.formState.isSubmitting ? "Logging in…" : "Log in"}
             </Button>
+            <Button
+              type="button"
+              variant="outline"
+              disabled={isDemoSubmitting}
+              onClick={onDemoLogin}
+              className="w-full"
+            >
+              {isDemoSubmitting ? "Logging in…" : "Try the demo account"}
+            </Button>
+            <p className="text-center text-xs text-muted-foreground">
+              This is a demo store — no real payments, nothing ships. This demo
+              login is shared by every visitor, not private to you, so don&apos;t
+              rely on anything you add to it sticking around. Sign in with{" "}
+              {SHOWCASE_ACCOUNT_EMAIL} / {SHOWCASE_ACCOUNT_PASSWORD}, or the button
+              above does it for you. Both real and demo accounts are cleared out
+              periodically.
+            </p>
             <p className="text-center text-sm text-muted-foreground">
               New here?{" "}
               <Link
