@@ -455,7 +455,9 @@ export interface components {
       /** Format: int32 */
       albumCount: number;
     };
-    ArtistType: number;
+    /** @enum {unknown} */
+    ArtistType:
+      "Person" | "Group" | "Orchestra" | "Choir" | "Character" | "Other" | null;
     CartItemArtistResponse: {
       sqid: string;
       name: string;
@@ -633,7 +635,7 @@ export interface components {
       orderNumber: string;
       /** Format: date-time */
       placedAt: string;
-      status: string;
+      status: components["schemas"]["OrderStatus"];
       contactFirstName: string;
       contactLastName: string;
       contactEmail: string;
@@ -641,6 +643,8 @@ export interface components {
       totalInPence: number;
       items: components["schemas"]["OrderDetailItemResponse"][];
     };
+    /** @enum {unknown} */
+    OrderStatus: "Placed";
     OrderSummaryItemResponse: {
       albumSqid: string;
       title: string;
@@ -651,7 +655,7 @@ export interface components {
       orderNumber: string;
       /** Format: date-time */
       placedAt: string;
-      status: string;
+      status: components["schemas"]["OrderStatus"];
       /** Format: int32 */
       totalInPence: number;
       items: components["schemas"]["OrderSummaryItemResponse"][];
