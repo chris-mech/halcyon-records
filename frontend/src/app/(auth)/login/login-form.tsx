@@ -158,11 +158,11 @@ function LoginForm({ next }: LoginFormProps) {
             </Button>
             <p className="text-center text-xs text-muted-foreground">
               This is a demo store — no real payments, nothing ships. This demo
-              login is shared by every visitor, not private to you, so don&apos;t
-              rely on anything you add to it sticking around. Sign in with{" "}
-              {SHOWCASE_ACCOUNT_EMAIL} / {SHOWCASE_ACCOUNT_PASSWORD}, or the button
-              above does it for you. Both real and demo accounts are cleared out
-              periodically.
+              login is shared by every visitor, not private to you, so
+              don&apos;t rely on anything you add to it sticking around. Sign in
+              with {SHOWCASE_ACCOUNT_EMAIL} / {SHOWCASE_ACCOUNT_PASSWORD}, or
+              the button above does it for you. Both real and demo accounts are
+              cleared out periodically.
             </p>
             <p className="text-center text-sm text-muted-foreground">
               New here?{" "}
