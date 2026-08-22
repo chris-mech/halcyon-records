@@ -21,6 +21,7 @@ public sealed class RegisterHandler(UserManager<User> userManager, TimeProvider 
             FirstName = command.FirstName,
             LastName = command.LastName,
             RegisteredAt = timeProvider.GetUtcNow(),
+            LastActiveAt = timeProvider.GetUtcNow(),
         };
 
         var createResult = await userManager.CreateAsync(user, command.Password);

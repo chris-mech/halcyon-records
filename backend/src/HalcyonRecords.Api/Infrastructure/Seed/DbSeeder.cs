@@ -1,7 +1,10 @@
 ﻿using System.Text.Json;
 using HalcyonRecords.Api.Domain;
+using HalcyonRecords.Api.Infrastructure.Options;
 using HalcyonRecords.Shared;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 
 namespace HalcyonRecords.Api.Infrastructure.Seed;
 
@@ -11,6 +14,9 @@ public static class DbSeeder
 
     public static async Task SeedAsync(
         ApplicationDbContext dbContext,
+        UserManager<User> userManager,
+        IOptions<ShopOptions> shopOptions,
+        TimeProvider timeProvider,
         CancellationToken cancellationToken = default
     )
     {
@@ -87,6 +93,7 @@ public static class DbSeeder
                     IsStaffPick = entry.IsStaffPick,
                     ImageUrl = entry.ImageUrl,
                     UnitsInStock = entry.UnitsInStock,
+                    RestockUnitsInStock = entry.UnitsInStock,
                     PriceInPence = entry.PriceInPence,
                     OriginalPriceInPence = entry.OriginalPriceInPence,
                 };
@@ -118,6 +125,54 @@ public static class DbSeeder
         dbContext.Decades.AddRange(decades);
         dbContext.Albums.AddRange(albums);
         await dbContext.SaveChangesAsync(cancellationToken);
+
+        await SeedShowcaseAccountAsync(
+            dbContext,
+            userManager,
+            shopOptions,
+            timeProvider,
+            cancellationToken
+        );
+    }
+
+    public const string ShowcaseAccountEmail = "demo@halcyonrecords.example";
+    public const string ShowcaseAccountPassword = "DemoPassword123!";
+
+    private static async Task SeedShowcaseAccountAsync(
+        ApplicationDbContext dbContext,
+        UserManager<User> userManager,
+        IOptions<ShopOptions> shopOptions,
+        TimeProvider timeProvider,
+        CancellationToken cancellationToken
+    )
+    {
+        var showcaseUser = new User
+        {
+            UserName = ShowcaseAccountEmail,
+            Email = ShowcaseAccountEmail,
+            FirstName = "Demo",
+            LastName = "Shopper",
+            RegisteredAt = timeProvider.GetUtcNow(),
+            LastActiveAt = timeProvider.GetUtcNow(),
+            IsShowcaseAccount = true,
+        };
+
+        var createResult = await userManager.CreateAsync(showcaseUser, ShowcaseAccountPassword);
+        if (!createResult.Succeeded)
+        {
+            throw new InvalidOperationException(
+                "Failed to seed the fixed showcase account: "
+                    + string.Join(", ", createResult.Errors.Select(e => e.Description))
+            );
+        }
+
+        await ShowcaseAccountSeeder.SeedOrdersAsync(
+            dbContext,
+            showcaseUser,
+            shopOptions,
+            timeProvider,
+            cancellationToken
+        );
     }
 
     private static async Task<List<T>> ReadSeedFileAsync<T>(

@@ -121,4 +121,27 @@ describe("LoginForm", () => {
       screen.getByRole("link", { name: "Create an account" }),
     ).toHaveAttribute("href", "/register?next=%2Fcheckout");
   });
+
+  test("logs in with the fixed demo credentials when the demo button is clicked", async () => {
+    vi.mocked(signIn).mockResolvedValue({
+      error: undefined,
+      code: undefined,
+      status: 200,
+      ok: true,
+      url: "/",
+    });
+    render(<LoginForm />);
+
+    fireEvent.click(
+      screen.getByRole("button", { name: "Try the demo account" }),
+    );
+
+    await waitFor(() => expect(push).toHaveBeenCalledWith("/"));
+    expect(signIn).toHaveBeenCalledWith("credentials", {
+      email: "demo@halcyonrecords.example",
+      password: "DemoPassword123!",
+      redirect: false,
+    });
+    expect(mergeCartAtLogin).toHaveBeenCalled();
+  });
 });

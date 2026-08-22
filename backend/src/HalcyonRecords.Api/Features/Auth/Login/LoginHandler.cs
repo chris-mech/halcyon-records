@@ -26,6 +26,9 @@ public sealed class LoginHandler(
             return DomainErrors.Auth.InvalidCredentials();
         }
 
+        var now = timeProvider.GetUtcNow();
+        user.LastActiveAt = now;
+
         var (accessToken, expiresAt) = jwtTokenService.GenerateAccessToken(user);
         var (rawRefreshToken, tokenHash, refreshExpiresAt) = jwtTokenService.GenerateRefreshToken();
 
@@ -34,7 +37,7 @@ public sealed class LoginHandler(
             {
                 TokenHash = tokenHash,
                 UserId = user.Id,
-                CreatedAt = timeProvider.GetUtcNow(),
+                CreatedAt = now,
                 ExpiresAt = refreshExpiresAt,
             }
         );
