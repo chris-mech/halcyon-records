@@ -1,4 +1,5 @@
 using System.Diagnostics;
+using System.Text.Json.Serialization;
 using FluentValidation;
 using HalcyonRecords.Api.Common;
 using HalcyonRecords.Api.Common.Behaviours;
@@ -59,6 +60,11 @@ builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
 builder.Services.AddApiMeilisearch(builder.Configuration);
 builder.Services.AddApiRateLimiting(builder.Configuration);
 builder.Services.AddApiAuth(builder.Configuration);
+
+builder.Services.ConfigureHttpJsonOptions(options =>
+{
+    options.SerializerOptions.Converters.Add(new JsonStringEnumConverter());
+});
 
 builder.Services.AddOpenApi(options =>
 {

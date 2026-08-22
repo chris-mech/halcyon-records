@@ -1,9 +1,11 @@
-﻿namespace HalcyonRecords.Api.Features.Orders.GetOrders;
+﻿using HalcyonRecords.Api.Domain;
+
+namespace HalcyonRecords.Api.Features.Orders.GetOrders;
 
 public sealed record OrderSummaryResponse(
     string OrderNumber,
     DateTimeOffset PlacedAt,
-    string Status,
+    OrderStatus Status,
     int TotalInPence,
     IReadOnlyList<OrderSummaryItemResponse> Items
 );

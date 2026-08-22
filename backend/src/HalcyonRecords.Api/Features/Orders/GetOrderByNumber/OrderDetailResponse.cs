@@ -1,9 +1,11 @@
-﻿namespace HalcyonRecords.Api.Features.Orders.GetOrderByNumber;
+﻿using HalcyonRecords.Api.Domain;
+
+namespace HalcyonRecords.Api.Features.Orders.GetOrderByNumber;
 
 public sealed record OrderDetailResponse(
     string OrderNumber,
     DateTimeOffset PlacedAt,
-    string Status,
+    OrderStatus Status,
     string ContactFirstName,
     string ContactLastName,
     string ContactEmail,

@@ -114,7 +114,7 @@ public class GetOrdersHandlerTests(SqlServerContainerFixture fixture)
         );
 
         var order = result.Value.Items.Should().ContainSingle().Subject;
-        order.Status.Should().Be(nameof(OrderStatus.Placed));
+        order.Status.Should().Be(OrderStatus.Placed);
         var item = order.Items.Should().ContainSingle().Subject;
         item.AlbumSqid.Should().Be(s_albumSqids.Encode(album.Id.Value));
         item.Title.Should().Be("Item Mapping Album");
