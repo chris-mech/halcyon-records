@@ -4,7 +4,7 @@ import { render, screen, within } from "@testing-library/react";
 import { client } from "@/lib/api/client";
 import type { components } from "@/lib/api/schema";
 
-import { GenreLandingContent } from "./page";
+import { generateMetadata, GenreLandingContent } from "./page";
 
 vi.mock("@/lib/api/client", () => ({
   client: { GET: vi.fn() },
@@ -30,6 +30,7 @@ const genre: GenreDetail = {
   name: "Full Detail Genre",
   slug: "full-detail-genre",
   description: "A description used to verify genre landing rendering.",
+  imageUrl: null,
   albumCount: 1,
 };
 
@@ -120,6 +121,10 @@ function mockGenreFetches({
   }) as typeof client.GET);
 }
 
+function renderMetadata(slug = genre.slug) {
+  return generateMetadata({ params: Promise.resolve({ slug }) });
+}
+
 function renderPage(
   slug = genre.slug,
   searchParams: Record<string, string> = {},
@@ -129,6 +134,39 @@ function renderPage(
     searchParams: Promise.resolve(searchParams),
   });
 }
+
+describe("generateMetadata", () => {
+  test("uses the genre name and description", async () => {
+    mockGenreFetches();
+
+    const metadata = await renderMetadata();
+
+    expect(metadata.title).toBe("Full Detail Genre");
+    expect(metadata.description).toBe(
+      "A description used to verify genre landing rendering.",
+    );
+  });
+
+  test("sets the curated genre image as the Open Graph image", async () => {
+    mockGenreFetches({
+      detailOverrides: { imageUrl: "https://example.com/genre.jpg" },
+    });
+
+    const metadata = await renderMetadata();
+
+    expect(metadata.openGraph?.images).toEqual([
+      "https://example.com/genre.jpg",
+    ]);
+  });
+
+  test("calls notFound when the genre fetch errors", async () => {
+    mockGenreFetches({ detailError: true });
+
+    await expect(renderMetadata()).rejects.toMatchObject({
+      digest: "NEXT_HTTP_ERROR_FALLBACK;404",
+    });
+  });
+});
 
 describe("GenreLandingPage", () => {
   test("renders genre header, description, count, and the album grid", async () => {

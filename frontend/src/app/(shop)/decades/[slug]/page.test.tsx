@@ -4,7 +4,7 @@ import { render, screen, within } from "@testing-library/react";
 import { client } from "@/lib/api/client";
 import type { components } from "@/lib/api/schema";
 
-import { DecadeLandingContent } from "./page";
+import { DecadeLandingContent, generateMetadata } from "./page";
 
 vi.mock("@/lib/api/client", () => ({
   client: { GET: vi.fn() },
@@ -32,6 +32,7 @@ const decade: DecadeDetail = {
   startYear: 1970,
   endYear: 1979,
   description: "A description used to verify decade landing rendering.",
+  imageUrl: null,
   albumCount: 1,
 };
 
@@ -124,6 +125,10 @@ function mockDecadeFetches({
   }) as typeof client.GET);
 }
 
+function renderMetadata(slug = decade.slug) {
+  return generateMetadata({ params: Promise.resolve({ slug }) });
+}
+
 function renderPage(
   slug = decade.slug,
   searchParams: Record<string, string> = {},
@@ -133,6 +138,39 @@ function renderPage(
     searchParams: Promise.resolve(searchParams),
   });
 }
+
+describe("generateMetadata", () => {
+  test("uses the decade label and description", async () => {
+    mockDecadeFetches();
+
+    const metadata = await renderMetadata();
+
+    expect(metadata.title).toBe("1970s");
+    expect(metadata.description).toBe(
+      "A description used to verify decade landing rendering.",
+    );
+  });
+
+  test("sets the curated decade image as the Open Graph image", async () => {
+    mockDecadeFetches({
+      detailOverrides: { imageUrl: "https://example.com/decade.jpg" },
+    });
+
+    const metadata = await renderMetadata();
+
+    expect(metadata.openGraph?.images).toEqual([
+      "https://example.com/decade.jpg",
+    ]);
+  });
+
+  test("calls notFound when the decade fetch errors", async () => {
+    mockDecadeFetches({ detailError: true });
+
+    await expect(renderMetadata()).rejects.toMatchObject({
+      digest: "NEXT_HTTP_ERROR_FALLBACK;404",
+    });
+  });
+});
 
 describe("DecadeLandingPage", () => {
   test("renders decade header, description, count, and the album grid", async () => {
