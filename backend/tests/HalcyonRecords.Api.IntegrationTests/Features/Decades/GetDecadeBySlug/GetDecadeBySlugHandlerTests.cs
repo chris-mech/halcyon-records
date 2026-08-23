@@ -22,6 +22,7 @@ public class GetDecadeBySlugHandlerTests(SqlServerContainerFixture fixture)
                 StartYear = 1970,
                 EndYear = 1979,
                 Description = "A decade used to verify field mapping.",
+                ImageUrl = "https://example.com/1970s.jpg",
             }
         );
         DbContext.Albums.Add(
@@ -42,6 +43,7 @@ public class GetDecadeBySlugHandlerTests(SqlServerContainerFixture fixture)
         result.IsError.Should().BeFalse();
         result.Value.Label.Should().Be("1970s");
         result.Value.Description.Should().Be("A decade used to verify field mapping.");
+        result.Value.ImageUrl.Should().Be("https://example.com/1970s.jpg");
         result.Value.AlbumCount.Should().Be(1);
     }
 

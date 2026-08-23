@@ -22,6 +22,7 @@ public sealed class GetDecadeBySlugHandler(ApplicationDbContext dbContext)
                 d.StartYear,
                 d.EndYear,
                 d.Description,
+                d.ImageUrl,
                 dbContext.Albums.Count(a =>
                     a.ReleaseDate != null
                     && (d.StartYear == null || a.ReleaseDate.Value.Year >= d.StartYear)

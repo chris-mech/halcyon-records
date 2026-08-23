@@ -20,6 +20,7 @@ public sealed class GetGenreBySlugHandler(ApplicationDbContext dbContext)
                 g.Name,
                 g.Slug,
                 g.Description,
+                g.ImageUrl,
                 g.AlbumGenres.Count
             ))
             .FirstOrDefaultAsync(cancellationToken);

@@ -575,6 +575,7 @@ export interface components {
       /** Format: int32 */
       endYear: null | number;
       description: null | string;
+      imageUrl: null | string;
       /** Format: int32 */
       albumCount: number;
     };
@@ -602,6 +603,7 @@ export interface components {
       name: string;
       slug: string;
       description: null | string;
+      imageUrl: null | string;
       /** Format: int32 */
       albumCount: number;
     };
