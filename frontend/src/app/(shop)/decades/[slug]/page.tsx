@@ -1,8 +1,11 @@
 import { Suspense } from "react";
+import { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { cacheLife } from "next/cache";
 
+import { PAGE_SIZE, parseCatalogFilters } from "@/lib/catalog-search-params";
+import type { components } from "@/lib/api/schema";
 import { client } from "@/lib/api/client";
 import { ProductCard } from "@/components/product-card";
 import { CatalogSortSelect } from "@/components/catalog-sort-select";
@@ -16,8 +19,25 @@ import {
   BreadcrumbPage,
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
-import { PAGE_SIZE, parseCatalogFilters } from "@/lib/catalog-search-params";
-import type { components } from "@/lib/api/schema";
+
+export async function generateMetadata({
+  params,
+}: Pick<PageProps<"/decades/[slug]">, "params">): Promise<Metadata> {
+  const { slug } = await params;
+  const result = await getDecadeDetailData(slug);
+
+  if (!result.found) {
+    notFound();
+  }
+
+  const { decade } = result;
+
+  return {
+    title: decade.label,
+    description: decade.description ?? undefined,
+    openGraph: decade.imageUrl ? { images: [decade.imageUrl] } : undefined,
+  };
+}
 
 type DecadeDetail = components["schemas"]["DecadeDetailResponse"];
 type DecadeListItem = components["schemas"]["DecadeListItemResponse"];

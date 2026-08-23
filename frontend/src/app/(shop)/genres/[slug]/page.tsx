@@ -1,9 +1,12 @@
 import { Suspense } from "react";
+import { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { cacheLife } from "next/cache";
 
 import { client } from "@/lib/api/client";
+import type { components } from "@/lib/api/schema";
+import { PAGE_SIZE, parseCatalogFilters } from "@/lib/catalog-search-params";
 import { ProductCard } from "@/components/product-card";
 import { CatalogSortSelect } from "@/components/catalog-sort-select";
 import { CatalogPagination } from "@/components/catalog-pagination";
@@ -16,8 +19,25 @@ import {
   BreadcrumbPage,
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
-import { PAGE_SIZE, parseCatalogFilters } from "@/lib/catalog-search-params";
-import type { components } from "@/lib/api/schema";
+
+export async function generateMetadata({
+  params,
+}: Pick<PageProps<"/genres/[slug]">, "params">): Promise<Metadata> {
+  const { slug } = await params;
+  const result = await getGenreDetailData(slug);
+
+  if (!result.found) {
+    notFound();
+  }
+
+  const { genre } = result;
+
+  return {
+    title: genre.name,
+    description: genre.description ?? undefined,
+    openGraph: genre.imageUrl ? { images: [genre.imageUrl] } : undefined,
+  };
+}
 
 type GenreDetail = components["schemas"]["GenreDetailResponse"];
 type GenreListItem = components["schemas"]["GenreListItemResponse"];

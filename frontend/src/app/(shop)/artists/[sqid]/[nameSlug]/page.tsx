@@ -1,10 +1,12 @@
 import { Suspense } from "react";
+import { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound, permanentRedirect } from "next/navigation";
 import { cacheLife } from "next/cache";
 import { DiscAlbum } from "lucide-react";
 
+import type { components } from "@/lib/api/schema";
 import { client } from "@/lib/api/client";
 import { GenrePillList } from "@/components/genre-pill-list";
 import { ProductCard } from "@/components/product-card";
@@ -20,7 +22,29 @@ import {
 import { ArtistSortSelect } from "./artist-sort-select";
 import { parseArtistSort, type ArtistAlbumSort } from "./search-params";
 
-import type { components } from "@/lib/api/schema";
+export async function generateMetadata({
+  params,
+  searchParams,
+}: Pick<
+  PageProps<"/artists/[sqid]/[nameSlug]">,
+  "params" | "searchParams"
+>): Promise<Metadata> {
+  const { sqid } = await params;
+  const sort = parseArtistSort(await searchParams);
+  const result = await getArtistDetailData(sqid, sort);
+
+  if (!result.found) {
+    notFound();
+  }
+
+  const { artist } = result;
+
+  return {
+    title: artist.name,
+    description: artist.bio ?? undefined,
+    openGraph: artist.imageUrl ? { images: [artist.imageUrl] } : undefined,
+  };
+}
 
 type ArtistDetail = components["schemas"]["ArtistDetailResponse"];
 

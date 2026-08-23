@@ -1,4 +1,5 @@
 import { Fragment, Suspense } from "react";
+import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound, permanentRedirect } from "next/navigation";
@@ -22,6 +23,26 @@ import {
 import { PurchaseRow } from "./purchase-row";
 
 import type { components } from "@/lib/api/schema";
+
+export async function generateMetadata({
+  params,
+}: Pick<PageProps<"/albums/[sqid]/[titleSlug]">, "params">): Promise<Metadata> {
+  const { sqid } = await params;
+  const result = await getAlbumData(sqid);
+
+  if (!result.found) {
+    notFound();
+  }
+
+  const { album } = result;
+  const artistNames = album.artists.map((artist) => artist.name).join(", ");
+
+  return {
+    title: artistNames ? `${album.title} by ${artistNames}` : album.title,
+    description: album.description ?? undefined,
+    openGraph: album.imageUrl ? { images: [album.imageUrl] } : undefined,
+  };
+}
 
 type AlbumDetail = components["schemas"]["AlbumDetailResponse"];
 type RelatedAlbum = components["schemas"]["RelatedAlbumResponse"];
