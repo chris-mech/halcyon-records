@@ -129,6 +129,8 @@ export async function HomeContent() {
       <section className="mx-auto grid w-full max-w-275 grid-cols-1 items-center gap-16 px-16 py-14 lg:grid-cols-[0.85fr_1.15fr]">
         <Link
           href={albumHref}
+          aria-hidden
+          tabIndex={-1}
           className="relative block aspect-square shadow-lg"
         >
           {coverStory.imageUrl ? (

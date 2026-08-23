@@ -91,6 +91,7 @@ export async function AlbumDetailContent({
   }
 
   const { album, relatedAlbums } = result;
+  const artistNames = album.artists.map((artist) => artist.name).join(", ");
 
   if (album.titleSlug !== titleSlug) {
     permanentRedirect(`/albums/${sqid}/${album.titleSlug}`);
@@ -128,7 +129,11 @@ export async function AlbumDetailContent({
             {album.imageUrl ? (
               <Image
                 src={album.imageUrl}
-                alt=""
+                alt={
+                  artistNames
+                    ? `${album.title} by ${artistNames} — album cover`
+                    : `${album.title} — album cover`
+                }
                 fill
                 sizes="(min-width: 1024px) 40vw, 90vw"
                 className="object-cover"

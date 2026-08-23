@@ -129,7 +129,7 @@ export async function ArtistDetailContent({
           {artist.imageUrl ? (
             <Image
               src={artist.imageUrl}
-              alt=""
+              alt={artist.name}
               fill
               sizes="200px"
               className="object-cover"

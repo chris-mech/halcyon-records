@@ -144,6 +144,14 @@ describe("ArtistDetailPage", () => {
     expect(screen.getByText("Discography Album One")).toBeInTheDocument();
   });
 
+  test("sets the artist's name as the image alt text", async () => {
+    mockArtistFetch({ imageUrl: "https://example.com/artist.jpg" });
+
+    render(await renderPage());
+
+    expect(screen.getByAltText("Full Detail Artist")).toBeInTheDocument();
+  });
+
   test("shows a Born label for a Person artist", async () => {
     mockArtistFetch({ type: "Person", sinceYear: 1985 });
 

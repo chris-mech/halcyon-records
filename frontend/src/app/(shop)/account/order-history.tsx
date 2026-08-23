@@ -118,7 +118,7 @@ function OrderHistory({ page }: OrderHistoryProps) {
                   {item.imageUrl && (
                     <Image
                       src={item.imageUrl}
-                      alt=""
+                      alt={item.title}
                       fill
                       sizes="48px"
                       className="object-cover"

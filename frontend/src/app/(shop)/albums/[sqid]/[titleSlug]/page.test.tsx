@@ -140,6 +140,16 @@ describe("AlbumDetailPage", () => {
     expect(screen.getByText("1999")).toBeInTheDocument();
   });
 
+  test("sets descriptive alt text on the album cover image", async () => {
+    mockAlbumFetch({ imageUrl: "https://example.com/cover.jpg" });
+
+    render(await renderPage());
+
+    expect(
+      screen.getByAltText("Full Detail Album by Artist One — album cover"),
+    ).toBeInTheDocument();
+  });
+
   test("renders a link for every genre on a multi-genre album", async () => {
     mockAlbumFetch(
       {
