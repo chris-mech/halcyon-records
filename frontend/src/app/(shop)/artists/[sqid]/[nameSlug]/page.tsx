@@ -136,7 +136,7 @@ export async function ArtistDetailContent({
             />
           ) : (
             <div className="flex size-full items-center justify-center bg-slate-muted/40">
-              <DiscAlbum aria-hidden className="size-12 text-slate-muted" />
+              <DiscAlbum aria-hidden className="size-12 text-slate" />
             </div>
           )}
         </div>

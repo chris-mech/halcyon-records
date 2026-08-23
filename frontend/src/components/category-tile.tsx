@@ -26,7 +26,7 @@ function CategoryTile({ href, name, imageUrl, albumCount }: CategoryTileProps) {
           />
         ) : (
           <div className="flex size-full items-center justify-center">
-            <DiscAlbum aria-hidden className="size-10 text-slate-muted" />
+            <DiscAlbum aria-hidden className="size-10 text-slate" />
           </div>
         )}
       </div>
