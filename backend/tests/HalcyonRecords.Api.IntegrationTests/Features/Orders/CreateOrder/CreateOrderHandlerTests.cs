@@ -317,6 +317,42 @@ public class CreateOrderHandlerTests(SqlServerContainerFixture fixture)
         listCacheValueAfter.Should().Be("fresh-list-value");
     }
 
+    [Fact]
+    public async Task Handle_UserDeletedBetweenLookupAndSave_ReturnsUserNotFoundError()
+    {
+        var user = await CreateUserAsync("create-order-user-deleted-mid-checkout@test.invalid");
+        var album = NewAlbum(
+            "User Deleted Mid Checkout Album",
+            unitsInStock: 5,
+            priceInPence: 1000
+        );
+        DbContext.Albums.Add(album);
+        await DbContext.SaveChangesAsync(TestContext.Current.CancellationToken);
+        await AddToCartAsync(user, album, 1);
+
+        var deletingTimeProvider = new UserDeletingTimeProvider(NewDbContext, user.Id);
+        var handler = new CreateOrderHandler(
+            DbContext,
+            s_albumSqids,
+            s_shopOptions,
+            deletingTimeProvider,
+            Cache
+        );
+
+        var result = await handler.Handle(
+            NewCommand(user.PublicId, Guid.NewGuid()),
+            TestContext.Current.CancellationToken
+        );
+
+        result.IsError.Should().BeTrue();
+        result.FirstError.Code.Should().Be("Auth.UserNotFound");
+
+        var finalAlbum = await DbContext
+            .Albums.AsNoTracking()
+            .FirstAsync(a => a.Id == album.Id, TestContext.Current.CancellationToken);
+        finalAlbum.UnitsInStock.Should().Be(5);
+    }
+
     private ApplicationDbContext NewDbContext() =>
         new(
             new DbContextOptionsBuilder<ApplicationDbContext>()
@@ -369,4 +405,28 @@ public class CreateOrderHandlerTests(SqlServerContainerFixture fixture)
             UnitsInStock = unitsInStock,
             PriceInPence = priceInPence,
         };
+
+    private sealed class UserDeletingTimeProvider(
+        Func<ApplicationDbContext> newDbContext,
+        int userId
+    ) : TimeProvider
+    {
+        private bool _deleted;
+
+        public override DateTimeOffset GetUtcNow()
+        {
+            if (!_deleted)
+            {
+                _deleted = true;
+                using var dbContext = newDbContext();
+                dbContext
+                    .Users.Where(u => u.Id == userId)
+                    .ExecuteDeleteAsync()
+                    .GetAwaiter()
+                    .GetResult();
+            }
+
+            return DateTimeOffset.UtcNow;
+        }
+    }
 }
