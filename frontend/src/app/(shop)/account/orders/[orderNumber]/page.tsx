@@ -1,9 +1,23 @@
 import { Suspense } from "react";
+import type { Metadata } from "next";
 import { redirect } from "next/navigation";
 
 import { auth } from "@/auth";
 
 import { OrderDetail } from "./order-detail";
+
+export async function generateMetadata({
+  params,
+}: Pick<
+  PageProps<"/account/orders/[orderNumber]">,
+  "params"
+>): Promise<Metadata> {
+  const { orderNumber } = await params;
+
+  return {
+    title: `Order ${orderNumber}`,
+  };
+}
 
 export async function OrderDetailGate({
   params,

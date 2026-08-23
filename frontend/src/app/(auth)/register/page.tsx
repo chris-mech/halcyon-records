@@ -1,7 +1,13 @@
 import { Suspense } from "react";
+import type { Metadata } from "next";
 
 import { safeNextPath } from "@/lib/safe-next-path";
 import { RegisterForm } from "./register-form";
+
+export const metadata: Metadata = {
+  title: "Create Account",
+  description: "Create a Halcyon Records account.",
+};
 
 async function RegisterPageContent({
   searchParams,

@@ -1,10 +1,16 @@
 import { Suspense } from "react";
+import type { Metadata } from "next";
 import { connection } from "next/server";
 import { cacheLife } from "next/cache";
 
 import { client } from "@/lib/api/client";
 import { CategoryTile } from "@/components/category-tile";
 import type { components } from "@/lib/api/schema";
+
+export const metadata: Metadata = {
+  title: "Genres",
+  description: "Browse the catalogue by genre.",
+};
 
 type GenreListItem = components["schemas"]["GenreListItemResponse"];
 

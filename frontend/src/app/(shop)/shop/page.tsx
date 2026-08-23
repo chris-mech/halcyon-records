@@ -1,4 +1,5 @@
 import { Suspense } from "react";
+import type { Metadata } from "next";
 
 import { client } from "@/lib/api/client";
 import { ProductCard } from "@/components/product-card";
@@ -7,6 +8,12 @@ import { FilterPills } from "./filter-pills";
 import { Pagination } from "./pagination";
 import { PAGE_SIZE, parseShopFilters } from "./search-params";
 import { SortSelect } from "./sort-select";
+
+export const metadata: Metadata = {
+  title: "Shop",
+  description:
+    "Browse the full record catalogue — filter by genre, price, and more.",
+};
 
 export async function ShopContent({
   searchParams,

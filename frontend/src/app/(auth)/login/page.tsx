@@ -1,7 +1,13 @@
 import { Suspense } from "react";
+import type { Metadata } from "next";
 
 import { safeNextPath } from "@/lib/safe-next-path";
 import { LoginForm } from "./login-form";
+
+export const metadata: Metadata = {
+  title: "Log In",
+  description: "Log in to your Halcyon Records account.",
+};
 
 async function LoginPageContent({
   searchParams,

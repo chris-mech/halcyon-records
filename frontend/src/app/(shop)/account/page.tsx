@@ -1,10 +1,16 @@
 import { Suspense } from "react";
+import type { Metadata } from "next";
 import { redirect } from "next/navigation";
 
 import { auth } from "@/auth";
 
 import { OrderHistory } from "./order-history";
 import { AccountShell } from "./account-shell";
+
+export const metadata: Metadata = {
+  title: "Order History",
+  description: "Your past Halcyon Records orders.",
+};
 
 export async function AccountContent({
   searchParams,

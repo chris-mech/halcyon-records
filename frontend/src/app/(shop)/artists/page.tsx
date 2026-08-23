@@ -1,4 +1,5 @@
 import { Suspense } from "react";
+import type { Metadata } from "next";
 import Link from "next/link";
 import { connection } from "next/server";
 import { cacheLife } from "next/cache";
@@ -13,6 +14,11 @@ import {
   letterKeyFor,
   type LetterKey,
 } from "./letters";
+
+export const metadata: Metadata = {
+  title: "Artists",
+  description: "Browse every artist in the Halcyon Records catalogue, A to Z.",
+};
 
 type ArtistListItem = components["schemas"]["ArtistListItemResponse"];
 
