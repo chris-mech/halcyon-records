@@ -11,6 +11,10 @@ const WARM_UP_ROUTES = [
   "/checkout/confirmation",
   "/account",
   "/account/orders/warm-up-placeholder",
+  "/artists",
+  "/genres",
+  "/decades",
+  "/account/details",
 ];
 
 async function globalSetup(): Promise<void> {
