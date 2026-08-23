@@ -70,6 +70,7 @@ builder.Services.ConfigureHttpJsonOptions(options =>
 builder.Services.AddOpenApi(options =>
 {
     options.AddSchemaTransformer<IntegerSchemaTransformer>();
+    options.AddOperationTransformer<SortEnumParameterTransformer>();
     options.AddDocumentTransformer(
         (document, context, cancellationToken) =>
         {
