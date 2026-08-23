@@ -11,6 +11,7 @@ export interface paths {
       path?: never;
       cookie?: never;
     };
+    /** Search across albums, artists, and genres by free-text query. */
     get: operations["Search"];
     put?: never;
     post?: never;
@@ -27,6 +28,7 @@ export interface paths {
       path?: never;
       cookie?: never;
     };
+    /** Get autocomplete suggestions for the search box. */
     get: operations["GetSearchSuggestions"];
     put?: never;
     post?: never;
@@ -43,8 +45,10 @@ export interface paths {
       path?: never;
       cookie?: never;
     };
+    /** List the current user's orders, paginated. */
     get: operations["GetOrders"];
     put?: never;
+    /** Place an order from the current user's cart. */
     post: operations["CreateOrder"];
     delete?: never;
     options?: never;
@@ -59,6 +63,7 @@ export interface paths {
       path?: never;
       cookie?: never;
     };
+    /** Get a single order's detail by order number. */
     get: operations["GetOrderByNumber"];
     put?: never;
     post?: never;
@@ -75,6 +80,7 @@ export interface paths {
       path?: never;
       cookie?: never;
     };
+    /** List all genres with each genre's album count. */
     get: operations["GetGenres"];
     put?: never;
     post?: never;
@@ -91,6 +97,7 @@ export interface paths {
       path?: never;
       cookie?: never;
     };
+    /** Get a single genre's detail by its slug. */
     get: operations["GetGenreBySlug"];
     put?: never;
     post?: never;
@@ -107,6 +114,7 @@ export interface paths {
       path?: never;
       cookie?: never;
     };
+    /** List all decades with each decade's album count. */
     get: operations["GetDecades"];
     put?: never;
     post?: never;
@@ -123,6 +131,7 @@ export interface paths {
       path?: never;
       cookie?: never;
     };
+    /** Get a single decade's detail by its slug. */
     get: operations["GetDecadeBySlug"];
     put?: never;
     post?: never;
@@ -141,6 +150,7 @@ export interface paths {
     };
     get?: never;
     put?: never;
+    /** Replace the current user's cart contents with the given items. */
     post: operations["SyncCart"];
     delete?: never;
     options?: never;
@@ -155,6 +165,7 @@ export interface paths {
       path?: never;
       cookie?: never;
     };
+    /** Get the current user's cart contents. */
     get: operations["GetCart"];
     put?: never;
     post?: never;
@@ -173,6 +184,7 @@ export interface paths {
     };
     get?: never;
     put?: never;
+    /** Create a new user account. */
     post: operations["Register"];
     delete?: never;
     options?: never;
@@ -189,6 +201,7 @@ export interface paths {
     };
     get?: never;
     put?: never;
+    /** Exchange a valid refresh token for a new access token and refresh token. */
     post: operations["Refresh"];
     delete?: never;
     options?: never;
@@ -205,6 +218,7 @@ export interface paths {
     };
     get?: never;
     put?: never;
+    /** Invalidate the given refresh token. */
     post: operations["Logout"];
     delete?: never;
     options?: never;
@@ -221,6 +235,7 @@ export interface paths {
     };
     get?: never;
     put?: never;
+    /** Authenticate with email and password, returning an access token and refresh token. */
     post: operations["Login"];
     delete?: never;
     options?: never;
@@ -235,6 +250,7 @@ export interface paths {
       path?: never;
       cookie?: never;
     };
+    /** Get the currently authenticated user's profile. */
     get: operations["GetCurrentUser"];
     put?: never;
     post?: never;
@@ -251,6 +267,7 @@ export interface paths {
       path?: never;
       cookie?: never;
     };
+    /** List all artists, alphabetically, with each artist's album count. */
     get: operations["GetArtists"];
     put?: never;
     post?: never;
@@ -267,6 +284,7 @@ export interface paths {
       path?: never;
       cookie?: never;
     };
+    /** Get a single artist's detail and discography by sqid. */
     get: operations["GetArtistById"];
     put?: never;
     post?: never;
@@ -283,6 +301,7 @@ export interface paths {
       path?: never;
       cookie?: never;
     };
+    /** Get albums related to the given album, by shared genre, artist, or release date. */
     get: operations["GetRelatedAlbums"];
     put?: never;
     post?: never;
@@ -299,6 +318,7 @@ export interface paths {
       path?: never;
       cookie?: never;
     };
+    /** Get this week's featured staff-pick album. */
     get: operations["GetCoverStory"];
     put?: never;
     post?: never;
@@ -315,6 +335,7 @@ export interface paths {
       path?: never;
       cookie?: never;
     };
+    /** List albums with filtering, sorting, and pagination. */
     get: operations["GetAlbums"];
     put?: never;
     post?: never;
@@ -331,6 +352,7 @@ export interface paths {
       path?: never;
       cookie?: never;
     };
+    /** Get a single album's full detail by its sqid. */
     get: operations["GetAlbumById"];
     put?: never;
     post?: never;
@@ -455,7 +477,9 @@ export interface components {
       /** Format: int32 */
       albumCount: number;
     };
-    ArtistType: number;
+    /** @enum {unknown} */
+    ArtistType:
+      "Person" | "Group" | "Orchestra" | "Choir" | "Character" | "Other" | null;
     CartItemArtistResponse: {
       sqid: string;
       name: string;
@@ -633,7 +657,7 @@ export interface components {
       orderNumber: string;
       /** Format: date-time */
       placedAt: string;
-      status: string;
+      status: components["schemas"]["OrderStatus"];
       contactFirstName: string;
       contactLastName: string;
       contactEmail: string;
@@ -641,6 +665,8 @@ export interface components {
       totalInPence: number;
       items: components["schemas"]["OrderDetailItemResponse"][];
     };
+    /** @enum {unknown} */
+    OrderStatus: "Placed";
     OrderSummaryItemResponse: {
       albumSqid: string;
       title: string;
@@ -651,7 +677,7 @@ export interface components {
       orderNumber: string;
       /** Format: date-time */
       placedAt: string;
-      status: string;
+      status: components["schemas"]["OrderStatus"];
       /** Format: int32 */
       totalInPence: number;
       items: components["schemas"]["OrderSummaryItemResponse"][];
@@ -856,6 +882,15 @@ export interface operations {
           "application/problem+json": components["schemas"]["HttpValidationProblemDetails"];
         };
       };
+      /** @description Not Found */
+      404: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/problem+json": components["schemas"]["DomainProblemDetails"];
+        };
+      };
     };
   };
   CreateOrder: {
@@ -887,6 +922,24 @@ export interface operations {
         };
         content: {
           "application/problem+json": components["schemas"]["HttpValidationProblemDetails"];
+        };
+      };
+      /** @description Not Found */
+      404: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/problem+json": components["schemas"]["DomainProblemDetails"];
+        };
+      };
+      /** @description Conflict */
+      409: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/problem+json": components["schemas"]["DomainProblemDetails"];
         };
       };
     };
@@ -1051,6 +1104,15 @@ export interface operations {
         };
         content: {
           "application/problem+json": components["schemas"]["HttpValidationProblemDetails"];
+        };
+      };
+      /** @description Not Found */
+      404: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/problem+json": components["schemas"]["DomainProblemDetails"];
         };
       };
     };
@@ -1291,7 +1353,7 @@ export interface operations {
   GetArtistById: {
     parameters: {
       query?: {
-        sort?: string;
+        sort?: "NewestFirst" | "OldestFirst" | "PriceAsc" | "PriceDesc";
       };
       header?: never;
       path: {
@@ -1402,7 +1464,13 @@ export interface operations {
         genres?: string[];
         startYear?: number;
         endYear?: number;
-        sort?: string;
+        sort?:
+          | "NewestFirst"
+          | "OldestFirst"
+          | "PriceAsc"
+          | "PriceDesc"
+          | "ArtistAZ"
+          | "ArtistZA";
       };
       header?: never;
       path?: never;

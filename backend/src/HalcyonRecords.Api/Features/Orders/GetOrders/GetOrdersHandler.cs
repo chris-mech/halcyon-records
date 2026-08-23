@@ -54,7 +54,7 @@ public sealed class GetOrdersHandler(ApplicationDbContext dbContext, AlbumSqidEn
         var items = page.Select(o => new OrderSummaryResponse(
                 o.OrderNumber,
                 o.PlacedAt,
-                o.Status.ToString(),
+                o.Status,
                 o.TotalInPence,
                 o.Items.Select(i => new OrderSummaryItemResponse(
                         albumSqids.Encode(i.AlbumId.Value),

@@ -28,6 +28,8 @@ public sealed class GetGenresEndpoint : IEndpoint
                     );
                 }
             )
-            .WithName("GetGenres");
+            .WithName("GetGenres")
+            .WithTags("Genres")
+            .WithSummary("List all genres with each genre's album count.");
     }
 }

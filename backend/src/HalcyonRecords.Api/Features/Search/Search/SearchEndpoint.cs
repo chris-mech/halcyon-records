@@ -29,6 +29,8 @@ public sealed class SearchEndpoint : IEndpoint
                     );
                 }
             )
-            .WithName("Search");
+            .WithName("Search")
+            .WithTags("Search")
+            .WithSummary("Search across albums, artists, and genres by free-text query.");
     }
 }

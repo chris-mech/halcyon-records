@@ -45,10 +45,10 @@ async function getArtistDetailData(
   return { found: true, artist };
 }
 
-const ARTIST_TYPE_PERSON = 0;
+type ArtistType = components["schemas"]["ArtistType"];
 
-function sinceYearLabel(sinceYear: number, type: number | null): string {
-  if (type === ARTIST_TYPE_PERSON) return `Born ${sinceYear}`;
+function sinceYearLabel(sinceYear: number, type: ArtistType): string {
+  if (type === "Person") return `Born ${sinceYear}`;
   if (type == null) return `Active since ${sinceYear}`;
   return `Formed ${sinceYear}`;
 }
@@ -56,7 +56,7 @@ function sinceYearLabel(sinceYear: number, type: number | null): string {
 function originNote(
   origin: string | null,
   sinceYear: number | null,
-  type: number | null,
+  type: ArtistType,
 ): string | null {
   const yearPart = sinceYear == null ? null : sinceYearLabel(sinceYear, type);
   if (origin && yearPart) return `${origin} · ${yearPart}`;

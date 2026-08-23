@@ -36,6 +36,8 @@ public sealed class GetCartEndpoint : IEndpoint
                 }
             )
             .WithName("GetCart")
+            .WithTags("Carts")
+            .WithSummary("Get the current user's cart contents.")
             .RequireAuthorization()
             .Produces<DomainProblemDetails>(
                 StatusCodes.Status404NotFound,

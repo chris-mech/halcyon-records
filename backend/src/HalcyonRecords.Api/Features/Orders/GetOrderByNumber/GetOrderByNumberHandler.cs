@@ -44,7 +44,7 @@ public sealed class GetOrderByNumberHandler(
         return new OrderDetailResponse(
             order.OrderNumber,
             order.PlacedAt,
-            order.Status.ToString(),
+            order.Status,
             order.ContactFirstName,
             order.ContactLastName,
             order.ContactEmail,

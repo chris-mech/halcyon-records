@@ -96,7 +96,7 @@ describe("ArtistDetailPage", () => {
   });
 
   test("shows a Born label for a Person artist", async () => {
-    mockArtistFetch({ type: 0, sinceYear: 1985 });
+    mockArtistFetch({ type: "Person", sinceYear: 1985 });
 
     render(await renderPage());
 
@@ -104,7 +104,7 @@ describe("ArtistDetailPage", () => {
   });
 
   test("shows a Formed label for a Group artist", async () => {
-    mockArtistFetch({ type: 1, sinceYear: 2015 });
+    mockArtistFetch({ type: "Group", sinceYear: 2015 });
 
     render(await renderPage());
 

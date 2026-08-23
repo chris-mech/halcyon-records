@@ -25,6 +25,8 @@ public sealed class GetCoverStoryEndpoint : IEndpoint
                 }
             )
             .WithName("GetCoverStory")
+            .WithTags("Albums")
+            .WithSummary("Get this week's featured staff-pick album.")
             .Produces<DomainProblemDetails>(
                 StatusCodes.Status404NotFound,
                 "application/problem+json"

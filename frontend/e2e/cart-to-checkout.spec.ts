@@ -13,6 +13,7 @@ test.describe("cart to checkout", () => {
 
     let albumTitle = "";
     let orderNumber = "";
+    const main = page.getByRole("main");
 
     await test.step("register an account, then log back out to browse anonymously", async () => {
       await page.goto("/register");
@@ -78,9 +79,7 @@ test.describe("cart to checkout", () => {
           .getByRole("navigation", { name: "Checkout progress" })
           .getByText("Checkout", { exact: true }),
       ).toHaveAttribute("aria-current", "step");
-      await expect(
-        page.locator("p", { hasText: albumTitle }).filter({ visible: true }),
-      ).toBeVisible();
+      await expect(main.locator("p", { hasText: albumTitle })).toBeVisible();
     });
 
     await test.step("place the order", async () => {
@@ -97,9 +96,7 @@ test.describe("cart to checkout", () => {
       ).toBeVisible();
       await expectNoAccessibilityViolations(page);
 
-      await expect(
-        page.locator("p", { hasText: albumTitle }).filter({ visible: true }),
-      ).toBeVisible();
+      await expect(main.locator("p", { hasText: albumTitle })).toBeVisible();
     });
 
     await test.step("the order shows up in order history", async () => {
@@ -116,9 +113,7 @@ test.describe("cart to checkout", () => {
       await expect(
         page.getByRole("heading", { name: `Order ${orderNumber}` }),
       ).toBeVisible();
-      await expect(
-        page.locator("p", { hasText: albumTitle }).filter({ visible: true }),
-      ).toBeVisible();
+      await expect(main.locator("p", { hasText: albumTitle })).toBeVisible();
     });
   });
 });

@@ -26,6 +26,8 @@ public sealed class GetSearchSuggestionsEndpoint : IEndpoint
                     );
                 }
             )
-            .WithName("GetSearchSuggestions");
+            .WithName("GetSearchSuggestions")
+            .WithTags("Search")
+            .WithSummary("Get autocomplete suggestions for the search box.");
     }
 }

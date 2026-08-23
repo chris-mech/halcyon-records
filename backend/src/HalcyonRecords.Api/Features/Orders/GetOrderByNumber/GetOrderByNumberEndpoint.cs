@@ -35,6 +35,8 @@ public sealed class GetOrderByNumberEndpoint : IEndpoint
                 }
             )
             .WithName("GetOrderByNumber")
+            .WithTags("Orders")
+            .WithSummary("Get a single order's detail by order number.")
             .RequireAuthorization()
             .Produces<DomainProblemDetails>(
                 StatusCodes.Status404NotFound,

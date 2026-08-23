@@ -1,12 +1,6 @@
-export type ArtistAlbumSort =
-  "NewestFirst" | "OldestFirst" | "PriceAsc" | "PriceDesc";
+import { ARTIST_ALBUM_SORTS, type ArtistAlbumSort } from "@/lib/api/album-sort";
 
-const ARTIST_ALBUM_SORTS: readonly ArtistAlbumSort[] = [
-  "NewestFirst",
-  "OldestFirst",
-  "PriceAsc",
-  "PriceDesc",
-];
+export type { ArtistAlbumSort };
 
 const DEFAULT_SORT: ArtistAlbumSort = "NewestFirst";
 

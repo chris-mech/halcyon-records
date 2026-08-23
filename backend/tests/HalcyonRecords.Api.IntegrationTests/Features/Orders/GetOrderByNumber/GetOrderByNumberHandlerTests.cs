@@ -87,7 +87,7 @@ public class GetOrderByNumberHandlerTests(SqlServerContainerFixture fixture)
         result.Value.ContactFirstName.Should().Be("Order");
         result.Value.ContactLastName.Should().Be("Contact");
         result.Value.ContactEmail.Should().Be("order-contact@test.invalid");
-        result.Value.Status.Should().Be(nameof(OrderStatus.Placed));
+        result.Value.Status.Should().Be(OrderStatus.Placed);
         result.Value.TotalInPence.Should().Be(3000);
         var item = result.Value.Items.Should().ContainSingle().Subject;
         item.AlbumSqid.Should().Be(s_albumSqids.Encode(album.Id.Value));

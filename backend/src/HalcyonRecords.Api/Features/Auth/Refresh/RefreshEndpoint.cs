@@ -30,6 +30,8 @@ public sealed class RefreshEndpoint : IEndpoint
                 }
             )
             .WithName("Refresh")
+            .WithTags("Auth")
+            .WithSummary("Exchange a valid refresh token for a new access token and refresh token.")
             .Produces<DomainProblemDetails>(
                 StatusCodes.Status401Unauthorized,
                 "application/problem+json"

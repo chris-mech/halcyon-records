@@ -47,6 +47,12 @@ public sealed class GetOrdersEndpoint : IEndpoint
                 }
             )
             .WithName("GetOrders")
-            .RequireAuthorization();
+            .WithTags("Orders")
+            .WithSummary("List the current user's orders, paginated.")
+            .RequireAuthorization()
+            .Produces<DomainProblemDetails>(
+                StatusCodes.Status404NotFound,
+                "application/problem+json"
+            );
     }
 }

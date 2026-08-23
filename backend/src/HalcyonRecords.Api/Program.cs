@@ -1,4 +1,5 @@
 using System.Diagnostics;
+using System.Text.Json.Serialization;
 using FluentValidation;
 using HalcyonRecords.Api.Common;
 using HalcyonRecords.Api.Common.Behaviours;
@@ -20,6 +21,7 @@ using HalcyonRecords.Api.Infrastructure.Seed;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
+using Scalar.AspNetCore;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.AddServiceDefaults();
@@ -60,9 +62,24 @@ builder.Services.AddApiMeilisearch(builder.Configuration);
 builder.Services.AddApiRateLimiting(builder.Configuration);
 builder.Services.AddApiAuth(builder.Configuration);
 
+builder.Services.ConfigureHttpJsonOptions(options =>
+{
+    options.SerializerOptions.Converters.Add(new JsonStringEnumConverter());
+});
+
 builder.Services.AddOpenApi(options =>
 {
     options.AddSchemaTransformer<IntegerSchemaTransformer>();
+    options.AddOperationTransformer<SortEnumParameterTransformer>();
+    options.AddDocumentTransformer(
+        (document, context, cancellationToken) =>
+        {
+            document.Info.Title = "Halcyon Records API";
+            document.Info.Version = "v1";
+            document.Info.Description = "REST API for the Halcyon Records online record shop.";
+            return Task.CompletedTask;
+        }
+    );
 });
 
 builder.Services.Configure<SearchOptions>(
@@ -93,8 +110,6 @@ if (app.Environment.IsDevelopment())
     var indexer = scope.ServiceProvider.GetRequiredService<MeilisearchIndexer>();
     await indexer.RebuildAsync(dbContext);
 
-    app.MapOpenApi();
-
     app.MapPost(
             "/api/dev/search/reindex",
             async (ApplicationDbContext db, MeilisearchIndexer indexer, CancellationToken ct) =>
@@ -107,6 +122,13 @@ if (app.Environment.IsDevelopment())
 
     app.MapBackgroundJobsDevEndpoints();
 }
+
+app.MapOpenApi();
+app.MapScalarApiReference(options =>
+{
+    options.WithTitle("Halcyon Records API");
+    options.WithDefaultHttpClient(ScalarTarget.JavaScript, ScalarClient.Fetch);
+});
 
 app.UseHttpsRedirection();
 app.UseExceptionHandler();

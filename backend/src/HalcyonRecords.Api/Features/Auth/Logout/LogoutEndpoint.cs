@@ -27,6 +27,8 @@ public sealed class LogoutEndpoint : IEndpoint
                     );
                 }
             )
-            .WithName("Logout");
+            .WithName("Logout")
+            .WithTags("Auth")
+            .WithSummary("Invalidate the given refresh token.");
     }
 }

@@ -43,6 +43,16 @@ public sealed class CreateOrderEndpoint : IEndpoint
                 }
             )
             .WithName("CreateOrder")
-            .RequireAuthorization();
+            .WithTags("Orders")
+            .WithSummary("Place an order from the current user's cart.")
+            .RequireAuthorization()
+            .Produces<DomainProblemDetails>(
+                StatusCodes.Status404NotFound,
+                "application/problem+json"
+            )
+            .Produces<DomainProblemDetails>(
+                StatusCodes.Status409Conflict,
+                "application/problem+json"
+            );
     }
 }

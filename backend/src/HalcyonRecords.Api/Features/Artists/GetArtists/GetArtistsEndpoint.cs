@@ -28,6 +28,8 @@ public sealed class GetArtistsEndpoint : IEndpoint
                     );
                 }
             )
-            .WithName("GetArtists");
+            .WithName("GetArtists")
+            .WithTags("Artists")
+            .WithSummary("List all artists, alphabetically, with each artist's album count.");
     }
 }
