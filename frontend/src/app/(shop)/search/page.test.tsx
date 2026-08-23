@@ -4,7 +4,7 @@ import { render, screen } from "@testing-library/react";
 import { client } from "@/lib/api/client";
 import type { components } from "@/lib/api/schema";
 
-import { SearchContent } from "./page";
+import { generateMetadata, SearchContent } from "./page";
 
 vi.mock("@/lib/api/client", () => ({
   client: { GET: vi.fn() },
@@ -39,6 +39,24 @@ const suggestedAlbum: SearchAlbum = {
 function renderPage(searchParams: Record<string, string | string[]> = {}) {
   return SearchContent({ searchParams: Promise.resolve(searchParams) });
 }
+
+describe("generateMetadata", () => {
+  test("returns a query-specific title when a query is present", async () => {
+    const metadata = await generateMetadata({
+      searchParams: Promise.resolve({ q: "test query" }),
+    });
+
+    expect(metadata.title).toBe('Results for "test query"');
+  });
+
+  test("returns a generic title when the query is blank", async () => {
+    const metadata = await generateMetadata({
+      searchParams: Promise.resolve({}),
+    });
+
+    expect(metadata.title).toBe("Search");
+  });
+});
 
 describe("SearchPage", () => {
   test("shows a search prompt with suggested terms when the query is blank", async () => {
