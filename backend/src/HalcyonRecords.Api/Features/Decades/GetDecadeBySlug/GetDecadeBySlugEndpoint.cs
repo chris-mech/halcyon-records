@@ -28,6 +28,8 @@ public sealed class GetDecadeBySlugEndpoint : IEndpoint
                 }
             )
             .WithName("GetDecadeBySlug")
+            .WithTags("Decades")
+            .WithSummary("Get a single decade's detail by its slug.")
             .Produces<DomainProblemDetails>(
                 StatusCodes.Status404NotFound,
                 "application/problem+json"

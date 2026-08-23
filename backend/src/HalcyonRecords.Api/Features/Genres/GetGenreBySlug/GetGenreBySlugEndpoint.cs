@@ -28,6 +28,8 @@ public sealed class GetGenreBySlugEndpoint : IEndpoint
                 }
             )
             .WithName("GetGenreBySlug")
+            .WithTags("Genres")
+            .WithSummary("Get a single genre's detail by its slug.")
             .Produces<DomainProblemDetails>(
                 StatusCodes.Status404NotFound,
                 "application/problem+json"

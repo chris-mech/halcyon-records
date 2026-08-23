@@ -39,6 +39,12 @@ public sealed class SyncCartEndpoint : IEndpoint
                 }
             )
             .WithName("SyncCart")
-            .RequireAuthorization();
+            .WithTags("Carts")
+            .WithSummary("Replace the current user's cart contents with the given items.")
+            .RequireAuthorization()
+            .Produces<DomainProblemDetails>(
+                StatusCodes.Status404NotFound,
+                "application/problem+json"
+            );
     }
 }

@@ -34,6 +34,8 @@ public sealed class GetCurrentUserEndpoint : IEndpoint
                 }
             )
             .WithName("GetCurrentUser")
+            .WithTags("Auth")
+            .WithSummary("Get the currently authenticated user's profile.")
             .RequireAuthorization()
             .Produces<DomainProblemDetails>(
                 StatusCodes.Status404NotFound,

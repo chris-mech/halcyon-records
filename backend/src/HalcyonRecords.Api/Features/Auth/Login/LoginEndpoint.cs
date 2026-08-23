@@ -30,6 +30,10 @@ public sealed class LoginEndpoint : IEndpoint
                 }
             )
             .WithName("Login")
+            .WithTags("Auth")
+            .WithSummary(
+                "Authenticate with email and password, returning an access token and refresh token."
+            )
             .Produces<DomainProblemDetails>(
                 StatusCodes.Status401Unauthorized,
                 "application/problem+json"

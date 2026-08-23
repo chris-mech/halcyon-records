@@ -28,6 +28,8 @@ public sealed class GetDecadesEndpoint : IEndpoint
                     );
                 }
             )
-            .WithName("GetDecades");
+            .WithName("GetDecades")
+            .WithTags("Decades")
+            .WithSummary("List all decades with each decade's album count.");
     }
 }

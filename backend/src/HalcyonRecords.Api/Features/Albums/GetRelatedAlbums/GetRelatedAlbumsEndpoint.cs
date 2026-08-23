@@ -30,6 +30,10 @@ public sealed class GetRelatedAlbumsEndpoint : IEndpoint
                 }
             )
             .WithName("GetRelatedAlbums")
+            .WithTags("Albums")
+            .WithSummary(
+                "Get albums related to the given album, by shared genre, artist, or release date."
+            )
             .Produces<DomainProblemDetails>(
                 StatusCodes.Status404NotFound,
                 "application/problem+json"

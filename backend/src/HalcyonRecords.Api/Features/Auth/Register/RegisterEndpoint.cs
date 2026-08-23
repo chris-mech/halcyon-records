@@ -34,6 +34,8 @@ public sealed class RegisterEndpoint : IEndpoint
                 }
             )
             .WithName("Register")
+            .WithTags("Auth")
+            .WithSummary("Create a new user account.")
             .Produces<DomainProblemDetails>(
                 StatusCodes.Status409Conflict,
                 "application/problem+json"

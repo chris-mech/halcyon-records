@@ -28,6 +28,8 @@ public sealed class GetAlbumByIdEndpoint : IEndpoint
                 }
             )
             .WithName("GetAlbumById")
+            .WithTags("Albums")
+            .WithSummary("Get a single album's full detail by its sqid.")
             .Produces<DomainProblemDetails>(
                 StatusCodes.Status404NotFound,
                 "application/problem+json"

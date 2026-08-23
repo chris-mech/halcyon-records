@@ -63,6 +63,8 @@ public sealed class GetAlbumsEndpoint : IEndpoint
                     );
                 }
             )
-            .WithName("GetAlbums");
+            .WithName("GetAlbums")
+            .WithTags("Albums")
+            .WithSummary("List albums with filtering, sorting, and pagination.");
     }
 }

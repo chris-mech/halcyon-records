@@ -29,6 +29,8 @@ public sealed class GetArtistByIdEndpoint : IEndpoint
                 }
             )
             .WithName("GetArtistById")
+            .WithTags("Artists")
+            .WithSummary("Get a single artist's detail and discography by sqid.")
             .Produces<DomainProblemDetails>(
                 StatusCodes.Status404NotFound,
                 "application/problem+json"
