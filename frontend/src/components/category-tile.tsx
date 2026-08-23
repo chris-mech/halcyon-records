@@ -11,7 +11,10 @@ interface CategoryTileProps {
 
 function CategoryTile({ href, name, imageUrl, albumCount }: CategoryTileProps) {
   return (
-    <Link href={href} className="block border border-line bg-paper shadow-lg">
+    <Link
+      href={href}
+      className="block border border-line bg-paper shadow-lg outline-none focus-visible:ring-3 focus-visible:ring-ring"
+    >
       <div className="relative aspect-[4/3] border-b border-line bg-slate-muted/40">
         {imageUrl ? (
           <Image

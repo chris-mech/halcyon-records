@@ -64,7 +64,7 @@ function ProductCard({
               {index > 0 && ", "}
               <Link
                 href={`/artists/${artist.sqid}/${artist.nameSlug}`}
-                className="hover:underline"
+                className="outline-none hover:underline focus-visible:ring-3 focus-visible:ring-ring"
               >
                 {artist.name}
               </Link>
@@ -78,7 +78,7 @@ function ProductCard({
                   {index > 0 && ", "}
                   <Link
                     href={`/genres/${genre.slug}`}
-                    className="hover:underline"
+                    className="outline-none hover:underline focus-visible:ring-3 focus-visible:ring-ring"
                   >
                     {genre.name}
                   </Link>
@@ -95,7 +95,7 @@ function ProductCard({
 
         <Link
           href={albumHref}
-          className="font-serif text-[1.0625rem] font-medium italic hover:underline"
+          className="font-serif text-[1.0625rem] font-medium italic outline-none hover:underline focus-visible:ring-3 focus-visible:ring-ring"
         >
           {album.title}
         </Link>
