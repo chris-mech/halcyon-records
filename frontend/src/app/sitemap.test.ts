@@ -85,10 +85,11 @@ function mockCatalog({
   genres = [buildGenre()],
   decades = [buildDecade()],
 }: CatalogOverrides = {}) {
-  vi.mocked(client.GET).mockImplementation(((path: string, options: any) => {
+  vi.mocked(client.GET).mockImplementation((path, options) => {
     switch (path) {
       case "/api/albums": {
-        const page = options.params.query.page as number;
+        const page = (options as { params?: { query?: { page?: number } } })
+          ?.params?.query?.page as number;
         const { items, totalPages } = albumPages[page - 1];
         return Promise.resolve({
           data: {
@@ -123,7 +124,7 @@ function mockCatalog({
       default:
         throw new Error(`Unexpected path in sitemap test: ${path}`);
     }
-  }) as typeof client.GET);
+  }) as typeof client.GET;
 }
 
 describe("sitemap", () => {
