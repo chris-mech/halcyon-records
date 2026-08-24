@@ -119,9 +119,10 @@ describe("Header", () => {
 
     render(<Header variant="stripped" />);
 
-    expect(
-      screen.getByRole("link", { name: "← Back to shop" }),
-    ).toHaveAttribute("href", "/shop");
+    expect(screen.getByRole("link", { name: "← Back home" })).toHaveAttribute(
+      "href",
+      "/",
+    );
   });
 
   test("shows a custom back link when backHref and backLabel are given", () => {
