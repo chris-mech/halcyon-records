@@ -1,9 +1,11 @@
 import { execSync } from "node:child_process";
 import { existsSync, rmSync } from "node:fs";
-import { tmpdir } from "node:os";
 import { join } from "node:path";
 
-const MARKER_PATH = join(tmpdir(), "halcyon-e2e-cold-start.marker");
+const MARKER_PATH = join(
+  __dirname,
+  "../test-results/halcyon-e2e-cold-start.marker",
+);
 
 async function globalTeardown(): Promise<void> {
   if (process.env.CI || !existsSync(MARKER_PATH)) {
