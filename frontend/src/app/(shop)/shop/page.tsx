@@ -12,7 +12,7 @@ import { SortSelect } from "./sort-select";
 export const metadata: Metadata = {
   title: "Shop",
   description:
-    "Browse the full record catalogue — filter by genre, price, and more.",
+    "Browse the full record catalogue and filter by genre, price, and more.",
 };
 
 export async function ShopContent({
@@ -43,7 +43,7 @@ export async function ShopContent({
   return (
     <div className="flex flex-col gap-8 px-16 py-12">
       <div className="flex items-baseline justify-between">
-        <h1 className="font-heading text-4xl font-black uppercase">
+        <h1 className="shadow-stack-section font-heading text-4xl font-black text-paper uppercase">
           All records
         </h1>
         <span className="text-sm text-muted-foreground">
