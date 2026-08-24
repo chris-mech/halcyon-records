@@ -57,10 +57,10 @@ export default function CartPage() {
           <ShoppingBag aria-hidden className="size-5.5 text-muted-foreground" />
         }
         heading="Your bag is empty"
-        description="Nothing here yet — have a dig through this week's cover story or browse the full catalogue."
+        description="Nothing here yet. Have a dig through this week's cover story or browse the full catalogue."
       >
         <Link
-          href="/shop"
+          href="/"
           className={cn(
             buttonVariants(),
             "px-7.5 py-3.5 text-xs font-bold tracking-wide uppercase",
@@ -94,7 +94,7 @@ export default function CartPage() {
             ))}
           </div>
           <Link
-            href="/shop"
+            href="/"
             className="mt-7 inline-block border-b-2 border-ink pb-0.5 text-xs font-bold tracking-wide text-ink uppercase"
           >
             ← Continue shopping
@@ -114,7 +114,7 @@ export default function CartPage() {
             </div>
             <div className="flex justify-between text-sm text-muted-foreground">
               <span>Shipping</span>
-              <span>Not applicable — demo order</span>
+              <span>Not applicable (demo order)</span>
             </div>
             <div className="mt-2 flex justify-between border-t border-line pt-4 text-base font-bold">
               <span>Total</span>

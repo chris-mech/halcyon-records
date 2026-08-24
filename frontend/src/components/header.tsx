@@ -31,8 +31,8 @@ interface HeaderProps {
 
 function Header({
   variant = "full",
-  backHref = "/shop",
-  backLabel = "← Back to shop",
+  backHref = "/",
+  backLabel = "← Back home",
 }: HeaderProps) {
   const { data: session, status } = useSession();
   const hydrated = useCartHydrated();
