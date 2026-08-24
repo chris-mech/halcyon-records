@@ -9,7 +9,7 @@ Get-CimInstance Win32_Process |
 Write-Host "Stopping sql/meilisearch containers (if any)..."
 $containers = docker ps --filter "name=sql-" --filter "name=meilisearch-" -q
 if ($containers) {
-    $containers | ForEach-Object { docker stop $_ }
+    $containers | ForEach-Object { docker rm -f $_ }
 } else {
     Write-Host "  None running."
 }
