@@ -27,7 +27,7 @@ public static class DiscogsServiceCollectionExtensions
             )
             {
                 throw new InvalidOperationException(
-                    "Discogs:ConsumerKey / Discogs:ConsumerSecret are not configured — set them via "
+                    "Discogs:ConsumerKey / Discogs:ConsumerSecret are not configured: set them via "
                         + "'dotnet user-secrets set \"Discogs:ConsumerKey\" \"...\"'."
                 );
             }

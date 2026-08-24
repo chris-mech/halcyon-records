@@ -2,25 +2,25 @@
   {
     "name": "Jazz",
     "slug": "jazz",
-    "description": "Modal, cool, hard bop and everything that came after — records for late nights and slow Sundays alike.",
+    "description": "Modal, cool, hard bop and everything that came after: records for late nights and slow Sundays alike.",
     "imageUrl": "https://picsum.photos/seed/genre-jazz/400/300"
   },
   {
     "name": "Electronic",
     "slug": "electronic",
-    "description": "From deep house to ambient drift — electronic music for dancing, thinking, or doing both at once.",
+    "description": "From deep house to ambient drift: electronic music for dancing, thinking, or doing both at once.",
     "imageUrl": "https://picsum.photos/seed/genre-electronic/400/300"
   },
   {
     "name": "Folk, World, & Country",
     "slug": "folk-world-and-country",
-    "description": "Country twang, front-porch folk, and rhythms from every corner of the map — proof that roots music has no borders.",
+    "description": "Country twang, front-porch folk, and rhythms from every corner of the map, proof that roots music has no borders.",
     "imageUrl": "https://picsum.photos/seed/genre-folk/400/300"
   },
   {
     "name": "Rock",
     "slug": "rock",
-    "description": "Loud guitars, louder hooks, and the odd quiet moment in between — the genre that never really left.",
+    "description": "Loud guitars, louder hooks, and the odd quiet moment in between: the genre that never really left.",
     "imageUrl": "https://picsum.photos/seed/genre-rock/400/300"
   }
 ]

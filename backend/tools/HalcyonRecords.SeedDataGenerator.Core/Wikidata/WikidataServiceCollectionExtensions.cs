@@ -23,7 +23,7 @@ public static class WikidataServiceCollectionExtensions
             if (string.IsNullOrWhiteSpace(wikidataOptions.ContactEmail))
             {
                 throw new InvalidOperationException(
-                    "Wikidata:ContactEmail is not configured — set it via "
+                    "Wikidata:ContactEmail is not configured: set it via "
                         + "'dotnet user-secrets set \"Wikidata:ContactEmail\" \"...\"'."
                 );
             }

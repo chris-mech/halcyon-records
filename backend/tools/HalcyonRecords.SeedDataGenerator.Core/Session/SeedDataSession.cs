@@ -180,7 +180,7 @@ public sealed class SeedDataSession(
         if (!_artistsBySourceId.ContainsKey(artistId))
         {
             throw new InvalidOperationException(
-                $"Cannot delete artist '{artistId}' — no such artist in the session."
+                $"Cannot delete artist '{artistId}': no such artist in the session."
             );
         }
 
@@ -206,7 +206,7 @@ public sealed class SeedDataSession(
         if (!_artistsBySourceId.ContainsKey(plan.SourceId))
         {
             throw new InvalidOperationException(
-                $"Cannot update artist '{plan.SourceId}' — no such artist in the session."
+                $"Cannot update artist '{plan.SourceId}': no such artist in the session."
             );
         }
 
@@ -316,7 +316,7 @@ public sealed class SeedDataSession(
         if (!_albumsBySourceId.ContainsKey(sourceId))
         {
             throw new InvalidOperationException(
-                $"Cannot update album '{sourceId}' — no such album in the session."
+                $"Cannot update album '{sourceId}': no such album in the session."
             );
         }
 
@@ -345,7 +345,7 @@ public sealed class SeedDataSession(
         if (!_albumsBySourceId.Remove(sourceId))
         {
             throw new InvalidOperationException(
-                $"Cannot delete album '{sourceId}' — no such album in the session."
+                $"Cannot delete album '{sourceId}': no such album in the session."
             );
         }
     }
@@ -363,7 +363,7 @@ public sealed class SeedDataSession(
         if (!GenreService.KnownGenreNames.Contains(name))
         {
             throw new InvalidOperationException(
-                $"Cannot add genre '{name}' — not part of the known Discogs taxonomy."
+                $"Cannot add genre '{name}': not part of the known Discogs taxonomy."
             );
         }
 
@@ -372,7 +372,7 @@ public sealed class SeedDataSession(
         if (!_genresBySlug.TryAdd(slug, new GenreSeedEntry(name, slug)))
         {
             throw new InvalidOperationException(
-                $"Cannot add genre '{name}' — already present in the session."
+                $"Cannot add genre '{name}': already present in the session."
             );
         }
 
@@ -384,7 +384,7 @@ public sealed class SeedDataSession(
         if (!_genresBySlug.ContainsKey(slug))
         {
             throw new InvalidOperationException(
-                $"Cannot update genre '{slug}' — no such genre in the session."
+                $"Cannot update genre '{slug}': no such genre in the session."
             );
         }
 
@@ -398,7 +398,7 @@ public sealed class SeedDataSession(
         if (!_genresBySlug.ContainsKey(slug))
         {
             throw new InvalidOperationException(
-                $"Cannot delete genre '{slug}' — no such genre in the session."
+                $"Cannot delete genre '{slug}': no such genre in the session."
             );
         }
 

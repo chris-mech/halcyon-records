@@ -27,7 +27,7 @@ public static class CoverArtArchiveServiceCollectionExtensions
             if (string.IsNullOrWhiteSpace(coverArtArchiveOptions.ContactEmail))
             {
                 throw new InvalidOperationException(
-                    "CoverArtArchive:ContactEmail is not configured — set it via "
+                    "CoverArtArchive:ContactEmail is not configured: set it via "
                         + "'dotnet user-secrets set \"CoverArtArchive:ContactEmail\" \"...\"'."
                 );
             }

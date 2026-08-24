@@ -23,7 +23,7 @@ public static class MusicBrainzServiceCollectionExtensions
             if (string.IsNullOrWhiteSpace(musicBrainzOptions.ContactEmail))
             {
                 throw new InvalidOperationException(
-                    "MusicBrainz:ContactEmail is not configured — set it via "
+                    "MusicBrainz:ContactEmail is not configured: set it via "
                         + "'dotnet user-secrets set \"MusicBrainz:ContactEmail\" \"...\"'."
                 );
             }
