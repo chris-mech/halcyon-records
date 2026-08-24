@@ -6,7 +6,7 @@ import { cn } from "@/lib/utils";
 const wordmarkVariants = cva("font-serif font-semibold text-gold", {
   variants: {
     variant: {
-      header: "text-xl text-shadow-[0.1em_0.1em_0_var(--color-ink)]",
+      header: "text-xl text-shadow-[0.06em_0.06em_0_var(--color-ink)]",
       footer: "text-sm",
     },
   },
@@ -29,7 +29,7 @@ function Wordmark({ variant = "header", className }: WordmarkProps) {
       <span className={cn(wordmarkVariants({ variant }))}>Halcyon Records</span>
       {variant === "header" && (
         <span className="mt-1 text-[0.5625rem] font-semibold tracking-[0.2em] text-slate-muted uppercase">
-          Tagline TBD
+          Est. sometime, probably
         </span>
       )}
     </Link>
