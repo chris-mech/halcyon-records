@@ -92,11 +92,7 @@ export async function ArtistsContent() {
 
       <div className="mx-auto w-full max-w-275 px-16 pb-25">
         {letterGroups.map(({ letter, artists }) => (
-          <section
-            key={letter}
-            id={letterAnchorId(letter)}
-            className="pt-9 first:pt-0"
-          >
+          <section key={letter} id={letterAnchorId(letter)} className="pt-9">
             <h2 className="mb-1 font-heading text-xl font-extrabold text-muted-foreground">
               {letter}
             </h2>
