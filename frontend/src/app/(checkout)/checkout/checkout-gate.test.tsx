@@ -20,7 +20,7 @@ describe("CheckoutGate", () => {
     render(<CheckoutGate />);
 
     expect(
-      screen.getByText("Your bag is saved — nothing will be lost."),
+      screen.getByText("Your bag is saved. Nothing will be lost."),
     ).toBeInTheDocument();
   });
 });

@@ -43,7 +43,7 @@ function AccountShell({ active, children }: AccountShellProps) {
         Your account
       </h1>
       <p className="mb-8 text-[0.8125rem] text-muted-foreground">
-        Demo account — nothing here is tied to a real identity
+        Demo account: nothing here is tied to a real identity
       </p>
 
       <div className="grid grid-cols-[220px_1fr] items-start gap-12">

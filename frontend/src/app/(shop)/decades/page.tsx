@@ -49,8 +49,8 @@ export async function DecadesContent() {
           Browse by decade
         </h1>
         <p className="max-w-130 text-sm text-muted-foreground">
-          A trip through the decades — everything sorted by when it actually
-          came out.
+          A trip through the decades: everything sorted by when it actually came
+          out.
         </p>
       </div>
 

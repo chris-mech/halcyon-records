@@ -65,7 +65,7 @@ export async function SearchContent({
             <Search aria-hidden className="size-5.5 text-muted-foreground" />
           }
           heading="Search the catalogue"
-          description="Look for a title, artist, or genre — we'll bring back the closest matches."
+          description="Look for a title, artist, or genre, and we'll bring back the closest matches."
         >
           <SuggestedSearchTerms terms={suggestions ?? []} />
         </EmptyState>

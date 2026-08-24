@@ -67,7 +67,7 @@ async function getDecadeEntries(): Promise<MetadataRoute.Sitemap> {
 }
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  await connection(); // prerendering stops here — everything below runs
+  await connection();
 
   const staticEntries: MetadataRoute.Sitemap = [
     { url: SITE_URL },
