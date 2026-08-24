@@ -1,10 +1,10 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import Image from "next/image";
 import Link from "next/link";
 import { CheckCircle2 } from "lucide-react";
 
+import { MediaThumbnail } from "@/components/media-thumbnail";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { buttonVariants } from "@/components/ui/button";
 import { formatPrice } from "@/lib/format";
@@ -108,17 +108,11 @@ function OrderConfirmation({ orderNumber }: OrderConfirmationProps) {
         <CardContent className="gap-3.5">
           {order.items.map((item) => (
             <div key={item.albumSqid} className="flex items-center gap-3">
-              <div className="relative size-12 shrink-0 bg-slate-muted/40">
-                {item.imageUrl && (
-                  <Image
-                    src={item.imageUrl}
-                    alt=""
-                    fill
-                    sizes="48px"
-                    className="object-cover"
-                  />
-                )}
-              </div>
+              <MediaThumbnail
+                imageUrl={item.imageUrl}
+                sizes="48px"
+                className="size-12 shrink-0"
+              />
               <div className="flex-1">
                 <p className="text-sm font-medium">{item.title}</p>
                 <p className="text-xs text-muted-foreground">
@@ -138,13 +132,13 @@ function OrderConfirmation({ orderNumber }: OrderConfirmationProps) {
       </Card>
 
       <div className="border-l-2 border-slate bg-background p-3 text-left text-[0.6875rem] leading-relaxed text-muted-foreground">
-        No confirmation email is sent and nothing ships — this page exists to
+        No confirmation email is sent and nothing ships. This page exists to
         show the order flow end to end. The order above has been saved to the
         database, so it&apos;s a genuine record, just not a genuine purchase.
       </div>
 
       <Link
-        href="/shop"
+        href="/"
         className={cn(
           buttonVariants(),
           "mt-8 w-full py-4 text-xs font-bold tracking-wide uppercase",

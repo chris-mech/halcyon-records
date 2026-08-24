@@ -1,13 +1,12 @@
 import { Fragment } from "react";
-import Image from "next/image";
 import Link from "next/link";
-import { DiscAlbum } from "lucide-react";
 
+import { formatPrice } from "@/lib/format";
+import type { components } from "@/lib/api/schema";
 import { Card } from "@/components/ui/card";
 import { AddToBagButton } from "@/components/add-to-bag-button";
 import { AlbumTagStack } from "@/components/album-tag-stack";
-import { formatPrice } from "@/lib/format";
-import type { components } from "@/lib/api/schema";
+import { MediaThumbnail } from "./media-thumbnail";
 
 type AlbumSummary = components["schemas"]["AlbumSummaryResponse"];
 
@@ -36,28 +35,14 @@ function ProductCard({
         className="absolute -top-1.5 left-5 z-10"
       />
 
-      <Link
+      <MediaThumbnail
+        imageUrl={album.imageUrl}
         href={albumHref}
-        aria-hidden
-        tabIndex={-1}
-        className="relative block aspect-square border-b border-line bg-slate-muted/40"
-      >
-        {album.imageUrl ? (
-          <Image
-            src={album.imageUrl}
-            alt=""
-            fill
-            sizes="(min-width: 1024px) 25vw, (min-width: 640px) 33vw, 50vw"
-            className="object-cover"
-          />
-        ) : (
-          <div className="flex size-full items-center justify-center">
-            <DiscAlbum aria-hidden className="size-10 text-slate" />
-          </div>
-        )}
-      </Link>
+        sizes="(min-width: 1024px) 25vw, (min-width: 640px) 33vw, 50vw"
+        className="block aspect-square border-b border-line"
+      />
 
-      <div className="flex flex-col gap-2.5 p-4">
+      <div className="flex flex-1 flex-col gap-2.5 p-4">
         <div className="flex flex-wrap items-center gap-x-1 text-[0.6875rem] font-bold tracking-wide text-muted-foreground uppercase">
           {album.artists.map((artist, index) => (
             <Fragment key={artist.sqid}>
@@ -100,7 +85,7 @@ function ProductCard({
           {album.title}
         </Link>
 
-        <div className="flex items-center justify-between border-t border-line pt-2.5">
+        <div className="mt-auto flex items-center justify-between border-t border-line pt-2.5">
           <p className="flex items-baseline">
             {album.originalPriceInPence != null && (
               <span className="mr-1.5 text-sm font-medium text-muted-foreground line-through">

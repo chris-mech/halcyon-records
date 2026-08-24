@@ -146,7 +146,7 @@ describe("AlbumDetailPage", () => {
     render(await renderPage());
 
     expect(
-      screen.getByAltText("Full Detail Album by Artist One — album cover"),
+      screen.getByAltText("Full Detail Album by Artist One, album cover"),
     ).toBeInTheDocument();
   });
 

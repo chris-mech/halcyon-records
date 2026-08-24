@@ -1,15 +1,14 @@
 import { Suspense } from "react";
 import { Metadata } from "next";
-import Image from "next/image";
 import Link from "next/link";
 import { notFound, permanentRedirect } from "next/navigation";
 import { cacheLife } from "next/cache";
-import { DiscAlbum } from "lucide-react";
 
 import type { components } from "@/lib/api/schema";
 import { client } from "@/lib/api/client";
 import { GenrePillList } from "@/components/genre-pill-list";
 import { ProductCard } from "@/components/product-card";
+import { MediaThumbnail } from "@/components/media-thumbnail";
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -125,21 +124,13 @@ export async function ArtistDetailContent({
       </Breadcrumb>
 
       <section className="mx-auto grid w-full max-w-275 grid-cols-1 gap-10 border-b border-line px-16 py-9 sm:grid-cols-[200px_1fr] sm:items-center">
-        <div className="relative aspect-square w-50 overflow-hidden shadow-lg">
-          {artist.imageUrl ? (
-            <Image
-              src={artist.imageUrl}
-              alt={artist.name}
-              fill
-              sizes="200px"
-              className="object-cover"
-            />
-          ) : (
-            <div className="flex size-full items-center justify-center bg-slate-muted/40">
-              <DiscAlbum aria-hidden className="size-12 text-slate" />
-            </div>
-          )}
-        </div>
+        <MediaThumbnail
+          imageUrl={artist.imageUrl}
+          alt={artist.name}
+          sizes="200px"
+          className="aspect-square w-50 overflow-hidden shadow-lg"
+          iconClassName="size-12"
+        />
 
         <div>
           <span className="mb-3.5 block text-[0.6875rem] font-extrabold tracking-[0.08em] text-muted-foreground uppercase">

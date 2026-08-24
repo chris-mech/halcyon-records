@@ -1,10 +1,10 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import Image from "next/image";
 import Link from "next/link";
 import { PackageOpen } from "lucide-react";
 
+import { MediaThumbnail } from "@/components/media-thumbnail";
 import { EmptyState } from "@/components/empty-state";
 import { buttonVariants } from "@/components/ui/button";
 import { formatPrice } from "@/lib/format";
@@ -79,7 +79,7 @@ function OrderHistory({ page }: OrderHistoryProps) {
         description="Everything you buy will show up here, so you can find it again later."
       >
         <Link
-          href="/shop"
+          href="/"
           className={cn(
             buttonVariants(),
             "px-7.5 py-3.5 text-xs font-bold tracking-wide uppercase",
@@ -111,20 +111,13 @@ function OrderHistory({ page }: OrderHistoryProps) {
 
             <div className="mb-4 flex gap-3">
               {order.items.slice(0, 4).map((item) => (
-                <div
+                <MediaThumbnail
                   key={item.albumSqid}
-                  className="relative size-12 shrink-0 bg-slate-muted/40"
-                >
-                  {item.imageUrl && (
-                    <Image
-                      src={item.imageUrl}
-                      alt={item.title}
-                      fill
-                      sizes="48px"
-                      className="object-cover"
-                    />
-                  )}
-                </div>
+                  alt={item.title}
+                  imageUrl={item.imageUrl}
+                  sizes="48px"
+                  className="size-12 shrink-0"
+                />
               ))}
             </div>
 

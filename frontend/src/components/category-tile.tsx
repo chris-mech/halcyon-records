@@ -1,6 +1,5 @@
-import Image from "next/image";
 import Link from "next/link";
-import { DiscAlbum } from "lucide-react";
+import { MediaThumbnail } from "./media-thumbnail";
 
 interface CategoryTileProps {
   href: string;
@@ -15,21 +14,11 @@ function CategoryTile({ href, name, imageUrl, albumCount }: CategoryTileProps) {
       href={href}
       className="block border border-line bg-paper shadow-lg outline-none focus-visible:ring-3 focus-visible:ring-ring"
     >
-      <div className="relative aspect-[4/3] border-b border-line bg-slate-muted/40">
-        {imageUrl ? (
-          <Image
-            src={imageUrl}
-            alt=""
-            fill
-            sizes="(min-width: 1024px) 25vw, (min-width: 640px) 33vw, 50vw"
-            className="object-cover"
-          />
-        ) : (
-          <div className="flex size-full items-center justify-center">
-            <DiscAlbum aria-hidden className="size-10 text-slate" />
-          </div>
-        )}
-      </div>
+      <MediaThumbnail
+        imageUrl={imageUrl}
+        sizes="(min-width: 1024px) 25vw, (min-width: 640px) 33vw, 50vw"
+        className="aspect-[4/3] border-b border-line"
+      />
       <div className="p-4.5">
         <div className="mb-2 font-serif text-lg font-medium italic">{name}</div>
         <div className="text-xs font-semibold text-muted-foreground">
