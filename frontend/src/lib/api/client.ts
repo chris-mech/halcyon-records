@@ -8,7 +8,7 @@ function resolveApiBaseUrl(): string | undefined {
 
   if (!baseUrl && process.env.NEXT_PHASE !== PHASE_PRODUCTION_BUILD) {
     throw new Error(
-      "Missing API_HTTPS — the frontend must be run as an Aspire resource (WithReference(api)) for API service discovery to work.",
+      "Missing API_HTTPS: the frontend must be run as an Aspire resource (WithReference(api)) for API service discovery to work.",
     );
   }
 
@@ -17,6 +17,17 @@ function resolveApiBaseUrl(): string | undefined {
 
 const client = createClient<paths>({
   baseUrl: resolveApiBaseUrl(),
+});
+
+const REQUEST_TIMEOUT_MS = 10_000;
+
+client.use({
+  onRequest({ request }) {
+    const timeoutSignal = AbortSignal.timeout(REQUEST_TIMEOUT_MS);
+    return new Request(request, {
+      signal: AbortSignal.any([request.signal, timeoutSignal]),
+    });
+  },
 });
 
 export { client };
