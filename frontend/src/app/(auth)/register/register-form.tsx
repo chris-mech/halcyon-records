@@ -156,7 +156,6 @@ function RegisterForm({ next }: RegisterFormProps) {
                     id={field.name}
                     type="email"
                     autoComplete="email"
-                    placeholder="you@email.com"
                     className="bg-background"
                     aria-invalid={fieldState.invalid}
                   />
@@ -180,7 +179,6 @@ function RegisterForm({ next }: RegisterFormProps) {
                     id={field.name}
                     type="password"
                     autoComplete="new-password"
-                    placeholder="••••••••"
                     className="bg-background"
                     aria-invalid={fieldState.invalid}
                   />
@@ -204,7 +202,6 @@ function RegisterForm({ next }: RegisterFormProps) {
                     id={field.name}
                     type="password"
                     autoComplete="new-password"
-                    placeholder="••••••••"
                     className="bg-background"
                     aria-invalid={fieldState.invalid}
                   />
@@ -213,7 +210,7 @@ function RegisterForm({ next }: RegisterFormProps) {
               )}
             />
             <div className="border-l-2 border-slate bg-background p-3 text-[0.6875rem] leading-relaxed text-muted-foreground">
-              This is a public demo project — please don&apos;t use a real name,
+              This is a public demo project. Please don&apos;t use a real name,
               email, or password you use elsewhere. Demo accounts (and any
               orders on them) are periodically cleared out, so don&apos;t rely
               on this for anything permanent.
