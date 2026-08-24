@@ -71,7 +71,7 @@ test.describe("accessibility sweep", () => {
     await page.getByLabel("Confirm password").fill(password);
     await page.getByRole("button", { name: "Create account" }).click();
 
-    await expect(page.getByRole("link", { name: "E2E" })).toBeVisible();
+    await expect(page.getByRole("button", { name: "E2E" })).toBeVisible();
 
     await page.goto("/account/details");
     await expect(page.getByText("Member since")).toBeVisible();

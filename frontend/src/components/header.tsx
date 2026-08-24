@@ -2,12 +2,19 @@
 
 import { useEffect } from "react";
 import Link from "next/link";
-import { Search } from "lucide-react";
+import { ChevronDown, Search, User } from "lucide-react";
 import { signOut, useSession } from "next-auth/react";
 
 import { Wordmark } from "@/components/wordmark";
-import { Button, buttonVariants } from "@/components/ui/button";
+import { buttonVariants } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 import {
   selectCartTotalQuantity,
   useCartHydrated,
@@ -80,22 +87,30 @@ function Header({
             </ul>
           </nav>
           <div className="flex shrink-0 items-center gap-5">
-            {status === "authenticated" ? (
-              <>
-                <Link
-                  href="/account"
-                  className="text-sm font-semibold text-paper hover:underline"
-                >
+            {status === "authenticated" && !isSessionExpired ? (
+              <DropdownMenu>
+                <DropdownMenuTrigger className="flex items-center gap-1.5 text-sm font-semibold text-paper outline-none hover:underline">
+                  <User aria-hidden className="size-4" />
                   {session.user.firstName}
-                </Link>
-                <Button
-                  variant="ghost"
-                  onClick={() => void syncCartOnLogout().then(() => signOut())}
-                  className="h-auto p-0 text-sm font-semibold text-slate-muted hover:bg-transparent hover:text-paper"
-                >
-                  Log out
-                </Button>
-              </>
+                  <ChevronDown aria-hidden className="size-3.5" />
+                </DropdownMenuTrigger>
+                <DropdownMenuContent>
+                  <DropdownMenuItem render={<Link href="/account" />}>
+                    Order history
+                  </DropdownMenuItem>
+                  <DropdownMenuItem render={<Link href="/account/details" />}>
+                    Account details
+                  </DropdownMenuItem>
+                  <DropdownMenuSeparator />
+                  <DropdownMenuItem
+                    onClick={() =>
+                      void syncCartOnLogout().then(() => signOut())
+                    }
+                  >
+                    Log out
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
             ) : (
               <Link
                 href="/login"
