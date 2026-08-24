@@ -15,7 +15,7 @@ export const metadata: Metadata = {
 export async function AccountDetailsContent() {
   const session = await auth();
 
-  if (!session) {
+  if (!session || session.error) {
     redirect("/login?next=/account/details");
   }
 

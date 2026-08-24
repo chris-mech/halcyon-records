@@ -18,7 +18,7 @@ export async function AccountContent({
   const { page } = await searchParams;
   const session = await auth();
 
-  if (!session) {
+  if (!session || session.error) {
     redirect(
       page ? `/login?next=/account?page=${page}` : "/login?next=/account",
     );

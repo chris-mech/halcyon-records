@@ -44,12 +44,13 @@ function Header({
   const { data: session, status } = useSession();
   const hydrated = useCartHydrated();
   const totalQuantity = useCartStore(selectCartTotalQuantity);
+  const isSessionExpired = session?.error === "RefreshError";
 
   useEffect(() => {
-    if (session?.error === "RefreshError") {
+    if (isSessionExpired) {
       void syncCartOnLogout().then(() => signOut());
     }
-  }, [session?.error]);
+  }, [isSessionExpired]);
 
   return (
     <header className="flex items-center justify-between gap-8 bg-slate px-16 py-5">
