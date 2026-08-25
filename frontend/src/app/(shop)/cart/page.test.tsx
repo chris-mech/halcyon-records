@@ -55,7 +55,7 @@ describe("CartPage", () => {
     expect(screen.getByText("Your bag is empty")).toBeInTheDocument();
     expect(
       screen.getByRole("link", { name: "Start browsing" }),
-    ).toHaveAttribute("href", "/shop");
+    ).toHaveAttribute("href", "/");
   });
 
   test("shows bag rows and a subtotal when the cart has items", () => {

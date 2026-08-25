@@ -1,5 +1,6 @@
 import { Header } from "@/components/header";
 import { Footer } from "@/components/footer";
+import { SkipLink } from "@/components/skip-link";
 
 export default function AuthLayout({
   children,
@@ -8,8 +9,11 @@ export default function AuthLayout({
 }>) {
   return (
     <>
+      <SkipLink />
       <Header variant="stripped" />
-      <main className="flex flex-1 flex-col">{children}</main>
+      <main id="main-content" tabIndex={-1} className="flex flex-1 flex-col">
+        {children}
+      </main>
       <Footer />
     </>
   );

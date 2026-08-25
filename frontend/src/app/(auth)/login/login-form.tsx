@@ -106,7 +106,6 @@ function LoginForm({ next }: LoginFormProps) {
                     id={field.name}
                     type="email"
                     autoComplete="email"
-                    placeholder="you@email.com"
                     className="bg-background"
                     aria-invalid={fieldState.invalid}
                   />
@@ -130,7 +129,6 @@ function LoginForm({ next }: LoginFormProps) {
                     id={field.name}
                     type="password"
                     autoComplete="current-password"
-                    placeholder="••••••••"
                     className="bg-background"
                     aria-invalid={fieldState.invalid}
                   />
@@ -157,7 +155,7 @@ function LoginForm({ next }: LoginFormProps) {
               {isDemoSubmitting ? "Logging in…" : "Try the demo account"}
             </Button>
             <p className="text-center text-xs text-muted-foreground">
-              This is a demo store — no real payments, nothing ships. This demo
+              This is a demo store: no real payments, nothing ships. This demo
               login is shared by every visitor, not private to you, so
               don&apos;t rely on anything you add to it sticking around. Sign in
               with {SHOWCASE_ACCOUNT_EMAIL} / {SHOWCASE_ACCOUNT_PASSWORD}, or

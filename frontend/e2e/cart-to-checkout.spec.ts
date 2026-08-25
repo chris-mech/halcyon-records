@@ -26,9 +26,10 @@ test.describe("cart to checkout", () => {
       await page.getByLabel("Confirm password").fill(password);
       await page.getByRole("button", { name: "Create account" }).click();
 
-      await expect(page.getByRole("link", { name: firstName })).toBeVisible();
+      await expect(page.getByRole("button", { name: firstName })).toBeVisible();
 
-      await page.getByRole("button", { name: "Log out" }).click();
+      await page.getByRole("button", { name: firstName }).click();
+      await page.getByRole("menuitem", { name: "Log out" }).click();
       await expect(page.getByRole("link", { name: "Log in" })).toBeVisible();
     });
 

@@ -32,7 +32,7 @@ export default function CheckoutPage() {
         description="Add something to your bag before checking out."
       >
         <Link
-          href="/shop"
+          href="/"
           className={cn(
             buttonVariants(),
             "px-7.5 py-3.5 text-xs font-bold tracking-wide uppercase",

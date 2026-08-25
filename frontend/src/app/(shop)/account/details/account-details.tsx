@@ -88,8 +88,8 @@ function AccountDetails() {
       </Card>
 
       <div className="mt-5 border-l-2 border-slate bg-background p-3 text-[0.6875rem] leading-relaxed text-muted-foreground">
-        Editing your details isn&apos;t available in this demo yet — this view
-        is read-only for now.
+        Editing your details isn&apos;t available in this demo yet. This view is
+        read-only for now.
       </div>
     </div>
   );

@@ -4,7 +4,7 @@ import { render, screen } from "@testing-library/react";
 import { client } from "@/lib/api/client";
 import type { components } from "@/lib/api/schema";
 
-import { ArtistDetailContent } from "./page";
+import { ArtistDetailContent, generateMetadata } from "./page";
 
 vi.mock("@/lib/api/client", () => ({
   client: { GET: vi.fn() },
@@ -69,12 +69,61 @@ function mockArtistFetch(overrides: Partial<ArtistDetail> = {}) {
   });
 }
 
+function renderMetadata() {
+  return generateMetadata({
+    params: Promise.resolve({ sqid: artist.sqid, nameSlug: artist.nameSlug }),
+    searchParams: Promise.resolve({}),
+  });
+}
+
 function renderPage(nameSlug = artist.nameSlug, sort?: string) {
   return ArtistDetailContent({
     params: Promise.resolve({ sqid: artist.sqid, nameSlug }),
     searchParams: Promise.resolve(sort ? { sort } : {}),
   });
 }
+
+describe("generateMetadata", () => {
+  test("uses the artist name as the title", async () => {
+    mockArtistFetch();
+
+    const metadata = await renderMetadata();
+
+    expect(metadata.title).toBe("Full Detail Artist");
+  });
+
+  test("uses the bio as the description", async () => {
+    mockArtistFetch();
+
+    const metadata = await renderMetadata();
+
+    expect(metadata.description).toBe(
+      "A bio used to verify artist detail rendering.",
+    );
+  });
+
+  test("sets the artist image as the Open Graph image", async () => {
+    mockArtistFetch({ imageUrl: "https://example.com/artist.jpg" });
+
+    const metadata = await renderMetadata();
+
+    expect(metadata.openGraph?.images).toEqual([
+      "https://example.com/artist.jpg",
+    ]);
+  });
+
+  test("calls notFound when the artist fetch errors", async () => {
+    vi.mocked(client.GET).mockResolvedValue({
+      data: undefined,
+      error: { title: "Not Found", status: 404 },
+      response: new Response(),
+    });
+
+    await expect(renderMetadata()).rejects.toMatchObject({
+      digest: "NEXT_HTTP_ERROR_FALLBACK;404",
+    });
+  });
+});
 
 describe("ArtistDetailPage", () => {
   test("renders artist detail on a successful load", async () => {
@@ -93,6 +142,14 @@ describe("ArtistDetailPage", () => {
     ).toBeInTheDocument();
     expect(screen.getByText("1 album in our catalogue")).toBeInTheDocument();
     expect(screen.getByText("Discography Album One")).toBeInTheDocument();
+  });
+
+  test("sets the artist's name as the image alt text", async () => {
+    mockArtistFetch({ imageUrl: "https://example.com/artist.jpg" });
+
+    render(await renderPage());
+
+    expect(screen.getByAltText("Full Detail Artist")).toBeInTheDocument();
   });
 
   test("shows a Born label for a Person artist", async () => {

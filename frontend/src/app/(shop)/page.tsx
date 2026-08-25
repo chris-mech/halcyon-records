@@ -1,15 +1,14 @@
 import { Fragment, Suspense } from "react";
 import { connection } from "next/server";
-import Image from "next/image";
 import Link from "next/link";
 import { cacheLife } from "next/cache";
-import { DiscAlbum } from "lucide-react";
 
 import { client } from "@/lib/api/client";
 import { formatPrice } from "@/lib/format";
 import { GenrePillList } from "@/components/genre-pill-list";
 import { ShadowStackHeading } from "@/components/shadow-stack-heading";
 import { AddToBagButton } from "@/components/add-to-bag-button";
+import { MediaThumbnail } from "@/components/media-thumbnail";
 import type { components } from "@/lib/api/schema";
 
 import { AlbumGridSection } from "./album-grid-section";
@@ -127,24 +126,13 @@ export async function HomeContent() {
       </div>
 
       <section className="mx-auto grid w-full max-w-275 grid-cols-1 items-center gap-16 px-16 py-14 lg:grid-cols-[0.85fr_1.15fr]">
-        <Link
+        <MediaThumbnail
+          imageUrl={coverStory.imageUrl}
           href={albumHref}
-          className="relative block aspect-square shadow-lg"
-        >
-          {coverStory.imageUrl ? (
-            <Image
-              src={coverStory.imageUrl}
-              alt=""
-              fill
-              sizes="(min-width: 1024px) 40vw, 90vw"
-              className="object-cover"
-            />
-          ) : (
-            <div className="flex size-full items-center justify-center bg-slate-muted/40">
-              <DiscAlbum aria-hidden className="size-16 text-slate-muted" />
-            </div>
-          )}
-        </Link>
+          sizes="(min-width: 1024px) 40vw, 90vw"
+          className="block aspect-square shadow-lg"
+          iconClassName="size-16"
+        />
 
         <div>
           <GenrePillList genres={coverStory.genres} className="mb-5.5" />

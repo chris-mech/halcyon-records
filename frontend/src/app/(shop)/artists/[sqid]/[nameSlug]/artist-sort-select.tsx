@@ -30,12 +30,12 @@ function ArtistSortSelect({ sqid, nameSlug, sort }: ArtistSortSelectProps) {
 
   return (
     <div className="flex items-center gap-2.5">
-      <label
+      <span
         id="artist-sort-label"
         className="text-xs font-semibold tracking-wide text-muted-foreground uppercase"
       >
         Sort
-      </label>
+      </span>
       <Select
         key={sort}
         items={SORT_OPTIONS}

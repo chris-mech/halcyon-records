@@ -36,7 +36,7 @@ describe("Header", () => {
     );
   });
 
-  test("shows the user's first name and a working Log out button when authenticated", async () => {
+  test("shows the user's first name and lets them get to account and log out", async () => {
     vi.mocked(useSession).mockReturnValue({
       data: {
         user: {
@@ -53,11 +53,19 @@ describe("Header", () => {
 
     render(<Header />);
 
-    expect(screen.getByText("Given Name Session")).toBeInTheDocument();
+    fireEvent.click(screen.getByRole("button", { name: "Given Name Session" }));
+
     expect(
-      screen.getByRole("link", { name: "Given Name Session" }),
+      await screen.findByRole("menuitem", { name: "Order history" }),
     ).toHaveAttribute("href", "/account");
-    fireEvent.click(screen.getByRole("button", { name: "Log out" }));
+    expect(
+      screen.getByRole("menuitem", { name: "Account details" }),
+    ).toHaveAttribute("href", "/account/details");
+
+    const logOut = screen.getByRole("menuitem", { name: "Log out" });
+    fireEvent.pointerDown(logOut);
+    fireEvent.click(logOut);
+
     await waitFor(() => expect(signOut).toHaveBeenCalled());
   });
 
@@ -119,9 +127,10 @@ describe("Header", () => {
 
     render(<Header variant="stripped" />);
 
-    expect(
-      screen.getByRole("link", { name: "← Back to shop" }),
-    ).toHaveAttribute("href", "/shop");
+    expect(screen.getByRole("link", { name: "← Back home" })).toHaveAttribute(
+      "href",
+      "/",
+    );
   });
 
   test("shows a custom back link when backHref and backLabel are given", () => {

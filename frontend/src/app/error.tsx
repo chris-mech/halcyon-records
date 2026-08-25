@@ -28,7 +28,7 @@ export default function Error({
             Something broke
           </h1>
           <p className="mx-auto mb-10 max-w-100 text-sm leading-relaxed text-muted-foreground">
-            That wasn&apos;t supposed to happen — the page hit an error
+            That wasn&apos;t supposed to happen. The page hit an error
             rendering. Trying again usually fixes it.
           </p>
           <div className="flex justify-center gap-3.5">

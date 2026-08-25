@@ -25,12 +25,12 @@ function CatalogSortSelect({ basePath, filters }: CatalogSortSelectProps) {
 
   return (
     <div className="flex items-center gap-2.5">
-      <label
+      <span
         id="catalog-sort-label"
         className="text-xs font-semibold tracking-wide text-muted-foreground uppercase"
       >
         Sort
-      </label>
+      </span>
       <Select
         key={filters.sort}
         items={ALBUM_SORT_OPTIONS}

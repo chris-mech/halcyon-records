@@ -6,5 +6,6 @@ public sealed record DecadeDetailResponse(
     int? StartYear,
     int? EndYear,
     string? Description,
+    string? ImageUrl,
     int AlbumCount
 );

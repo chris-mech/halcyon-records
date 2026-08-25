@@ -1,9 +1,26 @@
 import { Suspense } from "react";
+import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 
 import { StepIndicator } from "@/components/step-indicator";
 
 import { OrderConfirmation } from "./order-confirmation";
+
+export async function generateMetadata({
+  searchParams,
+}: Pick<
+  PageProps<"/checkout/confirmation">,
+  "searchParams"
+>): Promise<Metadata> {
+  const { order } = await searchParams;
+
+  return {
+    title:
+      typeof order === "string" && order.length > 0
+        ? `Order ${order} Confirmed`
+        : "Order Confirmed",
+  };
+}
 
 export async function ConfirmationContent({
   searchParams,

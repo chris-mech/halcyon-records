@@ -1,5 +1,7 @@
 import { request } from "@playwright/test";
 
+const API_BASE_URL = "https://localhost:7000";
+
 const WARM_UP_ROUTES = [
   "/",
   "/shop",
@@ -11,9 +13,31 @@ const WARM_UP_ROUTES = [
   "/checkout/confirmation",
   "/account",
   "/account/orders/warm-up-placeholder",
+  "/artists",
+  "/genres",
+  "/decades",
+  "/account/details",
 ];
 
+async function resetAlbumStock(): Promise<void> {
+  const context = await request.newContext({
+    baseURL: API_BASE_URL,
+    ignoreHTTPSErrors: true,
+  });
+
+  try {
+    const response = await context.post("/api/dev/albums/restock");
+    console.log(`[stock-reset] -> ${response.status()}`);
+  } catch (error) {
+    console.log(`[stock-reset] -> failed: ${error}`);
+  } finally {
+    await context.dispose();
+  }
+}
+
 async function globalSetup(): Promise<void> {
+  await resetAlbumStock();
+
   const context = await request.newContext({
     baseURL: "http://localhost:3000",
   });

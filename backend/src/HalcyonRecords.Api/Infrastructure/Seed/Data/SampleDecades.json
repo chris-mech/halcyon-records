@@ -4,7 +4,7 @@
     "label": "2020s",
     "startYear": 2020,
     "endYear": 2029,
-    "description": "The current decade, still being written — whatever's newest in the crates lives here.",
+    "description": "The current decade, still being written: whatever's newest in the crates lives here.",
     "imageUrl": "https://picsum.photos/seed/decade-2020s/400/300"
   },
   {
@@ -20,7 +20,7 @@
     "label": "2000s",
     "startYear": 2000,
     "endYear": 2009,
-    "description": "The decade vinyl was supposed to be dead — instead it just went quiet for a while.",
+    "description": "The decade vinyl was supposed to be dead. Instead it just went quiet for a while.",
     "imageUrl": "https://picsum.photos/seed/decade-2000s/400/300"
   },
   {
@@ -44,7 +44,7 @@
     "label": "1970s",
     "startYear": 1970,
     "endYear": 1979,
-    "description": "Everything in the catalogue pressed or released between 1970 and 1979 — the decade the record shop as we know it took shape.",
+    "description": "Everything in the catalogue pressed or released between 1970 and 1979: the decade the record shop as we know it took shape.",
     "imageUrl": "https://picsum.photos/seed/decade-1970s/400/300"
   },
   {
@@ -52,7 +52,7 @@
     "label": "1960s & earlier",
     "startYear": null,
     "endYear": 1969,
-    "description": "Everything that came before — the roots most of what's upstairs in the shop grew out of.",
+    "description": "Everything that came before: the roots most of what's upstairs in the shop grew out of.",
     "imageUrl": "https://picsum.photos/seed/decade-earlier/400/300"
   }
 ]

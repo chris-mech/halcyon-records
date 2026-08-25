@@ -1,10 +1,10 @@
 "use client";
 
 import { Fragment } from "react";
-import Image from "next/image";
 import Link from "next/link";
 import { Minus, Plus } from "lucide-react";
 
+import { MediaThumbnail } from "@/components/media-thumbnail";
 import { Button } from "@/components/ui/button";
 import { formatPrice } from "@/lib/format";
 import { useCartStore } from "@/lib/cart/cart-store";
@@ -22,22 +22,12 @@ function CartRow({ item }: CartRowProps) {
 
   return (
     <div className="flex items-center gap-5 border-b border-line py-6">
-      <Link
+      <MediaThumbnail
+        imageUrl={item.imageUrl}
         href={albumHref}
-        aria-hidden
-        tabIndex={-1}
-        className="relative block size-20 shrink-0 bg-slate-muted/40"
-      >
-        {item.imageUrl && (
-          <Image
-            src={item.imageUrl}
-            alt=""
-            fill
-            sizes="80px"
-            className="object-cover"
-          />
-        )}
-      </Link>
+        sizes="80px"
+        className="block size-20 shrink-0"
+      />
 
       <div className="flex-1">
         <p className="mb-1 flex flex-wrap gap-x-1 text-[0.6875rem] font-bold tracking-wide text-muted-foreground uppercase">

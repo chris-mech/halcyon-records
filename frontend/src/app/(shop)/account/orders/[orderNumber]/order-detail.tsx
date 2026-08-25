@@ -1,9 +1,9 @@
 "use client";
 
 import { Fragment, useEffect, useState } from "react";
-import Image from "next/image";
 import Link from "next/link";
 
+import { MediaThumbnail } from "@/components/media-thumbnail";
 import { Badge } from "@/components/ui/badge";
 import {
   Breadcrumb,
@@ -155,17 +155,11 @@ function OrderDetail({ orderNumber }: OrderDetailProps) {
                 key={item.albumSqid}
                 className="flex items-center gap-4.5 border-b border-line py-5"
               >
-                <div className="relative size-16 shrink-0 bg-slate-muted/40">
-                  {item.imageUrl && (
-                    <Image
-                      src={item.imageUrl}
-                      alt=""
-                      fill
-                      sizes="64px"
-                      className="object-cover"
-                    />
-                  )}
-                </div>
+                <MediaThumbnail
+                  imageUrl={item.imageUrl}
+                  sizes="64px"
+                  className="size-16 shrink-0"
+                />
                 <div className="flex-1">
                   <p className="mb-1 flex flex-wrap gap-x-1 text-[0.6875rem] font-bold tracking-wide text-muted-foreground uppercase">
                     {item.artists.map((artist, index) => (
@@ -213,7 +207,7 @@ function OrderDetail({ orderNumber }: OrderDetailProps) {
             </div>
 
             <div className="mt-6 border-l-2 border-slate bg-background p-3 text-[0.6875rem] leading-relaxed text-muted-foreground">
-              This is a demo order — no payment was collected and nothing was
+              This is a demo order. No payment was collected and nothing was
               shipped.
             </div>
 

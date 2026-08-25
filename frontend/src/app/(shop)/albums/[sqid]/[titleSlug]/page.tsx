@@ -1,15 +1,15 @@
 import { Fragment, Suspense } from "react";
-import Image from "next/image";
+import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound, permanentRedirect } from "next/navigation";
 import { cacheLife } from "next/cache";
-import { DiscAlbum } from "lucide-react";
 
 import { client } from "@/lib/api/client";
 import { formatPrice } from "@/lib/format";
 import { AlbumTagStack } from "@/components/album-tag-stack";
 import { GenrePillList } from "@/components/genre-pill-list";
 import { ProductCard } from "@/components/product-card";
+import { MediaThumbnail } from "@/components/media-thumbnail";
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -18,10 +18,29 @@ import {
   BreadcrumbPage,
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
-
 import { PurchaseRow } from "./purchase-row";
 
 import type { components } from "@/lib/api/schema";
+
+export async function generateMetadata({
+  params,
+}: Pick<PageProps<"/albums/[sqid]/[titleSlug]">, "params">): Promise<Metadata> {
+  const { sqid } = await params;
+  const result = await getAlbumData(sqid);
+
+  if (!result.found) {
+    notFound();
+  }
+
+  const { album } = result;
+  const artistNames = album.artists.map((artist) => artist.name).join(", ");
+
+  return {
+    title: artistNames ? `${album.title} by ${artistNames}` : album.title,
+    description: album.description ?? undefined,
+    openGraph: album.imageUrl ? { images: [album.imageUrl] } : undefined,
+  };
+}
 
 type AlbumDetail = components["schemas"]["AlbumDetailResponse"];
 type RelatedAlbum = components["schemas"]["RelatedAlbumResponse"];
@@ -70,6 +89,7 @@ export async function AlbumDetailContent({
   }
 
   const { album, relatedAlbums } = result;
+  const artistNames = album.artists.map((artist) => artist.name).join(", ");
 
   if (album.titleSlug !== titleSlug) {
     permanentRedirect(`/albums/${sqid}/${album.titleSlug}`);
@@ -103,21 +123,17 @@ export async function AlbumDetailContent({
             isStaffPick={album.isStaffPick}
             className="absolute -top-3 left-6 z-10"
           />
-          <div className="relative aspect-square overflow-hidden shadow-lg">
-            {album.imageUrl ? (
-              <Image
-                src={album.imageUrl}
-                alt=""
-                fill
-                sizes="(min-width: 1024px) 40vw, 90vw"
-                className="object-cover"
-              />
-            ) : (
-              <div className="flex size-full items-center justify-center bg-slate-muted/40">
-                <DiscAlbum aria-hidden className="size-16 text-slate-muted" />
-              </div>
-            )}
-          </div>
+          <MediaThumbnail
+            imageUrl={album.imageUrl}
+            alt={
+              artistNames
+                ? `${album.title} by ${artistNames}, album cover`
+                : `${album.title}, album cover`
+            }
+            sizes="(min-width: 1024px) 40vw, 90vw"
+            className="aspect-square overflow-hidden shadow-lg"
+            iconClassName="size-16"
+          />
         </div>
 
         <div className="flex flex-col">
@@ -199,7 +215,7 @@ export async function AlbumDetailContent({
 
       {relatedAlbums.length > 0 && (
         <section className="mx-auto w-full max-w-275 px-16 pb-25">
-          <h2 className="mb-11 text-center font-heading text-3xl font-black uppercase">
+          <h2 className="shadow-stack-section mb-11 text-center font-heading text-3xl font-black text-paper uppercase">
             More in this mood
           </h2>
           <div className="grid grid-cols-2 gap-7 sm:grid-cols-3 lg:grid-cols-4">

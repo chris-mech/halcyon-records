@@ -23,7 +23,7 @@ public static class WikipediaServiceCollectionExtensions
             if (string.IsNullOrWhiteSpace(wikipediaOptions.ContactEmail))
             {
                 throw new InvalidOperationException(
-                    "Wikipedia:ContactEmail is not configured — set it via "
+                    "Wikipedia:ContactEmail is not configured: set it via "
                         + "'dotnet user-secrets set \"Wikipedia:ContactEmail\" \"...\"'."
                 );
             }

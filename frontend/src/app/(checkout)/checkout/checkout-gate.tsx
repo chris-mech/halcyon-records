@@ -24,7 +24,7 @@ function CheckoutGate() {
             Log in to check out
           </CardTitle>
           <CardDescription className="text-center text-sm leading-relaxed">
-            An account keeps your order somewhere you can find it again —
+            An account keeps your order somewhere you can find it again, so
             you&apos;ll be able to see it under &quot;Order history&quot;
             afterward.
           </CardDescription>
@@ -51,7 +51,7 @@ function CheckoutGate() {
         </CardContent>
         <CardFooter className="justify-center">
           <p className="text-center text-xs text-muted-foreground">
-            Your bag is saved — nothing will be lost.
+            Your bag is saved. Nothing will be lost.
           </p>
         </CardFooter>
       </Card>

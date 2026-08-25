@@ -48,7 +48,7 @@ function fetchResponse(
 
 function submit() {
   fireEvent.click(
-    screen.getByRole("button", { name: /Place order \(demo — no charge\)/ }),
+    screen.getByRole("button", { name: /Place order \(demo, no charge\)/ }),
   );
 }
 
@@ -90,7 +90,7 @@ describe("CheckoutForm", () => {
 
     expect(
       screen.getByRole("button", {
-        name: "Place order (demo — no charge) — £20.00",
+        name: "Place order (demo, no charge): £20.00",
       }),
     ).toBeInTheDocument();
   });

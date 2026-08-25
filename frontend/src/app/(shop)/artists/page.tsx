@@ -1,4 +1,5 @@
 import { Suspense } from "react";
+import type { Metadata } from "next";
 import Link from "next/link";
 import { connection } from "next/server";
 import { cacheLife } from "next/cache";
@@ -13,6 +14,11 @@ import {
   letterKeyFor,
   type LetterKey,
 } from "./letters";
+
+export const metadata: Metadata = {
+  title: "Artists",
+  description: "Browse every artist in the Halcyon Records catalogue, A to Z.",
+};
 
 type ArtistListItem = components["schemas"]["ArtistListItemResponse"];
 
@@ -86,11 +92,7 @@ export async function ArtistsContent() {
 
       <div className="mx-auto w-full max-w-275 px-16 pb-25">
         {letterGroups.map(({ letter, artists }) => (
-          <section
-            key={letter}
-            id={letterAnchorId(letter)}
-            className="pt-9 first:pt-0"
-          >
+          <section key={letter} id={letterAnchorId(letter)} className="pt-9">
             <h2 className="mb-1 font-heading text-xl font-extrabold text-muted-foreground">
               {letter}
             </h2>

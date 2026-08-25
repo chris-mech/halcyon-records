@@ -128,6 +128,19 @@ describe("HomePage", () => {
     expect(screen.getByText("No. 014")).toBeInTheDocument();
   });
 
+  test("hides the cover-story image link from assistive tech, since the title link already carries it", async () => {
+    mockHomepageFetch();
+
+    const { container } = render(await HomeContent());
+
+    const [imageLink] = container.querySelectorAll(
+      'a[href="/albums/cover1/cover-story-album"]',
+    );
+
+    expect(imageLink).toHaveAttribute("aria-hidden", "true");
+    expect(imageLink).toHaveAttribute("tabindex", "-1");
+  });
+
   test("renders the new arrivals and on sale grids", async () => {
     mockHomepageFetch();
 

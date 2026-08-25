@@ -23,11 +23,12 @@ test.describe("register and login", () => {
 
       await page.getByRole("button", { name: "Create account" }).click();
 
-      await expect(page.getByRole("link", { name: firstName })).toBeVisible();
+      await expect(page.getByRole("button", { name: firstName })).toBeVisible();
     });
 
     await test.step("log out", async () => {
-      await page.getByRole("button", { name: "Log out" }).click();
+      await page.getByRole("button", { name: firstName }).click();
+      await page.getByRole("menuitem", { name: "Log out" }).click();
 
       await expect(page.getByRole("link", { name: "Log in" })).toBeVisible();
     });
@@ -41,7 +42,7 @@ test.describe("register and login", () => {
 
       await page.getByRole("button", { name: "Log in" }).click();
 
-      await expect(page.getByRole("link", { name: firstName })).toBeVisible();
+      await expect(page.getByRole("button", { name: firstName })).toBeVisible();
     });
   });
 });

@@ -1,13 +1,14 @@
 import { Suspense } from "react";
-import Image from "next/image";
+import { Metadata } from "next";
 import Link from "next/link";
 import { notFound, permanentRedirect } from "next/navigation";
 import { cacheLife } from "next/cache";
-import { DiscAlbum } from "lucide-react";
 
+import type { components } from "@/lib/api/schema";
 import { client } from "@/lib/api/client";
 import { GenrePillList } from "@/components/genre-pill-list";
 import { ProductCard } from "@/components/product-card";
+import { MediaThumbnail } from "@/components/media-thumbnail";
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -20,7 +21,29 @@ import {
 import { ArtistSortSelect } from "./artist-sort-select";
 import { parseArtistSort, type ArtistAlbumSort } from "./search-params";
 
-import type { components } from "@/lib/api/schema";
+export async function generateMetadata({
+  params,
+  searchParams,
+}: Pick<
+  PageProps<"/artists/[sqid]/[nameSlug]">,
+  "params" | "searchParams"
+>): Promise<Metadata> {
+  const { sqid } = await params;
+  const sort = parseArtistSort(await searchParams);
+  const result = await getArtistDetailData(sqid, sort);
+
+  if (!result.found) {
+    notFound();
+  }
+
+  const { artist } = result;
+
+  return {
+    title: artist.name,
+    description: artist.bio ?? undefined,
+    openGraph: artist.imageUrl ? { images: [artist.imageUrl] } : undefined,
+  };
+}
 
 type ArtistDetail = components["schemas"]["ArtistDetailResponse"];
 
@@ -101,21 +124,13 @@ export async function ArtistDetailContent({
       </Breadcrumb>
 
       <section className="mx-auto grid w-full max-w-275 grid-cols-1 gap-10 border-b border-line px-16 py-9 sm:grid-cols-[200px_1fr] sm:items-center">
-        <div className="relative aspect-square w-50 overflow-hidden shadow-lg">
-          {artist.imageUrl ? (
-            <Image
-              src={artist.imageUrl}
-              alt=""
-              fill
-              sizes="200px"
-              className="object-cover"
-            />
-          ) : (
-            <div className="flex size-full items-center justify-center bg-slate-muted/40">
-              <DiscAlbum aria-hidden className="size-12 text-slate-muted" />
-            </div>
-          )}
-        </div>
+        <MediaThumbnail
+          imageUrl={artist.imageUrl}
+          alt={artist.name}
+          sizes="200px"
+          className="aspect-square w-50 overflow-hidden shadow-lg"
+          iconClassName="size-12"
+        />
 
         <div>
           <span className="mb-3.5 block text-[0.6875rem] font-extrabold tracking-[0.08em] text-muted-foreground uppercase">

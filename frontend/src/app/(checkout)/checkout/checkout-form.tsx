@@ -1,12 +1,12 @@
 "use client";
 
 import { useRef } from "react";
-import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { Controller, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useSession } from "next-auth/react";
 
+import { MediaThumbnail } from "@/components/media-thumbnail";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Field, FieldError, FieldLabel } from "@/components/ui/field";
@@ -103,7 +103,7 @@ function CheckoutForm() {
               Contact
             </h2>
             <p className="mb-4 text-xs text-muted-foreground">
-              Pulled from your account — edit if this order needs different
+              Pulled from your account. Edit if this order needs different
               details.
             </p>
             <FieldError errors={[form.formState.errors.root?.serverError]} />
@@ -181,9 +181,8 @@ function CheckoutForm() {
           </div>
 
           <div className="border-l-2 border-slate bg-background p-3 text-[0.6875rem] leading-relaxed text-muted-foreground">
-            This is a demo store — no real payment is collected. Placing an
-            order just creates an order record so you can see the full flow
-            through.
+            This is a demo store: no real payment is collected. Placing an order
+            just creates an order record so you can see the full flow through.
           </div>
 
           <div>
@@ -194,7 +193,7 @@ function CheckoutForm() {
             >
               {form.formState.isSubmitting
                 ? "Placing order…"
-                : `Place order (demo — no charge) — ${formatPrice(subtotalInPence)}`}
+                : `Place order (demo, no charge): ${formatPrice(subtotalInPence)}`}
             </Button>
             <p className="mt-3 text-center text-[0.6875rem] text-muted-foreground">
               This is a portfolio project. No payment is processed and no real
@@ -212,17 +211,11 @@ function CheckoutForm() {
           <CardContent className="gap-3.5">
             {items.map((item) => (
               <div key={item.albumSqid} className="flex items-center gap-3">
-                <div className="relative size-12 shrink-0 bg-slate-muted/40">
-                  {item.imageUrl && (
-                    <Image
-                      src={item.imageUrl}
-                      alt=""
-                      fill
-                      sizes="48px"
-                      className="object-cover"
-                    />
-                  )}
-                </div>
+                <MediaThumbnail
+                  imageUrl={item.imageUrl}
+                  sizes="48px"
+                  className="size-12 shrink-0"
+                />
                 <div className="flex-1">
                   <p className="text-sm font-medium">{item.title}</p>
                   <p className="text-xs text-muted-foreground">
@@ -240,7 +233,7 @@ function CheckoutForm() {
             </div>
             <div className="flex justify-between text-sm text-muted-foreground">
               <span>Shipping</span>
-              <span>Not applicable — demo order</span>
+              <span>Not applicable (demo order)</span>
             </div>
             <div className="flex justify-between border-t border-line pt-4 text-base font-bold">
               <span>Total</span>

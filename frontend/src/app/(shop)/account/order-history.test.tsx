@@ -52,6 +52,39 @@ describe("OrderHistory", () => {
     expect(fetch).toHaveBeenCalledWith("/api/orders?page=1&pageSize=10");
   });
 
+  test("sets the album title as each order-item thumbnail's alt text", async () => {
+    vi.mocked(fetch).mockResolvedValue(
+      fetchResponse(true, {
+        items: [
+          {
+            orderNumber: "ORD-000002",
+            placedAt: "2026-08-20T12:00:00Z",
+            status: "Placed",
+            totalInPence: 2000,
+            items: [
+              {
+                albumSqid: "history-album-2",
+                title: "Order History Thumbnail Album",
+                titleSlug: "order-history-thumbnail-album",
+                imageUrl: "https://example.com/thumb.jpg",
+              },
+            ],
+          },
+        ],
+        page: 1,
+        pageSize: 10,
+        totalCount: 1,
+        totalPages: 1,
+      }),
+    );
+
+    render(<OrderHistory page={1} />);
+
+    expect(
+      await screen.findByAltText("Order History Thumbnail Album"),
+    ).toBeInTheDocument();
+  });
+
   test("shows an empty state when there are no orders", async () => {
     vi.mocked(fetch).mockResolvedValue(
       fetchResponse(true, {

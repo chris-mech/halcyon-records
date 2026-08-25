@@ -1,10 +1,24 @@
 import { Suspense } from "react";
+import type { Metadata } from "next";
 import Link from "next/link";
 import { Search } from "lucide-react";
 
 import { client } from "@/lib/api/client";
 import { ProductCard } from "@/components/product-card";
 import { EmptyState } from "@/components/empty-state";
+
+export async function generateMetadata({
+  searchParams,
+}: Pick<PageProps<"/search">, "searchParams">): Promise<Metadata> {
+  const query = firstValue((await searchParams).q)?.trim();
+
+  return {
+    title: query ? `Results for "${query}"` : "Search",
+    description: query
+      ? `Search results for "${query}" at Halcyon Records.`
+      : "Search the Halcyon Records catalogue.",
+  };
+}
 
 function firstValue(value: string | string[] | undefined): string | undefined {
   return Array.isArray(value) ? value[0] : value;
@@ -51,7 +65,7 @@ export async function SearchContent({
             <Search aria-hidden className="size-5.5 text-muted-foreground" />
           }
           heading="Search the catalogue"
-          description="Look for a title, artist, or genre — we'll bring back the closest matches."
+          description="Look for a title, artist, or genre, and we'll bring back the closest matches."
         >
           <SuggestedSearchTerms terms={suggestions ?? []} />
         </EmptyState>

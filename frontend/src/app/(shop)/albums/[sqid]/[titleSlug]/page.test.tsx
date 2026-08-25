@@ -4,7 +4,7 @@ import { render, screen } from "@testing-library/react";
 import { client } from "@/lib/api/client";
 import type { components } from "@/lib/api/schema";
 
-import { AlbumDetailContent } from "./page";
+import { AlbumDetailContent, generateMetadata } from "./page";
 
 vi.mock("@/lib/api/client", () => ({
   client: { GET: vi.fn() },
@@ -73,11 +73,57 @@ function mockAlbumFetch(
   });
 }
 
+function renderMetadata() {
+  return generateMetadata({
+    params: Promise.resolve({ sqid: album.sqid, titleSlug: album.titleSlug }),
+  });
+}
+
 function renderPage(titleSlug = album.titleSlug) {
   return AlbumDetailContent({
     params: Promise.resolve({ sqid: album.sqid, titleSlug }),
   });
 }
+
+describe("generateMetadata", () => {
+  test("combines the album title and artist names", async () => {
+    mockAlbumFetch();
+
+    const metadata = await renderMetadata();
+
+    expect(metadata.title).toBe("Full Detail Album by Artist One");
+  });
+
+  test("falls back to the bare title when there are no artists", async () => {
+    mockAlbumFetch({ artists: [] });
+
+    const metadata = await renderMetadata();
+
+    expect(metadata.title).toBe("Full Detail Album");
+  });
+
+  test("sets the album cover as the Open Graph image", async () => {
+    mockAlbumFetch({ imageUrl: "https://example.com/cover.jpg" });
+
+    const metadata = await renderMetadata();
+
+    expect(metadata.openGraph?.images).toEqual([
+      "https://example.com/cover.jpg",
+    ]);
+  });
+
+  test("calls notFound when the album fetch errors", async () => {
+    vi.mocked(client.GET).mockResolvedValue({
+      data: undefined,
+      error: { title: "Not Found", status: 404 },
+      response: new Response(),
+    });
+
+    await expect(renderMetadata()).rejects.toMatchObject({
+      digest: "NEXT_HTTP_ERROR_FALLBACK;404",
+    });
+  });
+});
 
 describe("AlbumDetailPage", () => {
   test("renders album detail on a successful load", async () => {
@@ -92,6 +138,16 @@ describe("AlbumDetailPage", () => {
     expect(screen.getByText("£19.99")).toBeInTheDocument();
     expect(screen.getByText("Test Label")).toBeInTheDocument();
     expect(screen.getByText("1999")).toBeInTheDocument();
+  });
+
+  test("sets descriptive alt text on the album cover image", async () => {
+    mockAlbumFetch({ imageUrl: "https://example.com/cover.jpg" });
+
+    render(await renderPage());
+
+    expect(
+      screen.getByAltText("Full Detail Album by Artist One, album cover"),
+    ).toBeInTheDocument();
   });
 
   test("renders a link for every genre on a multi-genre album", async () => {

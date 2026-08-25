@@ -31,6 +31,24 @@ public class GetGenreBySlugHandlerTests(SqlServerContainerFixture fixture)
     }
 
     [Fact]
+    public async Task Handle_MapsImageUrlDirectly()
+    {
+        var genre = NewGenre("Mapped Genre", "mapped-genre");
+        genre.ImageUrl = "https://example.com/mapped-genre.jpg";
+
+        DbContext.Genres.Add(genre);
+        await DbContext.SaveChangesAsync(TestContext.Current.CancellationToken);
+
+        var result = await Handler.Handle(
+            new GetGenreBySlugQuery("mapped-genre"),
+            CancellationToken.None
+        );
+
+        result.IsError.Should().BeFalse();
+        result.Value.ImageUrl.Should().Be("https://example.com/mapped-genre.jpg");
+    }
+
+    [Fact]
     public async Task Handle_UnknownSlug_ReturnsNotFound()
     {
         var result = await Handler.Handle(

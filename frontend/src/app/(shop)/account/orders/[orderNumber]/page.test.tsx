@@ -3,7 +3,7 @@ import { render, screen } from "@testing-library/react";
 import type { Session } from "@auth/core/types";
 
 import { auth } from "@/auth";
-import { OrderDetailGate } from "./page";
+import { generateMetadata, OrderDetailGate } from "./page";
 
 vi.mock("@/auth", () => ({ auth: vi.fn() }));
 
@@ -18,6 +18,16 @@ const mockAuth = vi.mocked<() => Promise<Session | null>>(auth);
 function renderPage(orderNumber: string) {
   return OrderDetailGate({ params: Promise.resolve({ orderNumber }) });
 }
+
+describe("generateMetadata", () => {
+  test("includes the order number in the title", async () => {
+    const metadata = await generateMetadata({
+      params: Promise.resolve({ orderNumber: "ORD-000001" }),
+    });
+
+    expect(metadata.title).toBe("Order ORD-000001");
+  });
+});
 
 describe("OrderDetailGate", () => {
   test("renders the order detail when signed in", async () => {
