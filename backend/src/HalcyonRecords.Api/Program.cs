@@ -21,6 +21,7 @@ using HalcyonRecords.Api.Infrastructure.Seed;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
+using Microsoft.OpenApi;
 using Scalar.AspNetCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -69,6 +70,7 @@ builder.Services.ConfigureHttpJsonOptions(options =>
 
 builder.Services.AddOpenApi(options =>
 {
+    options.OpenApiVersion = OpenApiSpecVersion.OpenApi3_1;
     options.AddSchemaTransformer<IntegerSchemaTransformer>();
     options.AddOperationTransformer<SortEnumParameterTransformer>();
     options.AddOperationTransformer<RequireBearerSecurityOperationTransformer>();

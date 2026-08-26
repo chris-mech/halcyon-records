@@ -19,6 +19,40 @@ public class OpenApiDocumentTests(SqlServerContainerFixture fixture) : IAsyncLif
     public async ValueTask DisposeAsync() => await _factory.DisposeAsync();
 
     [Fact]
+    public async Task Document_OpenApiVersion_Is3_1()
+    {
+        using var client = _factory.CreateClient();
+
+        var document = await client.GetFromJsonAsync<JsonNode>(
+            new Uri("/openapi/v1.json", UriKind.Relative),
+            TestContext.Current.CancellationToken
+        );
+
+        document!["openapi"]!.GetValue<string>().Should().StartWith("3.1");
+    }
+
+    [Fact]
+    public async Task Document_ArtistDetailResponseSinceYear_UsesTypeArrayForNullableIntegerUnderOpenApi31()
+    {
+        using var client = _factory.CreateClient();
+
+        var document = await client.GetFromJsonAsync<JsonNode>(
+            new Uri("/openapi/v1.json", UriKind.Relative),
+            TestContext.Current.CancellationToken
+        );
+
+        var sinceYearType = document!["components"]!["schemas"]!["ArtistDetailResponse"]![
+            "properties"
+        ]!["sinceYear"]!["type"]!;
+
+        sinceYearType
+            .AsArray()
+            .Select(t => t!.GetValue<string>())
+            .Should()
+            .BeEquivalentTo(["integer", "null"]);
+    }
+
+    [Fact]
     public async Task Document_AlbumsSortParameter_HasEnumSchemaMatchingAlbumSortBy()
     {
         var sortSchema = await GetSortParameterSchemaAsync("/api/albums");
