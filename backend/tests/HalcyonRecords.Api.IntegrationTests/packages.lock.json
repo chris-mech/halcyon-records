@@ -589,8 +589,8 @@
       },
       "Microsoft.Extensions.Features": {
         "type": "Transitive",
-        "resolved": "10.0.10",
-        "contentHash": "4Zdm7n1vxXAXpHOhGQVpGd5KCdcI1EWk66ilgdrDt2I+928ND+u/F+EVrzYi9pmRR+XeAE47kjuVEmkP0b0mBw=="
+        "resolved": "10.0.11",
+        "contentHash": "/ro7Ate9LihDcZP6ukTwUjFj3dBzz7tijNcGg4aYBa3RkjqC/cOPqxZtMrOS3RU3nhRLHX8WTKq9EKL/4V4r5A=="
       },
       "Microsoft.Extensions.FileProviders.Abstractions": {
         "type": "Transitive",
@@ -658,15 +658,15 @@
       },
       "Microsoft.Extensions.Http": {
         "type": "Transitive",
-        "resolved": "10.0.10",
-        "contentHash": "DuEBLw2y7ZBfilnaJtlge8f2M49932v43t7j1InceXVjcZzxNrSEkobYXdgZkXuPFnFbKcbWpAS+fZgYEW1BhA==",
+        "resolved": "10.0.11",
+        "contentHash": "ujx8RvcKzkxPFBguwgiygbwWVHVK0P7HFlNJ6I0JBRb28tzwe42jixBoA+dGmqG9IHepPVcm04vv2IDnU93ekA==",
         "dependencies": {
-          "Microsoft.Extensions.Configuration.Abstractions": "10.0.10",
-          "Microsoft.Extensions.DependencyInjection.Abstractions": "10.0.10",
-          "Microsoft.Extensions.Diagnostics": "10.0.10",
-          "Microsoft.Extensions.Logging": "10.0.10",
-          "Microsoft.Extensions.Logging.Abstractions": "10.0.10",
-          "Microsoft.Extensions.Options": "10.0.10"
+          "Microsoft.Extensions.Configuration.Abstractions": "10.0.11",
+          "Microsoft.Extensions.DependencyInjection.Abstractions": "10.0.11",
+          "Microsoft.Extensions.Diagnostics": "10.0.11",
+          "Microsoft.Extensions.Logging": "10.0.11",
+          "Microsoft.Extensions.Logging.Abstractions": "10.0.11",
+          "Microsoft.Extensions.Options": "10.0.11"
         }
       },
       "Microsoft.Extensions.Http.Diagnostics": {
@@ -834,25 +834,25 @@
       },
       "Microsoft.Extensions.ServiceDiscovery": {
         "type": "Transitive",
-        "resolved": "10.8.0",
-        "contentHash": "OflwReySDxjF/zVe2mo0ZqmZjVVPCJ68CoT91CG+j+gjeK4nByslvr8LFd7DcOs2VKHZZsKxfIejcysjEMG3Ng==",
+        "resolved": "10.9.0",
+        "contentHash": "mg982FgqvhLI/KGIpIqpx3SEyEbV6ZQUlAo6woNbj3kcqMa5pfCp2Cx/mxxXNqQrl5qbikPBhxGxtoXlFTzh0A==",
         "dependencies": {
-          "Microsoft.Extensions.Http": "10.0.10",
-          "Microsoft.Extensions.ServiceDiscovery.Abstractions": "10.8.0"
+          "Microsoft.Extensions.Http": "10.0.11",
+          "Microsoft.Extensions.ServiceDiscovery.Abstractions": "10.9.0"
         }
       },
       "Microsoft.Extensions.ServiceDiscovery.Abstractions": {
         "type": "Transitive",
-        "resolved": "10.8.0",
-        "contentHash": "FR1eyZTR6W6Ura43aQ+Kpcogb7aS4EAsMh8sMfOyZHx0PUBzmooIni/GvJBpXjgBUboWCgoDrdbLwCmN7DxHCA==",
+        "resolved": "10.9.0",
+        "contentHash": "rn+D8DCZN0jlo7exll5QyeX+SXjyBxPsD4jG0ffqANcPBEdpP3bPBChLmCoSsqe62qqta94reBdFgJHciNARZQ==",
         "dependencies": {
-          "Microsoft.Extensions.Configuration.Abstractions": "10.0.10",
-          "Microsoft.Extensions.Configuration.Binder": "10.0.10",
-          "Microsoft.Extensions.DependencyInjection.Abstractions": "10.0.10",
-          "Microsoft.Extensions.Features": "10.0.10",
-          "Microsoft.Extensions.Logging.Abstractions": "10.0.10",
-          "Microsoft.Extensions.Options": "10.0.10",
-          "Microsoft.Extensions.Primitives": "10.0.10"
+          "Microsoft.Extensions.Configuration.Abstractions": "10.0.11",
+          "Microsoft.Extensions.Configuration.Binder": "10.0.11",
+          "Microsoft.Extensions.DependencyInjection.Abstractions": "10.0.11",
+          "Microsoft.Extensions.Features": "10.0.11",
+          "Microsoft.Extensions.Logging.Abstractions": "10.0.11",
+          "Microsoft.Extensions.Options": "10.0.11",
+          "Microsoft.Extensions.Primitives": "10.0.11"
         }
       },
       "Microsoft.Extensions.Telemetry": {
@@ -1228,7 +1228,7 @@
         "type": "Project",
         "dependencies": {
           "Microsoft.Extensions.Http.Resilience": "[10.8.0, )",
-          "Microsoft.Extensions.ServiceDiscovery": "[10.8.0, )",
+          "Microsoft.Extensions.ServiceDiscovery": "[10.9.0, )",
           "OpenTelemetry.Exporter.OpenTelemetryProtocol": "[1.17.0, )",
           "OpenTelemetry.Extensions.Hosting": "[1.17.0, )",
           "OpenTelemetry.Instrumentation.AspNetCore": "[1.17.0, )",
