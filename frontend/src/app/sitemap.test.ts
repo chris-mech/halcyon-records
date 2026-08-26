@@ -53,7 +53,6 @@ function buildGenre(overrides: Partial<GenreListItem> = {}): GenreListItem {
   return {
     name: "Sitemap Genre",
     slug: "sitemap-genre",
-    description: null,
     imageUrl: null,
     albumCount: 1,
     ...overrides,
