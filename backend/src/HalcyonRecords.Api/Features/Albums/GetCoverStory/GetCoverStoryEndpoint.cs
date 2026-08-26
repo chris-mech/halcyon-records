@@ -27,6 +27,11 @@ public sealed class GetCoverStoryEndpoint : IEndpoint
             .WithName("GetCoverStory")
             .WithTags("Albums")
             .WithSummary("Get this week's featured staff-pick album.")
+            .WithDescription(
+                "Rotates deterministically through staff-picked albums on a weekly cycle. If no "
+                    + "albums are flagged as staff picks, falls back to the newest release instead. "
+                    + "Returns 404 only if the catalogue has no albums at all."
+            )
             .Produces<DomainProblemDetails>(
                 StatusCodes.Status404NotFound,
                 "application/problem+json"

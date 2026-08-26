@@ -230,6 +230,29 @@ public class OpenApiDocumentTests(SqlServerContainerFixture fixture) : IAsyncLif
     }
 
     [Fact]
+    public async Task Document_GetAlbumsGenresParameter_HasDescriptionFromDescriptionAttribute()
+    {
+        var parameter = await GetParameterAsync("/api/albums", "genres");
+
+        parameter!["description"]!
+            .GetValue<string>()
+            .Should()
+            .Be("Genre slugs to filter by. An album matching any of the given genres is included.");
+    }
+
+    [Fact]
+    public async Task Document_GetAlbumsGenresParameter_HasExampleFromOperationTransformer()
+    {
+        var parameter = await GetParameterAsync("/api/albums", "genres");
+
+        parameter!["example"]!
+            .AsArray()
+            .Select(v => v!.GetValue<string>())
+            .Should()
+            .BeEquivalentTo("shoegaze", "dream-pop");
+    }
+
+    [Fact]
     public async Task Document_HttpValidationProblemDetailsSchema_HasNoExampleSinceItDoesNotImplementTheProvider()
     {
         using var client = _factory.CreateClient();
@@ -268,7 +291,10 @@ public class OpenApiDocumentTests(SqlServerContainerFixture fixture) : IAsyncLif
             .BeEquivalentTo("Midnight Static", "Dream Pop", "Shoegaze");
     }
 
-    private async Task<JsonNode?> GetSortParameterSchemaAsync(string path)
+    private async Task<JsonNode?> GetSortParameterSchemaAsync(string path) =>
+        (await GetParameterAsync(path, "sort"))?["schema"];
+
+    private async Task<JsonNode?> GetParameterAsync(string path, string parameterName)
     {
         using var client = _factory.CreateClient();
 
@@ -280,8 +306,7 @@ public class OpenApiDocumentTests(SqlServerContainerFixture fixture) : IAsyncLif
         return document!
             ["paths"]
             ?[path]?["get"]?["parameters"]?.AsArray()
-            .FirstOrDefault(p => p?["name"]?.GetValue<string>() == "sort")
-            ?["schema"];
+            .FirstOrDefault(p => p?["name"]?.GetValue<string>() == parameterName);
     }
 
     private static JsonNode ResolveSchema(JsonNode document, JsonNode schema)

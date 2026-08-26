@@ -1,5 +1,8 @@
-﻿using ErrorOr;
+﻿using System.ComponentModel;
+using System.Text.Json.Nodes;
+using ErrorOr;
 using HalcyonRecords.Api.Common.Endpoints;
+using HalcyonRecords.Api.Common.OpenApi;
 using HalcyonRecords.Api.Common.Results;
 using MediatR;
 using Microsoft.AspNetCore.Http.HttpResults;
@@ -13,7 +16,8 @@ public sealed class GetAlbumByIdEndpoint : IEndpoint
         app.MapGet(
                 "/albums/{sqid}",
                 async Task<Results<Ok<AlbumDetailResponse>, ProblemHttpResult>> (
-                    string sqid,
+                    [Description("The album's sqid, as returned by other album endpoints.")]
+                        string sqid,
                     ISender sender
                 ) =>
                 {
@@ -33,6 +37,13 @@ public sealed class GetAlbumByIdEndpoint : IEndpoint
             .Produces<DomainProblemDetails>(
                 StatusCodes.Status404NotFound,
                 "application/problem+json"
+            )
+            .AddOpenApiOperationTransformer(
+                (operation, context, cancellationToken) =>
+                {
+                    operation.SetParameterExample("sqid", JsonValue.Create("9pXqL2"));
+                    return Task.CompletedTask;
+                }
             );
     }
 }
