@@ -59,7 +59,7 @@ public sealed record SearchResponse(
                         ]
                     }
                 ],
-                "suggestedTerms": ["midnight", "dream pop", "shoegaze"],
+                "suggestedTerms": [],
                 "totalCount": 1
             }
             """
