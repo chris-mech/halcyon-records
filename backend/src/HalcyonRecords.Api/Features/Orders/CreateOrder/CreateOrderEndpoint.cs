@@ -45,6 +45,12 @@ public sealed class CreateOrderEndpoint : IEndpoint
             .WithName("CreateOrder")
             .WithTags("Orders")
             .WithSummary("Place an order from the current user's cart.")
+            .WithDescription(
+                "Places the order in a single transaction: stock is decremented per item, the "
+                    + "cart is cleared, and a sequential order number is assigned. Retrying with "
+                    + "the same idempotency key returns the original order instead of creating a "
+                    + "duplicate."
+            )
             .RequireAuthorization()
             .Produces<DomainProblemDetails>(
                 StatusCodes.Status404NotFound,

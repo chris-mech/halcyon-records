@@ -1,6 +1,9 @@
-﻿using System.Security.Claims;
+﻿using System.ComponentModel;
+using System.Security.Claims;
+using System.Text.Json.Nodes;
 using ErrorOr;
 using HalcyonRecords.Api.Common.Endpoints;
+using HalcyonRecords.Api.Common.OpenApi;
 using HalcyonRecords.Api.Common.Results;
 using MediatR;
 using Microsoft.AspNetCore.Http.HttpResults;
@@ -15,7 +18,8 @@ public sealed class GetOrderByNumberEndpoint : IEndpoint
         app.MapGet(
                 "/orders/{orderNumber}",
                 async Task<Results<Ok<OrderDetailResponse>, ProblemHttpResult>> (
-                    string orderNumber,
+                    [Description("The order number, as returned when the order was placed.")]
+                        string orderNumber,
                     ClaimsPrincipal claimsPrincipal,
                     ISender sender
                 ) =>
@@ -41,6 +45,13 @@ public sealed class GetOrderByNumberEndpoint : IEndpoint
             .Produces<DomainProblemDetails>(
                 StatusCodes.Status404NotFound,
                 "application/problem+json"
+            )
+            .AddOpenApiOperationTransformer(
+                (operation, context, cancellationToken) =>
+                {
+                    operation.SetParameterExample("orderNumber", JsonValue.Create("HR-284917"));
+                    return Task.CompletedTask;
+                }
             );
     }
 }
