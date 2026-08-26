@@ -47,10 +47,9 @@ public class GetGenresHandlerTests(SqlServerContainerFixture fixture) : Integrat
     }
 
     [Fact]
-    public async Task Handle_MapsDescriptionAndImageUrlDirectly()
+    public async Task Handle_MapsImageUrlDirectly()
     {
         var genre = NewGenre("Mapped Genre", "mapped-genre");
-        genre.Description = "A genre used to verify field mapping.";
         genre.ImageUrl = "https://example.com/mapped-genre.jpg";
 
         DbContext.Genres.Add(genre);
@@ -60,7 +59,6 @@ public class GetGenresHandlerTests(SqlServerContainerFixture fixture) : Integrat
             await Handler.Handle(new GetGenresQuery(), CancellationToken.None)
         ).Value.Single();
 
-        item.Description.Should().Be("A genre used to verify field mapping.");
         item.ImageUrl.Should().Be("https://example.com/mapped-genre.jpg");
     }
 

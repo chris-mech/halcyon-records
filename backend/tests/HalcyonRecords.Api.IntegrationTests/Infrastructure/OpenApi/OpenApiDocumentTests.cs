@@ -49,7 +49,7 @@ public class OpenApiDocumentTests(SqlServerContainerFixture fixture) : IAsyncLif
             .AsArray()
             .Select(t => t!.GetValue<string>())
             .Should()
-            .BeEquivalentTo(["integer", "null"]);
+            .BeEquivalentTo("integer", "null");
     }
 
     [Fact]
@@ -189,6 +189,85 @@ public class OpenApiDocumentTests(SqlServerContainerFixture fixture) : IAsyncLif
         document!["paths"]!["/api/artists"]!["get"]!["security"].Should().BeNull();
     }
 
+    [Fact]
+    public async Task Document_AlbumDetailResponseSchema_HasExampleFromExampleSchemaTransformer()
+    {
+        using var client = _factory.CreateClient();
+
+        var document = await client.GetFromJsonAsync<JsonNode>(
+            new Uri("/openapi/v1.json", UriKind.Relative),
+            TestContext.Current.CancellationToken
+        );
+
+        var example = document!["components"]!["schemas"]!["AlbumDetailResponse"]!["examples"]!
+            .AsArray()
+            .Single()!;
+
+        example["sqid"]!.GetValue<string>().Should().Be("9pXqL2");
+        example["title"]!.GetValue<string>().Should().Be("Midnight Static");
+    }
+
+    [Fact]
+    public async Task Document_GetAlbumsOperationResponseSchema_HasSynthesizedPagedExample()
+    {
+        using var client = _factory.CreateClient();
+
+        var document = await client.GetFromJsonAsync<JsonNode>(
+            new Uri("/openapi/v1.json", UriKind.Relative),
+            TestContext.Current.CancellationToken
+        );
+
+        var responseSchema = document!["paths"]!["/api/albums"]!["get"]!["responses"]!["200"]![
+            "content"
+        ]!["application/json"]!["schema"]!;
+
+        var resolvedSchema = ResolveSchema(document, responseSchema);
+        var example = resolvedSchema["examples"]!.AsArray().Single()!;
+
+        example["page"]!.GetValue<int>().Should().Be(1);
+        example["items"]!.AsArray().Should().HaveCount(2);
+        example["items"]![0]!["sqid"]!.GetValue<string>().Should().Be("9pXqL2");
+    }
+
+    [Fact]
+    public async Task Document_HttpValidationProblemDetailsSchema_HasNoExampleSinceItDoesNotImplementTheProvider()
+    {
+        using var client = _factory.CreateClient();
+
+        var document = await client.GetFromJsonAsync<JsonNode>(
+            new Uri("/openapi/v1.json", UriKind.Relative),
+            TestContext.Current.CancellationToken
+        );
+
+        document!["components"]!["schemas"]!["HttpValidationProblemDetails"]!
+            ["examples"]
+            .Should()
+            .BeNull();
+    }
+
+    [Fact]
+    public async Task Document_GetSearchSuggestionsOperationResponseSchema_HasExampleFromOperationTransformer()
+    {
+        using var client = _factory.CreateClient();
+
+        var document = await client.GetFromJsonAsync<JsonNode>(
+            new Uri("/openapi/v1.json", UriKind.Relative),
+            TestContext.Current.CancellationToken
+        );
+
+        var example = document!["paths"]!["/api/search/suggestions"]!["get"]!["responses"]!["200"]![
+            "content"
+        ]!["application/json"]!["schema"]!["examples"]!
+            .AsArray()
+            .Single()!;
+
+        example
+            .AsArray()
+            .Select(v => v!.GetValue<string>())
+            .Should()
+            .BeEquivalentTo("Midnight Static", "Dream Pop", "Shoegaze");
+    }
+
     private async Task<JsonNode?> GetSortParameterSchemaAsync(string path)
     {
         using var client = _factory.CreateClient();
@@ -203,5 +282,18 @@ public class OpenApiDocumentTests(SqlServerContainerFixture fixture) : IAsyncLif
             ?[path]?["get"]?["parameters"]?.AsArray()
             .FirstOrDefault(p => p?["name"]?.GetValue<string>() == "sort")
             ?["schema"];
+    }
+
+    private static JsonNode ResolveSchema(JsonNode document, JsonNode schema)
+    {
+        var refValue = schema["$ref"]?.GetValue<string>();
+
+        if (refValue is null)
+        {
+            return schema;
+        }
+
+        var schemaName = refValue.Split('/').Last();
+        return document["components"]!["schemas"]![schemaName]!;
     }
 }
