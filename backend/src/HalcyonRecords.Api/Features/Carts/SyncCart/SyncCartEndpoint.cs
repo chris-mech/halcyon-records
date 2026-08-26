@@ -41,6 +41,11 @@ public sealed class SyncCartEndpoint : IEndpoint
             .WithName("SyncCart")
             .WithTags("Carts")
             .WithSummary("Replace the current user's cart contents with the given items.")
+            .WithDescription(
+                "Items with an unrecognized album sqid are silently ignored rather than causing "
+                    + "an error. Duplicate entries for the same album are summed into a single "
+                    + "quantity."
+            )
             .RequireAuthorization()
             .Produces<DomainProblemDetails>(
                 StatusCodes.Status404NotFound,
