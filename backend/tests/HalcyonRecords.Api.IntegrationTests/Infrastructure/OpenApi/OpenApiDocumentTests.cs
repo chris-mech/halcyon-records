@@ -253,6 +253,22 @@ public class OpenApiDocumentTests(SqlServerContainerFixture fixture) : IAsyncLif
     }
 
     [Fact]
+    public async Task Document_RefreshOperation_HasDescriptionFromWithDescription()
+    {
+        using var client = _factory.CreateClient();
+
+        var document = await client.GetFromJsonAsync<JsonNode>(
+            new Uri("/openapi/v1.json", UriKind.Relative),
+            TestContext.Current.CancellationToken
+        );
+
+        document!["paths"]!["/api/auth/refresh"]!["post"]!["description"]!
+            .GetValue<string>()
+            .Should()
+            .StartWith("Rotates the refresh token");
+    }
+
+    [Fact]
     public async Task Document_HttpValidationProblemDetailsSchema_HasNoExampleSinceItDoesNotImplementTheProvider()
     {
         using var client = _factory.CreateClient();
