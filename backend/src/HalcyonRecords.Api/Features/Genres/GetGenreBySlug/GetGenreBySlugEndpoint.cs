@@ -1,5 +1,8 @@
-﻿using ErrorOr;
+﻿using System.ComponentModel;
+using System.Text.Json.Nodes;
+using ErrorOr;
 using HalcyonRecords.Api.Common.Endpoints;
+using HalcyonRecords.Api.Common.OpenApi;
 using HalcyonRecords.Api.Common.Results;
 using MediatR;
 using Microsoft.AspNetCore.Http.HttpResults;
@@ -13,7 +16,8 @@ public sealed class GetGenreBySlugEndpoint : IEndpoint
         app.MapGet(
                 "/genres/{slug}",
                 async Task<Results<Ok<GenreDetailResponse>, ProblemHttpResult>> (
-                    string slug,
+                    [Description("The genre's slug, as returned by the genres list endpoint.")]
+                        string slug,
                     ISender sender
                 ) =>
                 {
@@ -33,6 +37,13 @@ public sealed class GetGenreBySlugEndpoint : IEndpoint
             .Produces<DomainProblemDetails>(
                 StatusCodes.Status404NotFound,
                 "application/problem+json"
+            )
+            .AddOpenApiOperationTransformer(
+                (operation, context, cancellationToken) =>
+                {
+                    operation.SetParameterExample("slug", JsonValue.Create("dream-pop"));
+                    return Task.CompletedTask;
+                }
             );
     }
 }
