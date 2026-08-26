@@ -32,6 +32,11 @@ public sealed class RefreshEndpoint : IEndpoint
             .WithName("Refresh")
             .WithTags("Auth")
             .WithSummary("Exchange a valid refresh token for a new access token and refresh token.")
+            .WithDescription(
+                "Rotates the refresh token: the given token is revoked and a new one is issued. "
+                    + "Reusing an already-revoked token is treated as a compromise and revokes its "
+                    + "entire descendant chain, invalidating every token issued after it."
+            )
             .Produces<DomainProblemDetails>(
                 StatusCodes.Status401Unauthorized,
                 "application/problem+json"

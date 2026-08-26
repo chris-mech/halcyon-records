@@ -36,6 +36,10 @@ public sealed class RegisterEndpoint : IEndpoint
             .WithName("Register")
             .WithTags("Auth")
             .WithSummary("Create a new user account.")
+            .WithDescription(
+                "Does not log the new user in or return any tokens; call the login endpoint "
+                    + "afterwards to authenticate."
+            )
             .Produces<DomainProblemDetails>(
                 StatusCodes.Status409Conflict,
                 "application/problem+json"

@@ -29,6 +29,10 @@ public sealed class LogoutEndpoint : IEndpoint
             )
             .WithName("Logout")
             .WithTags("Auth")
-            .WithSummary("Invalidate the given refresh token.");
+            .WithSummary("Invalidate the given refresh token.")
+            .WithDescription(
+                "Idempotent: silently succeeds even if the token does not exist or was already "
+                    + "revoked, so callers do not need to check before logging out."
+            );
     }
 }
