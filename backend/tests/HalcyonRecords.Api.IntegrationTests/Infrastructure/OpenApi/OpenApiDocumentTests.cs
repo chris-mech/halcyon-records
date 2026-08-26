@@ -109,6 +109,52 @@ public class OpenApiDocumentTests(SqlServerContainerFixture fixture) : IAsyncLif
         badRequestSchemaRef.Should().EndWith("HttpValidationProblemDetails");
     }
 
+    [Fact]
+    public async Task Document_BearerSecurityScheme_HasCorrectShape()
+    {
+        using var client = _factory.CreateClient();
+
+        var document = await client.GetFromJsonAsync<JsonNode>(
+            new Uri("/openapi/v1.json", UriKind.Relative),
+            TestContext.Current.CancellationToken
+        );
+
+        var bearerScheme = document!["components"]!["securitySchemes"]!["Bearer"]!;
+
+        bearerScheme["type"]!.GetValue<string>().Should().Be("http");
+        bearerScheme["scheme"]!.GetValue<string>().Should().Be("bearer");
+        bearerScheme["bearerFormat"]!.GetValue<string>().Should().Be("JWT");
+    }
+
+    [Fact]
+    public async Task Document_GetCartOperation_RequiresBearerSecurity()
+    {
+        using var client = _factory.CreateClient();
+
+        var document = await client.GetFromJsonAsync<JsonNode>(
+            new Uri("/openapi/v1.json", UriKind.Relative),
+            TestContext.Current.CancellationToken
+        );
+
+        var security = document!["paths"]!["/api/cart"]!["get"]!["security"]!.AsArray();
+
+        security.Should().ContainSingle();
+        security[0]!.AsObject().ContainsKey("Bearer").Should().BeTrue();
+    }
+
+    [Fact]
+    public async Task Document_ArtistsOperation_HasNoSecurityRequirementSinceItIsPublic()
+    {
+        using var client = _factory.CreateClient();
+
+        var document = await client.GetFromJsonAsync<JsonNode>(
+            new Uri("/openapi/v1.json", UriKind.Relative),
+            TestContext.Current.CancellationToken
+        );
+
+        document!["paths"]!["/api/artists"]!["get"]!["security"].Should().BeNull();
+    }
+
     private async Task<JsonNode?> GetSortParameterSchemaAsync(string path)
     {
         using var client = _factory.CreateClient();

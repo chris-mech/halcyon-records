@@ -71,7 +71,9 @@ builder.Services.AddOpenApi(options =>
 {
     options.AddSchemaTransformer<IntegerSchemaTransformer>();
     options.AddOperationTransformer<SortEnumParameterTransformer>();
+    options.AddOperationTransformer<RequireBearerSecurityOperationTransformer>();
     options.AddDocumentTransformer<GlobalErrorResponseDocumentTransformer>();
+    options.AddDocumentTransformer<BearerSecuritySchemeTransformer>();
     options.AddDocumentTransformer(
         (document, context, cancellationToken) =>
         {
