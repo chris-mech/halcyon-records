@@ -8,6 +8,7 @@ using HalcyonRecords.Api.Common.OpenApi;
 using HalcyonRecords.Api.Common.Results;
 using MediatR;
 using Microsoft.AspNetCore.Http.HttpResults;
+using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.JsonWebTokens;
 
 namespace HalcyonRecords.Api.Features.Orders.GetOrders;
@@ -25,20 +26,25 @@ public sealed class GetOrdersEndpoint : IEndpoint
                         ValidationProblem
                     >
                 > (
-                    [Description("The page number to return, starting at 1. Defaults to 1.")]
-                        int? page,
-                    [Description("The number of items per page, from 1 to 25. Defaults to 10.")]
-                        int? pageSize,
+                    [Description("The page number to return.")] int? page,
+                    [Description("The number of items per page.")] int? pageSize,
+                    IOptions<OrdersPaginationOptions> paginationOptions,
                     ClaimsPrincipal claimsPrincipal,
                     ISender sender
                 ) =>
                 {
+                    var pagination = paginationOptions.Value;
+
                     var publicId = Guid.Parse(
                         claimsPrincipal.FindFirstValue(JwtRegisteredClaimNames.Sub)!
                     );
 
                     ErrorOr<PagedResult<OrderSummaryResponse>> result = await sender.Send(
-                        new GetOrdersQuery(publicId, page ?? 1, pageSize ?? 10)
+                        new GetOrdersQuery(
+                            publicId,
+                            page ?? pagination.MinPage,
+                            pageSize ?? pagination.DefaultPageSize
+                        )
                     );
 
                     return result.Match<
@@ -67,8 +73,23 @@ public sealed class GetOrdersEndpoint : IEndpoint
             .AddOpenApiOperationTransformer(
                 (operation, context, cancellationToken) =>
                 {
+                    var pagination = context
+                        .ApplicationServices.GetRequiredService<IOptions<OrdersPaginationOptions>>()
+                        .Value;
+
                     operation.SetParameterExample("page", JsonValue.Create(1));
+                    operation.SetParameterRange("page", pagination.MinPage, int.MaxValue);
+                    operation.SetParameterDefault("page", JsonValue.Create(pagination.MinPage));
                     operation.SetParameterExample("pageSize", JsonValue.Create(10));
+                    operation.SetParameterRange(
+                        "pageSize",
+                        pagination.MinPageSize,
+                        pagination.MaxPageSize
+                    );
+                    operation.SetParameterDefault(
+                        "pageSize",
+                        JsonValue.Create(pagination.DefaultPageSize)
+                    );
                     return Task.CompletedTask;
                 }
             );

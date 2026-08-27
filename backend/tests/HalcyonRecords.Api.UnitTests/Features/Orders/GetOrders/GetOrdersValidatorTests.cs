@@ -1,11 +1,14 @@
 ﻿using FluentValidation.TestHelper;
 using HalcyonRecords.Api.Features.Orders.GetOrders;
+using Microsoft.Extensions.Options;
 
 namespace HalcyonRecords.Api.UnitTests.Features.Orders.GetOrders;
 
 public class GetOrdersValidatorTests
 {
-    private readonly GetOrdersValidator _validator = new();
+    private readonly GetOrdersValidator _validator = new(
+        Options.Create(new OrdersPaginationOptions())
+    );
 
     [Theory]
     [InlineData(1)]
