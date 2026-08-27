@@ -1,11 +1,14 @@
 ﻿using FluentValidation.TestHelper;
 using HalcyonRecords.Api.Features.Albums.GetAlbums;
+using Microsoft.Extensions.Options;
 
 namespace HalcyonRecords.Api.UnitTests.Features.Albums.GetAlbums;
 
 public class GetAlbumsValidatorTests
 {
-    private readonly GetAlbumsValidator _validator = new();
+    private readonly GetAlbumsValidator _validator = new(
+        Options.Create(new AlbumsPaginationOptions())
+    );
 
     [Theory]
     [InlineData(1)]
