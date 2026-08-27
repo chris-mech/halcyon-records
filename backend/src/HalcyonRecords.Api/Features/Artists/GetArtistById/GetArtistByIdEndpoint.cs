@@ -20,9 +20,8 @@ public sealed class GetArtistByIdEndpoint : IEndpoint
                 > (
                     [Description("The artist's sqid, as returned by other artist endpoints.")]
                         string sqid,
-                    [Description(
-                        "The sort order to apply to the artist's discography. Defaults to NewestFirst."
-                    )]
+                    [Description("The sort order to apply to the artist's discography.")]
+                    [DefaultValue(nameof(ArtistAlbumSortBy.NewestFirst))]
                         string? sort,
                     ISender sender
                 ) =>
