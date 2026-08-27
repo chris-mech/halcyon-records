@@ -68,4 +68,13 @@ public static class OpenApiOperationExtensions
         schema.MaxItems = maxItems;
         ((OpenApiSchema)schema.Items!).MaxLength = itemMaxLength;
     }
+
+    public static void SetResponseExample(
+        this OpenApiOperation operation,
+        string statusCode,
+        JsonNode example
+    )
+    {
+        operation.Responses![statusCode].Content!["application/problem+json"].Example = example;
+    }
 }

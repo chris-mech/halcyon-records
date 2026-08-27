@@ -277,7 +277,7 @@ public class OpenApiDocumentTests(SqlServerContainerFixture fixture) : IAsyncLif
     }
 
     [Fact]
-    public async Task Document_HttpValidationProblemDetailsSchema_HasNoExampleSinceItDoesNotImplementTheProvider()
+    public async Task Document_HttpValidationProblemDetailsSchema_HasExampleFromExampleSchemaTransformer()
     {
         using var client = _factory.CreateClient();
 
@@ -286,10 +286,71 @@ public class OpenApiDocumentTests(SqlServerContainerFixture fixture) : IAsyncLif
             TestContext.Current.CancellationToken
         );
 
-        document!["components"]!["schemas"]!["HttpValidationProblemDetails"]!
-            ["examples"]
+        var example = document!["components"]!["schemas"]!["HttpValidationProblemDetails"]![
+            "examples"
+        ]!
+            .AsArray()
+            .Single()!;
+
+        example["title"]!.GetValue<string>().Should().Be("One or more validation errors occurred.");
+        example["errors"]!["Email"]![0]!
+            .GetValue<string>()
             .Should()
-            .BeNull();
+            .Be("'Email' is not a valid email address.");
+    }
+
+    [Fact]
+    public async Task Document_ArtistsOperation500Response_HasExampleFromExampleSchemaTransformer()
+    {
+        using var client = _factory.CreateClient();
+
+        var document = await client.GetFromJsonAsync<JsonNode>(
+            new Uri("/openapi/v1.json", UriKind.Relative),
+            TestContext.Current.CancellationToken
+        );
+
+        var example = document!["paths"]!["/api/artists"]!["get"]!["responses"]!["500"]![
+            "content"
+        ]!["application/problem+json"]!["schema"]!["examples"]!
+            .AsArray()
+            .Single()!;
+
+        example["status"]!.GetValue<int>().Should().Be(400);
+        example["title"]!.GetValue<string>().Should().Be("Bad Request");
+    }
+
+    [Fact]
+    public async Task Document_DomainProblemDetailsSchema_HasExampleFromExampleSchemaTransformer()
+    {
+        using var client = _factory.CreateClient();
+
+        var document = await client.GetFromJsonAsync<JsonNode>(
+            new Uri("/openapi/v1.json", UriKind.Relative),
+            TestContext.Current.CancellationToken
+        );
+
+        var example = document!["components"]!["schemas"]!["DomainProblemDetails"]!["examples"]!
+            .AsArray()
+            .Single()!;
+
+        example["code"]!.GetValue<string>().Should().Be("Album.NotFound");
+    }
+
+    [Fact]
+    public async Task Document_GetAlbumByIdOperation404Response_HasExampleFromOperationTransformer()
+    {
+        using var client = _factory.CreateClient();
+
+        var document = await client.GetFromJsonAsync<JsonNode>(
+            new Uri("/openapi/v1.json", UriKind.Relative),
+            TestContext.Current.CancellationToken
+        );
+
+        var example = document!["paths"]!["/api/albums/{sqid}"]!["get"]!["responses"]!["404"]![
+            "content"
+        ]!["application/problem+json"]!["example"]!;
+
+        example["detail"]!.GetValue<string>().Should().Be("Album '9pXqL2' not found.");
     }
 
     [Fact]

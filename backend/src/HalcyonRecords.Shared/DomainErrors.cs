@@ -6,6 +6,9 @@ public static class DomainErrors
 {
     public static class Album
     {
+        public static Error CatalogueEmpty() =>
+            Error.NotFound(code: "Album.CatalogueEmpty", description: "No albums available.");
+
         public static Error NotFound(string detail) =>
             Error.NotFound(code: "Album.NotFound", description: detail);
 

@@ -21,7 +21,7 @@ public sealed class GetAlbumByIdHandler(
     {
         if (albumSqids.Decode(query.Sqid) is not { } id)
         {
-            return Error.NotFound(description: "Album not found.");
+            return DomainErrors.Album.NotFound($"Album '{query.Sqid}' not found.");
         }
 
         var album = await dbContext
@@ -35,7 +35,7 @@ public sealed class GetAlbumByIdHandler(
 
         if (album is null)
         {
-            return Error.NotFound(description: "Album not found.");
+            return DomainErrors.Album.NotFound($"Album '{query.Sqid}' not found.");
         }
 
         return new AlbumDetailResponse(

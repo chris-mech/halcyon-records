@@ -51,6 +51,7 @@ public sealed class GetRelatedAlbumsEndpoint : IEndpoint
                 (operation, context, cancellationToken) =>
                 {
                     operation.SetParameterExample("sqid", JsonValue.Create("9pXqL2"));
+                    operation.SetResponseExample("404", DomainProblemDetails.Example);
                     return Task.CompletedTask;
                 }
             );
