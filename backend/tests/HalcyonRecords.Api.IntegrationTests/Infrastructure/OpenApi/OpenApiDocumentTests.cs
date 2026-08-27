@@ -524,6 +524,40 @@ public class OpenApiDocumentTests(SqlServerContainerFixture fixture) : IAsyncLif
     }
 
     [Fact]
+    public async Task Document_GetCartOperation404Response_HasExampleFromOperationTransformer()
+    {
+        using var client = _factory.CreateClient();
+
+        var document = await client.GetFromJsonAsync<JsonNode>(
+            new Uri("/openapi/v1.json", UriKind.Relative),
+            TestContext.Current.CancellationToken
+        );
+
+        var example = document!["paths"]!["/api/cart"]!["get"]!["responses"]!["404"]!["content"]![
+            "application/problem+json"
+        ]!["example"]!;
+
+        example["code"]!.GetValue<string>().Should().Be("Auth.UserNotFound");
+    }
+
+    [Fact]
+    public async Task Document_SyncCartOperation404Response_HasExampleFromOperationTransformer()
+    {
+        using var client = _factory.CreateClient();
+
+        var document = await client.GetFromJsonAsync<JsonNode>(
+            new Uri("/openapi/v1.json", UriKind.Relative),
+            TestContext.Current.CancellationToken
+        );
+
+        var example = document!["paths"]!["/api/cart/sync"]!["post"]!["responses"]!["404"]![
+            "content"
+        ]!["application/problem+json"]!["example"]!;
+
+        example["code"]!.GetValue<string>().Should().Be("Auth.UserNotFound");
+    }
+
+    [Fact]
     public async Task Document_GetSearchSuggestionsOperationResponseSchema_HasExampleFromOperationTransformer()
     {
         using var client = _factory.CreateClient();
