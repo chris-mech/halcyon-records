@@ -2,6 +2,7 @@ import { describe, expect, test, vi } from "vitest";
 
 import { client } from "@/lib/api/client";
 import { requireAccessToken } from "@/lib/auth/require-access-token";
+import type { components } from "@/lib/api/schema";
 
 import { GET } from "./route";
 
@@ -33,7 +34,7 @@ describe("GET /api/orders/[orderNumber]", () => {
 
   test("forwards the bearer token and order number, returning the backend's order detail", async () => {
     vi.mocked(requireAccessToken).mockResolvedValue("fixture-access-token");
-    const order = {
+    const order: components["schemas"]["OrderDetailResponse"] = {
       orderNumber: "ORD-000001",
       placedAt: "2026-08-20T00:00:00Z",
       status: "Placed",
@@ -61,11 +62,15 @@ describe("GET /api/orders/[orderNumber]", () => {
 
   test("passes through the backend's not-found error", async () => {
     vi.mocked(requireAccessToken).mockResolvedValue("fixture-access-token");
+    const notFoundError: components["schemas"]["DomainProblemDetails"] = {
+      code: "Order.NotFound",
+      detail: "Order not found.",
+    };
     vi.mocked(client.GET).mockResolvedValue({
       data: undefined,
-      error: { code: "Order.NotFound", detail: "Order not found." },
+      error: notFoundError,
       response: new Response(null, { status: 404 }),
-    });
+    } as Awaited<ReturnType<typeof client.GET>>);
 
     const response = await GET(orderDetailRequest(), ctxFor("ORD-000001"));
 

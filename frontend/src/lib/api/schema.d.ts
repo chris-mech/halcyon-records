@@ -11,7 +11,10 @@ export interface paths {
       path?: never;
       cookie?: never;
     };
-    /** Search across albums, artists, and genres by free-text query. */
+    /**
+     * Search across albums, artists, and genres by free-text query.
+     * @description When the query has best matches, returns them in bestMatches along with related albums in suggestions, and suggestedTerms is empty. When there are no best matches, bestMatches and suggestions are both empty and suggestedTerms offers alternative search terms instead.
+     */
     get: operations["Search"];
     put?: never;
     post?: never;
@@ -48,7 +51,10 @@ export interface paths {
     /** List the current user's orders, paginated. */
     get: operations["GetOrders"];
     put?: never;
-    /** Place an order from the current user's cart. */
+    /**
+     * Place an order from the current user's cart.
+     * @description Places the order in a single transaction: stock is decremented per item, the cart is cleared, and a sequential order number is assigned. Retrying with the same idempotency key returns the original order instead of creating a duplicate.
+     */
     post: operations["CreateOrder"];
     delete?: never;
     options?: never;
@@ -150,7 +156,10 @@ export interface paths {
     };
     get?: never;
     put?: never;
-    /** Replace the current user's cart contents with the given items. */
+    /**
+     * Replace the current user's cart contents with the given items.
+     * @description Items with an unrecognized album sqid are silently ignored rather than causing an error. Duplicate entries for the same album are summed into a single quantity.
+     */
     post: operations["SyncCart"];
     delete?: never;
     options?: never;
@@ -184,7 +193,10 @@ export interface paths {
     };
     get?: never;
     put?: never;
-    /** Create a new user account. */
+    /**
+     * Create a new user account.
+     * @description Does not log the new user in or return any tokens; call the login endpoint afterwards to authenticate.
+     */
     post: operations["Register"];
     delete?: never;
     options?: never;
@@ -201,7 +213,10 @@ export interface paths {
     };
     get?: never;
     put?: never;
-    /** Exchange a valid refresh token for a new access token and refresh token. */
+    /**
+     * Exchange a valid refresh token for a new access token and refresh token.
+     * @description Rotates the refresh token: the given token is revoked and a new one is issued. Reusing an already-revoked token is treated as a compromise and revokes its entire descendant chain, invalidating every token issued after it.
+     */
     post: operations["Refresh"];
     delete?: never;
     options?: never;
@@ -218,7 +233,10 @@ export interface paths {
     };
     get?: never;
     put?: never;
-    /** Invalidate the given refresh token. */
+    /**
+     * Invalidate the given refresh token.
+     * @description Idempotent: silently succeeds even if the token does not exist or was already revoked, so callers do not need to check before logging out.
+     */
     post: operations["Logout"];
     delete?: never;
     options?: never;
@@ -301,7 +319,10 @@ export interface paths {
       path?: never;
       cookie?: never;
     };
-    /** Get albums related to the given album, by shared genre, artist, or release date. */
+    /**
+     * Get albums related to the given album, by shared genre, artist, or release date.
+     * @description Fills results by priority: shared genre first, then shared artist, then closest release date, then a random album if slots remain. Stops once the configured maximum result count is reached.
+     */
     get: operations["GetRelatedAlbums"];
     put?: never;
     post?: never;
@@ -318,7 +339,10 @@ export interface paths {
       path?: never;
       cookie?: never;
     };
-    /** Get this week's featured staff-pick album. */
+    /**
+     * Get this week's featured staff-pick album.
+     * @description Rotates deterministically through staff-picked albums on a weekly cycle. If no albums are flagged as staff picks, falls back to the newest release instead. Returns 404 only if the catalogue has no albums at all.
+     */
     get: operations["GetCoverStory"];
     put?: never;
     post?: never;
@@ -335,7 +359,10 @@ export interface paths {
       path?: never;
       cookie?: never;
     };
-    /** List albums with filtering, sorting, and pagination. */
+    /**
+     * List albums with filtering, sorting, and pagination.
+     * @description Boolean filters and the year range combine with AND; the genres filter combines with OR, matching an album that has any of the given genre slugs. When both startYear and endYear are given, endYear must be greater than or equal to startYear.
+     */
     get: operations["GetAlbums"];
     put?: never;
     post?: never;
@@ -421,6 +448,7 @@ export interface components {
       titleSlug: string;
       description: null | string;
       label: null | string;
+      /** Format: uri */
       imageUrl: null | string;
       /** Format: date */
       releaseDate: null | string;
@@ -478,6 +506,7 @@ export interface components {
       sqid: string;
       title: string;
       titleSlug: string;
+      /** Format: uri */
       imageUrl: null | string;
       /** Format: date */
       releaseDate: null | string;
@@ -503,6 +532,7 @@ export interface components {
       sqid: string;
       title: string;
       titleSlug: string;
+      /** Format: uri */
       imageUrl: null | string;
       /** Format: date */
       releaseDate: null | string;
@@ -611,6 +641,7 @@ export interface components {
       type: null | components["schemas"]["ArtistType"];
       /** Format: int32 */
       sinceYear: null | number;
+      /** Format: uri */
       imageUrl: null | string;
       /** Format: int32 */
       albumCount: number;
@@ -668,6 +699,7 @@ export interface components {
       albumSqid: string;
       title: string;
       titleSlug: string;
+      /** Format: uri */
       imageUrl: null | string;
       /** Format: int32 */
       priceInPence: number;
@@ -729,6 +761,7 @@ export interface components {
       title: string;
       titleSlug: string;
       description: null | string;
+      /** Format: uri */
       imageUrl: null | string;
       /** Format: date */
       releaseDate: null | string;
@@ -751,6 +784,7 @@ export interface components {
       albumSqid: string;
       title: string;
       titleSlug: string;
+      /** Format: uri */
       imageUrl: null | string;
       /** Format: int32 */
       quantity: number;
@@ -768,6 +802,10 @@ export interface components {
     CreateOrderRequest: {
       contactFirstName: string;
       contactLastName: string;
+      /**
+       * Format: email
+       * @description A valid email address.
+       */
       contactEmail: string;
       /** Format: uuid */
       idempotencyKey: string;
@@ -809,6 +847,7 @@ export interface components {
     CurrentUserResponse: {
       /** Format: uuid */
       id: string;
+      /** Format: email */
       email: string;
       firstName: string;
       lastName: string;
@@ -834,6 +873,7 @@ export interface components {
       /** Format: int32 */
       endYear: null | number;
       description: null | string;
+      /** Format: uri */
       imageUrl: null | string;
       /** Format: int32 */
       albumCount: number;
@@ -855,10 +895,22 @@ export interface components {
       startYear: null | number;
       /** Format: int32 */
       endYear: null | number;
+      /** Format: uri */
       imageUrl: null | string;
       /** Format: int32 */
       albumCount: number;
     };
+    /**
+     * @example {
+     *       "type": "https://tools.ietf.org/html/rfc9110#section-15.5.5",
+     *       "title": "Not Found",
+     *       "status": 404,
+     *       "detail": "Album '9pXqL2' not found.",
+     *       "instance": "/api/albums/9pXqL2",
+     *       "code": "Album.NotFound",
+     *       "traceId": "00-4f8c9b2e1a3d4c5e8f7a6b5c4d3e2f1a-9b8c7d6e5f4a3b2c-00"
+     *     }
+     */
     DomainProblemDetails: {
       type?: null | string;
       title?: null | string;
@@ -881,6 +933,7 @@ export interface components {
       name: string;
       slug: string;
       description: null | string;
+      /** Format: uri */
       imageUrl: null | string;
       /** Format: int32 */
       albumCount: number;
@@ -896,10 +949,26 @@ export interface components {
     GenreListItemResponse: {
       name: string;
       slug: string;
+      /** Format: uri */
       imageUrl: null | string;
       /** Format: int32 */
       albumCount: number;
     };
+    /**
+     * @example {
+     *       "type": "https://tools.ietf.org/html/rfc9110#section-15.5.1",
+     *       "title": "One or more validation errors occurred.",
+     *       "status": 400,
+     *       "detail": null,
+     *       "instance": "/api/auth/register",
+     *       "traceId": "00-4f8c9b2e1a3d4c5e8f7a6b5c4d3e2f1a-9b8c7d6e5f4a3b2c-00",
+     *       "errors": {
+     *         "Email": [
+     *           "'Email' is not a valid email address."
+     *         ]
+     *       }
+     *     }
+     */
     HttpValidationProblemDetails: {
       type?: null | string;
       title?: null | string;
@@ -918,6 +987,10 @@ export interface components {
      *     }
      */
     LoginRequest: {
+      /**
+       * Format: email
+       * @description A valid email address.
+       */
       email: string;
       password: string;
     };
@@ -952,6 +1025,7 @@ export interface components {
       title: string;
       titleSlug: string;
       artists: components["schemas"]["OrderDetailItemArtistResponse"][];
+      /** Format: uri */
       imageUrl: null | string;
       /** Format: int32 */
       quantity: number;
@@ -993,6 +1067,7 @@ export interface components {
       status: components["schemas"]["OrderStatus"];
       contactFirstName: string;
       contactLastName: string;
+      /** Format: email */
       contactEmail: string;
       /** Format: int32 */
       totalInPence: number;
@@ -1004,6 +1079,7 @@ export interface components {
       albumSqid: string;
       title: string;
       titleSlug: string;
+      /** Format: uri */
       imageUrl: null | string;
     };
     /**
@@ -1193,7 +1269,12 @@ export interface components {
     RegisterRequest: {
       firstName: string;
       lastName: string;
+      /**
+       * Format: email
+       * @description A valid email address.
+       */
       email: string;
+      /** @description Must contain at least 6 characters, a lowercase letter, an uppercase letter, a digit, a non-alphanumeric character. */
       password: string;
     };
     RelatedAlbumArtistResponse: {
@@ -1238,6 +1319,7 @@ export interface components {
       sqid: string;
       title: string;
       titleSlug: string;
+      /** Format: uri */
       imageUrl: null | string;
       /** Format: date */
       releaseDate: null | string;
@@ -1267,6 +1349,7 @@ export interface components {
       sqid: string;
       title: string;
       titleSlug: string;
+      /** Format: uri */
       imageUrl: null | string;
       /** Format: date */
       releaseDate: null | string;
@@ -1347,11 +1430,7 @@ export interface components {
      *           ]
      *         }
      *       ],
-     *       "suggestedTerms": [
-     *         "midnight",
-     *         "dream pop",
-     *         "shoegaze"
-     *       ],
+     *       "suggestedTerms": [],
      *       "totalCount": 1
      *     }
      */
@@ -1396,6 +1475,10 @@ export interface operations {
   Search: {
     parameters: {
       query?: {
+        /**
+         * @description The free-text search query. Required; a missing or empty query fails validation.
+         * @example Midnight Static
+         */
         q?: string;
       };
       header?: never;
@@ -1527,7 +1610,15 @@ export interface operations {
   GetOrders: {
     parameters: {
       query?: {
+        /**
+         * @description The page number to return.
+         * @example 1
+         */
         page?: number;
+        /**
+         * @description The number of items per page.
+         * @example 10
+         */
         pageSize?: number;
       };
       header?: never;
@@ -1560,6 +1651,17 @@ export interface operations {
           [name: string]: unknown;
         };
         content: {
+          /**
+           * @example {
+           *       "type": "https://tools.ietf.org/html/rfc9110#section-15.5.5",
+           *       "title": "Not Found",
+           *       "status": 404,
+           *       "detail": "The authenticated user no longer exists.",
+           *       "instance": "/api/orders",
+           *       "code": "Auth.UserNotFound",
+           *       "traceId": "00-4f8c9b2e1a3d4c5e8f7a6b5c4d3e2f1a-9b8c7d6e5f4a3b2c-00"
+           *     }
+           */
           "application/problem+json": components["schemas"]["DomainProblemDetails"];
         };
       };
@@ -1634,6 +1736,17 @@ export interface operations {
           [name: string]: unknown;
         };
         content: {
+          /**
+           * @example {
+           *       "type": "https://tools.ietf.org/html/rfc9110#section-15.5.5",
+           *       "title": "Not Found",
+           *       "status": 404,
+           *       "detail": "The authenticated user no longer exists.",
+           *       "instance": "/api/orders",
+           *       "code": "Auth.UserNotFound",
+           *       "traceId": "00-4f8c9b2e1a3d4c5e8f7a6b5c4d3e2f1a-9b8c7d6e5f4a3b2c-00"
+           *     }
+           */
           "application/problem+json": components["schemas"]["DomainProblemDetails"];
         };
       };
@@ -1659,6 +1772,17 @@ export interface operations {
           [name: string]: unknown;
         };
         content: {
+          /**
+           * @example {
+           *       "type": "https://tools.ietf.org/html/rfc9110#section-15.5.10",
+           *       "title": "Conflict",
+           *       "status": 409,
+           *       "detail": "Sorry, 'Midnight Static' just sold out.",
+           *       "instance": "/api/orders",
+           *       "code": "Order.InsufficientStock",
+           *       "traceId": "00-4f8c9b2e1a3d4c5e8f7a6b5c4d3e2f1a-9b8c7d6e5f4a3b2c-00"
+           *     }
+           */
           "application/problem+json": components["schemas"]["DomainProblemDetails"];
         };
       };
@@ -1701,6 +1825,10 @@ export interface operations {
       query?: never;
       header?: never;
       path: {
+        /**
+         * @description The order number, as returned when the order was placed.
+         * @example HR-284917
+         */
         orderNumber: string;
       };
       cookie?: never;
@@ -1738,6 +1866,17 @@ export interface operations {
           [name: string]: unknown;
         };
         content: {
+          /**
+           * @example {
+           *       "type": "https://tools.ietf.org/html/rfc9110#section-15.5.5",
+           *       "title": "Not Found",
+           *       "status": 404,
+           *       "detail": "Order 'HR-284917' not found.",
+           *       "instance": "/api/orders/HR-284917",
+           *       "code": "Order.NotFound",
+           *       "traceId": "00-4f8c9b2e1a3d4c5e8f7a6b5c4d3e2f1a-9b8c7d6e5f4a3b2c-00"
+           *     }
+           */
           "application/problem+json": components["schemas"]["DomainProblemDetails"];
         };
       };
@@ -1848,6 +1987,10 @@ export interface operations {
       query?: never;
       header?: never;
       path: {
+        /**
+         * @description The genre's slug, as returned by the genres list endpoint.
+         * @example dream-pop
+         */
         slug: string;
       };
       cookie?: never;
@@ -1885,6 +2028,17 @@ export interface operations {
           [name: string]: unknown;
         };
         content: {
+          /**
+           * @example {
+           *       "type": "https://tools.ietf.org/html/rfc9110#section-15.5.5",
+           *       "title": "Not Found",
+           *       "status": 404,
+           *       "detail": "Genre 'dream-pop' was not found.",
+           *       "instance": "/api/genres/dream-pop",
+           *       "code": "Genre.NotFound",
+           *       "traceId": "00-4f8c9b2e1a3d4c5e8f7a6b5c4d3e2f1a-9b8c7d6e5f4a3b2c-00"
+           *     }
+           */
           "application/problem+json": components["schemas"]["DomainProblemDetails"];
         };
       };
@@ -1995,6 +2149,10 @@ export interface operations {
       query?: never;
       header?: never;
       path: {
+        /**
+         * @description The decade's slug, as returned by the decades list endpoint.
+         * @example 1990s
+         */
         slug: string;
       };
       cookie?: never;
@@ -2032,6 +2190,17 @@ export interface operations {
           [name: string]: unknown;
         };
         content: {
+          /**
+           * @example {
+           *       "type": "https://tools.ietf.org/html/rfc9110#section-15.5.5",
+           *       "title": "Not Found",
+           *       "status": 404,
+           *       "detail": "Decade '1990s' was not found.",
+           *       "instance": "/api/decades/1990s",
+           *       "code": "Decade.NotFound",
+           *       "traceId": "00-4f8c9b2e1a3d4c5e8f7a6b5c4d3e2f1a-9b8c7d6e5f4a3b2c-00"
+           *     }
+           */
           "application/problem+json": components["schemas"]["DomainProblemDetails"];
         };
       };
@@ -2104,6 +2273,17 @@ export interface operations {
           [name: string]: unknown;
         };
         content: {
+          /**
+           * @example {
+           *       "type": "https://tools.ietf.org/html/rfc9110#section-15.5.5",
+           *       "title": "Not Found",
+           *       "status": 404,
+           *       "detail": "The authenticated user no longer exists.",
+           *       "instance": "/api/cart/sync",
+           *       "code": "Auth.UserNotFound",
+           *       "traceId": "00-4f8c9b2e1a3d4c5e8f7a6b5c4d3e2f1a-9b8c7d6e5f4a3b2c-00"
+           *     }
+           */
           "application/problem+json": components["schemas"]["DomainProblemDetails"];
         };
       };
@@ -2197,6 +2377,17 @@ export interface operations {
           [name: string]: unknown;
         };
         content: {
+          /**
+           * @example {
+           *       "type": "https://tools.ietf.org/html/rfc9110#section-15.5.5",
+           *       "title": "Not Found",
+           *       "status": 404,
+           *       "detail": "The authenticated user no longer exists.",
+           *       "instance": "/api/cart",
+           *       "code": "Auth.UserNotFound",
+           *       "traceId": "00-4f8c9b2e1a3d4c5e8f7a6b5c4d3e2f1a-9b8c7d6e5f4a3b2c-00"
+           *     }
+           */
           "application/problem+json": components["schemas"]["DomainProblemDetails"];
         };
       };
@@ -2285,6 +2476,17 @@ export interface operations {
           [name: string]: unknown;
         };
         content: {
+          /**
+           * @example {
+           *       "type": "https://tools.ietf.org/html/rfc9110#section-15.5.10",
+           *       "title": "Conflict",
+           *       "status": 409,
+           *       "detail": "An account with email 'john.doe@example.com' already exists.",
+           *       "instance": "/api/auth/register",
+           *       "code": "Auth.EmailAlreadyRegistered",
+           *       "traceId": "00-4f8c9b2e1a3d4c5e8f7a6b5c4d3e2f1a-9b8c7d6e5f4a3b2c-00"
+           *     }
+           */
           "application/problem+json": components["schemas"]["DomainProblemDetails"];
         };
       };
@@ -2359,6 +2561,17 @@ export interface operations {
           [name: string]: unknown;
         };
         content: {
+          /**
+           * @example {
+           *       "type": "https://tools.ietf.org/html/rfc9110#section-15.5.2",
+           *       "title": "Unauthorized",
+           *       "status": 401,
+           *       "detail": "The refresh token is invalid, expired, or has already been used.",
+           *       "instance": "/api/auth/refresh",
+           *       "code": "Auth.InvalidRefreshToken",
+           *       "traceId": "00-4f8c9b2e1a3d4c5e8f7a6b5c4d3e2f1a-9b8c7d6e5f4a3b2c-00"
+           *     }
+           */
           "application/problem+json": components["schemas"]["DomainProblemDetails"];
         };
       };
@@ -2528,6 +2741,17 @@ export interface operations {
           [name: string]: unknown;
         };
         content: {
+          /**
+           * @example {
+           *       "type": "https://tools.ietf.org/html/rfc9110#section-15.5.2",
+           *       "title": "Unauthorized",
+           *       "status": 401,
+           *       "detail": "The email or password is incorrect.",
+           *       "instance": "/api/auth/login",
+           *       "code": "Auth.InvalidCredentials",
+           *       "traceId": "00-4f8c9b2e1a3d4c5e8f7a6b5c4d3e2f1a-9b8c7d6e5f4a3b2c-00"
+           *     }
+           */
           "application/problem+json": components["schemas"]["DomainProblemDetails"];
         };
       };
@@ -2621,6 +2845,17 @@ export interface operations {
           [name: string]: unknown;
         };
         content: {
+          /**
+           * @example {
+           *       "type": "https://tools.ietf.org/html/rfc9110#section-15.5.5",
+           *       "title": "Not Found",
+           *       "status": 404,
+           *       "detail": "The authenticated user no longer exists.",
+           *       "instance": "/api/auth/me",
+           *       "code": "Auth.UserNotFound",
+           *       "traceId": "00-4f8c9b2e1a3d4c5e8f7a6b5c4d3e2f1a-9b8c7d6e5f4a3b2c-00"
+           *     }
+           */
           "application/problem+json": components["schemas"]["DomainProblemDetails"];
         };
       };
@@ -2729,10 +2964,18 @@ export interface operations {
   GetArtistById: {
     parameters: {
       query?: {
+        /**
+         * @description The sort order to apply to the artist's discography.
+         * @example NewestFirst
+         */
         sort?: "NewestFirst" | "OldestFirst" | "PriceAsc" | "PriceDesc";
       };
       header?: never;
       path: {
+        /**
+         * @description The artist's sqid, as returned by other artist endpoints.
+         * @example 9pXqL2
+         */
         sqid: string;
       };
       cookie?: never;
@@ -2763,6 +3006,17 @@ export interface operations {
           [name: string]: unknown;
         };
         content: {
+          /**
+           * @example {
+           *       "type": "https://tools.ietf.org/html/rfc9110#section-15.5.5",
+           *       "title": "Not Found",
+           *       "status": 404,
+           *       "detail": "Artist '9pXqL2' not found.",
+           *       "instance": "/api/artists/9pXqL2",
+           *       "code": "Artist.NotFound",
+           *       "traceId": "00-4f8c9b2e1a3d4c5e8f7a6b5c4d3e2f1a-9b8c7d6e5f4a3b2c-00"
+           *     }
+           */
           "application/problem+json": components["schemas"]["DomainProblemDetails"];
         };
       };
@@ -2805,6 +3059,10 @@ export interface operations {
       query?: never;
       header?: never;
       path: {
+        /**
+         * @description The album's sqid, as returned by other album endpoints.
+         * @example 9pXqL2
+         */
         sqid: string;
       };
       cookie?: never;
@@ -2842,6 +3100,17 @@ export interface operations {
           [name: string]: unknown;
         };
         content: {
+          /**
+           * @example {
+           *       "type": "https://tools.ietf.org/html/rfc9110#section-15.5.5",
+           *       "title": "Not Found",
+           *       "status": 404,
+           *       "detail": "Album '9pXqL2' not found.",
+           *       "instance": "/api/albums/9pXqL2/related",
+           *       "code": "Album.NotFound",
+           *       "traceId": "00-4f8c9b2e1a3d4c5e8f7a6b5c4d3e2f1a-9b8c7d6e5f4a3b2c-00"
+           *     }
+           */
           "application/problem+json": components["schemas"]["DomainProblemDetails"];
         };
       };
@@ -2919,6 +3188,17 @@ export interface operations {
           [name: string]: unknown;
         };
         content: {
+          /**
+           * @example {
+           *       "type": "https://tools.ietf.org/html/rfc9110#section-15.5.5",
+           *       "title": "Not Found",
+           *       "status": 404,
+           *       "detail": "No albums available.",
+           *       "instance": "/api/albums/cover-story",
+           *       "code": "Album.CatalogueEmpty",
+           *       "traceId": "00-4f8c9b2e1a3d4c5e8f7a6b5c4d3e2f1a-9b8c7d6e5f4a3b2c-00"
+           *     }
+           */
           "application/problem+json": components["schemas"]["DomainProblemDetails"];
         };
       };
@@ -2959,15 +3239,58 @@ export interface operations {
   GetAlbums: {
     parameters: {
       query?: {
+        /**
+         * @description The page number to return.
+         * @example 1
+         */
         page?: number;
+        /**
+         * @description The number of items per page.
+         * @example 12
+         */
         pageSize?: number;
+        /**
+         * @description Only return albums flagged as new arrivals.
+         * @example true
+         */
         isNew?: boolean;
+        /**
+         * @description Only return albums currently discounted from their original price.
+         * @example true
+         */
         isOnSale?: boolean;
+        /**
+         * @description Only return albums flagged as staff picks.
+         * @example true
+         */
         isStaffPick?: boolean;
+        /**
+         * @description Only return albums with at least one unit in stock.
+         * @example true
+         */
         inStock?: boolean;
+        /**
+         * @description Genre slugs to filter by. An album matching any of the given genres is included.
+         * @example [
+         *       "shoegaze",
+         *       "dream-pop"
+         *     ]
+         */
         genres?: string[];
+        /**
+         * @description Only return albums released in or after this year.
+         * @example 1990
+         */
         startYear?: number;
+        /**
+         * @description Only return albums released in or before this year.
+         * @example 1999
+         */
         endYear?: number;
+        /**
+         * @description The sort order to apply.
+         * @example NewestFirst
+         */
         sort?:
           | "NewestFirst"
           | "OldestFirst"
@@ -3039,6 +3362,10 @@ export interface operations {
       query?: never;
       header?: never;
       path: {
+        /**
+         * @description The album's sqid, as returned by other album endpoints.
+         * @example 9pXqL2
+         */
         sqid: string;
       };
       cookie?: never;
@@ -3076,6 +3403,17 @@ export interface operations {
           [name: string]: unknown;
         };
         content: {
+          /**
+           * @example {
+           *       "type": "https://tools.ietf.org/html/rfc9110#section-15.5.5",
+           *       "title": "Not Found",
+           *       "status": 404,
+           *       "detail": "Album '9pXqL2' not found.",
+           *       "instance": "/api/albums/9pXqL2",
+           *       "code": "Album.NotFound",
+           *       "traceId": "00-4f8c9b2e1a3d4c5e8f7a6b5c4d3e2f1a-9b8c7d6e5f4a3b2c-00"
+           *     }
+           */
           "application/problem+json": components["schemas"]["DomainProblemDetails"];
         };
       };
