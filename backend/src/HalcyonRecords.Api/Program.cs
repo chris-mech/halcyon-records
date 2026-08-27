@@ -76,6 +76,7 @@ builder.Services.AddOpenApi(options =>
     options.AddSchemaTransformer<IntegerSchemaTransformer>();
     options.AddSchemaTransformer<ExampleSchemaTransformer>();
     options.AddSchemaTransformer<WellKnownPropertyFormatSchemaTransformer>();
+    options.AddSchemaTransformer<PasswordPolicySchemaTransformer>();
     options.AddOperationTransformer<SortEnumParameterTransformer>();
     options.AddOperationTransformer<RequireBearerSecurityOperationTransformer>();
     options.AddDocumentTransformer<TagDescriptionDocumentTransformer>();

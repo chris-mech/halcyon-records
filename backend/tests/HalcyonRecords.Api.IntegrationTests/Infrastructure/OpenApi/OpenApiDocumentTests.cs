@@ -341,6 +341,43 @@ public class OpenApiDocumentTests(SqlServerContainerFixture fixture) : IAsyncLif
             .Be("uri");
     }
 
+    [Fact]
+    public async Task Document_RegisterRequestPasswordProperty_HasMinLengthAndPatternFromPasswordPolicyTransformer()
+    {
+        using var client = _factory.CreateClient();
+
+        var document = await client.GetFromJsonAsync<JsonNode>(
+            new Uri("/openapi/v1.json", UriKind.Relative),
+            TestContext.Current.CancellationToken
+        );
+
+        var passwordSchema = document!["components"]!["schemas"]!["RegisterRequest"]![
+            "properties"
+        ]!["password"]!;
+
+        passwordSchema["minLength"]!.GetValue<int>().Should().Be(6);
+        passwordSchema["pattern"]!
+            .GetValue<string>()
+            .Should()
+            .Be("^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[^a-zA-Z0-9]).+$");
+    }
+
+    [Fact]
+    public async Task Document_LoginRequestPasswordProperty_HasNoPatternSincePolicyOnlyAppliesToRegistration()
+    {
+        using var client = _factory.CreateClient();
+
+        var document = await client.GetFromJsonAsync<JsonNode>(
+            new Uri("/openapi/v1.json", UriKind.Relative),
+            TestContext.Current.CancellationToken
+        );
+
+        document!["components"]!["schemas"]!["LoginRequest"]!["properties"]!["password"]!
+            ["pattern"]
+            .Should()
+            .BeNull();
+    }
+
     private async Task<JsonNode?> GetSortParameterSchemaAsync(string path) =>
         (await GetParameterAsync(path, "sort"))?["schema"];
 
