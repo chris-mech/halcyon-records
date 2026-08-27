@@ -75,6 +75,7 @@ builder.Services.AddOpenApi(options =>
     options.OpenApiVersion = OpenApiSpecVersion.OpenApi3_1;
     options.AddSchemaTransformer<IntegerSchemaTransformer>();
     options.AddSchemaTransformer<ExampleSchemaTransformer>();
+    options.AddSchemaTransformer<WellKnownPropertyFormatSchemaTransformer>();
     options.AddOperationTransformer<SortEnumParameterTransformer>();
     options.AddOperationTransformer<RequireBearerSecurityOperationTransformer>();
     options.AddDocumentTransformer<TagDescriptionDocumentTransformer>();

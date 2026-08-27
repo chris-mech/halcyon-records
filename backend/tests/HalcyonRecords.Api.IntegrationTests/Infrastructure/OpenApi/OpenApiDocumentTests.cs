@@ -307,6 +307,40 @@ public class OpenApiDocumentTests(SqlServerContainerFixture fixture) : IAsyncLif
             .BeEquivalentTo("Midnight Static", "Dream Pop", "Shoegaze");
     }
 
+    [Fact]
+    public async Task Document_RegisterRequestEmailProperty_HasEmailFormatFromWellKnownPropertyFormatTransformer()
+    {
+        using var client = _factory.CreateClient();
+
+        var document = await client.GetFromJsonAsync<JsonNode>(
+            new Uri("/openapi/v1.json", UriKind.Relative),
+            TestContext.Current.CancellationToken
+        );
+
+        document!["components"]!["schemas"]!["RegisterRequest"]!["properties"]!["email"]!["format"]!
+            .GetValue<string>()
+            .Should()
+            .Be("email");
+    }
+
+    [Fact]
+    public async Task Document_AlbumSummaryResponseImageUrlProperty_HasUriFormatFromWellKnownPropertyFormatTransformer()
+    {
+        using var client = _factory.CreateClient();
+
+        var document = await client.GetFromJsonAsync<JsonNode>(
+            new Uri("/openapi/v1.json", UriKind.Relative),
+            TestContext.Current.CancellationToken
+        );
+
+        document!["components"]!["schemas"]!["AlbumSummaryResponse"]!["properties"]!["imageUrl"]![
+            "format"
+        ]!
+            .GetValue<string>()
+            .Should()
+            .Be("uri");
+    }
+
     private async Task<JsonNode?> GetSortParameterSchemaAsync(string path) =>
         (await GetParameterAsync(path, "sort"))?["schema"];
 
