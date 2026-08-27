@@ -456,6 +456,74 @@ public class OpenApiDocumentTests(SqlServerContainerFixture fixture) : IAsyncLif
     }
 
     [Fact]
+    public async Task Document_GetOrdersOperation404Response_HasExampleFromOperationTransformer()
+    {
+        using var client = _factory.CreateClient();
+
+        var document = await client.GetFromJsonAsync<JsonNode>(
+            new Uri("/openapi/v1.json", UriKind.Relative),
+            TestContext.Current.CancellationToken
+        );
+
+        var example = document!["paths"]!["/api/orders"]!["get"]!["responses"]!["404"]!["content"]![
+            "application/problem+json"
+        ]!["example"]!;
+
+        example["code"]!.GetValue<string>().Should().Be("Auth.UserNotFound");
+    }
+
+    [Fact]
+    public async Task Document_GetOrderByNumberOperation404Response_HasExampleFromOperationTransformer()
+    {
+        using var client = _factory.CreateClient();
+
+        var document = await client.GetFromJsonAsync<JsonNode>(
+            new Uri("/openapi/v1.json", UriKind.Relative),
+            TestContext.Current.CancellationToken
+        );
+
+        var example = document!["paths"]!["/api/orders/{orderNumber}"]!["get"]!["responses"]![
+            "404"
+        ]!["content"]!["application/problem+json"]!["example"]!;
+
+        example["code"]!.GetValue<string>().Should().Be("Order.NotFound");
+    }
+
+    [Fact]
+    public async Task Document_CreateOrderOperation404Response_HasExampleFromOperationTransformer()
+    {
+        using var client = _factory.CreateClient();
+
+        var document = await client.GetFromJsonAsync<JsonNode>(
+            new Uri("/openapi/v1.json", UriKind.Relative),
+            TestContext.Current.CancellationToken
+        );
+
+        var example = document!["paths"]!["/api/orders"]!["post"]!["responses"]!["404"]![
+            "content"
+        ]!["application/problem+json"]!["example"]!;
+
+        example["code"]!.GetValue<string>().Should().Be("Auth.UserNotFound");
+    }
+
+    [Fact]
+    public async Task Document_CreateOrderOperation409Response_HasExampleFromOperationTransformer()
+    {
+        using var client = _factory.CreateClient();
+
+        var document = await client.GetFromJsonAsync<JsonNode>(
+            new Uri("/openapi/v1.json", UriKind.Relative),
+            TestContext.Current.CancellationToken
+        );
+
+        var example = document!["paths"]!["/api/orders"]!["post"]!["responses"]!["409"]![
+            "content"
+        ]!["application/problem+json"]!["example"]!;
+
+        example["code"]!.GetValue<string>().Should().Be("Order.InsufficientStock");
+    }
+
+    [Fact]
     public async Task Document_GetSearchSuggestionsOperationResponseSchema_HasExampleFromOperationTransformer()
     {
         using var client = _factory.CreateClient();
