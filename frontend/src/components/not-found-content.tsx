@@ -1,14 +1,19 @@
 import Link from "next/link";
 
+import { ShadowStackText } from "@/components/shadow-stack-text";
 import { buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 
 function NotFoundContent() {
   return (
     <div className="mx-auto w-full max-w-160 px-16 pt-30 pb-35 text-center">
-      <div className="shadow-stack-hero mb-6 font-heading text-[7.5rem] leading-none font-black text-paper uppercase">
+      <ShadowStackText
+        as="div"
+        size="hero"
+        className="mb-6 text-[7.5rem] leading-none"
+      >
         404
-      </div>
+      </ShadowStackText>
       <h1 className="mb-3.5 font-serif text-[1.625rem] font-medium italic">
         This side&apos;s blank
       </h1>

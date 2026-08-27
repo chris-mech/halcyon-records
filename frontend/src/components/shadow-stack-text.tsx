@@ -17,20 +17,20 @@ const shadowStackVariants = cva(
   },
 );
 
-interface ShadowStackHeadingProps extends VariantProps<
+interface ShadowStackTextProps extends VariantProps<
   typeof shadowStackVariants
 > {
-  as?: "h1" | "h2";
+  as?: "h1" | "h2" | "div";
   className?: string;
   children: React.ReactNode;
 }
 
-function ShadowStackHeading({
+function ShadowStackText({
   as: Tag = "h2",
   size,
   className,
   children,
-}: ShadowStackHeadingProps) {
+}: ShadowStackTextProps) {
   return (
     <Tag className={cn(shadowStackVariants({ size }), className)}>
       {children}
@@ -38,4 +38,4 @@ function ShadowStackHeading({
   );
 }
 
-export { ShadowStackHeading };
+export { ShadowStackText };

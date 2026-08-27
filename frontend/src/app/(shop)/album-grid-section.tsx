@@ -1,7 +1,7 @@
 import Link from "next/link";
 
 import { ProductCard } from "@/components/product-card";
-import { ShadowStackHeading } from "@/components/shadow-stack-heading";
+import { ShadowStackText } from "@/components/shadow-stack-text";
 import type { components } from "@/lib/api/schema";
 
 type AlbumSummary = components["schemas"]["AlbumSummaryResponse"];
@@ -26,9 +26,9 @@ function AlbumGridSection({
   return (
     <section className="mx-auto w-full max-w-275 px-16 py-12">
       <div className="mb-11 flex flex-col items-center gap-3.5 text-center">
-        <ShadowStackHeading as="h2" size="section">
+        <ShadowStackText as="h2" size="section">
           {heading}
-        </ShadowStackHeading>
+        </ShadowStackText>
         <div className="flex items-center gap-4">
           <p className="text-sm font-semibold text-muted-foreground">
             {subtext}
