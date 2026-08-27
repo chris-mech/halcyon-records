@@ -37,13 +37,15 @@ public sealed class SortEnumParameterTransformer : IOpenApiOperationTransformer
             return Task.CompletedTask;
         }
 
-        sortParameter.Schema = new OpenApiSchema
+        if (sortParameter.Schema is not OpenApiSchema schema)
         {
-            Type = JsonSchemaType.String,
-            Enum = Enum.GetNames(enumType)
-                .Select(name => (JsonNode)JsonValue.Create(name))
-                .ToList(),
-        };
+            return Task.CompletedTask;
+        }
+
+        schema.Type = JsonSchemaType.String;
+        schema.Enum = Enum.GetNames(enumType)
+            .Select(name => (JsonNode)JsonValue.Create(name))
+            .ToList();
 
         return Task.CompletedTask;
     }

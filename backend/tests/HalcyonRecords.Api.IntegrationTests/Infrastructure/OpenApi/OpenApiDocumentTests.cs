@@ -66,6 +66,14 @@ public class OpenApiDocumentTests(SqlServerContainerFixture fixture) : IAsyncLif
     }
 
     [Fact]
+    public async Task Document_AlbumsSortParameter_HasDefaultDespiteSortEnumParameterTransformerReplacingSchema()
+    {
+        var sortSchema = await GetSortParameterSchemaAsync("/api/albums");
+
+        sortSchema!["default"]!.GetValue<string>().Should().Be(nameof(AlbumSortBy.NewestFirst));
+    }
+
+    [Fact]
     public async Task Document_ArtistByIdSortParameter_HasEnumSchemaMatchingArtistAlbumSortBy()
     {
         var sortSchema = await GetSortParameterSchemaAsync("/api/artists/{sqid}");
