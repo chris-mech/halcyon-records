@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 
 import { client } from "@/lib/api/client";
 import { ProductCard } from "@/components/product-card";
+import { ShadowStackText } from "@/components/shadow-stack-text";
 
 import { FilterPills } from "./filter-pills";
 import { Pagination } from "./pagination";
@@ -43,9 +44,9 @@ export async function ShopContent({
   return (
     <div className="flex flex-col gap-8 px-16 py-12">
       <div className="flex items-baseline justify-between">
-        <h1 className="shadow-stack-section font-heading text-4xl font-black text-paper uppercase">
+        <ShadowStackText as="h1" size="section">
           All records
-        </h1>
+        </ShadowStackText>
         <span className="text-sm text-muted-foreground">
           {data.totalCount} {data.totalCount === 1 ? "record" : "records"}
         </span>

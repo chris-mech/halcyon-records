@@ -6,7 +6,7 @@ import { cacheLife } from "next/cache";
 import { client } from "@/lib/api/client";
 import { formatPrice } from "@/lib/format";
 import { GenrePillList } from "@/components/genre-pill-list";
-import { ShadowStackHeading } from "@/components/shadow-stack-heading";
+import { ShadowStackText } from "@/components/shadow-stack-text";
 import { AddToBagButton } from "@/components/add-to-bag-button";
 import { MediaThumbnail } from "@/components/media-thumbnail";
 import type { components } from "@/lib/api/schema";
@@ -138,9 +138,9 @@ export async function HomeContent() {
           <GenrePillList genres={coverStory.genres} className="mb-5.5" />
 
           <Link href={albumHref}>
-            <ShadowStackHeading as="h1" size="hero" className="mb-6">
+            <ShadowStackText as="h1" size="hero" className="mb-6">
               {coverStory.title}
-            </ShadowStackHeading>
+            </ShadowStackText>
           </Link>
 
           <div className="mb-7 flex flex-wrap gap-x-1 text-sm font-bold tracking-wide text-muted-foreground uppercase">

@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.WebUtilities;
+using Microsoft.EntityFrameworkCore;
 
 namespace HalcyonRecords.Api.Common;
 
@@ -60,6 +61,11 @@ file static class ExceptionMappingExtensions
                 HttpRequestException => (
                     StatusCodes.Status502BadGateway,
                     "Bad Gateway",
+                    "Please try again later."
+                ),
+                DbUpdateConcurrencyException => (
+                    StatusCodes.Status409Conflict,
+                    "Conflict",
                     "Please try again later."
                 ),
                 _ => (

@@ -52,6 +52,24 @@ public class OpenApiDocumentTests(SqlServerContainerFixture fixture) : IAsyncLif
     }
 
     [Fact]
+    public async Task Document_PagedResultOfAlbumSummaryResponsePage_UsesPlainIntegerTypeForNonNullableInteger()
+    {
+        using var client = _factory.CreateClient();
+
+        var document = await client.GetFromJsonAsync<JsonNode>(
+            new Uri("/openapi/v1.json", UriKind.Relative),
+            TestContext.Current.CancellationToken
+        );
+
+        var pageSchema = document!["components"]!["schemas"]!["PagedResultOfAlbumSummaryResponse"]![
+            "properties"
+        ]!["page"]!;
+
+        pageSchema["type"]!.GetValue<string>().Should().Be("integer");
+        pageSchema["format"]!.GetValue<string>().Should().Be("int32");
+    }
+
+    [Fact]
     public async Task Document_AlbumsSortParameter_HasEnumSchemaMatchingAlbumSortBy()
     {
         var sortSchema = await GetSortParameterSchemaAsync("/api/albums");

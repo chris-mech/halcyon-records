@@ -1,6 +1,7 @@
 ﻿using FluentAssertions;
 using HalcyonRecords.Api.Common;
 using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using NSubstitute;
 
@@ -12,6 +13,8 @@ public class GlobalExceptionHandlerTests
     [InlineData(typeof(BadHttpRequestException), StatusCodes.Status400BadRequest)]
     [InlineData(typeof(TaskCanceledException), StatusCodes.Status408RequestTimeout)]
     [InlineData(typeof(HttpRequestException), StatusCodes.Status502BadGateway)]
+    [InlineData(typeof(DbUpdateConcurrencyException), StatusCodes.Status409Conflict)]
+    [InlineData(typeof(DbUpdateException), StatusCodes.Status500InternalServerError)]
     [InlineData(typeof(InvalidOperationException), StatusCodes.Status500InternalServerError)]
     public async Task TryHandleAsync_KnownExceptionTypes_ProduceTheExpectedStatusCode(
         Type exceptionType,

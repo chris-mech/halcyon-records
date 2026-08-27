@@ -10,6 +10,7 @@ import { AlbumTagStack } from "@/components/album-tag-stack";
 import { GenrePillList } from "@/components/genre-pill-list";
 import { ProductCard } from "@/components/product-card";
 import { MediaThumbnail } from "@/components/media-thumbnail";
+import { ShadowStackText } from "@/components/shadow-stack-text";
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -215,9 +216,9 @@ export async function AlbumDetailContent({
 
       {relatedAlbums.length > 0 && (
         <section className="mx-auto w-full max-w-275 px-16 pb-25">
-          <h2 className="shadow-stack-section mb-11 text-center font-heading text-3xl font-black text-paper uppercase">
+          <ShadowStackText as="h2" size="section" className="mb-11 text-center">
             More in this mood
-          </h2>
+          </ShadowStackText>
           <div className="grid grid-cols-2 gap-7 sm:grid-cols-3 lg:grid-cols-4">
             {relatedAlbums.map((related) => (
               <ProductCard key={related.sqid} album={related} />
