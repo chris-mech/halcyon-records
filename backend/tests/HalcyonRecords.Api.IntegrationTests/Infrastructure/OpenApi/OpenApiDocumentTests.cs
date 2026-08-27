@@ -354,6 +354,23 @@ public class OpenApiDocumentTests(SqlServerContainerFixture fixture) : IAsyncLif
     }
 
     [Fact]
+    public async Task Document_GetArtistByIdOperation404Response_HasExampleFromOperationTransformer()
+    {
+        using var client = _factory.CreateClient();
+
+        var document = await client.GetFromJsonAsync<JsonNode>(
+            new Uri("/openapi/v1.json", UriKind.Relative),
+            TestContext.Current.CancellationToken
+        );
+
+        var example = document!["paths"]!["/api/artists/{sqid}"]!["get"]!["responses"]!["404"]![
+            "content"
+        ]!["application/problem+json"]!["example"]!;
+
+        example["detail"]!.GetValue<string>().Should().Be("Artist '9pXqL2' not found.");
+    }
+
+    [Fact]
     public async Task Document_GetSearchSuggestionsOperationResponseSchema_HasExampleFromOperationTransformer()
     {
         using var client = _factory.CreateClient();
