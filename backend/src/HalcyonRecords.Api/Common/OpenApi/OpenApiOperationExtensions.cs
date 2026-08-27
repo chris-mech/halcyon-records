@@ -17,6 +17,18 @@ public static class OpenApiOperationExtensions
         parameter.Example = example;
     }
 
+    public static void SetParameterMinimum(
+        this OpenApiOperation operation,
+        string parameterName,
+        int minimum
+    )
+    {
+        var parameter = (OpenApiParameter)
+            operation.Parameters!.Single(p => p.Name == parameterName);
+        var schema = (OpenApiSchema)parameter.Schema!;
+        schema.Minimum = minimum.ToString(CultureInfo.InvariantCulture);
+    }
+
     public static void SetParameterRange(
         this OpenApiOperation operation,
         string parameterName,

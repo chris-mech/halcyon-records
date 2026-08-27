@@ -104,7 +104,7 @@ public sealed class GetAlbumsEndpoint : IEndpoint
                         .Value;
 
                     operation.SetParameterExample("page", JsonValue.Create(1));
-                    operation.SetParameterRange("page", pagination.MinPage, int.MaxValue);
+                    operation.SetParameterMinimum("page", pagination.MinPage);
                     operation.SetParameterDefault("page", JsonValue.Create(pagination.MinPage));
                     operation.SetParameterExample("pageSize", JsonValue.Create(12));
                     operation.SetParameterRange(

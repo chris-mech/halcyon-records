@@ -378,6 +378,24 @@ public class OpenApiDocumentTests(SqlServerContainerFixture fixture) : IAsyncLif
             .BeNull();
     }
 
+    [Fact]
+    public async Task Document_SyncCartItemRequestQuantityProperty_HasMinimumButNoMaximum()
+    {
+        using var client = _factory.CreateClient();
+
+        var document = await client.GetFromJsonAsync<JsonNode>(
+            new Uri("/openapi/v1.json", UriKind.Relative),
+            TestContext.Current.CancellationToken
+        );
+
+        var quantitySchema = document!["components"]!["schemas"]!["SyncCartItemRequest"]![
+            "properties"
+        ]!["quantity"]!;
+
+        quantitySchema["minimum"]!.GetValue<int>().Should().Be(1);
+        quantitySchema["maximum"].Should().BeNull();
+    }
+
     private async Task<JsonNode?> GetSortParameterSchemaAsync(string path) =>
         (await GetParameterAsync(path, "sort"))?["schema"];
 

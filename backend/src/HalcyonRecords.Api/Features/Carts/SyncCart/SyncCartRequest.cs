@@ -20,7 +20,4 @@ public sealed record SyncCartRequest(IReadOnlyList<SyncCartItemRequest> Items)
         )!;
 }
 
-public sealed record SyncCartItemRequest(
-    string AlbumSqid,
-    [property: Range(1, int.MaxValue)] int Quantity
-);
+public sealed record SyncCartItemRequest(string AlbumSqid, int Quantity);
