@@ -371,6 +371,91 @@ public class OpenApiDocumentTests(SqlServerContainerFixture fixture) : IAsyncLif
     }
 
     [Fact]
+    public async Task Document_GetRelatedAlbumsOperation404Response_HasExampleFromOperationTransformer()
+    {
+        using var client = _factory.CreateClient();
+
+        var document = await client.GetFromJsonAsync<JsonNode>(
+            new Uri("/openapi/v1.json", UriKind.Relative),
+            TestContext.Current.CancellationToken
+        );
+
+        var example = document!["paths"]!["/api/albums/{sqid}/related"]!["get"]!["responses"]![
+            "404"
+        ]!["content"]!["application/problem+json"]!["example"]!;
+
+        example["instance"]!.GetValue<string>().Should().Be("/api/albums/9pXqL2/related");
+    }
+
+    [Fact]
+    public async Task Document_RegisterOperation409Response_HasExampleFromOperationTransformer()
+    {
+        using var client = _factory.CreateClient();
+
+        var document = await client.GetFromJsonAsync<JsonNode>(
+            new Uri("/openapi/v1.json", UriKind.Relative),
+            TestContext.Current.CancellationToken
+        );
+
+        var example = document!["paths"]!["/api/auth/register"]!["post"]!["responses"]!["409"]![
+            "content"
+        ]!["application/problem+json"]!["example"]!;
+
+        example["code"]!.GetValue<string>().Should().Be("Auth.EmailAlreadyRegistered");
+    }
+
+    [Fact]
+    public async Task Document_LoginOperation401Response_HasExampleFromOperationTransformer()
+    {
+        using var client = _factory.CreateClient();
+
+        var document = await client.GetFromJsonAsync<JsonNode>(
+            new Uri("/openapi/v1.json", UriKind.Relative),
+            TestContext.Current.CancellationToken
+        );
+
+        var example = document!["paths"]!["/api/auth/login"]!["post"]!["responses"]!["401"]![
+            "content"
+        ]!["application/problem+json"]!["example"]!;
+
+        example["code"]!.GetValue<string>().Should().Be("Auth.InvalidCredentials");
+    }
+
+    [Fact]
+    public async Task Document_RefreshOperation401Response_HasExampleFromOperationTransformer()
+    {
+        using var client = _factory.CreateClient();
+
+        var document = await client.GetFromJsonAsync<JsonNode>(
+            new Uri("/openapi/v1.json", UriKind.Relative),
+            TestContext.Current.CancellationToken
+        );
+
+        var example = document!["paths"]!["/api/auth/refresh"]!["post"]!["responses"]!["401"]![
+            "content"
+        ]!["application/problem+json"]!["example"]!;
+
+        example["code"]!.GetValue<string>().Should().Be("Auth.InvalidRefreshToken");
+    }
+
+    [Fact]
+    public async Task Document_GetCurrentUserOperation404Response_HasExampleFromOperationTransformer()
+    {
+        using var client = _factory.CreateClient();
+
+        var document = await client.GetFromJsonAsync<JsonNode>(
+            new Uri("/openapi/v1.json", UriKind.Relative),
+            TestContext.Current.CancellationToken
+        );
+
+        var example = document!["paths"]!["/api/auth/me"]!["get"]!["responses"]!["404"]![
+            "content"
+        ]!["application/problem+json"]!["example"]!;
+
+        example["code"]!.GetValue<string>().Should().Be("Auth.UserNotFound");
+    }
+
+    [Fact]
     public async Task Document_GetSearchSuggestionsOperationResponseSchema_HasExampleFromOperationTransformer()
     {
         using var client = _factory.CreateClient();
