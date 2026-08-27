@@ -5,10 +5,7 @@ namespace HalcyonRecords.Api.Common.OpenApi;
 
 public sealed class TagDescriptionDocumentTransformer : IOpenApiDocumentTransformer
 {
-    private static readonly IReadOnlyDictionary<string, string> Descriptions = new Dictionary<
-        string,
-        string
-    >
+    private static readonly Dictionary<string, string> s_descriptions = new()
     {
         ["Albums"] =
             "Browse album listings and detail pages, including related albums and the weekly staff-pick cover story.",
@@ -36,7 +33,7 @@ public sealed class TagDescriptionDocumentTransformer : IOpenApiDocumentTransfor
 
         foreach (var tag in document.Tags)
         {
-            if (Descriptions.TryGetValue(tag.Name!, out var description))
+            if (s_descriptions.TryGetValue(tag.Name!, out var description))
             {
                 tag.Description = description;
             }

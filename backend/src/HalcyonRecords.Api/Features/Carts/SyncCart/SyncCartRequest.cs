@@ -1,5 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-using System.Text.Json.Nodes;
+﻿using System.Text.Json.Nodes;
 using HalcyonRecords.Api.Common.OpenApi;
 
 namespace HalcyonRecords.Api.Features.Carts.SyncCart;
