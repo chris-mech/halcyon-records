@@ -42,6 +42,22 @@ public sealed class GetGenreBySlugEndpoint : IEndpoint
                 (operation, context, cancellationToken) =>
                 {
                     operation.SetParameterExample("slug", JsonValue.Create("dream-pop"));
+                    operation.SetResponseExample(
+                        "404",
+                        JsonNode.Parse(
+                            """
+                            {
+                                "type": "https://tools.ietf.org/html/rfc9110#section-15.5.5",
+                                "title": "Not Found",
+                                "status": 404,
+                                "detail": "Genre 'dream-pop' was not found.",
+                                "instance": "/api/genres/dream-pop",
+                                "code": "Genre.NotFound",
+                                "traceId": "00-4f8c9b2e1a3d4c5e8f7a6b5c4d3e2f1a-9b8c7d6e5f4a3b2c-00"
+                            }
+                            """
+                        )!
+                    );
                     return Task.CompletedTask;
                 }
             );

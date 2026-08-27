@@ -558,6 +558,40 @@ public class OpenApiDocumentTests(SqlServerContainerFixture fixture) : IAsyncLif
     }
 
     [Fact]
+    public async Task Document_GetDecadeBySlugOperation404Response_HasExampleFromOperationTransformer()
+    {
+        using var client = _factory.CreateClient();
+
+        var document = await client.GetFromJsonAsync<JsonNode>(
+            new Uri("/openapi/v1.json", UriKind.Relative),
+            TestContext.Current.CancellationToken
+        );
+
+        var example = document!["paths"]!["/api/decades/{slug}"]!["get"]!["responses"]!["404"]![
+            "content"
+        ]!["application/problem+json"]!["example"]!;
+
+        example["code"]!.GetValue<string>().Should().Be("Decade.NotFound");
+    }
+
+    [Fact]
+    public async Task Document_GetGenreBySlugOperation404Response_HasExampleFromOperationTransformer()
+    {
+        using var client = _factory.CreateClient();
+
+        var document = await client.GetFromJsonAsync<JsonNode>(
+            new Uri("/openapi/v1.json", UriKind.Relative),
+            TestContext.Current.CancellationToken
+        );
+
+        var example = document!["paths"]!["/api/genres/{slug}"]!["get"]!["responses"]!["404"]![
+            "content"
+        ]!["application/problem+json"]!["example"]!;
+
+        example["code"]!.GetValue<string>().Should().Be("Genre.NotFound");
+    }
+
+    [Fact]
     public async Task Document_GetSearchSuggestionsOperationResponseSchema_HasExampleFromOperationTransformer()
     {
         using var client = _factory.CreateClient();
