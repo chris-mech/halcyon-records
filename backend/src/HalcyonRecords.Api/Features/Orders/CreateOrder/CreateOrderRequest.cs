@@ -1,12 +1,16 @@
-﻿using System.Text.Json.Nodes;
+﻿using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Nodes;
 using HalcyonRecords.Api.Common.OpenApi;
 
 namespace HalcyonRecords.Api.Features.Orders.CreateOrder;
 
 public sealed record CreateOrderRequest(
-    string ContactFirstName,
-    string ContactLastName,
-    string ContactEmail,
+    [property: MaxLength(100)] string ContactFirstName,
+    [property: MaxLength(100)] string ContactLastName,
+    [property: MaxLength(256)]
+    [property: Description("A valid email address.")]
+        string ContactEmail,
     Guid IdempotencyKey
 ) : IOpenApiExampleProvider
 {

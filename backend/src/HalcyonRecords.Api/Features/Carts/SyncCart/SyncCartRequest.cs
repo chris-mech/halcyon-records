@@ -1,4 +1,5 @@
-﻿using System.Text.Json.Nodes;
+﻿using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Nodes;
 using HalcyonRecords.Api.Common.OpenApi;
 
 namespace HalcyonRecords.Api.Features.Carts.SyncCart;
@@ -19,4 +20,7 @@ public sealed record SyncCartRequest(IReadOnlyList<SyncCartItemRequest> Items)
         )!;
 }
 
-public sealed record SyncCartItemRequest(string AlbumSqid, int Quantity);
+public sealed record SyncCartItemRequest(
+    string AlbumSqid,
+    [property: Range(1, int.MaxValue)] int Quantity
+);

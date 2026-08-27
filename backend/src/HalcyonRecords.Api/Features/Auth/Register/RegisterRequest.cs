@@ -1,12 +1,14 @@
-﻿using System.Text.Json.Nodes;
+﻿using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Nodes;
 using HalcyonRecords.Api.Common.OpenApi;
 
 namespace HalcyonRecords.Api.Features.Auth.Register;
 
 public sealed record RegisterRequest(
-    string FirstName,
-    string LastName,
-    string Email,
+    [property: MaxLength(100)] string FirstName,
+    [property: MaxLength(100)] string LastName,
+    [property: MaxLength(256)] [property: Description("A valid email address.")] string Email,
     string Password
 ) : IOpenApiExampleProvider
 {
