@@ -21,7 +21,7 @@ public sealed class GetArtistByIdHandler(
     {
         if (artistSqids.Decode(query.Sqid) is not { } id)
         {
-            return Error.NotFound(description: "Artist not found.");
+            return DomainErrors.Artist.NotFound($"Artist '{query.Sqid}' not found.");
         }
 
         var artistId = new ArtistId(id);
@@ -41,7 +41,7 @@ public sealed class GetArtistByIdHandler(
 
         if (artistData is null)
         {
-            return Error.NotFound(description: "Artist not found.");
+            return DomainErrors.Artist.NotFound($"Artist '{query.Sqid}' not found.");
         }
 
         var sort = Enum.Parse<ArtistAlbumSortBy>(query.Sort);

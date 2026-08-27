@@ -24,7 +24,7 @@ public sealed class GetRelatedAlbumsHandler(
     {
         if (albumSqids.Decode(query.Sqid) is not { } id)
         {
-            return Error.NotFound(description: "Album not found.");
+            return DomainErrors.Album.NotFound($"Album '{query.Sqid}' not found.");
         }
 
         var currentId = new AlbumId(id);
@@ -42,7 +42,7 @@ public sealed class GetRelatedAlbumsHandler(
 
         if (current is null)
         {
-            return Error.NotFound(description: "Album not found.");
+            return DomainErrors.Album.NotFound($"Album '{query.Sqid}' not found.");
         }
 
         var selectedIds = new List<AlbumId>();

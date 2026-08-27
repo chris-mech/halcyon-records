@@ -47,7 +47,7 @@ public sealed class GetCoverStoryHandler(
 
             if (fallbackId is null)
             {
-                return Error.NotFound(description: "No albums available.");
+                return DomainErrors.Album.CatalogueEmpty();
             }
 
             selectedId = fallbackId.Value;
@@ -64,7 +64,7 @@ public sealed class GetCoverStoryHandler(
 
         if (album is null)
         {
-            return Error.NotFound(description: "No albums available.");
+            return DomainErrors.Album.CatalogueEmpty();
         }
 
         return new CoverStoryResponse(

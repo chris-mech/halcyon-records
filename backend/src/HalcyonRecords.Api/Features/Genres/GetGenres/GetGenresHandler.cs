@@ -15,13 +15,7 @@ public sealed class GetGenresHandler(ApplicationDbContext dbContext)
     {
         return await dbContext
             .Genres.OrderBy(g => g.Name)
-            .Select(g => new GenreListItemResponse(
-                g.Name,
-                g.Slug,
-                g.Description,
-                g.ImageUrl,
-                g.AlbumGenres.Count
-            ))
+            .Select(g => new GenreListItemResponse(g.Name, g.Slug, g.ImageUrl, g.AlbumGenres.Count))
             .ToListAsync(cancellationToken);
     }
 }

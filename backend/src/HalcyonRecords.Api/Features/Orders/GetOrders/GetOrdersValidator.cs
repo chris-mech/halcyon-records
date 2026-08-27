@@ -1,12 +1,15 @@
 ﻿using FluentValidation;
+using Microsoft.Extensions.Options;
 
 namespace HalcyonRecords.Api.Features.Orders.GetOrders;
 
 public sealed class GetOrdersValidator : AbstractValidator<GetOrdersQuery>
 {
-    public GetOrdersValidator()
+    public GetOrdersValidator(IOptions<OrdersPaginationOptions> paginationOptions)
     {
-        RuleFor(x => x.Page).GreaterThan(0);
-        RuleFor(x => x.PageSize).InclusiveBetween(1, 25);
+        var pagination = paginationOptions.Value;
+
+        RuleFor(x => x.Page).GreaterThanOrEqualTo(pagination.MinPage);
+        RuleFor(x => x.PageSize).InclusiveBetween(pagination.MinPageSize, pagination.MaxPageSize);
     }
 }

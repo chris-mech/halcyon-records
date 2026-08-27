@@ -38,14 +38,12 @@ const siblingGenres: GenreListItem[] = [
   {
     name: "Full Detail Genre",
     slug: "full-detail-genre",
-    description: null,
     imageUrl: null,
     albumCount: 1,
   },
   {
     name: "Genre Match 2",
     slug: "genre-match-2",
-    description: null,
     imageUrl: null,
     albumCount: 3,
   },

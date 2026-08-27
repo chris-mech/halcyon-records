@@ -24,7 +24,6 @@ function buildGenre(overrides: Partial<GenreListItem> = {}): GenreListItem {
   return {
     name: "Genre Match 1",
     slug: "genre-match-1",
-    description: null,
     imageUrl: null,
     albumCount: 1,
     ...overrides,

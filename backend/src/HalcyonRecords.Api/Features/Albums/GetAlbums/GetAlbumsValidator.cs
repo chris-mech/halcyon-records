@@ -1,13 +1,16 @@
 ﻿using FluentValidation;
+using Microsoft.Extensions.Options;
 
 namespace HalcyonRecords.Api.Features.Albums.GetAlbums;
 
 public sealed class GetAlbumsValidator : AbstractValidator<GetAlbumsQuery>
 {
-    public GetAlbumsValidator()
+    public GetAlbumsValidator(IOptions<AlbumsPaginationOptions> paginationOptions)
     {
-        RuleFor(x => x.Page).GreaterThan(0);
-        RuleFor(x => x.PageSize).InclusiveBetween(1, 50);
+        var pagination = paginationOptions.Value;
+
+        RuleFor(x => x.Page).GreaterThanOrEqualTo(pagination.MinPage);
+        RuleFor(x => x.PageSize).InclusiveBetween(pagination.MinPageSize, pagination.MaxPageSize);
 
         RuleForEach(x => x.Genres).MaximumLength(150);
         RuleFor(x => x.Genres)

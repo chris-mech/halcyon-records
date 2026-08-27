@@ -1,5 +1,8 @@
-﻿using ErrorOr;
+﻿using System.ComponentModel;
+using System.Text.Json.Nodes;
+using ErrorOr;
 using HalcyonRecords.Api.Common.Endpoints;
+using HalcyonRecords.Api.Common.OpenApi;
 using HalcyonRecords.Api.Common.Results;
 using MediatR;
 using Microsoft.AspNetCore.Http.HttpResults;
@@ -13,7 +16,8 @@ public sealed class GetGenreBySlugEndpoint : IEndpoint
         app.MapGet(
                 "/genres/{slug}",
                 async Task<Results<Ok<GenreDetailResponse>, ProblemHttpResult>> (
-                    string slug,
+                    [Description("The genre's slug, as returned by the genres list endpoint.")]
+                        string slug,
                     ISender sender
                 ) =>
                 {
@@ -33,6 +37,29 @@ public sealed class GetGenreBySlugEndpoint : IEndpoint
             .Produces<DomainProblemDetails>(
                 StatusCodes.Status404NotFound,
                 "application/problem+json"
+            )
+            .AddOpenApiOperationTransformer(
+                (operation, context, cancellationToken) =>
+                {
+                    operation.SetParameterExample("slug", JsonValue.Create("dream-pop"));
+                    operation.SetResponseExample(
+                        "404",
+                        JsonNode.Parse(
+                            """
+                            {
+                                "type": "https://tools.ietf.org/html/rfc9110#section-15.5.5",
+                                "title": "Not Found",
+                                "status": 404,
+                                "detail": "Genre 'dream-pop' was not found.",
+                                "instance": "/api/genres/dream-pop",
+                                "code": "Genre.NotFound",
+                                "traceId": "00-4f8c9b2e1a3d4c5e8f7a6b5c4d3e2f1a-9b8c7d6e5f4a3b2c-00"
+                            }
+                            """
+                        )!
+                    );
+                    return Task.CompletedTask;
+                }
             );
     }
 }

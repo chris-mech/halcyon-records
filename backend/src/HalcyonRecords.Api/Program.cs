@@ -9,7 +9,9 @@ using HalcyonRecords.Api.Common.OpenApi;
 using HalcyonRecords.Api.Common.RateLimiting;
 using HalcyonRecords.Api.Common.Sqids;
 using HalcyonRecords.Api.Domain;
+using HalcyonRecords.Api.Features.Albums.GetAlbums;
 using HalcyonRecords.Api.Features.Albums.GetRelatedAlbums;
+using HalcyonRecords.Api.Features.Orders.GetOrders;
 using HalcyonRecords.Api.Features.Search;
 using HalcyonRecords.Api.Features.Search.Search;
 using HalcyonRecords.Api.Infrastructure;
@@ -21,6 +23,7 @@ using HalcyonRecords.Api.Infrastructure.Seed;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
+using Microsoft.OpenApi;
 using Scalar.AspNetCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -69,8 +72,17 @@ builder.Services.ConfigureHttpJsonOptions(options =>
 
 builder.Services.AddOpenApi(options =>
 {
+    options.OpenApiVersion = OpenApiSpecVersion.OpenApi3_1;
     options.AddSchemaTransformer<IntegerSchemaTransformer>();
+    options.AddSchemaTransformer<ExampleSchemaTransformer>();
+    options.AddSchemaTransformer<WellKnownPropertyFormatSchemaTransformer>();
+    options.AddSchemaTransformer<WellKnownPropertyMinimumSchemaTransformer>();
+    options.AddSchemaTransformer<PasswordPolicySchemaTransformer>();
     options.AddOperationTransformer<SortEnumParameterTransformer>();
+    options.AddOperationTransformer<RequireBearerSecurityOperationTransformer>();
+    options.AddDocumentTransformer<TagDescriptionDocumentTransformer>();
+    options.AddDocumentTransformer<GlobalErrorResponseDocumentTransformer>();
+    options.AddDocumentTransformer<BearerSecuritySchemeTransformer>();
     options.AddDocumentTransformer(
         (document, context, cancellationToken) =>
         {
@@ -82,6 +94,12 @@ builder.Services.AddOpenApi(options =>
     );
 });
 
+builder.Services.Configure<AlbumsPaginationOptions>(
+    builder.Configuration.GetSection(AlbumsPaginationOptions.SectionName)
+);
+builder.Services.Configure<OrdersPaginationOptions>(
+    builder.Configuration.GetSection(OrdersPaginationOptions.SectionName)
+);
 builder.Services.Configure<SearchOptions>(
     builder.Configuration.GetSection(SearchOptions.SectionName)
 );
@@ -128,6 +146,13 @@ app.MapScalarApiReference(options =>
 {
     options.WithTitle("Halcyon Records API");
     options.WithDefaultHttpClient(ScalarTarget.JavaScript, ScalarClient.Fetch);
+    options.EnabledTargets = [ScalarTarget.JavaScript];
+    options.ExpandAllTags();
+    options.SortTagsAlphabetically();
+    options.ShowOperationId();
+    options.WithOperationTitleSource(OperationTitleSource.Path);
+    options.OperationSorter = OperationSorter.Alpha;
+    options.HideModels();
 });
 
 app.UseHttpsRedirection();
