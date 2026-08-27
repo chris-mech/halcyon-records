@@ -5,10 +5,9 @@ using FluentAssertions;
 using HalcyonRecords.Api.Common.OpenApi;
 using HalcyonRecords.Api.Features.Albums.GetAlbums;
 using HalcyonRecords.Api.Features.Artists.GetArtistById;
-using HalcyonRecords.Api.IntegrationTests.Common;
 using Microsoft.AspNetCore.Http;
 
-namespace HalcyonRecords.Api.IntegrationTests.Infrastructure.OpenApi;
+namespace HalcyonRecords.Api.IntegrationTests.Common.OpenApi;
 
 public class OpenApiDocumentTests(SqlServerContainerFixture fixture) : IAsyncLifetime
 {
