@@ -487,4 +487,7 @@ node_modules/
 out/
 .env*.local
 *.tsbuildinfo
+
+# Azure
 .azure
+backend/src/HalcyonRecords.AppHost/infra/
