@@ -487,3 +487,4 @@ node_modules/
 out/
 .env*.local
 *.tsbuildinfo
+.azure
