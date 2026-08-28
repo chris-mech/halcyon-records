@@ -26,6 +26,7 @@ public sealed class MeilisearchContainerFixture : IAsyncLifetime
         .Build();
 
     public MeilisearchClient Client { get; private set; } = null!;
+    public string ConnectionString { get; private set; } = null!;
 
     public async ValueTask InitializeAsync()
     {
@@ -34,6 +35,7 @@ public sealed class MeilisearchContainerFixture : IAsyncLifetime
         var endpoint =
             $"http://{_container.Hostname}:{_container.GetMappedPublicPort(MeilisearchPort)}";
         Client = new MeilisearchClient(endpoint, MasterKey);
+        ConnectionString = $"Endpoint={endpoint};MasterKey={MasterKey}";
 
         var createTask = await Client.CreateIndexAsync(IndexName, "id");
         await Client.Index(IndexName).WaitForTaskAsync(createTask.TaskUid);

@@ -103,6 +103,10 @@ builder.Services.AddOpenApi(options =>
     );
 });
 
+builder.Services.Configure<ReindexOptions>(
+    builder.Configuration.GetSection(ReindexOptions.SectionName)
+);
+
 builder.Services.Configure<AlbumsPaginationOptions>(
     builder.Configuration.GetSection(AlbumsPaginationOptions.SectionName)
 );
@@ -137,18 +141,10 @@ if (app.Environment.IsDevelopment())
     var indexer = scope.ServiceProvider.GetRequiredService<MeilisearchIndexer>();
     await indexer.RebuildAsync(dbContext);
 
-    app.MapPost(
-            "/api/dev/search/reindex",
-            async (ApplicationDbContext db, MeilisearchIndexer indexer, CancellationToken ct) =>
-            {
-                await indexer.RebuildAsync(db, ct);
-                return Results.Ok();
-            }
-        )
-        .ExcludeFromDescription();
-
     app.MapBackgroundJobsDevEndpoints();
 }
+
+app.MapMeilisearchMaintenanceEndpoints();
 
 app.MapOpenApi();
 app.MapScalarApiReference(options =>
