@@ -24,6 +24,7 @@ var meilisearch = builder.AddMeilisearch("meilisearch").WithDataVolume();
 
 var api = builder
     .AddProject<Projects.HalcyonRecords_Api>("api")
+    .WithExternalHttpEndpoints()
     .WithReference(sql)
     .WaitFor(sql)
     .WithReference(meilisearch)
@@ -38,7 +39,8 @@ builder
     .WithHttpEndpoint(port: 3000)
     .WithReference(api)
     .WaitFor(api)
-    .WithEnvironment("AUTH_SECRET", authSecret);
+    .WithEnvironment("AUTH_SECRET", authSecret)
+    .ExcludeFromManifest();
 #pragma warning restore ASPIREJAVASCRIPT001 // Type is for evaluation purposes only and is subject to change or removal in future updates. Suppress this diagnostic to proceed.
 
 await builder.Build().RunAsync();
