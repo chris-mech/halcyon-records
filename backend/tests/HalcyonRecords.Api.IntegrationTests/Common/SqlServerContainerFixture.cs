@@ -38,7 +38,10 @@ public sealed class SqlServerContainerFixture : IAsyncLifetime
         _connection = new SqlConnection(ConnectionString);
         await _connection.OpenAsync();
 
-        _respawner = await Respawner.CreateAsync(_connection);
+        _respawner = await Respawner.CreateAsync(
+            _connection,
+            new RespawnerOptions { TablesToIgnore = ["__EFMigrationsHistory"] }
+        );
     }
 
     public Task ResetAsync() => _respawner.ResetAsync(_connection);
