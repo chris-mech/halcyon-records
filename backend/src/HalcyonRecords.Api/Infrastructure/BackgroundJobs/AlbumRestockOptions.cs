@@ -4,5 +4,5 @@ public sealed class AlbumRestockOptions
 {
     public const string SectionName = "AlbumRestock";
 
-    public string CronSchedule { get; init; } = "0 */6 * * *";
+    public string CronSchedule { get; init; } = "0 */12 * * *";
 }
