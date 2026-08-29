@@ -125,10 +125,14 @@ builder.Services.AddApiBackgroundJobs(builder.Configuration);
 
 var app = builder.Build();
 
-app.UseApiBackgroundJobs();
+if (JobRunner.TryGetRequestedJob(args, out var requestedJob))
+{
+    return await JobRunner.RunAsync(app.Services, requestedJob);
+}
 
 if (app.Environment.IsDevelopment())
 {
+    app.UseApiBackgroundJobs();
     using var scope = app.Services.CreateScope();
     var dbContext = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
     await dbContext.Database.MigrateAsync();
@@ -173,5 +177,7 @@ app.MapDefaultEndpoints();
 app.MapEndpoints();
 
 await app.RunAsync();
+
+return 0;
 
 public partial class Program;
