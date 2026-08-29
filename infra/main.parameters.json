@@ -1,0 +1,31 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+      "principalId": {
+        "value": "${AZURE_PRINCIPAL_ID}"
+      },
+      "auth_secret": {
+        "value": "${AZURE_AUTH_SECRET}"
+      },
+      "jwt_signing_key": {
+        "value": "${AZURE_JWT_SIGNING_KEY}"
+      },
+      "mediatr_license_key": {
+        "value": "${AZURE_MEDIATR_LICENSE_KEY}"
+      },
+      "meilisearch_masterKey": {
+        "value": "${AZURE_MEILISEARCH_MASTER_KEY}"
+      },
+      "reindex_trigger_key": {
+        "value": "${AZURE_REINDEX_TRIGGER_KEY}"
+      },
+      "environmentName": {
+        "value": "${AZURE_ENV_NAME}"
+      },
+      "location": {
+        "value": "${AZURE_LOCATION}"
+      }
+    }
+  }
+  
