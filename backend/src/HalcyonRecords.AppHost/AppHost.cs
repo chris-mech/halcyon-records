@@ -28,7 +28,16 @@ var sql = builder
     .RunAsContainer(c => c.WithImageTag("2025-latest").WithDataVolume())
     .AddDatabase("halcyonrecords");
 
-var meilisearch = builder.AddMeilisearch("meilisearch").WithDataVolume();
+var meilisearch = builder
+    .AddMeilisearch("meilisearch")
+    .WithDataVolume()
+    .PublishAsAzureContainerApp(
+        (infrastructure, app) =>
+        {
+            app.Template.Scale.MinReplicas = 0;
+            app.Template.Scale.MaxReplicas = 1;
+        }
+    );
 
 var api = builder
     .AddProject<Projects.HalcyonRecords_Api>("api")
@@ -39,7 +48,14 @@ var api = builder
     .WaitFor(meilisearch)
     .WithEnvironment("Jwt__SigningKey", jwtSigningKey)
     .WithEnvironment("MediatR__LicenseKey", mediatrLicenseKey)
-    .WithEnvironment("Reindex__TriggerKey", reindexTriggerKey);
+    .WithEnvironment("Reindex__TriggerKey", reindexTriggerKey)
+    .PublishAsAzureContainerApp(
+        (infrastructure, app) =>
+        {
+            app.Template.Scale.MinReplicas = 0;
+            app.Template.Scale.MaxReplicas = 3;
+        }
+    );
 
 #pragma warning disable ASPIREJAVASCRIPT001 // Type is for evaluation purposes only and is subject to change or removal in future updates. Suppress this diagnostic to proceed.
 builder
