@@ -1,8 +1,3 @@
 # yaml-language-server: $schema=https://raw.githubusercontent.com/Azure/azure-dev/main/schemas/v1.0/azure.yaml.json
 
 name: halcyon-records
-services:  
-  app:
-    language: dotnet
-    project: ./backend/src/HalcyonRecords.AppHost/HalcyonRecords.AppHost.csproj
-    host: containerapp
