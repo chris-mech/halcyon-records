@@ -103,6 +103,103 @@ module sql 'sql/sql.module.bicep' = {
     location: location
   }
 }
+module migrate_job 'api-job/api-job.module.bicep' = {
+  name: 'job-migrate'
+  scope: rg
+  params: {
+    location: location
+    environmentId: aca_env.outputs.AZURE_CONTAINER_APPS_ENVIRONMENT_ID
+    containerImage: api_containerimage
+    identityId: api_identity.outputs.id
+    identityClientId: api_identity.outputs.clientId
+    sqlServerFqdn: sql.outputs.sqlServerFqdn
+    meilisearchDefaultDomain: aca_env.outputs.AZURE_CONTAINER_APPS_ENVIRONMENT_DEFAULT_DOMAIN
+    meilisearchMasterkeyValue: meilisearch_masterKey
+    jwtSigningKeyValue: jwt_signing_key
+    mediatrLicenseKeyValue: mediatr_license_key
+    jobName: 'migrate'
+    triggerType: 'Manual'
+    replicaTimeout: 300
+  }
+}
+module seed_job 'api-job/api-job.module.bicep' = {
+  name: 'job-seed'
+  scope: rg
+  params: {
+    location: location
+    environmentId: aca_env.outputs.AZURE_CONTAINER_APPS_ENVIRONMENT_ID
+    containerImage: api_containerimage
+    identityId: api_identity.outputs.id
+    identityClientId: api_identity.outputs.clientId
+    sqlServerFqdn: sql.outputs.sqlServerFqdn
+    meilisearchDefaultDomain: aca_env.outputs.AZURE_CONTAINER_APPS_ENVIRONMENT_DEFAULT_DOMAIN
+    meilisearchMasterkeyValue: meilisearch_masterKey
+    jwtSigningKeyValue: jwt_signing_key
+    mediatrLicenseKeyValue: mediatr_license_key
+    jobName: 'seed'
+    triggerType: 'Manual'
+    replicaTimeout: 900
+  }
+}
+module reindex_job 'api-job/api-job.module.bicep' = {
+  name: 'job-reindex'
+  scope: rg
+  params: {
+    location: location
+    environmentId: aca_env.outputs.AZURE_CONTAINER_APPS_ENVIRONMENT_ID
+    containerImage: api_containerimage
+    identityId: api_identity.outputs.id
+    identityClientId: api_identity.outputs.clientId
+    sqlServerFqdn: sql.outputs.sqlServerFqdn
+    meilisearchDefaultDomain: aca_env.outputs.AZURE_CONTAINER_APPS_ENVIRONMENT_DEFAULT_DOMAIN
+    meilisearchMasterkeyValue: meilisearch_masterKey
+    jwtSigningKeyValue: jwt_signing_key
+    mediatrLicenseKeyValue: mediatr_license_key
+    jobName: 'reindex'
+    triggerType: 'Manual'
+    replicaTimeout: 600
+  }
+}
+module account_maintenance_job 'api-job/api-job.module.bicep' = {
+  name: 'job-account-maintenance'
+  scope: rg
+  params: {
+    location: location
+    environmentId: aca_env.outputs.AZURE_CONTAINER_APPS_ENVIRONMENT_ID
+    containerImage: api_containerimage
+    identityId: api_identity.outputs.id
+    identityClientId: api_identity.outputs.clientId
+    sqlServerFqdn: sql.outputs.sqlServerFqdn
+    meilisearchDefaultDomain: aca_env.outputs.AZURE_CONTAINER_APPS_ENVIRONMENT_DEFAULT_DOMAIN
+    meilisearchMasterkeyValue: meilisearch_masterKey
+    jwtSigningKeyValue: jwt_signing_key
+    mediatrLicenseKeyValue: mediatr_license_key
+    jobName: 'account-maintenance'
+    triggerType: 'Schedule'
+    cronExpression: '15 3 * * *'
+    replicaTimeout: 180
+  }
+}
+module restock_job 'api-job/api-job.module.bicep' = {
+  name: 'job-restock'
+  scope: rg
+  params: {
+    location: location
+    environmentId: aca_env.outputs.AZURE_CONTAINER_APPS_ENVIRONMENT_ID
+    containerImage: api_containerimage
+    identityId: api_identity.outputs.id
+    identityClientId: api_identity.outputs.clientId
+    sqlServerFqdn: sql.outputs.sqlServerFqdn
+    meilisearchDefaultDomain: aca_env.outputs.AZURE_CONTAINER_APPS_ENVIRONMENT_DEFAULT_DOMAIN
+    meilisearchMasterkeyValue: meilisearch_masterKey
+    jwtSigningKeyValue: jwt_signing_key
+    mediatrLicenseKeyValue: mediatr_license_key
+    jobName: 'restock'
+    triggerType: 'Schedule'
+    cronExpression: '0 */12 * * *'
+    replicaTimeout: 120
+  }
+}
 output ACA_ENV_AZURE_CONTAINER_APPS_ENVIRONMENT_DEFAULT_DOMAIN string = aca_env.outputs.AZURE_CONTAINER_APPS_ENVIRONMENT_DEFAULT_DOMAIN
 output ACA_ENV_AZURE_CONTAINER_APPS_ENVIRONMENT_ID string = aca_env.outputs.AZURE_CONTAINER_APPS_ENVIRONMENT_ID
 output ACA_ENV_VOLUMES_MEILISEARCH_0 string = aca_env.outputs.volumes_meilisearch_0
