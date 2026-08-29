@@ -103,10 +103,6 @@ builder.Services.AddOpenApi(options =>
     );
 });
 
-builder.Services.Configure<ReindexOptions>(
-    builder.Configuration.GetSection(ReindexOptions.SectionName)
-);
-
 builder.Services.Configure<AlbumsPaginationOptions>(
     builder.Configuration.GetSection(AlbumsPaginationOptions.SectionName)
 );
@@ -147,8 +143,6 @@ if (app.Environment.IsDevelopment())
 
     app.MapBackgroundJobsDevEndpoints();
 }
-
-app.MapMeilisearchMaintenanceEndpoints();
 
 app.MapOpenApi();
 app.MapScalarApiReference(options =>

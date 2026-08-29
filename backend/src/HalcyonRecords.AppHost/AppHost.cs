@@ -16,13 +16,6 @@ var authSecret = builder.AddParameter(
     persist: true
 );
 
-var reindexTriggerKey = builder.AddParameter(
-    "reindex-trigger-key",
-    new GenerateParameterDefault { MinLength = 32 },
-    secret: true,
-    persist: true
-);
-
 var sql = builder
     .AddAzureSqlServer("sql")
     .RunAsContainer(c => c.WithImageTag("2025-latest").WithDataVolume())
@@ -48,7 +41,6 @@ var api = builder
     .WaitFor(meilisearch)
     .WithEnvironment("Jwt__SigningKey", jwtSigningKey)
     .WithEnvironment("MediatR__LicenseKey", mediatrLicenseKey)
-    .WithEnvironment("Reindex__TriggerKey", reindexTriggerKey)
     .PublishAsAzureContainerApp(
         (infrastructure, app) =>
         {
