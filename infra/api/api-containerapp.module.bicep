@@ -22,14 +22,7 @@ param jwt_signing_key_value string
 @secure()
 param mediatr_license_key_value string
 
-@secure()
-param reindex_trigger_key_value string
-
 param api_identity_outputs_clientid string
-
-param aca_env_outputs_azure_container_registry_endpoint string
-
-param aca_env_outputs_azure_container_registry_managed_identity_id string
 
 resource api 'Microsoft.App/containerApps@2025-10-02-preview' = {
   name: 'api'
@@ -53,10 +46,6 @@ resource api 'Microsoft.App/containerApps@2025-10-02-preview' = {
           name: 'mediatr--licensekey'
           value: mediatr_license_key_value
         }
-        {
-          name: 'reindex--triggerkey'
-          value: reindex_trigger_key_value
-        }
       ]
       activeRevisionsMode: 'Single'
       ingress: {
@@ -64,12 +53,6 @@ resource api 'Microsoft.App/containerApps@2025-10-02-preview' = {
         targetPort: int(api_containerport)
         transport: 'http'
       }
-      registries: [
-        {
-          server: aca_env_outputs_azure_container_registry_endpoint
-          identity: aca_env_outputs_azure_container_registry_managed_identity_id
-        }
-      ]
       runtime: {
         dotnet: {
           autoConfigureDataProtection: true
@@ -148,10 +131,6 @@ resource api 'Microsoft.App/containerApps@2025-10-02-preview' = {
               secretRef: 'mediatr--licensekey'
             }
             {
-              name: 'Reindex__TriggerKey'
-              secretRef: 'reindex--triggerkey'
-            }
-            {
               name: 'AZURE_CLIENT_ID'
               value: api_identity_outputs_clientid
             }
@@ -172,7 +151,8 @@ resource api 'Microsoft.App/containerApps@2025-10-02-preview' = {
     type: 'UserAssigned'
     userAssignedIdentities: {
       '${api_identity_outputs_id}': { }
-      '${aca_env_outputs_azure_container_registry_managed_identity_id}': { }
     }
   }
 }
+
+output fqdn string = api.properties.configuration.ingress.fqdn

@@ -5,28 +5,6 @@ param userPrincipalId string = ''
 
 param tags object = { }
 
-param aca_env_acr_outputs_name string
-
-resource aca_env_mi 'Microsoft.ManagedIdentity/userAssignedIdentities@2024-11-30' = {
-  name: take('aca_env_mi-${uniqueString(resourceGroup().id)}', 128)
-  location: location
-  tags: tags
-}
-
-resource aca_env_acr 'Microsoft.ContainerRegistry/registries@2025-04-01' existing = {
-  name: aca_env_acr_outputs_name
-}
-
-resource aca_env_acr_aca_env_mi_AcrPull 'Microsoft.Authorization/roleAssignments@2022-04-01' = {
-  name: guid(aca_env_acr.id, aca_env_mi.id, subscriptionResourceId('Microsoft.Authorization/roleDefinitions', '7f951dda-4ed3-4680-a7ca-43fe172d538d'))
-  properties: {
-    principalId: aca_env_mi.properties.principalId
-    roleDefinitionId: subscriptionResourceId('Microsoft.Authorization/roleDefinitions', '7f951dda-4ed3-4680-a7ca-43fe172d538d')
-    principalType: 'ServicePrincipal'
-  }
-  scope: aca_env_acr
-}
-
 resource aca_env_law 'Microsoft.OperationalInsights/workspaces@2025-02-01' = {
   name: take('acaenvlaw-${uniqueString(resourceGroup().id)}', 63)
   location: location
@@ -113,12 +91,6 @@ output volumes_meilisearch_0 string = managedStorage_volumes_meilisearch_0.name
 output AZURE_LOG_ANALYTICS_WORKSPACE_NAME string = aca_env_law.name
 
 output AZURE_LOG_ANALYTICS_WORKSPACE_ID string = aca_env_law.id
-
-output AZURE_CONTAINER_REGISTRY_NAME string = aca_env_acr.name
-
-output AZURE_CONTAINER_REGISTRY_ENDPOINT string = aca_env_acr.properties.loginServer
-
-output AZURE_CONTAINER_REGISTRY_MANAGED_IDENTITY_ID string = aca_env_mi.id
 
 output AZURE_CONTAINER_APPS_ENVIRONMENT_NAME string = aca_env.name
 

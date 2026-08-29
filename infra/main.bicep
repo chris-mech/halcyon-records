@@ -12,13 +12,9 @@ param location string
 @description('Id of the user or app to assign application roles')
 param principalId string = ''
 
-@metadata({azd: {
-  type: 'generate'
-  config: {length:32}
-  }
-})
-@secure()
-param auth_secret string
+@description('Container image reference for the API, e.g. ghcr.io/<owner>/halcyon-records/api:sha-xxxxxxx')
+param api_containerimage string
+
 @metadata({azd: {
   type: 'generate'
   config: {length:64}
@@ -35,13 +31,6 @@ param mediatr_license_key string
 })
 @secure()
 param meilisearch_masterKey string
-@metadata({azd: {
-  type: 'generate'
-  config: {length:32}
-  }
-})
-@secure()
-param reindex_trigger_key string
 
 var tags = {
   'azd-env-name': environmentName
@@ -57,16 +46,25 @@ module aca_env 'aca-env/aca-env.module.bicep' = {
   name: 'aca-env'
   scope: rg
   params: {
-    aca_env_acr_outputs_name: aca_env_acr.outputs.name
     location: location
     userPrincipalId: principalId
   }
 }
-module aca_env_acr 'aca-env-acr/aca-env-acr.module.bicep' = {
-  name: 'aca-env-acr'
+module api 'api/api-containerapp.module.bicep' = {
+  name: 'api'
   scope: rg
   params: {
     location: location
+    aca_env_outputs_azure_container_apps_environment_default_domain: aca_env.outputs.AZURE_CONTAINER_APPS_ENVIRONMENT_DEFAULT_DOMAIN
+    aca_env_outputs_azure_container_apps_environment_id: aca_env.outputs.AZURE_CONTAINER_APPS_ENVIRONMENT_ID
+    api_containerimage: api_containerimage
+    api_identity_outputs_id: api_identity.outputs.id
+    api_containerport: '8080'
+    sql_outputs_sqlserverfqdn: sql.outputs.sqlServerFqdn
+    meilisearch_masterkey_value: meilisearch_masterKey
+    jwt_signing_key_value: jwt_signing_key
+    mediatr_license_key_value: mediatr_license_key
+    api_identity_outputs_clientid: api_identity.outputs.clientId
   }
 }
 module api_identity 'api-identity/api-identity.module.bicep' = {
@@ -87,6 +85,17 @@ module api_roles_sql 'api-roles-sql/api-roles-sql.module.bicep' = {
     sql_outputs_sqlserveradminname: sql.outputs.sqlServerAdminName
   }
 }
+module meilisearch 'meilisearch/meilisearch-containerapp.module.bicep' = {
+  name: 'meilisearch'
+  scope: rg
+  params: {
+    location: location
+    aca_env_outputs_azure_container_apps_environment_default_domain: aca_env.outputs.AZURE_CONTAINER_APPS_ENVIRONMENT_DEFAULT_DOMAIN
+    aca_env_outputs_azure_container_apps_environment_id: aca_env.outputs.AZURE_CONTAINER_APPS_ENVIRONMENT_ID
+    meilisearch_masterkey_value: meilisearch_masterKey
+    aca_env_outputs_volumes_meilisearch_0: aca_env.outputs.volumes_meilisearch_0
+  }
+}
 module sql 'sql/sql.module.bicep' = {
   name: 'sql'
   scope: rg
@@ -96,11 +105,9 @@ module sql 'sql/sql.module.bicep' = {
 }
 output ACA_ENV_AZURE_CONTAINER_APPS_ENVIRONMENT_DEFAULT_DOMAIN string = aca_env.outputs.AZURE_CONTAINER_APPS_ENVIRONMENT_DEFAULT_DOMAIN
 output ACA_ENV_AZURE_CONTAINER_APPS_ENVIRONMENT_ID string = aca_env.outputs.AZURE_CONTAINER_APPS_ENVIRONMENT_ID
-output ACA_ENV_AZURE_CONTAINER_REGISTRY_ENDPOINT string = aca_env.outputs.AZURE_CONTAINER_REGISTRY_ENDPOINT
-output ACA_ENV_AZURE_CONTAINER_REGISTRY_MANAGED_IDENTITY_ID string = aca_env.outputs.AZURE_CONTAINER_REGISTRY_MANAGED_IDENTITY_ID
 output ACA_ENV_VOLUMES_MEILISEARCH_0 string = aca_env.outputs.volumes_meilisearch_0
+output API_FQDN string = api.outputs.fqdn
 output API_IDENTITY_CLIENTID string = api_identity.outputs.clientId
 output API_IDENTITY_ID string = api_identity.outputs.id
 output AZURE_CONTAINER_APPS_ENVIRONMENT_DEFAULT_DOMAIN string = aca_env.outputs.AZURE_CONTAINER_APPS_ENVIRONMENT_DEFAULT_DOMAIN
-output AZURE_CONTAINER_REGISTRY_ENDPOINT string = aca_env.outputs.AZURE_CONTAINER_REGISTRY_ENDPOINT
 output SQL_SQLSERVERFQDN string = sql.outputs.sqlServerFqdn

@@ -491,3 +491,4 @@ out/
 # Azure
 .azure
 backend/src/HalcyonRecords.AppHost/infra/
+infra/main.json
