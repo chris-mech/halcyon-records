@@ -13,6 +13,8 @@ param api_containerport string
 
 param sql_outputs_sqlserverfqdn string
 
+param appinsights_outputs_appinsightsconnectionstring string
+
 param keyvault_outputs_name string
 
 param api_identity_outputs_clientid string
@@ -128,6 +130,10 @@ resource api 'Microsoft.App/containerApps@2025-10-02-preview' = {
             {
               name: 'MEILISEARCH_URI'
               value: 'http://${'meilisearch.internal.${aca_env_outputs_azure_container_apps_environment_default_domain}'}:443'
+            }
+            {
+              name: 'APPLICATIONINSIGHTS_CONNECTION_STRING'
+              value: appinsights_outputs_appinsightsconnectionstring
             }
             {
               name: 'Jwt__SigningKey'

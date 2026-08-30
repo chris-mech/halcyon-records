@@ -60,6 +60,7 @@ module api 'api/api-containerapp.module.bicep' = {
     api_containerport: '8080'
     api_identity_outputs_clientid: api_identity.outputs.clientId
     api_identity_outputs_id: api_identity.outputs.id
+    appinsights_outputs_appinsightsconnectionstring: appinsights.outputs.appInsightsConnectionString
     keyvault_outputs_name: keyvault.outputs.name
     location: location
     sql_outputs_sqlserverfqdn: sql.outputs.sqlServerFqdn
@@ -90,6 +91,13 @@ module api_roles_sql 'api-roles-sql/api-roles-sql.module.bicep' = {
     principalName: api_identity.outputs.principalName
     sql_outputs_name: sql.outputs.name
     sql_outputs_sqlserveradminname: sql.outputs.sqlServerAdminName
+  }
+}
+module appinsights 'appinsights/appinsights.module.bicep' = {
+  name: 'appinsights'
+  scope: rg
+  params: {
+    location: location
   }
 }
 module keyvault 'keyvault/keyvault.module.bicep' = {
@@ -214,6 +222,7 @@ output ACA_ENV_VOLUMES_MEILISEARCH_0 string = aca_env.outputs.volumes_meilisearc
 output API_FQDN string = api.outputs.fqdn
 output API_IDENTITY_CLIENTID string = api_identity.outputs.clientId
 output API_IDENTITY_ID string = api_identity.outputs.id
+output APPINSIGHTS_APPINSIGHTSCONNECTIONSTRING string = appinsights.outputs.appInsightsConnectionString
 output AZURE_CONTAINER_APPS_ENVIRONMENT_DEFAULT_DOMAIN string = aca_env.outputs.AZURE_CONTAINER_APPS_ENVIRONMENT_DEFAULT_DOMAIN
 output KEYVAULT_NAME string = keyvault.outputs.name
 output KEYVAULT_VAULTURI string = keyvault.outputs.vaultUri
