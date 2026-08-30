@@ -5,10 +5,20 @@ param aca_env_outputs_azure_container_apps_environment_default_domain string
 
 param aca_env_outputs_azure_container_apps_environment_id string
 
-@secure()
-param meilisearch_masterkey_value string
+param keyvault_outputs_name string
+
+param identityId string
 
 param aca_env_outputs_volumes_meilisearch_0 string
+
+resource keyvault 'Microsoft.KeyVault/vaults@2024-11-01' existing = {
+  name: keyvault_outputs_name
+}
+
+resource keyvault_meilisearch_master_key 'Microsoft.KeyVault/vaults/secrets@2024-11-01' existing = {
+  name: 'meilisearch-master-key'
+  parent: keyvault
+}
 
 resource meilisearch 'Microsoft.App/containerApps@2025-07-01' = {
   name: 'meilisearch'
@@ -18,7 +28,8 @@ resource meilisearch 'Microsoft.App/containerApps@2025-07-01' = {
       secrets: [
         {
           name: 'meili-master-key'
-          value: meilisearch_masterkey_value
+          identity: identityId
+          keyVaultUrl: keyvault_meilisearch_master_key.properties.secretUri
         }
       ]
       activeRevisionsMode: 'Single'
@@ -59,6 +70,12 @@ resource meilisearch 'Microsoft.App/containerApps@2025-07-01' = {
           storageName: aca_env_outputs_volumes_meilisearch_0
         }
       ]
+    }
+  }
+  identity: {
+    type: 'UserAssigned'
+    userAssignedIdentities: {
+      '${identityId}': { }
     }
   }
 }

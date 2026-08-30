@@ -54,17 +54,15 @@ module api 'api/api-containerapp.module.bicep' = {
   name: 'api'
   scope: rg
   params: {
-    location: location
     aca_env_outputs_azure_container_apps_environment_default_domain: aca_env.outputs.AZURE_CONTAINER_APPS_ENVIRONMENT_DEFAULT_DOMAIN
     aca_env_outputs_azure_container_apps_environment_id: aca_env.outputs.AZURE_CONTAINER_APPS_ENVIRONMENT_ID
     api_containerimage: api_containerimage
-    api_identity_outputs_id: api_identity.outputs.id
     api_containerport: '8080'
-    sql_outputs_sqlserverfqdn: sql.outputs.sqlServerFqdn
-    meilisearch_masterkey_value: meilisearch_masterKey
-    jwt_signing_key_value: jwt_signing_key
-    mediatr_license_key_value: mediatr_license_key
     api_identity_outputs_clientid: api_identity.outputs.clientId
+    api_identity_outputs_id: api_identity.outputs.id
+    keyvault_outputs_name: keyvault.outputs.name
+    location: location
+    sql_outputs_sqlserverfqdn: sql.outputs.sqlServerFqdn
   }
 }
 module api_identity 'api-identity/api-identity.module.bicep' = {
@@ -72,6 +70,15 @@ module api_identity 'api-identity/api-identity.module.bicep' = {
   scope: rg
   params: {
     location: location
+  }
+}
+module api_roles_keyvault 'api-roles-keyvault/api-roles-keyvault.module.bicep' = {
+  name: 'api-roles-keyvault'
+  scope: rg
+  params: {
+    keyvault_outputs_name: keyvault.outputs.name
+    location: location
+    principalId: api_identity.outputs.principalId
   }
 }
 module api_roles_sql 'api-roles-sql/api-roles-sql.module.bicep' = {
@@ -85,15 +92,26 @@ module api_roles_sql 'api-roles-sql/api-roles-sql.module.bicep' = {
     sql_outputs_sqlserveradminname: sql.outputs.sqlServerAdminName
   }
 }
+module keyvault 'keyvault/keyvault.module.bicep' = {
+  name: 'keyvault'
+  scope: rg
+  params: {
+    jwt_signing_key_value: jwt_signing_key
+    location: location
+    mediatr_license_key_value: mediatr_license_key
+    meilisearch_masterkey_value: meilisearch_masterKey
+  }
+}
 module meilisearch 'meilisearch/meilisearch-containerapp.module.bicep' = {
   name: 'meilisearch'
   scope: rg
   params: {
-    location: location
     aca_env_outputs_azure_container_apps_environment_default_domain: aca_env.outputs.AZURE_CONTAINER_APPS_ENVIRONMENT_DEFAULT_DOMAIN
     aca_env_outputs_azure_container_apps_environment_id: aca_env.outputs.AZURE_CONTAINER_APPS_ENVIRONMENT_ID
-    meilisearch_masterkey_value: meilisearch_masterKey
     aca_env_outputs_volumes_meilisearch_0: aca_env.outputs.volumes_meilisearch_0
+    identityId: api_identity.outputs.id
+    keyvault_outputs_name: keyvault.outputs.name
+    location: location
   }
 }
 module sql 'sql/sql.module.bicep' = {
@@ -114,9 +132,7 @@ module migrate_job 'api-job/api-job.module.bicep' = {
     identityClientId: api_identity.outputs.clientId
     sqlServerFqdn: sql.outputs.sqlServerFqdn
     meilisearchDefaultDomain: aca_env.outputs.AZURE_CONTAINER_APPS_ENVIRONMENT_DEFAULT_DOMAIN
-    meilisearchMasterkeyValue: meilisearch_masterKey
-    jwtSigningKeyValue: jwt_signing_key
-    mediatrLicenseKeyValue: mediatr_license_key
+    keyVaultName: keyvault.outputs.name
     jobName: 'migrate'
     triggerType: 'Manual'
     replicaTimeout: 300
@@ -133,9 +149,7 @@ module seed_job 'api-job/api-job.module.bicep' = {
     identityClientId: api_identity.outputs.clientId
     sqlServerFqdn: sql.outputs.sqlServerFqdn
     meilisearchDefaultDomain: aca_env.outputs.AZURE_CONTAINER_APPS_ENVIRONMENT_DEFAULT_DOMAIN
-    meilisearchMasterkeyValue: meilisearch_masterKey
-    jwtSigningKeyValue: jwt_signing_key
-    mediatrLicenseKeyValue: mediatr_license_key
+    keyVaultName: keyvault.outputs.name
     jobName: 'seed'
     triggerType: 'Manual'
     replicaTimeout: 900
@@ -152,9 +166,7 @@ module reindex_job 'api-job/api-job.module.bicep' = {
     identityClientId: api_identity.outputs.clientId
     sqlServerFqdn: sql.outputs.sqlServerFqdn
     meilisearchDefaultDomain: aca_env.outputs.AZURE_CONTAINER_APPS_ENVIRONMENT_DEFAULT_DOMAIN
-    meilisearchMasterkeyValue: meilisearch_masterKey
-    jwtSigningKeyValue: jwt_signing_key
-    mediatrLicenseKeyValue: mediatr_license_key
+    keyVaultName: keyvault.outputs.name
     jobName: 'reindex'
     triggerType: 'Manual'
     replicaTimeout: 600
@@ -171,9 +183,7 @@ module account_maintenance_job 'api-job/api-job.module.bicep' = {
     identityClientId: api_identity.outputs.clientId
     sqlServerFqdn: sql.outputs.sqlServerFqdn
     meilisearchDefaultDomain: aca_env.outputs.AZURE_CONTAINER_APPS_ENVIRONMENT_DEFAULT_DOMAIN
-    meilisearchMasterkeyValue: meilisearch_masterKey
-    jwtSigningKeyValue: jwt_signing_key
-    mediatrLicenseKeyValue: mediatr_license_key
+    keyVaultName: keyvault.outputs.name
     jobName: 'account-maintenance'
     triggerType: 'Schedule'
     cronExpression: '15 3 * * *'
@@ -191,9 +201,7 @@ module restock_job 'api-job/api-job.module.bicep' = {
     identityClientId: api_identity.outputs.clientId
     sqlServerFqdn: sql.outputs.sqlServerFqdn
     meilisearchDefaultDomain: aca_env.outputs.AZURE_CONTAINER_APPS_ENVIRONMENT_DEFAULT_DOMAIN
-    meilisearchMasterkeyValue: meilisearch_masterKey
-    jwtSigningKeyValue: jwt_signing_key
-    mediatrLicenseKeyValue: mediatr_license_key
+    keyVaultName: keyvault.outputs.name
     jobName: 'restock'
     triggerType: 'Schedule'
     cronExpression: '0 */12 * * *'
@@ -207,4 +215,6 @@ output API_FQDN string = api.outputs.fqdn
 output API_IDENTITY_CLIENTID string = api_identity.outputs.clientId
 output API_IDENTITY_ID string = api_identity.outputs.id
 output AZURE_CONTAINER_APPS_ENVIRONMENT_DEFAULT_DOMAIN string = aca_env.outputs.AZURE_CONTAINER_APPS_ENVIRONMENT_DEFAULT_DOMAIN
+output KEYVAULT_NAME string = keyvault.outputs.name
+output KEYVAULT_VAULTURI string = keyvault.outputs.vaultUri
 output SQL_SQLSERVERFQDN string = sql.outputs.sqlServerFqdn

@@ -16,6 +16,10 @@ var authSecret = builder.AddParameter(
     persist: true
 );
 
+var keyVault = builder.AddAzureKeyVault("keyvault");
+keyVault.AddSecret("kv-jwt-signing-key", "jwt-signing-key", jwtSigningKey.Resource);
+keyVault.AddSecret("kv-mediatr-license-key", "mediatr-license-key", mediatrLicenseKey.Resource);
+
 var sql = builder
     .AddAzureSqlServer("sql")
     .RunAsContainer(c => c.WithImageTag("2025-latest").WithDataVolume())
@@ -32,6 +36,12 @@ var meilisearch = builder
         }
     );
 
+keyVault.AddSecret(
+    "kv-meilisearch-master-key",
+    "meilisearch-master-key",
+    meilisearch.Resource.MasterKeyParameter
+);
+
 var api = builder
     .AddProject<Projects.HalcyonRecords_Api>("api")
     .WithExternalHttpEndpoints()
@@ -39,8 +49,9 @@ var api = builder
     .WaitFor(sql)
     .WithReference(meilisearch)
     .WaitFor(meilisearch)
-    .WithEnvironment("Jwt__SigningKey", jwtSigningKey)
-    .WithEnvironment("MediatR__LicenseKey", mediatrLicenseKey)
+    .WithEnvironment("Jwt__SigningKey", keyVault.GetSecret("jwt-signing-key"))
+    .WithEnvironment("MediatR__LicenseKey", keyVault.GetSecret("mediatr-license-key"))
+    .WithEnvironment("Meilisearch__MasterKey", keyVault.GetSecret("meilisearch-master-key"))
     .PublishAsAzureContainerApp(
         (infrastructure, app) =>
         {

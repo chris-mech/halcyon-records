@@ -13,16 +13,28 @@ param api_containerport string
 
 param sql_outputs_sqlserverfqdn string
 
-@secure()
-param meilisearch_masterkey_value string
-
-@secure()
-param jwt_signing_key_value string
-
-@secure()
-param mediatr_license_key_value string
+param keyvault_outputs_name string
 
 param api_identity_outputs_clientid string
+
+resource keyvault 'Microsoft.KeyVault/vaults@2024-11-01' existing = {
+  name: keyvault_outputs_name
+}
+
+resource keyvault_jwt_signing_key 'Microsoft.KeyVault/vaults/secrets@2024-11-01' existing = {
+  name: 'jwt-signing-key'
+  parent: keyvault
+}
+
+resource keyvault_mediatr_license_key 'Microsoft.KeyVault/vaults/secrets@2024-11-01' existing = {
+  name: 'mediatr-license-key'
+  parent: keyvault
+}
+
+resource keyvault_meilisearch_master_key 'Microsoft.KeyVault/vaults/secrets@2024-11-01' existing = {
+  name: 'meilisearch-master-key'
+  parent: keyvault
+}
 
 resource api 'Microsoft.App/containerApps@2025-10-02-preview' = {
   name: 'api'
@@ -31,20 +43,19 @@ resource api 'Microsoft.App/containerApps@2025-10-02-preview' = {
     configuration: {
       secrets: [
         {
-          name: 'connectionstrings--meilisearch'
-          value: 'Endpoint=http://${'meilisearch.internal.${aca_env_outputs_azure_container_apps_environment_default_domain}'}:443;MasterKey=${meilisearch_masterkey_value}'
-        }
-        {
-          name: 'meilisearch-masterkey'
-          value: meilisearch_masterkey_value
-        }
-        {
           name: 'jwt--signingkey'
-          value: jwt_signing_key_value
+          identity: api_identity_outputs_id
+          keyVaultUrl: keyvault_jwt_signing_key.properties.secretUri
         }
         {
           name: 'mediatr--licensekey'
-          value: mediatr_license_key_value
+          identity: api_identity_outputs_id
+          keyVaultUrl: keyvault_mediatr_license_key.properties.secretUri
+        }
+        {
+          name: 'meilisearch--masterkey'
+          identity: api_identity_outputs_id
+          keyVaultUrl: keyvault_meilisearch_master_key.properties.secretUri
         }
       ]
       activeRevisionsMode: 'Single'
@@ -104,7 +115,7 @@ resource api 'Microsoft.App/containerApps@2025-10-02-preview' = {
             }
             {
               name: 'ConnectionStrings__meilisearch'
-              secretRef: 'connectionstrings--meilisearch'
+              value: 'http://${'meilisearch.internal.${aca_env_outputs_azure_container_apps_environment_default_domain}'}:443'
             }
             {
               name: 'MEILISEARCH_HOST'
@@ -113,10 +124,6 @@ resource api 'Microsoft.App/containerApps@2025-10-02-preview' = {
             {
               name: 'MEILISEARCH_PORT'
               value: '443'
-            }
-            {
-              name: 'MEILISEARCH_MASTERKEY'
-              secretRef: 'meilisearch-masterkey'
             }
             {
               name: 'MEILISEARCH_URI'
@@ -129,6 +136,10 @@ resource api 'Microsoft.App/containerApps@2025-10-02-preview' = {
             {
               name: 'MediatR__LicenseKey'
               secretRef: 'mediatr--licensekey'
+            }
+            {
+              name: 'Meilisearch__MasterKey'
+              secretRef: 'meilisearch--masterkey'
             }
             {
               name: 'AZURE_CLIENT_ID'

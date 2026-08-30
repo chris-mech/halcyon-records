@@ -13,14 +13,7 @@ param sqlServerFqdn string
 
 param meilisearchDefaultDomain string
 
-@secure()
-param meilisearchMasterkeyValue string
-
-@secure()
-param jwtSigningKeyValue string
-
-@secure()
-param mediatrLicenseKeyValue string
+param keyVaultName string
 
 param jobName string
 
@@ -29,6 +22,25 @@ param triggerType string
 param cronExpression string = ''
 
 param replicaTimeout int
+
+resource keyVault 'Microsoft.KeyVault/vaults@2024-11-01' existing = {
+  name: keyVaultName
+}
+
+resource keyVaultJwtSigningKey 'Microsoft.KeyVault/vaults/secrets@2024-11-01' existing = {
+  name: 'jwt-signing-key'
+  parent: keyVault
+}
+
+resource keyVaultMediatrLicenseKey 'Microsoft.KeyVault/vaults/secrets@2024-11-01' existing = {
+  name: 'mediatr-license-key'
+  parent: keyVault
+}
+
+resource keyVaultMeilisearchMasterKey 'Microsoft.KeyVault/vaults/secrets@2024-11-01' existing = {
+  name: 'meilisearch-master-key'
+  parent: keyVault
+}
 
 resource job 'Microsoft.App/jobs@2025-07-01' = {
   name: jobName
@@ -49,16 +61,19 @@ resource job 'Microsoft.App/jobs@2025-07-01' = {
       scheduleTriggerConfig: triggerType == 'Schedule' ? { cronExpression: cronExpression, parallelism: 1, replicaCompletionCount: 1 } : null
       secrets: [
         {
-          name: 'connectionstrings--meilisearch'
-          value: 'Endpoint=http://${'meilisearch.internal.${meilisearchDefaultDomain}'}:443;MasterKey=${meilisearchMasterkeyValue}'
-        }
-        {
           name: 'jwt--signingkey'
-          value: jwtSigningKeyValue
+          identity: identityId
+          keyVaultUrl: keyVaultJwtSigningKey.properties.secretUri
         }
         {
           name: 'mediatr--licensekey'
-          value: mediatrLicenseKeyValue
+          identity: identityId
+          keyVaultUrl: keyVaultMediatrLicenseKey.properties.secretUri
+        }
+        {
+          name: 'meilisearch--masterkey'
+          identity: identityId
+          keyVaultUrl: keyVaultMeilisearchMasterKey.properties.secretUri
         }
       ]
     }
@@ -78,7 +93,7 @@ resource job 'Microsoft.App/jobs@2025-07-01' = {
             }
             {
               name: 'ConnectionStrings__meilisearch'
-              secretRef: 'connectionstrings--meilisearch'
+              value: 'http://${'meilisearch.internal.${meilisearchDefaultDomain}'}:443'
             }
             {
               name: 'Jwt__SigningKey'
@@ -87,6 +102,10 @@ resource job 'Microsoft.App/jobs@2025-07-01' = {
             {
               name: 'MediatR__LicenseKey'
               secretRef: 'mediatr--licensekey'
+            }
+            {
+              name: 'Meilisearch__MasterKey'
+              secretRef: 'meilisearch--masterkey'
             }
             {
               name: 'AZURE_CLIENT_ID'
