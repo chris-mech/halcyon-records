@@ -1,4 +1,7 @@
+using Aspire.Hosting.Azure;
+
 var builder = DistributedApplication.CreateBuilder(args);
+var isPublishMode = builder.ExecutionContext.IsPublishMode;
 
 builder.AddAzureContainerAppEnvironment("aca-env");
 
@@ -16,9 +19,15 @@ var authSecret = builder.AddParameter(
     persist: true
 );
 
-var keyVault = builder.AddAzureKeyVault("keyvault");
-keyVault.AddSecret("kv-jwt-signing-key", "jwt-signing-key", jwtSigningKey.Resource);
-keyVault.AddSecret("kv-mediatr-license-key", "mediatr-license-key", mediatrLicenseKey.Resource);
+IResourceBuilder<AzureKeyVaultResource>? keyVault = isPublishMode
+    ? builder.AddAzureKeyVault("keyvault")
+    : null;
+keyVault?.AddSecret("kv-jwt-signing-key", "jwt-signing-key", jwtSigningKey.Resource);
+keyVault?.AddSecret("kv-mediatr-license-key", "mediatr-license-key", mediatrLicenseKey.Resource);
+
+IResourceBuilder<AzureApplicationInsightsResource>? appInsights = isPublishMode
+    ? builder.AddAzureApplicationInsights("appinsights")
+    : null;
 
 var sql = builder
     .AddAzureSqlServer("sql")
@@ -36,29 +45,42 @@ var meilisearch = builder
         }
     );
 
-keyVault.AddSecret(
+keyVault?.AddSecret(
     "kv-meilisearch-master-key",
     "meilisearch-master-key",
     meilisearch.Resource.MasterKeyParameter
 );
 
+#pragma warning disable ASPIRECERTIFICATES001 // Type is for evaluation purposes only and is subject to change or removal in future updates. Suppress this diagnostic to proceed.
 var api = builder
     .AddProject<Projects.HalcyonRecords_Api>("api")
     .WithExternalHttpEndpoints()
+    .WithoutHttpsCertificate()
     .WithReference(sql)
     .WaitFor(sql)
     .WithReference(meilisearch)
-    .WaitFor(meilisearch)
-    .WithEnvironment("Jwt__SigningKey", keyVault.GetSecret("jwt-signing-key"))
-    .WithEnvironment("MediatR__LicenseKey", keyVault.GetSecret("mediatr-license-key"))
-    .WithEnvironment("Meilisearch__MasterKey", keyVault.GetSecret("meilisearch-master-key"))
-    .PublishAsAzureContainerApp(
-        (infrastructure, app) =>
-        {
-            app.Template.Scale.MinReplicas = 0;
-            app.Template.Scale.MaxReplicas = 3;
-        }
-    );
+    .WaitFor(meilisearch);
+#pragma warning restore ASPIRECERTIFICATES001 // Type is for evaluation purposes only and is subject to change or removal in future updates. Suppress this diagnostic to proceed.
+
+if (appInsights is not null)
+{
+    api = api.WithReference(appInsights);
+}
+
+api = isPublishMode
+    ? api.WithEnvironment("Jwt__SigningKey", keyVault!.GetSecret("jwt-signing-key"))
+        .WithEnvironment("MediatR__LicenseKey", keyVault!.GetSecret("mediatr-license-key"))
+        .WithEnvironment("Meilisearch__MasterKey", keyVault!.GetSecret("meilisearch-master-key"))
+    : api.WithEnvironment("Jwt__SigningKey", jwtSigningKey)
+        .WithEnvironment("MediatR__LicenseKey", mediatrLicenseKey);
+
+api = api.PublishAsAzureContainerApp(
+    (infrastructure, app) =>
+    {
+        app.Template.Scale.MinReplicas = 0;
+        app.Template.Scale.MaxReplicas = 3;
+    }
+);
 
 #pragma warning disable ASPIREJAVASCRIPT001 // Type is for evaluation purposes only and is subject to change or removal in future updates. Suppress this diagnostic to proceed.
 builder
