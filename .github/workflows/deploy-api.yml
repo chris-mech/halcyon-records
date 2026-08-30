@@ -51,10 +51,66 @@ jobs:
     permissions:
       contents: read
       id-token: write
+    env:
+      AZURE_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
+      AZURE_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
+      AZURE_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+      AZURE_ENV_NAME: halcyon-records-prod
+      AZURE_LOCATION: uksouth
     steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+
+      - name: Install azd
+        uses: Azure/setup-azd@0b7e3a35ab00f2eee7080c845eb39c3f0ebfa553 # v2.4.0
+
       - name: Log in to Azure
         uses: azure/login@7ddb5af1ef8758cf1353cf3b42f940aee27ba21c # v3.0.2
         with:
           client-id: ${{ secrets.AZURE_CLIENT_ID }}
           tenant-id: ${{ secrets.AZURE_TENANT_ID }}
           subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+
+      - name: Select or create azd environment
+        run: azd env select "$AZURE_ENV_NAME" --no-prompt || azd env new "$AZURE_ENV_NAME" --location "$AZURE_LOCATION" --subscription "$AZURE_SUBSCRIPTION_ID" --no-prompt
+
+      - name: Set container image
+        run: azd env set API_CONTAINERIMAGE "ghcr.io/${{ github.repository_owner }}/halcyon-records/api:sha-${GITHUB_SHA:0:7}"
+
+      - name: Provision infrastructure
+        run: azd provision --no-prompt
+
+      - name: Run migrate, seed, reindex jobs
+        run: |
+          run_job() {
+            local job_name="$1"
+            echo "Starting job: $job_name"
+            local execution_name
+            execution_name=$(az containerapp job start --name "$job_name" --resource-group rg-halcyon-records-prod --query name -o tsv)
+            echo "Execution: $execution_name"
+
+            for attempt in $(seq 1 120); do
+              local status
+              status=$(az containerapp job execution show --name "$job_name" --resource-group rg-halcyon-records-prod --job-execution-name "$execution_name" --query properties.status -o tsv)
+              case "$status" in
+                Succeeded)
+                  echo "$job_name succeeded"
+                  return 0
+                  ;;
+                Failed)
+                  echo "::error::$job_name failed (execution $execution_name)"
+                  exit 1
+                  ;;
+                *)
+                  sleep 10
+                  ;;
+              esac
+            done
+
+            echo "::error::$job_name timed out waiting for completion (execution $execution_name)"
+            exit 1
+          }
+
+          run_job migrate
+          run_job seed
+          run_job reindex
