@@ -80,6 +80,11 @@ jobs:
       - name: Set container image
         run: azd env set API_CONTAINERIMAGE "ghcr.io/${{ github.repository_owner }}/halcyon-records/api:sha-${GITHUB_SHA:0:7}"
 
+      - name: Set MediatR license key
+        env:
+          MEDIATR_LICENSE_KEY: ${{ secrets.MEDIATR_LICENSE_KEY }}
+        run: azd env set AZURE_MEDIATR_LICENSE_KEY "$MEDIATR_LICENSE_KEY"
+
       - name: Provision infrastructure
         run: azd provision --no-prompt
 
