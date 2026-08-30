@@ -2,9 +2,12 @@
 
 namespace HalcyonRecords.Api.Infrastructure.Search;
 
-public sealed record MeilisearchClientOptions(Uri Endpoint, string? MasterKey)
+public sealed record MeilisearchConnectionInfo(Uri Endpoint, string? MasterKey)
 {
-    public static MeilisearchClientOptions Parse(string? connectionString)
+    public static MeilisearchConnectionInfo Parse(
+        string? connectionString,
+        string? masterKeyOverride = null
+    )
     {
         if (string.IsNullOrWhiteSpace(connectionString))
         {
@@ -15,7 +18,7 @@ public sealed record MeilisearchClientOptions(Uri Endpoint, string? MasterKey)
 
         if (Uri.TryCreate(connectionString, UriKind.Absolute, out var bareUri))
         {
-            return new MeilisearchClientOptions(bareUri, MasterKey: null);
+            return new MeilisearchConnectionInfo(bareUri, MasterKey: masterKeyOverride);
         }
 
         var builder = new DbConnectionStringBuilder { ConnectionString = connectionString };
@@ -30,10 +33,14 @@ public sealed record MeilisearchClientOptions(Uri Endpoint, string? MasterKey)
             );
         }
 
-        var masterKey = builder.TryGetValue("MasterKey", out var masterKeyValue)
-            ? masterKeyValue.ToString()
-            : null;
+        var masterKey =
+            masterKeyOverride
+            ?? (
+                builder.TryGetValue("MasterKey", out var masterKeyValue)
+                    ? masterKeyValue.ToString()
+                    : null
+            );
 
-        return new MeilisearchClientOptions(endpoint, masterKey);
+        return new MeilisearchConnectionInfo(endpoint, masterKey);
     }
 }
