@@ -93,7 +93,7 @@ resource job 'Microsoft.App/jobs@2025-07-01' = {
             }
             {
               name: 'ConnectionStrings__meilisearch'
-              value: 'http://${'meilisearch.internal.${meilisearchDefaultDomain}'}:443'
+              value: 'https://${'meilisearch.internal.${meilisearchDefaultDomain}'}:443'
             }
             {
               name: 'Jwt__SigningKey'

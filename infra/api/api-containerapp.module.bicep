@@ -117,7 +117,7 @@ resource api 'Microsoft.App/containerApps@2025-10-02-preview' = {
             }
             {
               name: 'ConnectionStrings__meilisearch'
-              value: 'http://${'meilisearch.internal.${aca_env_outputs_azure_container_apps_environment_default_domain}'}:443'
+              value: 'https://${'meilisearch.internal.${aca_env_outputs_azure_container_apps_environment_default_domain}'}:443'
             }
             {
               name: 'MEILISEARCH_HOST'
@@ -129,7 +129,7 @@ resource api 'Microsoft.App/containerApps@2025-10-02-preview' = {
             }
             {
               name: 'MEILISEARCH_URI'
-              value: 'http://${'meilisearch.internal.${aca_env_outputs_azure_container_apps_environment_default_domain}'}:443'
+              value: 'https://${'meilisearch.internal.${aca_env_outputs_azure_container_apps_environment_default_domain}'}:443'
             }
             {
               name: 'APPLICATIONINSIGHTS_CONNECTION_STRING'
