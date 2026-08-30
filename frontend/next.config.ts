@@ -4,7 +4,6 @@ const nextConfig: NextConfig = {
   /* config options here */
   reactCompiler: true,
   cacheComponents: true,
-  output: "standalone",
   images: {
     remotePatterns: [
       { protocol: "https", hostname: "coverartarchive.org" },
