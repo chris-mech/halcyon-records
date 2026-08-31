@@ -10,10 +10,10 @@ import { cn } from "@/lib/utils";
 
 export default function Error({
   error,
-  reset,
+  retry,
 }: {
   error: Error & { digest?: string };
-  reset: () => void;
+  retry: () => void;
 }) {
   useEffect(() => {
     console.error(error);
@@ -34,7 +34,7 @@ export default function Error({
           <div className="flex justify-center gap-3.5">
             <Button
               type="button"
-              onClick={reset}
+              onClick={retry}
               className="h-auto px-7.5 py-3.5 text-[0.8125rem] font-bold tracking-wide uppercase"
             >
               Try again
