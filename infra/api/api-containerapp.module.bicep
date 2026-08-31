@@ -93,7 +93,7 @@ resource api 'Microsoft.App/containerApps@2025-10-02-preview' = {
             }
             {
               name: 'ConnectionStrings__halcyonrecords'
-              value: 'Server=tcp:${sql_outputs_sqlserverfqdn},1433;Encrypt=True;Authentication="Active Directory Default";Database=halcyonrecords'
+              value: 'Server=tcp:${sql_outputs_sqlserverfqdn},1433;Encrypt=True;Authentication="Active Directory Default";Database=halcyonrecords;Connect Timeout=30'
             }
             {
               name: 'HALCYONRECORDS_HOST'

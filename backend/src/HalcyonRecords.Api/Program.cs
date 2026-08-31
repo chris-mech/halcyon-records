@@ -30,7 +30,7 @@ using Scalar.AspNetCore;
 var builder = WebApplication.CreateBuilder(args);
 builder.AddServiceDefaults();
 
-builder.AddSqlServerDbContext<ApplicationDbContext>("halcyonrecords");
+builder.AddApiSqlServer();
 
 builder.Services.AddEndpoints(typeof(Program).Assembly);
 
