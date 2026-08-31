@@ -1,6 +1,6 @@
 Write-Host "Stopping AppHost process (if any)..."
 Get-CimInstance Win32_Process |
-    Where-Object { $_.Name -like "*AppHost*" -or $_.CommandLine -like "*HalcyonRecords.AppHost*" } |
+    Where-Object { $_.CommandLine -like "*HalcyonRecords.AppHost*" } |
     ForEach-Object {
         Write-Host "  Stopping PID $($_.ProcessId) ($($_.Name))"
         Stop-Process -Id $_.ProcessId -Force
