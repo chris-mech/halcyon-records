@@ -6,6 +6,12 @@ import { cacheLife } from "next/cache";
 
 import { client } from "@/lib/api/client";
 import { formatPrice } from "@/lib/format";
+import { LoadingState } from "@/components/loading-state";
+import {
+  SkeletonCardGrid,
+  SkeletonLines,
+} from "@/components/skeleton-primitives";
+import { Skeleton } from "@/components/ui/skeleton";
 import { AlbumTagStack } from "@/components/album-tag-stack";
 import { GenrePillList } from "@/components/genre-pill-list";
 import { ProductCard } from "@/components/product-card";
@@ -232,9 +238,23 @@ export async function AlbumDetailContent({
 
 function AlbumDetailSkeleton() {
   return (
-    <div className="flex flex-1 items-center justify-center px-16 py-20 text-sm text-muted-foreground">
-      Loading…
-    </div>
+    <LoadingState>
+      <section className="mx-auto grid w-full max-w-275 grid-cols-1 gap-16 px-16 py-10 lg:grid-cols-[0.85fr_1.15fr]">
+        <Skeleton className="aspect-square w-full shadow-lg" />
+        <div className="flex flex-col gap-4">
+          <Skeleton className="h-5 w-32" />
+          <Skeleton className="h-3 w-40" />
+          <Skeleton className="h-10 w-full max-w-100" />
+          <SkeletonLines count={3} className="max-w-115" />
+          <Skeleton className="h-8 w-24" />
+          <Skeleton className="h-11 w-full max-w-60" />
+        </div>
+      </section>
+      <section className="mx-auto w-full max-w-275 px-16 pb-25">
+        <Skeleton className="mx-auto mb-11 h-9 w-64" />
+        <SkeletonCardGrid count={4} />
+      </section>
+    </LoadingState>
   );
 }
 

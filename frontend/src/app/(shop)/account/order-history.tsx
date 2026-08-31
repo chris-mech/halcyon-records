@@ -4,6 +4,8 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import { PackageOpen } from "lucide-react";
 
+import { LoadingState } from "@/components/loading-state";
+import { Skeleton } from "@/components/ui/skeleton";
 import { MediaThumbnail } from "@/components/media-thumbnail";
 import { EmptyState } from "@/components/empty-state";
 import { buttonVariants } from "@/components/ui/button";
@@ -55,7 +57,26 @@ function OrderHistory({ page }: OrderHistoryProps) {
   }, [page]);
 
   if (state.status === "loading") {
-    return <div className="py-16 text-sm text-muted-foreground">Loading…</div>;
+    return (
+      <LoadingState>
+        <div className="border-t border-line">
+          {Array.from({ length: 3 }, (_, index) => (
+            <div key={index} className="border-b border-line py-6">
+              <div className="mb-4 flex items-baseline justify-between">
+                <Skeleton className="h-4 w-28" />
+                <Skeleton className="h-3 w-24" />
+              </div>
+              <div className="mb-4 flex gap-3">
+                {Array.from({ length: 4 }, (_, thumbIndex) => (
+                  <Skeleton key={thumbIndex} className="size-12 shrink-0" />
+                ))}
+              </div>
+              <Skeleton className="h-4 w-20" />
+            </div>
+          ))}
+        </div>
+      </LoadingState>
+    );
   }
 
   if (state.status === "error") {

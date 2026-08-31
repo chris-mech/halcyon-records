@@ -4,8 +4,11 @@ import { connection } from "next/server";
 import { cacheLife } from "next/cache";
 
 import { client } from "@/lib/api/client";
-import { CategoryTile } from "@/components/category-tile";
 import type { components } from "@/lib/api/schema";
+import { LoadingState } from "@/components/loading-state";
+import { SkeletonCardGrid } from "@/components/skeleton-primitives";
+import { Skeleton } from "@/components/ui/skeleton";
+import { CategoryTile } from "@/components/category-tile";
 
 export const metadata: Metadata = {
   title: "Genres",
@@ -67,9 +70,16 @@ export async function GenresContent() {
 
 function GenresSkeleton() {
   return (
-    <div className="flex flex-1 items-center justify-center px-16 py-20 text-sm text-muted-foreground">
-      Loading…
-    </div>
+    <LoadingState>
+      <div className="mx-auto flex w-full max-w-275 flex-col gap-3 px-16 pt-14 pb-8">
+        <Skeleton className="h-3 w-16" />
+        <Skeleton className="h-9 w-56" />
+        <Skeleton className="h-4 w-96" />
+      </div>
+      <div className="mx-auto w-full max-w-275 px-16 pb-25">
+        <SkeletonCardGrid />
+      </div>
+    </LoadingState>
   );
 }
 

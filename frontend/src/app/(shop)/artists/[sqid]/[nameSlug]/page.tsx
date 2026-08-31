@@ -6,6 +6,12 @@ import { cacheLife } from "next/cache";
 
 import type { components } from "@/lib/api/schema";
 import { client } from "@/lib/api/client";
+import { LoadingState } from "@/components/loading-state";
+import {
+  SkeletonCardGrid,
+  SkeletonLines,
+} from "@/components/skeleton-primitives";
+import { Skeleton } from "@/components/ui/skeleton";
 import { GenrePillList } from "@/components/genre-pill-list";
 import { ProductCard } from "@/components/product-card";
 import { MediaThumbnail } from "@/components/media-thumbnail";
@@ -184,9 +190,20 @@ export async function ArtistDetailContent({
 
 function ArtistDetailSkeleton() {
   return (
-    <div className="flex flex-1 items-center justify-center px-16 py-20 text-sm text-muted-foreground">
-      Loading…
-    </div>
+    <LoadingState>
+      <section className="mx-auto grid w-full max-w-275 grid-cols-1 gap-10 border-b border-line px-16 py-9 sm:grid-cols-[200px_1fr] sm:items-center">
+        <Skeleton className="aspect-square w-50 shadow-lg" />
+        <div className="flex flex-col gap-3.5">
+          <Skeleton className="h-3 w-16" />
+          <Skeleton className="h-11 w-64" />
+          <Skeleton className="h-5 w-40" />
+          <SkeletonLines count={2} className="max-w-130" />
+        </div>
+      </section>
+      <div className="mx-auto w-full max-w-275 px-16 pt-6 pb-25">
+        <SkeletonCardGrid />
+      </div>
+    </LoadingState>
   );
 }
 

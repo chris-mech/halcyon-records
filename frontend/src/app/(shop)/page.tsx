@@ -5,6 +5,12 @@ import { cacheLife } from "next/cache";
 
 import { client } from "@/lib/api/client";
 import { formatPrice } from "@/lib/format";
+import { LoadingState } from "@/components/loading-state";
+import {
+  SkeletonCardGrid,
+  SkeletonLines,
+} from "@/components/skeleton-primitives";
+import { Skeleton } from "@/components/ui/skeleton";
 import { GenrePillList } from "@/components/genre-pill-list";
 import { ShadowStackText } from "@/components/shadow-stack-text";
 import { AddToBagButton } from "@/components/add-to-bag-button";
@@ -210,9 +216,33 @@ export async function HomeContent() {
 
 function HomeSkeleton() {
   return (
-    <div className="flex flex-1 items-center justify-center px-16 py-20 text-sm text-muted-foreground">
-      Loading…
-    </div>
+    <LoadingState>
+      <div className="mx-auto flex w-full max-w-275 flex-col gap-1.5 px-16 pt-14">
+        <Skeleton className="h-4 w-56" />
+        <Skeleton className="h-3 w-72" />
+      </div>
+
+      <section className="mx-auto grid w-full max-w-275 grid-cols-1 items-center gap-16 px-16 py-14 lg:grid-cols-[0.85fr_1.15fr]">
+        <Skeleton className="aspect-square w-full shadow-lg" />
+        <div className="flex flex-col gap-5">
+          <Skeleton className="h-5 w-32" />
+          <Skeleton className="h-12 w-full max-w-100" />
+          <Skeleton className="h-4 w-48" />
+          <SkeletonLines count={2} className="max-w-115" />
+          <Skeleton className="h-11 w-40" />
+        </div>
+      </section>
+
+      <div className="mx-auto w-full max-w-275 px-16 py-12">
+        <Skeleton className="mx-auto mb-11 h-9 w-48" />
+        <SkeletonCardGrid count={4} />
+      </div>
+
+      <div className="mx-auto w-full max-w-275 px-16 py-12">
+        <Skeleton className="mx-auto mb-11 h-9 w-32" />
+        <SkeletonCardGrid count={4} />
+      </div>
+    </LoadingState>
   );
 }
 

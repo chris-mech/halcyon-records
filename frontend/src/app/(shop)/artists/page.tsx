@@ -6,6 +6,8 @@ import { cacheLife } from "next/cache";
 
 import { client } from "@/lib/api/client";
 import type { components } from "@/lib/api/schema";
+import { LoadingState } from "@/components/loading-state";
+import { Skeleton } from "@/components/ui/skeleton";
 
 import { LetterStrip } from "./letter-strip";
 import {
@@ -122,9 +124,29 @@ export async function ArtistsContent() {
 
 function ArtistsSkeleton() {
   return (
-    <div className="flex flex-1 items-center justify-center px-16 py-20 text-sm text-muted-foreground">
-      Loading…
-    </div>
+    <LoadingState>
+      <div className="mx-auto flex w-full max-w-275 flex-col gap-3 px-16 pt-14 pb-8">
+        <Skeleton className="h-3 w-16" />
+        <Skeleton className="h-9 w-40" />
+        <Skeleton className="h-4 w-72" />
+      </div>
+      <div className="mx-auto w-full max-w-275 px-16">
+        <Skeleton className="h-8 w-full" />
+      </div>
+      <div className="mx-auto w-full max-w-275 px-16 pb-25">
+        <div className="flex flex-col pt-9">
+          {Array.from({ length: 6 }, (_, index) => (
+            <div
+              key={index}
+              className="flex items-baseline justify-between border-b border-line py-4"
+            >
+              <Skeleton className="h-5 w-40" />
+              <Skeleton className="h-3 w-16" />
+            </div>
+          ))}
+        </div>
+      </div>
+    </LoadingState>
   );
 }
 
