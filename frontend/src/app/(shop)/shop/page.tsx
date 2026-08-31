@@ -79,12 +79,14 @@ export async function ShopContent({
 
 function ShopSkeleton() {
   return (
-    <div className="flex flex-col gap-8 px-16 py-12">
-      <LoadingState>
+    <LoadingState>
+      <div className="px-16 pt-12 pb-8">
         <Skeleton className="h-8 w-48" />
+      </div>
+      <div className="px-16 pb-12">
         <SkeletonCardGrid />
-      </LoadingState>
-    </div>
+      </div>
+    </LoadingState>
   );
 }
 
