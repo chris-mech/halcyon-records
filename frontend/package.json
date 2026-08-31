@@ -8,7 +8,7 @@
     "start": "bun --bun next start",
     "lint": "eslint",
     "codegen": "bun --env-file=.env.local run codegen:generate",
-    "codegen:generate": "NODE_OPTIONS=--use-system-ca openapi-typescript $API_URL/openapi/v1.json -o src/lib/api/schema.d.ts",
+    "codegen:generate": "NODE_OPTIONS=--use-system-ca openapi-typescript $CODEGEN_API_URL/openapi/v1.json -o src/lib/api/schema.d.ts",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "test": "vitest run",
@@ -21,6 +21,7 @@
   "dependencies": {
     "@base-ui/react": "^1.6.0",
     "@hookform/resolvers": "^5.7.1",
+    "@sentry/nextjs": "^10.71.0",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "lucide-react": "^1.33.0",

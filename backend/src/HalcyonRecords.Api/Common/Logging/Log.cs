@@ -47,4 +47,24 @@ public static partial class Log
 
     [LoggerMessage(EventId = 1005, Level = LogLevel.Error, Message = "Album restock sweep failed")]
     public static partial void AlbumRestockSweepFailed(this ILogger logger, Exception exception);
+
+    [LoggerMessage(
+        EventId = 1006,
+        Level = LogLevel.Information,
+        Message = "Job {JobName} starting"
+    )]
+    public static partial void JobStarting(this ILogger logger, string jobName);
+
+    [LoggerMessage(
+        EventId = 1007,
+        Level = LogLevel.Information,
+        Message = "Job {JobName} completed"
+    )]
+    public static partial void JobCompleted(this ILogger logger, string jobName);
+
+    [LoggerMessage(EventId = 1008, Level = LogLevel.Error, Message = "Job {JobName} failed")]
+    public static partial void JobFailed(this ILogger logger, Exception exception, string jobName);
+
+    [LoggerMessage(EventId = 1009, Level = LogLevel.Error, Message = "Unknown job {JobName}")]
+    public static partial void JobUnknown(this ILogger logger, string jobName);
 }

@@ -10,7 +10,10 @@ public sealed class ApiWebApplicationFactory : WebApplicationFactory<Program>
     public const string JwtIssuer = "HalcyonRecords.Api.Tests";
     public const string JwtAudience = "HalcyonRecords.Api.Tests";
 
-    public ApiWebApplicationFactory(SqlServerContainerFixture fixture)
+    public ApiWebApplicationFactory(
+        SqlServerContainerFixture fixture,
+        MeilisearchContainerFixture? meilisearchFixture = null
+    )
     {
         Environment.SetEnvironmentVariable(
             "ConnectionStrings__halcyonrecords",
@@ -19,6 +22,14 @@ public sealed class ApiWebApplicationFactory : WebApplicationFactory<Program>
         Environment.SetEnvironmentVariable($"{JwtOptions.SectionName}__SigningKey", JwtSigningKey);
         Environment.SetEnvironmentVariable($"{JwtOptions.SectionName}__Issuer", JwtIssuer);
         Environment.SetEnvironmentVariable($"{JwtOptions.SectionName}__Audience", JwtAudience);
+
+        if (meilisearchFixture is not null)
+        {
+            Environment.SetEnvironmentVariable(
+                "ConnectionStrings__meilisearch",
+                meilisearchFixture.ConnectionString
+            );
+        }
     }
 
     protected override void ConfigureWebHost(IWebHostBuilder builder) =>

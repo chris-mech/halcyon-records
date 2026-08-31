@@ -3,7 +3,7 @@ import { Big_Shoulders, Fraunces, Manrope } from "next/font/google";
 import { SessionProvider } from "next-auth/react";
 import { Suspense } from "react";
 import "./globals.css";
-import { SITE_DESCRIPTION, SITE_NAME, SITE_URL } from "@/lib/site-config";
+import { DEPLOYMENT_URL, SITE_DESCRIPTION, SITE_NAME } from "@/lib/site-config";
 import { cn } from "@/lib/utils";
 import { AuthSessionProvider } from "@/components/auth-session-provider";
 import { Toaster } from "@/components/ui/toast";
@@ -28,7 +28,7 @@ const bigShoulders = Big_Shoulders({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL(SITE_URL),
+  metadataBase: new URL(DEPLOYMENT_URL),
   title: {
     default: SITE_NAME,
     template: `%s | ${SITE_NAME}`,

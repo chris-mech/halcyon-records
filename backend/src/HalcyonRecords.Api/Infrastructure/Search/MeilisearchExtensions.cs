@@ -18,15 +18,16 @@ public static class MeilisearchExtensions
 
             services.AddSingleton(sp =>
             {
-                var clientOptions = MeilisearchClientOptions.Parse(
-                    configuration.GetConnectionString("meilisearch")
+                var connectionInfo = MeilisearchConnectionInfo.Parse(
+                    configuration.GetConnectionString("meilisearch"),
+                    configuration["Meilisearch:MasterKey"]
                 );
 
                 var httpClient = sp.GetRequiredService<IHttpClientFactory>()
                     .CreateClient(HttpClientName);
-                httpClient.BaseAddress = clientOptions.Endpoint;
+                httpClient.BaseAddress = connectionInfo.Endpoint;
 
-                return new MeilisearchClient(httpClient, clientOptions.MasterKey);
+                return new MeilisearchClient(httpClient, connectionInfo.MasterKey);
             });
 
             services.AddHealthChecks().AddCheck<MeilisearchHealthCheck>("meilisearch");

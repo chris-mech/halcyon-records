@@ -20,6 +20,7 @@ using HalcyonRecords.Api.Infrastructure.BackgroundJobs;
 using HalcyonRecords.Api.Infrastructure.Options;
 using HalcyonRecords.Api.Infrastructure.Search;
 using HalcyonRecords.Api.Infrastructure.Seed;
+using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
@@ -60,6 +61,14 @@ builder.Services.AddProblemDetails(options =>
     };
 });
 builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
+
+builder.Services.Configure<ForwardedHeadersOptions>(options =>
+{
+    options.ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto;
+
+    options.KnownIPNetworks.Clear();
+    options.KnownProxies.Clear();
+});
 
 builder.Services.AddApiMeilisearch(builder.Configuration);
 builder.Services.AddApiRateLimiting(builder.Configuration);
@@ -112,10 +121,14 @@ builder.Services.AddApiBackgroundJobs(builder.Configuration);
 
 var app = builder.Build();
 
-app.UseApiBackgroundJobs();
+if (JobRunner.TryGetRequestedJob(args, out var requestedJob))
+{
+    return await JobRunner.RunAsync(app.Services, requestedJob);
+}
 
 if (app.Environment.IsDevelopment())
 {
+    app.UseApiBackgroundJobs();
     using var scope = app.Services.CreateScope();
     var dbContext = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
     await dbContext.Database.MigrateAsync();
@@ -127,16 +140,6 @@ if (app.Environment.IsDevelopment())
 
     var indexer = scope.ServiceProvider.GetRequiredService<MeilisearchIndexer>();
     await indexer.RebuildAsync(dbContext);
-
-    app.MapPost(
-            "/api/dev/search/reindex",
-            async (ApplicationDbContext db, MeilisearchIndexer indexer, CancellationToken ct) =>
-            {
-                await indexer.RebuildAsync(db, ct);
-                return Results.Ok();
-            }
-        )
-        .ExcludeFromDescription();
 
     app.MapBackgroundJobsDevEndpoints();
 }
@@ -155,6 +158,8 @@ app.MapScalarApiReference(options =>
     options.HideModels();
 });
 
+app.UseForwardedHeaders();
+
 app.UseHttpsRedirection();
 app.UseExceptionHandler();
 app.UseRateLimiter();
@@ -166,5 +171,7 @@ app.MapDefaultEndpoints();
 app.MapEndpoints();
 
 await app.RunAsync();
+
+return 0;
 
 public partial class Program;
