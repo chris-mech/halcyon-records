@@ -1,6 +1,6 @@
 ﻿using HalcyonRecords.Api.Domain;
-using HalcyonRecords.Api.Infrastructure;
 using HalcyonRecords.Api.Infrastructure.Auth;
+using HalcyonRecords.Api.Infrastructure.Sql;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;

@@ -1,5 +1,5 @@
 ﻿using HalcyonRecords.Api.Features.Search.Search;
-using HalcyonRecords.Api.Infrastructure;
+using HalcyonRecords.Api.Infrastructure.Sql;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 

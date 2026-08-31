@@ -1,4 +1,5 @@
 ﻿using System.Text.Json.Serialization;
+using HalcyonRecords.Api.Infrastructure.Sql;
 using Meilisearch;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;

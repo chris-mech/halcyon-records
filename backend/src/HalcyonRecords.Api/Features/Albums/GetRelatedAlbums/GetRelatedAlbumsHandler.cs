@@ -2,7 +2,7 @@
 using HalcyonRecords.Api.Common.Sqids;
 using HalcyonRecords.Api.Domain;
 using HalcyonRecords.Api.Domain.Ids;
-using HalcyonRecords.Api.Infrastructure;
+using HalcyonRecords.Api.Infrastructure.Sql;
 using HalcyonRecords.Shared;
 using MediatR;
 using Microsoft.EntityFrameworkCore;

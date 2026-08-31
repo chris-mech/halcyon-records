@@ -1,4 +1,5 @@
 ﻿using HalcyonRecords.Api.Common.Logging;
+using HalcyonRecords.Api.Infrastructure.Sql;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Caching.Hybrid;
 

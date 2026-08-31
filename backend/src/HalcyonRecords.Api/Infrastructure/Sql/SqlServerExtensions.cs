@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 
-namespace HalcyonRecords.Api.Infrastructure;
+namespace HalcyonRecords.Api.Infrastructure.Sql;
 
 public static class SqlServerExtensions
 {

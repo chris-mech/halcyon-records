@@ -3,7 +3,7 @@ using HalcyonRecords.Api.Common.Sqids;
 using HalcyonRecords.Api.Domain;
 using HalcyonRecords.Api.Features.Auth.Register;
 using HalcyonRecords.Api.Features.Carts.SyncCart;
-using HalcyonRecords.Api.Infrastructure;
+using HalcyonRecords.Api.Infrastructure.Sql;
 using HalcyonRecords.Api.IntegrationTests.Common;
 using Microsoft.EntityFrameworkCore;
 

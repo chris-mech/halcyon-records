@@ -1,10 +1,10 @@
 ﻿using FluentAssertions;
-using HalcyonRecords.Api.Infrastructure;
+using HalcyonRecords.Api.Infrastructure.Sql;
 using Microsoft.EntityFrameworkCore.Storage;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
-namespace HalcyonRecords.Api.UnitTests.Infrastructure;
+namespace HalcyonRecords.Api.UnitTests.Infrastructure.Sql;
 
 public class SqlServerExtensionsTests
 {

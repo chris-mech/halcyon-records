@@ -1,4 +1,4 @@
-﻿using HalcyonRecords.Api.Infrastructure;
+﻿using HalcyonRecords.Api.Infrastructure.Sql;
 using Microsoft.EntityFrameworkCore;
 
 namespace HalcyonRecords.Api.IntegrationTests.Common;

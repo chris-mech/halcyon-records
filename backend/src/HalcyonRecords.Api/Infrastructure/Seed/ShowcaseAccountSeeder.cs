@@ -1,5 +1,6 @@
 ﻿using HalcyonRecords.Api.Domain;
 using HalcyonRecords.Api.Infrastructure.Options;
+using HalcyonRecords.Api.Infrastructure.Sql;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 
