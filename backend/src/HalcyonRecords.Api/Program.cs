@@ -126,9 +126,10 @@ if (JobRunner.TryGetRequestedJob(args, out var requestedJob))
     return await JobRunner.RunAsync(app.Services, requestedJob);
 }
 
+app.UseApiBackgroundJobs(includeMaintenanceJobs: app.Environment.IsDevelopment());
+
 if (app.Environment.IsDevelopment())
 {
-    app.UseApiBackgroundJobs();
     using var scope = app.Services.CreateScope();
     var dbContext = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
     await dbContext.Database.MigrateAsync();

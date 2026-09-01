@@ -14,6 +14,7 @@ public sealed class MeilisearchWarmUpJob(
         try
         {
             await client.IsHealthyAsync();
+            logger.JobCompleted("MeilisearchWarmUp");
         }
         catch (Exception ex)
         {

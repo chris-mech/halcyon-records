@@ -35,10 +35,23 @@ public static class BackgroundJobsExtensions
 
     extension(WebApplication app)
     {
-        public WebApplication UseApiBackgroundJobs()
+        public WebApplication UseApiBackgroundJobs(bool includeMaintenanceJobs)
         {
             app.Services.UseScheduler(scheduler =>
             {
+                var warmUpOptions = app
+                    .Services.GetRequiredService<IOptions<MeilisearchWarmUpOptions>>()
+                    .Value;
+                scheduler
+                    .Schedule<MeilisearchWarmUpJob>()
+                    .Cron(warmUpOptions.CronSchedule)
+                    .RunOnceAtStart();
+
+                if (!includeMaintenanceJobs)
+                {
+                    return;
+                }
+
                 var accountOptions = app
                     .Services.GetRequiredService<IOptions<AccountMaintenanceOptions>>()
                     .Value;
@@ -48,14 +61,6 @@ public static class BackgroundJobsExtensions
                     .Services.GetRequiredService<IOptions<AlbumRestockOptions>>()
                     .Value;
                 scheduler.Schedule<AlbumRestockJob>().Cron(restockOptions.CronSchedule);
-
-                var warmUpOptions = app
-                    .Services.GetRequiredService<IOptions<MeilisearchWarmUpOptions>>()
-                    .Value;
-                scheduler
-                    .Schedule<MeilisearchWarmUpJob>()
-                    .Cron(warmUpOptions.CronSchedule)
-                    .RunOnceAtStart();
             });
 
             return app;
