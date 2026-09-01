@@ -67,4 +67,11 @@ public static partial class Log
 
     [LoggerMessage(EventId = 1009, Level = LogLevel.Error, Message = "Unknown job {JobName}")]
     public static partial void JobUnknown(this ILogger logger, string jobName);
+
+    [LoggerMessage(
+        EventId = 1010,
+        Level = LogLevel.Warning,
+        Message = "Meilisearch warm-up ping failed"
+    )]
+    public static partial void MeilisearchWarmUpFailed(this ILogger logger, Exception exception);
 }

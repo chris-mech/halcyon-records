@@ -22,6 +22,11 @@ public static class BackgroundJobsExtensions
             services.AddScoped<AlbumRestocker>();
             services.AddScoped<AlbumRestockJob>();
 
+            services.Configure<MeilisearchWarmUpOptions>(
+                configuration.GetSection(MeilisearchWarmUpOptions.SectionName)
+            );
+            services.AddScoped<MeilisearchWarmUpJob>();
+
             services.AddScheduler();
 
             return services;
@@ -43,6 +48,14 @@ public static class BackgroundJobsExtensions
                     .Services.GetRequiredService<IOptions<AlbumRestockOptions>>()
                     .Value;
                 scheduler.Schedule<AlbumRestockJob>().Cron(restockOptions.CronSchedule);
+
+                var warmUpOptions = app
+                    .Services.GetRequiredService<IOptions<MeilisearchWarmUpOptions>>()
+                    .Value;
+                scheduler
+                    .Schedule<MeilisearchWarmUpJob>()
+                    .Cron(warmUpOptions.CronSchedule)
+                    .RunOnceAtStart();
             });
 
             return app;
