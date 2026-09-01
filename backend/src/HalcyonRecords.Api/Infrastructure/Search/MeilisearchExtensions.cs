@@ -14,7 +14,18 @@ public static class MeilisearchExtensions
                 configuration.GetSection(MeilisearchIndexOptions.SectionName)
             );
 
-            services.AddHttpClient(HttpClientName);
+            services
+                .AddHttpClient(HttpClientName)
+                .UseSocketsHttpHandler(
+                    (handler, _) => handler.PooledConnectionLifetime = TimeSpan.FromMinutes(2)
+                )
+                .SetHandlerLifetime(Timeout.InfiniteTimeSpan)
+                .AddStandardResilienceHandler(options =>
+                {
+                    options.AttemptTimeout.Timeout = TimeSpan.FromSeconds(20);
+                    options.TotalRequestTimeout.Timeout = TimeSpan.FromSeconds(60);
+                    options.CircuitBreaker.SamplingDuration = TimeSpan.FromSeconds(40);
+                });
 
             services.AddSingleton(sp =>
             {
