@@ -1,6 +1,6 @@
 ﻿using FluentAssertions;
 using HalcyonRecords.Api.Infrastructure.Sql;
-using Microsoft.EntityFrameworkCore.Storage;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
@@ -18,9 +18,11 @@ public class SqlServerExtensionsTests
 
         using var host = builder.Build();
         var dbContext = host.Services.GetRequiredService<ApplicationDbContext>();
-        var strategy = (ExecutionStrategy)dbContext.Database.CreateExecutionStrategy();
+        var strategy = (SqlServerRetryingExecutionStrategy)
+            dbContext.Database.CreateExecutionStrategy();
 
         strategy.MaxRetryCount.Should().Be(10);
         strategy.MaxRetryDelay.Should().Be(TimeSpan.FromSeconds(15));
+        strategy.AdditionalErrorNumbers.Should().Contain(-2);
     }
 }

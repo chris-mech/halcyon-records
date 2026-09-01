@@ -16,7 +16,7 @@ public static class SqlServerExtensions
                         sql.EnableRetryOnFailure(
                             maxRetryCount: 10,
                             maxRetryDelay: TimeSpan.FromSeconds(15),
-                            errorNumbersToAdd: null
+                            errorNumbersToAdd: [-2]
                         )
                     )
             );
