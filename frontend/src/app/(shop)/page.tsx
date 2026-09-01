@@ -29,14 +29,14 @@ type HomepageDataResult =
       newArrivals: AlbumSummary[];
       onSaleAlbums: AlbumSummary[];
     }
-  | { ok: false };
+  | { ok: false; status: number; error: unknown };
 
 async function getHomepageData(): Promise<HomepageDataResult> {
   "use cache";
   cacheLife({ stale: 60, revalidate: 60, expire: 300 });
 
   const [
-    { data: coverStory, error: coverStoryError },
+    { data: coverStory, error: coverStoryError, response: coverStoryResponse },
     { data: newArrivals, error: newArrivalsError },
     { data: onSale, error: onSaleError },
   ] = await Promise.all([
@@ -68,7 +68,11 @@ async function getHomepageData(): Promise<HomepageDataResult> {
   ]);
 
   if (coverStoryError) {
-    return { ok: false };
+    return {
+      ok: false,
+      status: coverStoryResponse.status,
+      error: coverStoryError,
+    };
   }
 
   return {
@@ -85,7 +89,9 @@ export async function HomeContent() {
   const result = await getHomepageData();
 
   if (!result.ok) {
-    throw new Error("Failed to load the homepage.");
+    throw new Error("Failed to load the homepage.", {
+      cause: { status: result.status, error: result.error },
+    });
   }
 
   const { coverStory, newArrivals, onSaleAlbums } = result;
