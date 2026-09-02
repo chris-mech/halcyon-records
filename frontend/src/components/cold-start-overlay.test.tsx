@@ -5,7 +5,7 @@ import { ColdStartOverlay, pickNextMessageIndex } from "./cold-start-overlay";
 import { LoadingState } from "./loading-state";
 
 const ESCALATION_DELAY_MS = 6000;
-const ROTATION_INTERVAL_MS = 5000;
+const ROTATION_INTERVAL_MS = 10000;
 const FADE_DURATION_MS = 400;
 
 async function flushMicrotasks() {

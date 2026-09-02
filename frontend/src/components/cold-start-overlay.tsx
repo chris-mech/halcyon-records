@@ -5,13 +5,15 @@ import { useEffect, useState } from "react";
 import { cn } from "@/lib/utils";
 
 const ESCALATION_DELAY_MS = 6000;
-const ROTATION_INTERVAL_MS = 5000;
+const ROTATION_INTERVAL_MS = 10000;
 const FADE_DURATION_MS = 400;
 const SKELETON_SELECTOR = "[data-cold-start-skeleton]";
 const APP_CONTENT_ID = "app-content";
 
-const FIXED_MESSAGE =
-  "Still loading, and thank you so much for taking a look at my store. Azure SQL, Meilisearch, and the API all scale to zero when idle, so the first request wakes the whole stack back up.";
+const HEADING =
+  "Still loading, and thank you so much for taking a look at my store.";
+const SUBHEADING =
+  "Azure SQL, Meilisearch, and the API all scale to zero when idle, so the first request wakes the whole stack back up.";
 
 const TECH_MESSAGES = [
   "Built with .NET 10 and vertical slice architecture: each feature owns its own path straight through to the database.",
@@ -117,14 +119,17 @@ function ColdStartOverlay() {
     <div
       role="status"
       aria-live="polite"
-      className="fixed inset-0 z-50 flex flex-col items-center justify-center gap-4 bg-ink/80 px-8 text-center"
+      className="fixed inset-0 z-50 flex flex-col items-center justify-center gap-8 bg-ink/80 px-8 text-center"
     >
-      <p className="max-w-md text-sm text-paper">{FIXED_MESSAGE}</p>
+      <div className="max-w-xl">
+        <h2 className="text-2xl font-medium text-paper">{HEADING}</h2>
+        <p className="mt-3 text-base text-paper/90">{SUBHEADING}</p>
+      </div>
       <p
         aria-hidden="true"
         data-testid="cold-start-trivia"
         className={cn(
-          "max-w-md text-xs text-paper/70 transition-opacity motion-reduce:transition-none",
+          "min-h-10 max-w-md text-sm text-paper/70 transition-opacity motion-reduce:transition-none",
           triviaVisible ? "opacity-100" : "opacity-0",
         )}
         style={{ transitionDuration: `${FADE_DURATION_MS}ms` }}
