@@ -1,8 +1,18 @@
 import { beforeEach, describe, expect, test, vi } from "vitest";
 
+import { toast } from "@/components/ui/toast";
 import { useCartStore } from "./cart-store";
 import type { CartItem } from "./cart-store";
-import { mergeCartAtLogin, syncCart, syncCartOnLogout } from "./sync-cart";
+import {
+  mergeCartAtLogin,
+  notifyCartSyncFailed,
+  syncCart,
+  syncCartOnLogout,
+} from "./sync-cart";
+
+vi.mock("@/components/ui/toast", () => ({
+  toast: { add: vi.fn() },
+}));
 
 function cartItem(overrides: Partial<CartItem> = {}): CartItem {
   return {
@@ -29,6 +39,7 @@ beforeEach(() => {
   vi.restoreAllMocks();
   vi.spyOn(useCartStore.persist, "hasHydrated").mockReturnValue(true);
   vi.stubGlobal("fetch", vi.fn());
+  vi.mocked(toast.add).mockClear();
 });
 
 describe("syncCart", () => {
@@ -198,5 +209,18 @@ describe("syncCartOnLogout", () => {
       body: JSON.stringify({ items: [] }),
     });
     expect(useCartStore.getState().items).toEqual([]);
+  });
+});
+
+describe("notifyCartSyncFailed", () => {
+  test("shows an error toast", () => {
+    notifyCartSyncFailed();
+
+    expect(toast.add).toHaveBeenCalledWith({
+      type: "error",
+      title: "Bag didn't sync",
+      description:
+        "Your changes are saved locally, but couldn't reach the server. We'll try again shortly.",
+    });
   });
 });

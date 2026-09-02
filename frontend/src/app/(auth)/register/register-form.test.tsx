@@ -2,7 +2,7 @@ import { describe, expect, test, vi } from "vitest";
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { signIn } from "next-auth/react";
 
-import { mergeCartAtLogin } from "@/lib/cart/sync-cart";
+import { mergeCartAtLogin, notifyCartSyncFailed } from "@/lib/cart/sync-cart";
 import { RegisterForm } from "./register-form";
 import { registerAction } from "./actions";
 
@@ -21,7 +21,8 @@ vi.mock("./actions", () => ({
 }));
 
 vi.mock("@/lib/cart/sync-cart", () => ({
-  mergeCartAtLogin: vi.fn(),
+  mergeCartAtLogin: vi.fn().mockResolvedValue(true),
+  notifyCartSyncFailed: vi.fn(),
 }));
 
 function fillField(label: string, value: string) {
@@ -120,6 +121,25 @@ describe("RegisterForm", () => {
       redirect: false,
     });
     expect(mergeCartAtLogin).toHaveBeenCalled();
+  });
+
+  test("shows a toast when the cart sync fails, but still navigates home", async () => {
+    vi.mocked(registerAction).mockResolvedValue({ success: true });
+    vi.mocked(mergeCartAtLogin).mockResolvedValueOnce(false);
+    vi.mocked(signIn).mockResolvedValue({
+      error: undefined,
+      code: undefined,
+      status: 200,
+      ok: true,
+      url: "/",
+    });
+    render(<RegisterForm />);
+
+    fillValidForm();
+    submit();
+
+    await waitFor(() => expect(push).toHaveBeenCalledWith("/"));
+    expect(notifyCartSyncFailed).toHaveBeenCalled();
   });
 
   test("navigates to the given next path on successful registration", async () => {
