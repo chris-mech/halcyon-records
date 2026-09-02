@@ -6,7 +6,7 @@ public static class Slugifier
 {
     public static string Slugify(string value)
     {
-        var withAnd = value.Replace("&", " and ");
+        var withAnd = value.Normalize(NormalizationForm.FormC).Replace("&", " and ");
 
         var slug = new StringBuilder(withAnd.Length);
         var previousWasHyphen = true;
