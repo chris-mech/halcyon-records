@@ -5,6 +5,7 @@ import { notFound, permanentRedirect } from "next/navigation";
 import { cacheLife } from "next/cache";
 
 import { client } from "@/lib/api/client";
+import { assertOk } from "@/lib/api/assert-ok";
 import { formatPrice } from "@/lib/format";
 import { LoadingState } from "@/components/loading-state";
 import {
@@ -70,19 +71,22 @@ async function getAlbumData(sqid: string): Promise<AlbumDetailResult> {
   "use cache";
   cacheLife({ stale: 60, revalidate: 60, expire: 300 });
 
-  const [
-    { data: album, error: albumError },
-    { data: related, error: relatedError },
-  ] = await Promise.all([
+  const [albumResult, relatedResult] = await Promise.all([
     client.GET("/api/albums/{sqid}", { params: { path: { sqid } } }),
     client.GET("/api/albums/{sqid}/related", { params: { path: { sqid } } }),
   ]);
 
-  if (albumError) {
+  if (albumResult.response.status === 404) {
     return { found: false };
   }
 
-  return { found: true, album, relatedAlbums: relatedError ? [] : related };
+  const album = assertOk(albumResult, "Failed to load album.");
+
+  return {
+    found: true,
+    album,
+    relatedAlbums: relatedResult.error ? [] : relatedResult.data,
+  };
 }
 
 export async function AlbumDetailContent({

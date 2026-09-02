@@ -2,6 +2,7 @@ import { Suspense } from "react";
 import type { Metadata } from "next";
 
 import { client } from "@/lib/api/client";
+import { assertOk } from "@/lib/api/assert-ok";
 import { LoadingState } from "@/components/loading-state";
 import { SkeletonCardGrid } from "@/components/skeleton-primitives";
 import { Skeleton } from "@/components/ui/skeleton";
@@ -24,23 +25,22 @@ export async function ShopContent({
 }: Pick<PageProps<"/shop">, "searchParams">) {
   const filters = parseShopFilters(await searchParams);
 
-  const { data, error } = await client.GET("/api/albums", {
-    params: {
-      query: {
-        page: filters.page,
-        pageSize: PAGE_SIZE,
-        isNew: filters.isNew,
-        isOnSale: filters.isOnSale,
-        isStaffPick: filters.isStaffPick,
-        genres: filters.genres,
-        sort: filters.sort,
+  const data = assertOk(
+    await client.GET("/api/albums", {
+      params: {
+        query: {
+          page: filters.page,
+          pageSize: PAGE_SIZE,
+          isNew: filters.isNew,
+          isOnSale: filters.isOnSale,
+          isStaffPick: filters.isStaffPick,
+          genres: filters.genres,
+          sort: filters.sort,
+        },
       },
-    },
-  });
-
-  if (error) {
-    throw new Error("Failed to load albums.");
-  }
+    }),
+    "Failed to load albums.",
+  );
 
   const totalPages = data.totalPages ?? Math.ceil(data.totalCount / PAGE_SIZE);
 
