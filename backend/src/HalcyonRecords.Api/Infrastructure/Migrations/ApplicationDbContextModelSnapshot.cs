@@ -17,7 +17,7 @@ namespace HalcyonRecords.Api.Infrastructure.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "10.0.10")
+                .HasAnnotation("ProductVersion", "10.0.11")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
@@ -97,7 +97,7 @@ namespace HalcyonRecords.Api.Infrastructure.Migrations
 
                     b.HasIndex("ArtistId");
 
-                    b.ToTable("AlbumArtists");
+                    b.ToTable("AlbumArtists", (string)null);
                 });
 
             modelBuilder.Entity("HalcyonRecords.Api.Domain.AlbumGenre", b =>
@@ -112,7 +112,7 @@ namespace HalcyonRecords.Api.Infrastructure.Migrations
 
                     b.HasIndex("GenreId");
 
-                    b.ToTable("AlbumGenres");
+                    b.ToTable("AlbumGenres", (string)null);
                 });
 
             modelBuilder.Entity("HalcyonRecords.Api.Domain.Artist", b =>
@@ -170,7 +170,7 @@ namespace HalcyonRecords.Api.Infrastructure.Migrations
                     b.HasIndex("UserId")
                         .IsUnique();
 
-                    b.ToTable("Carts");
+                    b.ToTable("Carts", (string)null);
                 });
 
             modelBuilder.Entity("HalcyonRecords.Api.Domain.CartItem", b =>
@@ -314,7 +314,7 @@ namespace HalcyonRecords.Api.Infrastructure.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Orders");
+                    b.ToTable("Orders", (string)null);
                 });
 
             modelBuilder.Entity("HalcyonRecords.Api.Domain.OrderItem", b =>
