@@ -14,6 +14,7 @@ public sealed class GlobalErrorResponseDocumentTransformer : IOpenApiDocumentTra
         StatusCodes.Status408RequestTimeout,
         StatusCodes.Status415UnsupportedMediaType,
         StatusCodes.Status500InternalServerError,
+        StatusCodes.Status503ServiceUnavailable,
     ];
 
     public async Task TransformAsync(
@@ -62,6 +63,17 @@ public sealed class GlobalErrorResponseDocumentTransformer : IOpenApiDocumentTra
                             Schema = problemSchema,
                         },
                     },
+                    Headers =
+                        statusCode == StatusCodes.Status503ServiceUnavailable
+                            ? new Dictionary<string, IOpenApiHeader>
+                            {
+                                ["Retry-After"] = new OpenApiHeader
+                                {
+                                    Description = "Seconds to wait before retrying.",
+                                    Schema = new OpenApiSchema { Type = JsonSchemaType.Integer },
+                                },
+                            }
+                            : null,
                 };
             }
         }

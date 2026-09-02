@@ -1537,6 +1537,24 @@ export interface operations {
           };
         };
       };
+      /** @description Service Unavailable */
+      503: {
+        headers: {
+          /** @description Seconds to wait before retrying. */
+          "Retry-After"?: number;
+          [name: string]: unknown;
+        };
+        content: {
+          "application/problem+json": {
+            type?: null | string;
+            title?: null | string;
+            /** Format: int32 */
+            status?: null | number;
+            detail?: null | string;
+            instance?: null | string;
+          };
+        };
+      };
     };
   };
   GetSearchSuggestions: {
@@ -1592,6 +1610,24 @@ export interface operations {
       /** @description Internal Server Error */
       500: {
         headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/problem+json": {
+            type?: null | string;
+            title?: null | string;
+            /** Format: int32 */
+            status?: null | number;
+            detail?: null | string;
+            instance?: null | string;
+          };
+        };
+      };
+      /** @description Service Unavailable */
+      503: {
+        headers: {
+          /** @description Seconds to wait before retrying. */
+          "Retry-After"?: number;
           [name: string]: unknown;
         };
         content: {
@@ -1684,6 +1720,24 @@ export interface operations {
       /** @description Internal Server Error */
       500: {
         headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/problem+json": {
+            type?: null | string;
+            title?: null | string;
+            /** Format: int32 */
+            status?: null | number;
+            detail?: null | string;
+            instance?: null | string;
+          };
+        };
+      };
+      /** @description Service Unavailable */
+      503: {
+        headers: {
+          /** @description Seconds to wait before retrying. */
+          "Retry-After"?: number;
           [name: string]: unknown;
         };
         content: {
@@ -1818,6 +1872,24 @@ export interface operations {
           };
         };
       };
+      /** @description Service Unavailable */
+      503: {
+        headers: {
+          /** @description Seconds to wait before retrying. */
+          "Retry-After"?: number;
+          [name: string]: unknown;
+        };
+        content: {
+          "application/problem+json": {
+            type?: null | string;
+            title?: null | string;
+            /** Format: int32 */
+            status?: null | number;
+            detail?: null | string;
+            instance?: null | string;
+          };
+        };
+      };
     };
   };
   GetOrderByNumber: {
@@ -1912,6 +1984,24 @@ export interface operations {
           };
         };
       };
+      /** @description Service Unavailable */
+      503: {
+        headers: {
+          /** @description Seconds to wait before retrying. */
+          "Retry-After"?: number;
+          [name: string]: unknown;
+        };
+        content: {
+          "application/problem+json": {
+            type?: null | string;
+            title?: null | string;
+            /** Format: int32 */
+            status?: null | number;
+            detail?: null | string;
+            instance?: null | string;
+          };
+        };
+      };
     };
   };
   GetGenres: {
@@ -1967,6 +2057,24 @@ export interface operations {
       /** @description Internal Server Error */
       500: {
         headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/problem+json": {
+            type?: null | string;
+            title?: null | string;
+            /** Format: int32 */
+            status?: null | number;
+            detail?: null | string;
+            instance?: null | string;
+          };
+        };
+      };
+      /** @description Service Unavailable */
+      503: {
+        headers: {
+          /** @description Seconds to wait before retrying. */
+          "Retry-After"?: number;
           [name: string]: unknown;
         };
         content: {
@@ -2074,6 +2182,24 @@ export interface operations {
           };
         };
       };
+      /** @description Service Unavailable */
+      503: {
+        headers: {
+          /** @description Seconds to wait before retrying. */
+          "Retry-After"?: number;
+          [name: string]: unknown;
+        };
+        content: {
+          "application/problem+json": {
+            type?: null | string;
+            title?: null | string;
+            /** Format: int32 */
+            status?: null | number;
+            detail?: null | string;
+            instance?: null | string;
+          };
+        };
+      };
     };
   };
   GetDecades: {
@@ -2129,6 +2255,24 @@ export interface operations {
       /** @description Internal Server Error */
       500: {
         headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/problem+json": {
+            type?: null | string;
+            title?: null | string;
+            /** Format: int32 */
+            status?: null | number;
+            detail?: null | string;
+            instance?: null | string;
+          };
+        };
+      };
+      /** @description Service Unavailable */
+      503: {
+        headers: {
+          /** @description Seconds to wait before retrying. */
+          "Retry-After"?: number;
           [name: string]: unknown;
         };
         content: {
@@ -2223,6 +2367,24 @@ export interface operations {
       /** @description Internal Server Error */
       500: {
         headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/problem+json": {
+            type?: null | string;
+            title?: null | string;
+            /** Format: int32 */
+            status?: null | number;
+            detail?: null | string;
+            instance?: null | string;
+          };
+        };
+      };
+      /** @description Service Unavailable */
+      503: {
+        headers: {
+          /** @description Seconds to wait before retrying. */
+          "Retry-After"?: number;
           [name: string]: unknown;
         };
         content: {
@@ -2335,6 +2497,24 @@ export interface operations {
           };
         };
       };
+      /** @description Service Unavailable */
+      503: {
+        headers: {
+          /** @description Seconds to wait before retrying. */
+          "Retry-After"?: number;
+          [name: string]: unknown;
+        };
+        content: {
+          "application/problem+json": {
+            type?: null | string;
+            title?: null | string;
+            /** Format: int32 */
+            status?: null | number;
+            detail?: null | string;
+            instance?: null | string;
+          };
+        };
+      };
     };
   };
   GetCart: {
@@ -2410,6 +2590,24 @@ export interface operations {
       /** @description Internal Server Error */
       500: {
         headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/problem+json": {
+            type?: null | string;
+            title?: null | string;
+            /** Format: int32 */
+            status?: null | number;
+            detail?: null | string;
+            instance?: null | string;
+          };
+        };
+      };
+      /** @description Service Unavailable */
+      503: {
+        headers: {
+          /** @description Seconds to wait before retrying. */
+          "Retry-After"?: number;
           [name: string]: unknown;
         };
         content: {
@@ -2509,6 +2707,24 @@ export interface operations {
       /** @description Internal Server Error */
       500: {
         headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/problem+json": {
+            type?: null | string;
+            title?: null | string;
+            /** Format: int32 */
+            status?: null | number;
+            detail?: null | string;
+            instance?: null | string;
+          };
+        };
+      };
+      /** @description Service Unavailable */
+      503: {
+        headers: {
+          /** @description Seconds to wait before retrying. */
+          "Retry-After"?: number;
           [name: string]: unknown;
         };
         content: {
@@ -2623,6 +2839,24 @@ export interface operations {
           };
         };
       };
+      /** @description Service Unavailable */
+      503: {
+        headers: {
+          /** @description Seconds to wait before retrying. */
+          "Retry-After"?: number;
+          [name: string]: unknown;
+        };
+        content: {
+          "application/problem+json": {
+            type?: null | string;
+            title?: null | string;
+            /** Format: int32 */
+            status?: null | number;
+            detail?: null | string;
+            instance?: null | string;
+          };
+        };
+      };
     };
   };
   Logout: {
@@ -2689,6 +2923,24 @@ export interface operations {
       /** @description Internal Server Error */
       500: {
         headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/problem+json": {
+            type?: null | string;
+            title?: null | string;
+            /** Format: int32 */
+            status?: null | number;
+            detail?: null | string;
+            instance?: null | string;
+          };
+        };
+      };
+      /** @description Service Unavailable */
+      503: {
+        headers: {
+          /** @description Seconds to wait before retrying. */
+          "Retry-After"?: number;
           [name: string]: unknown;
         };
         content: {
@@ -2803,6 +3055,24 @@ export interface operations {
           };
         };
       };
+      /** @description Service Unavailable */
+      503: {
+        headers: {
+          /** @description Seconds to wait before retrying. */
+          "Retry-After"?: number;
+          [name: string]: unknown;
+        };
+        content: {
+          "application/problem+json": {
+            type?: null | string;
+            title?: null | string;
+            /** Format: int32 */
+            status?: null | number;
+            detail?: null | string;
+            instance?: null | string;
+          };
+        };
+      };
     };
   };
   GetCurrentUser: {
@@ -2891,6 +3161,24 @@ export interface operations {
           };
         };
       };
+      /** @description Service Unavailable */
+      503: {
+        headers: {
+          /** @description Seconds to wait before retrying. */
+          "Retry-After"?: number;
+          [name: string]: unknown;
+        };
+        content: {
+          "application/problem+json": {
+            type?: null | string;
+            title?: null | string;
+            /** Format: int32 */
+            status?: null | number;
+            detail?: null | string;
+            instance?: null | string;
+          };
+        };
+      };
     };
   };
   GetArtists: {
@@ -2946,6 +3234,24 @@ export interface operations {
       /** @description Internal Server Error */
       500: {
         headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/problem+json": {
+            type?: null | string;
+            title?: null | string;
+            /** Format: int32 */
+            status?: null | number;
+            detail?: null | string;
+            instance?: null | string;
+          };
+        };
+      };
+      /** @description Service Unavailable */
+      503: {
+        headers: {
+          /** @description Seconds to wait before retrying. */
+          "Retry-After"?: number;
           [name: string]: unknown;
         };
         content: {
@@ -3039,6 +3345,24 @@ export interface operations {
       /** @description Internal Server Error */
       500: {
         headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/problem+json": {
+            type?: null | string;
+            title?: null | string;
+            /** Format: int32 */
+            status?: null | number;
+            detail?: null | string;
+            instance?: null | string;
+          };
+        };
+      };
+      /** @description Service Unavailable */
+      503: {
+        headers: {
+          /** @description Seconds to wait before retrying. */
+          "Retry-After"?: number;
           [name: string]: unknown;
         };
         content: {
@@ -3146,6 +3470,24 @@ export interface operations {
           };
         };
       };
+      /** @description Service Unavailable */
+      503: {
+        headers: {
+          /** @description Seconds to wait before retrying. */
+          "Retry-After"?: number;
+          [name: string]: unknown;
+        };
+        content: {
+          "application/problem+json": {
+            type?: null | string;
+            title?: null | string;
+            /** Format: int32 */
+            status?: null | number;
+            detail?: null | string;
+            instance?: null | string;
+          };
+        };
+      };
     };
   };
   GetCoverStory: {
@@ -3221,6 +3563,24 @@ export interface operations {
       /** @description Internal Server Error */
       500: {
         headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/problem+json": {
+            type?: null | string;
+            title?: null | string;
+            /** Format: int32 */
+            status?: null | number;
+            detail?: null | string;
+            instance?: null | string;
+          };
+        };
+      };
+      /** @description Service Unavailable */
+      503: {
+        headers: {
+          /** @description Seconds to wait before retrying. */
+          "Retry-After"?: number;
           [name: string]: unknown;
         };
         content: {
@@ -3355,6 +3715,24 @@ export interface operations {
           };
         };
       };
+      /** @description Service Unavailable */
+      503: {
+        headers: {
+          /** @description Seconds to wait before retrying. */
+          "Retry-After"?: number;
+          [name: string]: unknown;
+        };
+        content: {
+          "application/problem+json": {
+            type?: null | string;
+            title?: null | string;
+            /** Format: int32 */
+            status?: null | number;
+            detail?: null | string;
+            instance?: null | string;
+          };
+        };
+      };
     };
   };
   GetAlbumById: {
@@ -3436,6 +3814,24 @@ export interface operations {
       /** @description Internal Server Error */
       500: {
         headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/problem+json": {
+            type?: null | string;
+            title?: null | string;
+            /** Format: int32 */
+            status?: null | number;
+            detail?: null | string;
+            instance?: null | string;
+          };
+        };
+      };
+      /** @description Service Unavailable */
+      503: {
+        headers: {
+          /** @description Seconds to wait before retrying. */
+          "Retry-After"?: number;
           [name: string]: unknown;
         };
         content: {
