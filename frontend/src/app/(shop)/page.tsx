@@ -4,6 +4,7 @@ import Link from "next/link";
 import { cacheLife } from "next/cache";
 
 import { client } from "@/lib/api/client";
+import { assertOk } from "@/lib/api/assert-ok";
 import { formatPrice } from "@/lib/format";
 import { LoadingState } from "@/components/loading-state";
 import {
@@ -22,21 +23,18 @@ import { AlbumGridSection } from "./album-grid-section";
 type CoverStory = components["schemas"]["CoverStoryResponse"];
 type AlbumSummary = components["schemas"]["AlbumSummaryResponse"];
 
-type HomepageDataResult =
-  | {
-      ok: true;
-      coverStory: CoverStory;
-      newArrivals: AlbumSummary[];
-      onSaleAlbums: AlbumSummary[];
-    }
-  | { ok: false; status: number; error: unknown };
+type HomepageData = {
+  coverStory: CoverStory;
+  newArrivals: AlbumSummary[];
+  onSaleAlbums: AlbumSummary[];
+};
 
-async function getHomepageData(): Promise<HomepageDataResult> {
+async function getHomepageData(): Promise<HomepageData> {
   "use cache";
   cacheLife({ stale: 60, revalidate: 60, expire: 300 });
 
   const [
-    { data: coverStory, error: coverStoryError, response: coverStoryResponse },
+    coverStoryResult,
     { data: newArrivals, error: newArrivalsError },
     { data: onSale, error: onSaleError },
   ] = await Promise.all([
@@ -67,16 +65,9 @@ async function getHomepageData(): Promise<HomepageDataResult> {
     }),
   ]);
 
-  if (coverStoryError) {
-    return {
-      ok: false,
-      status: coverStoryResponse.status,
-      error: coverStoryError,
-    };
-  }
+  const coverStory = assertOk(coverStoryResult, "Failed to load the homepage.");
 
   return {
-    ok: true,
     coverStory,
     newArrivals: newArrivalsError ? [] : newArrivals.items,
     onSaleAlbums: onSaleError ? [] : onSale.items,
@@ -86,15 +77,7 @@ async function getHomepageData(): Promise<HomepageDataResult> {
 export async function HomeContent() {
   await connection();
 
-  const result = await getHomepageData();
-
-  if (!result.ok) {
-    throw new Error("Failed to load the homepage.", {
-      cause: { status: result.status, error: result.error },
-    });
-  }
-
-  const { coverStory, newArrivals, onSaleAlbums } = result;
+  const { coverStory, newArrivals, onSaleAlbums } = await getHomepageData();
   const albumHref = `/albums/${coverStory.sqid}/${coverStory.titleSlug}`;
 
   const quicklinks = [
