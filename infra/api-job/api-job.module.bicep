@@ -89,7 +89,7 @@ resource job 'Microsoft.App/jobs@2025-07-01' = {
           env: [
             {
               name: 'ConnectionStrings__halcyonrecords'
-              value: 'Server=tcp:${sqlServerFqdn},1433;Encrypt=True;Authentication="Active Directory Default";Database=halcyonrecords'
+              value: 'Server=tcp:${sqlServerFqdn},1433;Encrypt=True;Authentication="Active Directory Default";Database=halcyonrecords;Connect Timeout=60'
             }
             {
               name: 'ConnectionStrings__meilisearch'

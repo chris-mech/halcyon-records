@@ -7,6 +7,9 @@ import { cacheLife } from "next/cache";
 import { client } from "@/lib/api/client";
 import type { components } from "@/lib/api/schema";
 import { PAGE_SIZE, parseCatalogFilters } from "@/lib/catalog-search-params";
+import { LoadingState } from "@/components/loading-state";
+import { SkeletonCardGrid } from "@/components/skeleton-primitives";
+import { Skeleton } from "@/components/ui/skeleton";
 import { ProductCard } from "@/components/product-card";
 import { CatalogSortSelect } from "@/components/catalog-sort-select";
 import { CatalogPagination } from "@/components/catalog-pagination";
@@ -181,9 +184,16 @@ export async function GenreLandingContent({
 
 function GenreLandingSkeleton() {
   return (
-    <div className="flex flex-1 items-center justify-center px-16 py-20 text-sm text-muted-foreground">
-      Loading…
-    </div>
+    <LoadingState>
+      <div className="mx-auto flex w-full max-w-275 flex-col gap-4 border-b border-line px-16 py-9">
+        <Skeleton className="h-3 w-14" />
+        <Skeleton className="h-11 w-72" />
+        <Skeleton className="h-4 w-full max-w-140" />
+      </div>
+      <div className="mx-auto w-full max-w-275 px-16 pt-6 pb-10">
+        <SkeletonCardGrid />
+      </div>
+    </LoadingState>
   );
 }
 

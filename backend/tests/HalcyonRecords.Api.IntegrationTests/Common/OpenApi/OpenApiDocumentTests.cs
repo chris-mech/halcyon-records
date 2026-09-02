@@ -720,6 +720,23 @@ public class OpenApiDocumentTests(SqlServerContainerFixture fixture) : IAsyncLif
         quantitySchema["maximum"].Should().BeNull();
     }
 
+    [Fact]
+    public async Task Document_ArtistsOperation503Response_HasRetryAfterHeader()
+    {
+        using var client = _factory.CreateClient();
+
+        var document = await client.GetFromJsonAsync<JsonNode>(
+            new Uri("/openapi/v1.json", UriKind.Relative),
+            TestContext.Current.CancellationToken
+        );
+
+        var retryAfterHeader = document!["paths"]!["/api/artists"]!["get"]!["responses"]!["503"]![
+            "headers"
+        ]!["Retry-After"]!;
+
+        retryAfterHeader["schema"]!["type"]!.GetValue<string>().Should().Be("integer");
+    }
+
     private async Task<JsonNode?> GetSortParameterSchemaAsync(string path) =>
         (await GetParameterAsync(path, "sort"))?["schema"];
 

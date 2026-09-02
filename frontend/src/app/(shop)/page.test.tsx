@@ -90,7 +90,7 @@ function mockHomepageFetch({
         ? {
             data: undefined,
             error: { title: "Server Error", status: 500 },
-            response: new Response(),
+            response: new Response(null, { status: 500 }),
           }
         : { data: coverStory, error: undefined, response: new Response() };
     }
@@ -186,9 +186,16 @@ describe("HomePage", () => {
     ).toBeDisabled();
   });
 
-  test("throws when the cover-story fetch fails", async () => {
+  test("throws when the cover-story fetch fails, carrying status and error as the cause", async () => {
     mockHomepageFetch({ coverStoryError: true });
 
-    await expect(HomeContent()).rejects.toThrow("Failed to load the homepage.");
+    const error = (await HomeContent().catch((e: unknown) => e)) as Error;
+
+    expect(error).toBeInstanceOf(Error);
+    expect(error.message).toBe("Failed to load the homepage.");
+    expect(error.cause).toEqual({
+      status: 500,
+      error: { title: "Server Error", status: 500 },
+    });
   });
 });

@@ -212,7 +212,7 @@ module restock_job 'api-job/api-job.module.bicep' = {
     keyVaultName: keyvault.outputs.name
     jobName: 'restock'
     triggerType: 'Schedule'
-    cronExpression: '0 */12 * * *'
+    cronExpression: '20 3 * * *'
     replicaTimeout: 120
   }
 }

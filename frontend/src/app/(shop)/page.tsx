@@ -4,7 +4,14 @@ import Link from "next/link";
 import { cacheLife } from "next/cache";
 
 import { client } from "@/lib/api/client";
+import { assertOk } from "@/lib/api/assert-ok";
 import { formatPrice } from "@/lib/format";
+import { LoadingState } from "@/components/loading-state";
+import {
+  SkeletonCardGrid,
+  SkeletonLines,
+} from "@/components/skeleton-primitives";
+import { Skeleton } from "@/components/ui/skeleton";
 import { GenrePillList } from "@/components/genre-pill-list";
 import { ShadowStackText } from "@/components/shadow-stack-text";
 import { AddToBagButton } from "@/components/add-to-bag-button";
@@ -16,21 +23,18 @@ import { AlbumGridSection } from "./album-grid-section";
 type CoverStory = components["schemas"]["CoverStoryResponse"];
 type AlbumSummary = components["schemas"]["AlbumSummaryResponse"];
 
-type HomepageDataResult =
-  | {
-      ok: true;
-      coverStory: CoverStory;
-      newArrivals: AlbumSummary[];
-      onSaleAlbums: AlbumSummary[];
-    }
-  | { ok: false };
+type HomepageData = {
+  coverStory: CoverStory;
+  newArrivals: AlbumSummary[];
+  onSaleAlbums: AlbumSummary[];
+};
 
-async function getHomepageData(): Promise<HomepageDataResult> {
+async function getHomepageData(): Promise<HomepageData> {
   "use cache";
   cacheLife({ stale: 60, revalidate: 60, expire: 300 });
 
   const [
-    { data: coverStory, error: coverStoryError },
+    coverStoryResult,
     { data: newArrivals, error: newArrivalsError },
     { data: onSale, error: onSaleError },
   ] = await Promise.all([
@@ -61,12 +65,9 @@ async function getHomepageData(): Promise<HomepageDataResult> {
     }),
   ]);
 
-  if (coverStoryError) {
-    return { ok: false };
-  }
+  const coverStory = assertOk(coverStoryResult, "Failed to load the homepage.");
 
   return {
-    ok: true,
     coverStory,
     newArrivals: newArrivalsError ? [] : newArrivals.items,
     onSaleAlbums: onSaleError ? [] : onSale.items,
@@ -76,13 +77,7 @@ async function getHomepageData(): Promise<HomepageDataResult> {
 export async function HomeContent() {
   await connection();
 
-  const result = await getHomepageData();
-
-  if (!result.ok) {
-    throw new Error("Failed to load the homepage.");
-  }
-
-  const { coverStory, newArrivals, onSaleAlbums } = result;
+  const { coverStory, newArrivals, onSaleAlbums } = await getHomepageData();
   const albumHref = `/albums/${coverStory.sqid}/${coverStory.titleSlug}`;
 
   const quicklinks = [
@@ -210,9 +205,33 @@ export async function HomeContent() {
 
 function HomeSkeleton() {
   return (
-    <div className="flex flex-1 items-center justify-center px-16 py-20 text-sm text-muted-foreground">
-      Loading…
-    </div>
+    <LoadingState>
+      <div className="mx-auto flex w-full max-w-275 flex-col gap-1.5 px-16 pt-14">
+        <Skeleton className="h-4 w-56" />
+        <Skeleton className="h-3 w-72" />
+      </div>
+
+      <section className="mx-auto grid w-full max-w-275 grid-cols-1 items-center gap-16 px-16 py-14 lg:grid-cols-[0.85fr_1.15fr]">
+        <Skeleton className="aspect-square w-full shadow-lg" />
+        <div className="flex flex-col gap-5">
+          <Skeleton className="h-5 w-32" />
+          <Skeleton className="h-12 w-full max-w-100" />
+          <Skeleton className="h-4 w-48" />
+          <SkeletonLines count={2} className="max-w-115" />
+          <Skeleton className="h-11 w-40" />
+        </div>
+      </section>
+
+      <div className="mx-auto w-full max-w-275 px-16 py-12">
+        <Skeleton className="mx-auto mb-11 h-9 w-48" />
+        <SkeletonCardGrid count={4} />
+      </div>
+
+      <div className="mx-auto w-full max-w-275 px-16 py-12">
+        <Skeleton className="mx-auto mb-11 h-9 w-32" />
+        <SkeletonCardGrid count={4} />
+      </div>
+    </LoadingState>
   );
 }
 

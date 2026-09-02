@@ -1,5 +1,5 @@
 ﻿using ErrorOr;
-using HalcyonRecords.Api.Infrastructure;
+using HalcyonRecords.Api.Infrastructure.Sql;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 

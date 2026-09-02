@@ -1,9 +1,9 @@
 ﻿using FluentAssertions;
 using HalcyonRecords.Api.Domain;
 using HalcyonRecords.Api.Domain.Ids;
-using HalcyonRecords.Api.Infrastructure;
 using HalcyonRecords.Api.Infrastructure.BackgroundJobs;
 using HalcyonRecords.Api.Infrastructure.Seed;
+using HalcyonRecords.Api.Infrastructure.Sql;
 using HalcyonRecords.Api.IntegrationTests.Common;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;

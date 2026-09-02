@@ -1,6 +1,7 @@
 ﻿using System.Text.Json;
 using HalcyonRecords.Api.Domain;
 using HalcyonRecords.Api.Infrastructure.Options;
+using HalcyonRecords.Api.Infrastructure.Sql;
 using HalcyonRecords.Shared;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;

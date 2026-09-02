@@ -2,6 +2,8 @@
 
 import { useEffect, useState } from "react";
 
+import { LoadingState } from "@/components/loading-state";
+import { Skeleton } from "@/components/ui/skeleton";
 import { Card, CardContent } from "@/components/ui/card";
 
 import type { components } from "@/lib/api/schema";
@@ -41,7 +43,20 @@ function AccountDetails() {
   }, []);
 
   if (state.status === "loading") {
-    return <div className="py-16 text-sm text-muted-foreground">Loading…</div>;
+    return (
+      <LoadingState>
+        <Card className="border-line">
+          <CardContent className="gap-0 divide-y divide-line px-7">
+            {Array.from({ length: 3 }, (_, index) => (
+              <div key={index} className="flex justify-between py-4.5">
+                <Skeleton className="h-3 w-20" />
+                <Skeleton className="h-4 w-32" />
+              </div>
+            ))}
+          </CardContent>
+        </Card>
+      </LoadingState>
+    );
   }
 
   if (state.status === "error") {

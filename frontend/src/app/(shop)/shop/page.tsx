@@ -2,6 +2,9 @@ import { Suspense } from "react";
 import type { Metadata } from "next";
 
 import { client } from "@/lib/api/client";
+import { LoadingState } from "@/components/loading-state";
+import { SkeletonCardGrid } from "@/components/skeleton-primitives";
+import { Skeleton } from "@/components/ui/skeleton";
 import { ProductCard } from "@/components/product-card";
 import { ShadowStackText } from "@/components/shadow-stack-text";
 
@@ -76,9 +79,14 @@ export async function ShopContent({
 
 function ShopSkeleton() {
   return (
-    <div className="flex flex-1 items-center justify-center px-16 py-20 text-sm text-muted-foreground">
-      Loading…
-    </div>
+    <LoadingState>
+      <div className="px-16 pt-12 pb-8">
+        <Skeleton className="h-8 w-48" />
+      </div>
+      <div className="px-16 pb-12">
+        <SkeletonCardGrid />
+      </div>
+    </LoadingState>
   );
 }
 

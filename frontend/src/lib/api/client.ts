@@ -19,7 +19,7 @@ const client = createClient<paths>({
   baseUrl: resolveApiBaseUrl(),
 });
 
-const REQUEST_TIMEOUT_MS = 10_000;
+const REQUEST_TIMEOUT_MS = 150_000;
 
 client.use({
   onRequest({ request }) {

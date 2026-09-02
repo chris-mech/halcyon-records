@@ -1,5 +1,5 @@
 ﻿using FluentAssertions;
-using HalcyonRecords.Api.Infrastructure;
+using HalcyonRecords.Api.Infrastructure.Sql;
 
 namespace HalcyonRecords.Api.UnitTests.Common;
 

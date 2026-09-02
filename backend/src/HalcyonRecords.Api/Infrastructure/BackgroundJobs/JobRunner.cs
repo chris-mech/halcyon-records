@@ -3,6 +3,7 @@ using HalcyonRecords.Api.Domain;
 using HalcyonRecords.Api.Infrastructure.Options;
 using HalcyonRecords.Api.Infrastructure.Search;
 using HalcyonRecords.Api.Infrastructure.Seed;
+using HalcyonRecords.Api.Infrastructure.Sql;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;

@@ -42,6 +42,7 @@ var meilisearch = builder
         {
             app.Template.Scale.MinReplicas = 0;
             app.Template.Scale.MaxReplicas = 1;
+            app.Template.Scale.CooldownPeriod = 120;
         }
     );
 

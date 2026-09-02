@@ -1,6 +1,7 @@
 ﻿using HalcyonRecords.Api.Common.Logging;
 using HalcyonRecords.Api.Infrastructure.Options;
 using HalcyonRecords.Api.Infrastructure.Seed;
+using HalcyonRecords.Api.Infrastructure.Sql;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 

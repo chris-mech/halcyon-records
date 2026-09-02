@@ -1,5 +1,6 @@
 ﻿using System.Text;
 using HalcyonRecords.Api.Domain;
+using HalcyonRecords.Api.Infrastructure.Sql;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;

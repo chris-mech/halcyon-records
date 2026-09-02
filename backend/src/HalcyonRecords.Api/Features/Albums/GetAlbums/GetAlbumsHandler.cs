@@ -1,7 +1,7 @@
 ﻿using ErrorOr;
 using HalcyonRecords.Api.Common.Contracts;
 using HalcyonRecords.Api.Common.Sqids;
-using HalcyonRecords.Api.Infrastructure;
+using HalcyonRecords.Api.Infrastructure.Sql;
 using HalcyonRecords.Shared;
 using MediatR;
 using Microsoft.EntityFrameworkCore;

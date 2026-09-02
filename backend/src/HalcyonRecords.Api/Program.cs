@@ -14,12 +14,12 @@ using HalcyonRecords.Api.Features.Albums.GetRelatedAlbums;
 using HalcyonRecords.Api.Features.Orders.GetOrders;
 using HalcyonRecords.Api.Features.Search;
 using HalcyonRecords.Api.Features.Search.Search;
-using HalcyonRecords.Api.Infrastructure;
 using HalcyonRecords.Api.Infrastructure.Auth;
 using HalcyonRecords.Api.Infrastructure.BackgroundJobs;
 using HalcyonRecords.Api.Infrastructure.Options;
 using HalcyonRecords.Api.Infrastructure.Search;
 using HalcyonRecords.Api.Infrastructure.Seed;
+using HalcyonRecords.Api.Infrastructure.Sql;
 using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -30,7 +30,7 @@ using Scalar.AspNetCore;
 var builder = WebApplication.CreateBuilder(args);
 builder.AddServiceDefaults();
 
-builder.AddSqlServerDbContext<ApplicationDbContext>("halcyonrecords");
+builder.AddApiSqlServer();
 
 builder.Services.AddEndpoints(typeof(Program).Assembly);
 
@@ -126,9 +126,10 @@ if (JobRunner.TryGetRequestedJob(args, out var requestedJob))
     return await JobRunner.RunAsync(app.Services, requestedJob);
 }
 
+app.UseApiBackgroundJobs(includeMaintenanceJobs: app.Environment.IsDevelopment());
+
 if (app.Environment.IsDevelopment())
 {
-    app.UseApiBackgroundJobs();
     using var scope = app.Services.CreateScope();
     var dbContext = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
     await dbContext.Database.MigrateAsync();

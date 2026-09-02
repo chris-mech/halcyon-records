@@ -2,11 +2,14 @@ import type { Metadata, Viewport } from "next";
 import { Big_Shoulders, Fraunces, Manrope } from "next/font/google";
 import { SessionProvider } from "next-auth/react";
 import { Suspense } from "react";
-import "./globals.css";
+
 import { DEPLOYMENT_URL, SITE_DESCRIPTION, SITE_NAME } from "@/lib/site-config";
 import { cn } from "@/lib/utils";
+import { ColdStartOverlay } from "@/components/cold-start-overlay";
 import { AuthSessionProvider } from "@/components/auth-session-provider";
 import { Toaster } from "@/components/ui/toast";
+
+import "./globals.css";
 
 const manrope = Manrope({
   variable: "--font-manrope",
@@ -63,9 +66,12 @@ export default function RootLayout({
       )}
     >
       <body className="flex min-h-full flex-col">
-        <Suspense fallback={<SessionProvider>{children}</SessionProvider>}>
-          <AuthSessionProvider>{children}</AuthSessionProvider>
-        </Suspense>
+        <div id="app-content" className="flex min-h-full flex-col">
+          <Suspense fallback={<SessionProvider>{children}</SessionProvider>}>
+            <AuthSessionProvider>{children}</AuthSessionProvider>
+          </Suspense>
+        </div>
+        <ColdStartOverlay />
         <Toaster />
       </body>
     </html>

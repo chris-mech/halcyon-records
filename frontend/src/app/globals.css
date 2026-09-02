@@ -16,6 +16,7 @@
   --color-rust: oklch(0.47 0.146 34.717);
   --color-gold: oklch(0.728 0.138 89.726);
   --color-line: oklch(0.798 0.046 88.537);
+  --color-skeleton: oklch(0.66 0 0);
 }
 
 @theme inline {
