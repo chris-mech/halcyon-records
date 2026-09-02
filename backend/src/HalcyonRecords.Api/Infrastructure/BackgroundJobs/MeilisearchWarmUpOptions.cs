@@ -4,5 +4,5 @@ public sealed class MeilisearchWarmUpOptions
 {
     public const string SectionName = "MeilisearchWarmUp";
 
-    public string CronSchedule { get; init; } = "*/2 * * * *";
+    public string CronSchedule { get; init; } = "* * * * *";
 }

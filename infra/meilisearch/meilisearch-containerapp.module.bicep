@@ -62,6 +62,7 @@ resource meilisearch 'Microsoft.App/containerApps@2025-07-01' = {
       scale: {
         minReplicas: 0
         maxReplicas: 1
+        cooldownPeriod: 120
       }
       volumes: [
         {
