@@ -74,4 +74,11 @@ public static partial class Log
         Message = "Meilisearch warm-up ping failed"
     )]
     public static partial void MeilisearchWarmUpFailed(this ILogger logger, Exception exception);
+
+    [LoggerMessage(
+        EventId = 1011,
+        Level = LogLevel.Information,
+        Message = "Cleared all catalogue, order, cart, and account data ahead of a reseed"
+    )]
+    public static partial void AllDataCleared(this ILogger logger);
 }

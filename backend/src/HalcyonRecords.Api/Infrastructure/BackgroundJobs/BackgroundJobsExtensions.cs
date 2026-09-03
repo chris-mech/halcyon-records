@@ -27,6 +27,8 @@ public static class BackgroundJobsExtensions
             );
             services.AddScoped<MeilisearchWarmUpJob>();
 
+            services.AddScoped<DataClearer>();
+
             services.AddScheduler();
 
             return services;

@@ -64,6 +64,65 @@ public class JobRunnerTests(
     }
 
     [Fact]
+    public async Task RunAsync_Reseed_ClearsExistingDataAndRepopulatesFromSeedFiles()
+    {
+        await JobRunner.RunAsync(_factory.Services, "seed", TestContext.Current.CancellationToken);
+
+        AlbumId strayAlbumId;
+        using (var scope = _factory.Services.CreateScope())
+        {
+            var dbContext = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+            var strayAlbum = new Album
+            {
+                Title = "Reseed Job Stray Album",
+                UnitsInStock = 1,
+                RestockUnitsInStock = 1,
+                PriceInPence = 1000,
+            };
+            dbContext.Albums.Add(strayAlbum);
+            await dbContext.SaveChangesAsync(TestContext.Current.CancellationToken);
+            strayAlbumId = strayAlbum.Id;
+        }
+
+        var exitCode = await JobRunner.RunAsync(
+            _factory.Services,
+            "reseed",
+            TestContext.Current.CancellationToken
+        );
+
+        exitCode.Should().Be(0);
+
+        using var assertScope = _factory.Services.CreateScope();
+        var assertDbContext =
+            assertScope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+
+        (await assertDbContext.Albums.AnyAsync(TestContext.Current.CancellationToken))
+            .Should()
+            .BeTrue();
+        (
+            await assertDbContext.Albums.AnyAsync(
+                a => a.Id == strayAlbumId,
+                TestContext.Current.CancellationToken
+            )
+        )
+            .Should()
+            .BeFalse();
+        (
+            await assertDbContext.Users.AnyAsync(
+                u => u.Email == DbSeeder.ShowcaseAccountEmail,
+                TestContext.Current.CancellationToken
+            )
+        )
+            .Should()
+            .BeTrue();
+
+        var settings = await meilisearchFixture
+            .Client.Index(MeilisearchContainerFixture.IndexName)
+            .GetSettingsAsync(TestContext.Current.CancellationToken);
+        settings.SearchableAttributes.Should().Contain("title");
+    }
+
+    [Fact]
     public async Task RunAsync_Restock_RestoresDepletedAlbumsToRestockLevel()
     {
         AlbumId albumId;

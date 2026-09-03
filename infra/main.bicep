@@ -163,6 +163,23 @@ module seed_job 'api-job/api-job.module.bicep' = {
     replicaTimeout: 900
   }
 }
+module reseed_job 'api-job/api-job.module.bicep' = {
+  name: 'job-reseed'
+  scope: rg
+  params: {
+    location: location
+    environmentId: aca_env.outputs.AZURE_CONTAINER_APPS_ENVIRONMENT_ID
+    containerImage: api_containerimage
+    identityId: api_identity.outputs.id
+    identityClientId: api_identity.outputs.clientId
+    sqlServerFqdn: sql.outputs.sqlServerFqdn
+    meilisearchDefaultDomain: aca_env.outputs.AZURE_CONTAINER_APPS_ENVIRONMENT_DEFAULT_DOMAIN
+    keyVaultName: keyvault.outputs.name
+    jobName: 'reseed'
+    triggerType: 'Manual'
+    replicaTimeout: 1200
+  }
+}
 module reindex_job 'api-job/api-job.module.bicep' = {
   name: 'job-reindex'
   scope: rg
