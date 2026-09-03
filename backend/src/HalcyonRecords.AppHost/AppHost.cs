@@ -83,7 +83,7 @@ api = api.PublishAsAzureContainerApp(
     (infrastructure, app) =>
     {
         app.Template.Scale.MinReplicas = 0;
-        app.Template.Scale.MaxReplicas = 3;
+        app.Template.Scale.MaxReplicas = 1;
     }
 );
 
