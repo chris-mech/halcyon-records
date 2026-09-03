@@ -1,6 +1,7 @@
 import { describe, expect, test, vi, beforeEach } from "vitest";
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { signOut, useSession } from "next-auth/react";
+import { ReadonlyURLSearchParams, useSearchParams } from "next/navigation";
 
 import { useCartStore } from "@/lib/cart/cart-store";
 
@@ -11,6 +12,11 @@ vi.mock("next-auth/react", () => ({
   signOut: vi.fn(),
 }));
 
+vi.mock("next/navigation", async (importOriginal) => ({
+  ...(await importOriginal()),
+  useSearchParams: vi.fn(),
+}));
+
 vi.mock("@/lib/cart/sync-cart", () => ({
   syncCartOnLogout: vi.fn().mockResolvedValue(undefined),
 }));
@@ -18,6 +24,7 @@ vi.mock("@/lib/cart/sync-cart", () => ({
 beforeEach(() => {
   useCartStore.setState({ items: [] });
   localStorage.clear();
+  vi.mocked(useSearchParams).mockReturnValue(new ReadonlyURLSearchParams());
 });
 
 describe("Header", () => {
@@ -148,5 +155,82 @@ describe("Header", () => {
       "href",
       "/cart",
     );
+  });
+
+  test("prefills the search box from the current URL", () => {
+    vi.mocked(useSession).mockReturnValue({
+      data: null,
+      status: "unauthenticated",
+      update: vi.fn(),
+    });
+    vi.mocked(useSearchParams).mockReturnValue(
+      new ReadonlyURLSearchParams("q=Existing+Query"),
+    );
+
+    render(<Header />);
+
+    expect(
+      screen.getByRole("searchbox", {
+        name: "Search artists, albums, genres",
+      }),
+    ).toHaveValue("Existing Query");
+  });
+
+  test("shows a clear button only once there is a query, and clearing empties and refocuses the box", () => {
+    vi.mocked(useSession).mockReturnValue({
+      data: null,
+      status: "unauthenticated",
+      update: vi.fn(),
+    });
+
+    render(<Header />);
+
+    const searchInput = screen.getByRole("searchbox", {
+      name: "Search artists, albums, genres",
+    });
+    expect(
+      screen.queryByRole("button", { name: "Clear search" }),
+    ).not.toBeInTheDocument();
+
+    fireEvent.change(searchInput, { target: { value: "Rock" } });
+    const clearButton = screen.getByRole("button", { name: "Clear search" });
+
+    fireEvent.click(clearButton);
+
+    expect(searchInput).toHaveValue("");
+    expect(searchInput).toHaveFocus();
+    expect(
+      screen.queryByRole("button", { name: "Clear search" }),
+    ).not.toBeInTheDocument();
+  });
+
+  test("updates the search box when the URL's query changes under it, e.g. a suggested-term link", () => {
+    vi.mocked(useSession).mockReturnValue({
+      data: null,
+      status: "unauthenticated",
+      update: vi.fn(),
+    });
+    vi.mocked(useSearchParams).mockReturnValue(
+      new ReadonlyURLSearchParams("q=First"),
+    );
+
+    const { rerender } = render(<Header />);
+
+    expect(
+      screen.getByRole("searchbox", {
+        name: "Search artists, albums, genres",
+      }),
+    ).toHaveValue("First");
+
+    vi.mocked(useSearchParams).mockReturnValue(
+      new ReadonlyURLSearchParams("q=Second"),
+    );
+    rerender(<Header />);
+
+    expect(
+      screen.getByRole("searchbox", {
+        name: "Search artists, albums, genres",
+      }),
+    ).toHaveValue("Second");
   });
 });

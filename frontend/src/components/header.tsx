@@ -1,12 +1,13 @@
 "use client";
 
-import { useEffect } from "react";
+import { Suspense, useEffect, useRef, useState } from "react";
 import Link from "next/link";
-import { ChevronDown, Search, User } from "lucide-react";
+import { useSearchParams } from "next/navigation";
+import { ChevronDown, Search, User, XIcon } from "lucide-react";
 import { signOut, useSession } from "next-auth/react";
 
 import { Wordmark } from "@/components/wordmark";
-import { buttonVariants } from "@/components/ui/button";
+import { Button, buttonVariants } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import {
   DropdownMenu,
@@ -36,6 +37,79 @@ interface HeaderProps {
   backLabel?: string;
 }
 
+function HeaderSearch() {
+  const searchParams = useSearchParams();
+  const currentQuery = searchParams.get("q") ?? "";
+  const [prevQuery, setPrevQuery] = useState(currentQuery);
+  const [searchQuery, setSearchQuery] = useState(currentQuery);
+  const searchInputRef = useRef<HTMLInputElement>(null);
+
+  if (currentQuery !== prevQuery) {
+    setPrevQuery(currentQuery);
+    setSearchQuery(currentQuery);
+  }
+
+  function handleClearSearch() {
+    setSearchQuery("");
+    searchInputRef.current?.focus();
+  }
+
+  return (
+    <form action="/search" className="relative max-w-85 flex-1">
+      <label htmlFor="header-search" className="sr-only">
+        Search artists, albums, genres
+      </label>
+      <Search
+        aria-hidden
+        className="pointer-events-none absolute top-1/2 left-3 size-3.5 -translate-y-1/2 text-paper/70"
+      />
+      <Input
+        ref={searchInputRef}
+        id="header-search"
+        type="search"
+        name="q"
+        placeholder="Search artists, albums, genres…"
+        value={searchQuery}
+        onChange={(e) => setSearchQuery(e.target.value)}
+        className="h-auto border-paper/25 bg-slate-plaque py-2.5 pr-9 pl-9 text-sm text-paper shadow-none placeholder:text-slate-muted [&::-webkit-search-cancel-button]:hidden"
+      />
+      {searchQuery && (
+        <Button
+          type="button"
+          variant="ghost"
+          size="icon-xs"
+          aria-label="Clear search"
+          onClick={handleClearSearch}
+          className="absolute inset-y-0 right-2 my-auto text-paper/70 hover:bg-paper/10 hover:text-paper"
+        >
+          <XIcon aria-hidden />
+        </Button>
+      )}
+    </form>
+  );
+}
+
+function HeaderSearchFallback() {
+  return (
+    <div className="relative max-w-85 flex-1">
+      <label htmlFor="header-search" className="sr-only">
+        Search artists, albums, genres
+      </label>
+      <Search
+        aria-hidden
+        className="pointer-events-none absolute top-1/2 left-3 size-3.5 -translate-y-1/2 text-paper/70"
+      />
+      <Input
+        id="header-search"
+        type="search"
+        placeholder="Search artists, albums, genres…"
+        disabled
+        className="h-auto border-paper/25 bg-slate-plaque py-2.5 pr-8 pl-9 text-sm text-paper shadow-none placeholder:text-slate-muted [&::-webkit-search-cancel-button]:hidden"
+      />
+    </div>
+  );
+}
+
 function Header({
   variant = "full",
   backHref = "/",
@@ -57,22 +131,9 @@ function Header({
       <Wordmark variant="header" />
       {variant === "full" ? (
         <>
-          <form action="/search" className="relative max-w-85 flex-1">
-            <label htmlFor="header-search" className="sr-only">
-              Search artists, albums, genres
-            </label>
-            <Search
-              aria-hidden
-              className="pointer-events-none absolute top-1/2 left-3 size-3.5 -translate-y-1/2 text-paper/70"
-            />
-            <Input
-              id="header-search"
-              type="search"
-              name="q"
-              placeholder="Search artists, albums, genres…"
-              className="h-auto border-paper/25 bg-slate-plaque py-2.5 pr-4 pl-9 text-sm text-paper shadow-none placeholder:text-slate-muted"
-            />
-          </form>
+          <Suspense fallback={<HeaderSearchFallback />}>
+            <HeaderSearch />
+          </Suspense>
           <nav className="shrink-0">
             <ul className="flex gap-7">
               {navLinks.map(({ href, label }) => (
