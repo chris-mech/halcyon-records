@@ -1,47 +1,792 @@
 ﻿[
   {
-    "name": "Lena Marsh",
-    "sourceId": "7eb83daa-2915-414b-be54-2d8a9a9c2927",
+    "name": "Junction Eleven",
+    "sourceId": "52e72592-864f-5094-a9e7-459dc2d53019",
     "source": "Generated",
-    "bio": "Placeholder bio.",
-    "origin": "Bristol, UK",
-    "activeSince": 2011,
-    "imageUrl": null
+    "bio": "Four members, one rehearsal room above a motorway services, and a debut recorded almost entirely at night. Junction Eleven write the sort of widescreen rock that sounds like it was built for rooms much bigger than the ones they started in.",
+    "origin": "Glasgow, UK",
+    "type": "Group",
+    "sinceYear": 2016,
+    "imageUrl": "https://picsum.photos/seed/artist-junction-eleven/500/500"
   },
   {
     "name": "The Coastline Static",
-    "sourceId": "da140048-06d0-4601-843d-cf65014b2f2d",
+    "sourceId": "93e04dda-4a93-58bb-80e4-a5d35abfb3c2",
     "source": "Generated",
-    "bio": "Placeholder bio.",
+    "bio": "Formed out of the wreckage of two other bands nobody remembers, The Coastline Static make guitar music with the reverb turned up and the tempo turned down. Their records reward headphones and patience in roughly equal measure.",
     "origin": "Portland, US",
-    "activeSince": 2015,
-    "imageUrl": null
+    "type": "Group",
+    "sinceYear": 2013,
+    "imageUrl": "https://picsum.photos/seed/artist-the-coastline-static/500/500"
   },
   {
-    "name": "Odessa Grey",
-    "sourceId": "1f4e8aff-adde-41fc-8a45-c69346605b36",
+    "name": "Paper Anchor",
+    "sourceId": "76ee04d3-26bc-5db0-98d1-bf9f081f8a63",
     "source": "Generated",
-    "bio": "Placeholder bio.",
+    "bio": "Sheffield's most reliably underrated band spent the nineties one support slot away from a bigger career and never seemed to mind. Three decades on, the records sound less like a missed chance and more like a deliberate choice.",
+    "origin": "Sheffield, UK",
+    "type": "Group",
+    "sinceYear": 1994,
+    "imageUrl": "https://picsum.photos/seed/artist-paper-anchor/500/500"
+  },
+  {
+    "name": "Velvet Transit",
+    "sourceId": "e70f9a7f-1c83-5dc5-bd2c-aa47423b6f5e",
+    "source": "Generated",
+    "bio": "Post-punk that traded the shouting for something colder and considerably stranger. Velvet Transit's first three albums are the ones people cite, though the fourth is quietly the best of them.",
+    "origin": "Manchester, UK",
+    "type": "Group",
+    "sinceYear": 1979,
+    "imageUrl": "https://picsum.photos/seed/artist-velvet-transit/500/500"
+  },
+  {
+    "name": "Holloway Drive",
+    "sourceId": "8f0a6aaf-e0cc-5b84-bdbc-66b663a36d59",
+    "source": "Generated",
+    "bio": "Named after the road they all lived on, Holloway Drive built a career out of songs that sound bigger on the tenth listen than the first. A staple of the shop's rock racks since the day it opened.",
+    "origin": "London, UK",
+    "type": "Group",
+    "sinceYear": 1986,
+    "imageUrl": "https://picsum.photos/seed/artist-holloway-drive/500/500"
+  },
+  {
+    "name": "Saltmarsh",
+    "sourceId": "56be698f-badd-54fb-b46f-e1bbc039d771",
+    "source": "Generated",
+    "bio": "Slow, tidal guitar music from a band that has never once been in a hurry. Saltmarsh records tend to arrive with little warning and stay in rotation for years.",
+    "origin": "Dublin, IE",
+    "type": "Group",
+    "sinceYear": 2004,
+    "imageUrl": "https://picsum.photos/seed/artist-saltmarsh/500/500"
+  },
+  {
+    "name": "The Quiet Mile",
+    "sourceId": "f86aeb4e-5a33-54cc-871f-d91d615fb68c",
+    "source": "Generated",
+    "bio": "They arrived at the tail end of one scene and refused to belong to it, which cost them a decade of attention and earned them a much longer shelf life. Loud where it counts, restrained everywhere else.",
+    "origin": "Seattle, US",
+    "type": "Group",
+    "sinceYear": 1991,
+    "imageUrl": "https://picsum.photos/seed/artist-the-quiet-mile/500/500"
+  },
+  {
+    "name": "Nadia Brandt",
+    "sourceId": "2d097285-455f-55ff-9a08-684a21bdd010",
+    "source": "Generated",
+    "bio": "A guitarist and songwriter who records almost everything herself, then tours it with a band twice the size. Brandt's albums have a homemade intimacy that survives being played very loudly.",
+    "origin": "Hamburg, DE",
+    "type": "Person",
+    "sinceYear": 2009,
+    "imageUrl": "https://picsum.photos/seed/artist-nadia-brandt/500/500"
+  },
+  {
+    "name": "Iron Orchard",
+    "sourceId": "4d2918c6-19f1-5dca-9fb2-aa20bea97467",
+    "source": "Generated",
+    "bio": "Heavy, blues-fed rock recorded fast and mixed hot, the way most of it was in that part of the world. Iron Orchard's back catalogue has been reissued more times than the band ever toured.",
+    "origin": "Detroit, US",
+    "type": "Group",
+    "sinceYear": 1971,
+    "imageUrl": "https://picsum.photos/seed/artist-iron-orchard/500/500"
+  },
+  {
+    "name": "The Long Way Down",
+    "sourceId": "7c24d5dc-308e-5832-a3a9-905875e7d7ea",
+    "source": "Generated",
+    "bio": "A band with a talent for arriving just after a trend has peaked and doing it better anyway. Their records are unfashionable in a way that has aged remarkably well.",
+    "origin": "Melbourne, AU",
+    "type": "Group",
+    "sinceYear": 1998,
+    "imageUrl": "https://picsum.photos/seed/artist-the-long-way-down/500/500"
+  },
+  {
+    "name": "Cassia Vale",
+    "sourceId": "50956779-de1d-5af4-ac88-b9c153ebe671",
+    "source": "Generated",
+    "bio": "Vale writes songs that start quiet and end somewhere considerably less so. A live reputation built entirely on word of mouth, and records that finally caught up with it.",
+    "origin": "Bristol, UK",
+    "type": "Person",
+    "sinceYear": 2015,
+    "imageUrl": "https://picsum.photos/seed/artist-cassia-vale/500/500"
+  },
+  {
+    "name": "North Pier",
+    "sourceId": "110b2853-c916-56d3-8a88-b6905517ec0a",
+    "source": "Generated",
+    "bio": "Big choruses, bigger drums, and a stubborn refusal to move to London. North Pier remain the definitive argument that the eighties happened outside the capital too.",
+    "origin": "Newcastle, UK",
+    "type": "Group",
+    "sinceYear": 1983,
+    "imageUrl": "https://picsum.photos/seed/artist-north-pier/500/500"
+  },
+  {
+    "name": "Tallow Moon",
+    "sourceId": "95aa41d1-afe3-5751-86d3-e4273375cbe1",
+    "source": "Generated",
+    "bio": "Glacial, patient rock music that takes its time getting anywhere and is always worth the wait. Recorded in a converted fish processing plant, which you can somehow hear.",
+    "origin": "Reykjavik, IS",
+    "type": "Group",
+    "sinceYear": 2011,
+    "imageUrl": "https://picsum.photos/seed/artist-tallow-moon/500/500"
+  },
+  {
+    "name": "Dead Letter Club",
+    "sourceId": "0fa9fc01-b6d5-539a-b4f1-fcd05ee1dbf8",
+    "source": "Generated",
+    "bio": "Sharp, wiry guitar music with lyrics that read better than most bands' interviews. They have broken up twice and come back both times sounding better.",
+    "origin": "Brooklyn, US",
+    "type": "Group",
+    "sinceYear": 2006,
+    "imageUrl": "https://picsum.photos/seed/artist-dead-letter-club/500/500"
+  },
+  {
+    "name": "The Hollow Signal",
+    "sourceId": "fce6c02d-e4e9-5e76-833e-8a16e5753ac1",
+    "source": "Generated",
+    "bio": "The newest band on this wall and already the one customers ask about most. Loud, tightly wound, and unusually good at endings.",
     "origin": "Leeds, UK",
-    "activeSince": 2009,
-    "imageUrl": null
+    "type": "Group",
+    "sinceYear": 2019,
+    "imageUrl": "https://picsum.photos/seed/artist-the-hollow-signal/500/500"
   },
   {
-    "name": "Junction Eleven",
-    "sourceId": "604712c0-7c26-40c4-99a2-993f0151ea91",
+    "name": "Marius Fenn",
+    "sourceId": "eac7c03d-8627-5455-a49d-e8a3eda8c0f7",
     "source": "Generated",
-    "bio": "Placeholder bio.",
-    "origin": "Glasgow, UK",
-    "activeSince": 2018,
-    "imageUrl": null
+    "bio": "A songwriter's songwriter who spent the seventies being covered by more famous people. His own versions are stranger, slower and considerably better.",
+    "origin": "Antwerp, BE",
+    "type": "Person",
+    "sinceYear": 1975,
+    "imageUrl": "https://picsum.photos/seed/artist-marius-fenn/500/500"
+  },
+  {
+    "name": "Lena Marsh",
+    "sourceId": "2bcb20ca-136b-56b0-bc29-cdf4c3ef98fe",
+    "source": "Generated",
+    "bio": "A pianist and bandleader who came up through club residencies rather than conservatoires, and it shows in the best way. Marsh writes for the room she is playing in.",
+    "origin": "Bristol, UK",
+    "type": "Person",
+    "sinceYear": 2011,
+    "imageUrl": "https://picsum.photos/seed/artist-lena-marsh/500/500"
+  },
+  {
+    "name": "The Osric Trio",
+    "sourceId": "b3b1556b-fa36-56f7-9dfd-06517840c641",
+    "source": "Generated",
+    "bio": "Piano, bass and drums, no guests, no overdubs, no fuss. Six decades of personnel changes and the trio still sounds like one instrument being played by three people.",
+    "origin": "New York, US",
+    "type": "Group",
+    "sinceYear": 1964,
+    "imageUrl": "https://picsum.photos/seed/artist-the-osric-trio/500/500"
+  },
+  {
+    "name": "Abena Quaye",
+    "sourceId": "c734c87c-025a-5de8-b3bd-b2f1d865b90a",
+    "source": "Generated",
+    "bio": "A saxophonist whose playing folds highlife phrasing into post-bop structures without ever making a point of it. Her records have quietly become the ones other players recommend.",
+    "origin": "Accra, GH",
+    "type": "Person",
+    "sinceYear": 2007,
+    "imageUrl": "https://picsum.photos/seed/artist-abena-quaye/500/500"
+  },
+  {
+    "name": "Blue Hour Quintet",
+    "sourceId": "f0b67c55-aac4-5e4a-a9ac-1c8b44ed20f1",
+    "source": "Generated",
+    "bio": "Hard bop recorded in single takes at the end of long nights, which is exactly how it sounds. The original pressings are the ones collectors chase, though the reissues are honest.",
+    "origin": "Chicago, US",
+    "type": "Group",
+    "sinceYear": 1958,
+    "imageUrl": "https://picsum.photos/seed/artist-blue-hour-quintet/500/500"
+  },
+  {
+    "name": "Teodor Lindqvist",
+    "sourceId": "083e1be3-5290-55ff-acf2-34b986140f0e",
+    "source": "Generated",
+    "bio": "A bassist and composer with an unusually light touch and a fondness for very long endings. Records that work as well at low volume as they do at full attention.",
+    "origin": "Stockholm, SE",
+    "type": "Person",
+    "sinceYear": 1996,
+    "imageUrl": "https://picsum.photos/seed/artist-teodor-lindqvist/500/500"
   },
   {
     "name": "Mira Voss",
-    "sourceId": "ee1d4d83-1405-48bc-a991-26115db88d98",
+    "sourceId": "928bf8a1-fecb-5304-8e88-0918811e1244",
     "source": "Generated",
-    "bio": "Placeholder bio.",
+    "bio": "Voss came to jazz sideways, through electronic production, and her records still carry that structural thinking. Loops and horns, held together better than that description suggests.",
     "origin": "Berlin, DE",
-    "activeSince": 2013,
-    "imageUrl": null
+    "type": "Person",
+    "sinceYear": 2013,
+    "imageUrl": "https://picsum.photos/seed/artist-mira-voss/500/500"
+  },
+  {
+    "name": "The Crosstown Four",
+    "sourceId": "583f76f0-40e7-53dd-ac48-f91550a44a54",
+    "source": "Generated",
+    "bio": "A working band in the truest sense: hundreds of gigs a year and records made in the gaps between them. Loose, warm and completely unpretentious.",
+    "origin": "New Orleans, US",
+    "type": "Group",
+    "sinceYear": 1972,
+    "imageUrl": "https://picsum.photos/seed/artist-the-crosstown-four/500/500"
+  },
+  {
+    "name": "Yuki Nakahara",
+    "sourceId": "fba0fdcf-cc33-50c8-8314-305fbeb2d403",
+    "source": "Generated",
+    "bio": "A pianist with a reputation for silence as much as sound, leaving space where most players would fill it. Her solo records are among the shop's most reliable recommendations.",
+    "origin": "Osaka, JP",
+    "type": "Person",
+    "sinceYear": 2001,
+    "imageUrl": "https://picsum.photos/seed/artist-yuki-nakahara/500/500"
+  },
+  {
+    "name": "Eleanor Shaw",
+    "sourceId": "34706b8c-13aa-5767-b483-fb6cf19995a9",
+    "source": "Generated",
+    "bio": "A singer who treats standards as raw material rather than scripture. Four decades in and she still reworks her own back catalogue on stage every night.",
+    "origin": "London, UK",
+    "type": "Person",
+    "sinceYear": 1981,
+    "imageUrl": "https://picsum.photos/seed/artist-eleanor-shaw/500/500"
+  },
+  {
+    "name": "Slow Signal",
+    "sourceId": "ea49931f-75ca-53d1-825e-c2dc653f92e1",
+    "source": "Generated",
+    "bio": "A duo who make dance records for the hours either side of the peak. Patient, textural and built to be heard on a proper system.",
+    "origin": "Berlin, DE",
+    "type": "Group",
+    "sinceYear": 2008,
+    "imageUrl": "https://picsum.photos/seed/artist-slow-signal/500/500"
+  },
+  {
+    "name": "Arc of Static",
+    "sourceId": "e152c569-56b3-5c7f-8ec1-a370dc023fba",
+    "source": "Generated",
+    "bio": "One producer, an unreasonable amount of hardware, and a catalogue that swerves between beatless drift and something close to techno. Nothing here was made by accident.",
+    "origin": "Rotterdam, NL",
+    "type": "Person",
+    "sinceYear": 1997,
+    "imageUrl": "https://picsum.photos/seed/artist-arc-of-static/500/500"
+  },
+  {
+    "name": "Odessa Grey",
+    "sourceId": "03c4b6a7-bf10-5225-806e-5752dda0cb1e",
+    "source": "Generated",
+    "bio": "Grey builds tracks the way other people build rooms, starting with the space and adding only what it needs. Sparse records that somehow never feel empty.",
+    "origin": "Leeds, UK",
+    "type": "Person",
+    "sinceYear": 2009,
+    "imageUrl": "https://picsum.photos/seed/artist-odessa-grey/500/500"
+  },
+  {
+    "name": "Field Recorder",
+    "sourceId": "5403f0e9-1f3e-58ff-befa-fd2e7fbca4fd",
+    "source": "Generated",
+    "bio": "Ambient music assembled from tape of actual places, then processed until the places are only a suggestion. Better on headphones, best on a long walk.",
+    "origin": "Oslo, NO",
+    "type": "Person",
+    "sinceYear": 2014,
+    "imageUrl": "https://picsum.photos/seed/artist-field-recorder/500/500"
+  },
+  {
+    "name": "Cobalt Hours",
+    "sourceId": "5df22c77-10f0-5fb5-a5bc-dc19d4cf5536",
+    "source": "Generated",
+    "bio": "Machine music from the city that wrote the manual, made by people who were there for the first wave and never stopped. Warm where you expect cold.",
+    "origin": "Detroit, US",
+    "type": "Group",
+    "sinceYear": 1991,
+    "imageUrl": "https://picsum.photos/seed/artist-cobalt-hours/500/500"
+  },
+  {
+    "name": "Tessellate Nine",
+    "sourceId": "af7230b5-828a-5791-8a20-af59bca9c19c",
+    "source": "Generated",
+    "bio": "Precise, restless electronic music with a habit of changing direction just as you settle in. Their live show is reportedly even less predictable.",
+    "origin": "Tokyo, JP",
+    "type": "Group",
+    "sinceYear": 2018,
+    "imageUrl": "https://picsum.photos/seed/artist-tessellate-nine/500/500"
+  },
+  {
+    "name": "Halogen Park",
+    "sourceId": "bbd43eb3-695d-5bcb-9315-64aea11aeb96",
+    "source": "Generated",
+    "bio": "Early adopters of cheap samplers and expensive ideas. Halogen Park's late-eighties records still turn up in other people's DJ sets every year.",
+    "origin": "Sheffield, UK",
+    "type": "Group",
+    "sinceYear": 1988,
+    "imageUrl": "https://picsum.photos/seed/artist-halogen-park/500/500"
+  },
+  {
+    "name": "Nyx Carrow",
+    "sourceId": "0787ca27-52ea-5cdd-ab05-df48b9fffdfc",
+    "source": "Generated",
+    "bio": "The newest name in the electronic racks, making club tracks with an unusual amount of melancholy in them. Two records in and already hard to keep in stock.",
+    "origin": "Lisbon, PT",
+    "type": "Person",
+    "sinceYear": 2021,
+    "imageUrl": "https://picsum.photos/seed/artist-nyx-carrow/500/500"
+  },
+  {
+    "name": "The Ambient Works Co.",
+    "sourceId": "e5d63e51-ae42-5af8-bb65-0c5e04a4db57",
+    "source": "Generated",
+    "bio": "A rotating collective rather than a band, releasing long-form pieces under a shared name. Consistently excellent, occasionally very long.",
+    "origin": "Cologne, DE",
+    "type": "Group",
+    "sinceYear": 2002,
+    "imageUrl": "https://picsum.photos/seed/artist-the-ambient-works-co/500/500"
+  },
+  {
+    "name": "Sunday Best",
+    "sourceId": "cf5638c7-fea6-590c-b357-9e00c6f55049",
+    "source": "Generated",
+    "bio": "Immaculate pop songs delivered with just enough weariness to keep them honest. A band who understand that a good chorus is a serious business.",
+    "origin": "London, UK",
+    "type": "Group",
+    "sinceYear": 2012,
+    "imageUrl": "https://picsum.photos/seed/artist-sunday-best/500/500"
+  },
+  {
+    "name": "Romy Lake",
+    "sourceId": "fb9ead1a-2cae-528d-ae4d-f545efdccba0",
+    "source": "Generated",
+    "bio": "Writes and produces everything herself, which is why the records sound like nobody else's. Sharp, bright and quietly devastating in places.",
+    "origin": "Toronto, CA",
+    "type": "Person",
+    "sinceYear": 2017,
+    "imageUrl": "https://picsum.photos/seed/artist-romy-lake/500/500"
+  },
+  {
+    "name": "The Paper Hearts",
+    "sourceId": "96bf5bec-0d37-53a2-a9fc-f505d745054c",
+    "source": "Generated",
+    "bio": "Three-minute songs, jangling guitars, and a run of singles in the mid-eighties that nobody has improved on since. Endlessly reissued for good reason.",
+    "origin": "Liverpool, UK",
+    "type": "Group",
+    "sinceYear": 1984,
+    "imageUrl": "https://picsum.photos/seed/artist-the-paper-hearts/500/500"
+  },
+  {
+    "name": "Clara Boone",
+    "sourceId": "5073829f-c24e-5d9c-be69-4cb84ee3498f",
+    "source": "Generated",
+    "bio": "A voice that crossed from country radio to pop charts without ever sounding like it was trying to. Her sixties records remain the shop's most requested reissues.",
+    "origin": "Nashville, US",
+    "type": "Person",
+    "sinceYear": 1966,
+    "imageUrl": "https://picsum.photos/seed/artist-clara-boone/500/500"
+  },
+  {
+    "name": "Neon Postcard",
+    "sourceId": "4f5fc96a-2b10-575a-bf86-d0bb0da2766c",
+    "source": "Generated",
+    "bio": "Bright, synthetic pop made by people who clearly owned a lot of records. Cheerful on the surface and considerably sadder underneath.",
+    "origin": "Sydney, AU",
+    "type": "Group",
+    "sinceYear": 1993,
+    "imageUrl": "https://picsum.photos/seed/artist-neon-postcard/500/500"
+  },
+  {
+    "name": "Juno Sparrow",
+    "sourceId": "7a268390-e1f0-5b7e-a625-36cbc153b6b1",
+    "source": "Generated",
+    "bio": "Pop built out of very small sounds and very large hooks. Two albums in, and the second is the one that made everyone pay attention.",
+    "origin": "Seoul, KR",
+    "type": "Person",
+    "sinceYear": 2020,
+    "imageUrl": "https://picsum.photos/seed/artist-juno-sparrow/500/500"
+  },
+  {
+    "name": "The Tuesday Set",
+    "sourceId": "538af20b-002c-5837-8e30-db361acede9d",
+    "source": "Generated",
+    "bio": "Named after the weekly residency where they worked the songs out in public. That habit never left the records, which still sound like a room rather than a studio.",
+    "origin": "Copenhagen, DK",
+    "type": "Group",
+    "sinceYear": 2005,
+    "imageUrl": "https://picsum.photos/seed/artist-the-tuesday-set/500/500"
+  },
+  {
+    "name": "The Brass Tacks",
+    "sourceId": "b8117703-2e9f-5588-8efa-a1adcfa9dce5",
+    "source": "Generated",
+    "bio": "A house band that got tired of backing other people and made their own records instead. Tight, hot and recorded almost entirely live to tape.",
+    "origin": "Memphis, US",
+    "type": "Group",
+    "sinceYear": 1969,
+    "imageUrl": "https://picsum.photos/seed/artist-the-brass-tacks/500/500"
+  },
+  {
+    "name": "Delroy Vance",
+    "sourceId": "a6465fdb-f043-5437-bd5c-56614cbb61bd",
+    "source": "Generated",
+    "bio": "British soul that never quite got its due at home and was enormous everywhere else. Vance's seventies albums are the ones DJs still dig for.",
+    "origin": "Birmingham, UK",
+    "type": "Person",
+    "sinceYear": 1974,
+    "imageUrl": "https://picsum.photos/seed/artist-delroy-vance/500/500"
+  },
+  {
+    "name": "Sister Alma",
+    "sourceId": "cb7f7d90-69df-592e-b405-67b06b127d62",
+    "source": "Generated",
+    "bio": "Came up through church choirs and never entirely left them behind. A voice with enough force to make an arrangement get out of its way.",
+    "origin": "Philadelphia, US",
+    "type": "Person",
+    "sinceYear": 1967,
+    "imageUrl": "https://picsum.photos/seed/artist-sister-alma/500/500"
+  },
+  {
+    "name": "The Hot Plate Revue",
+    "sourceId": "00ac2875-ca52-5423-9a6d-0e9db31bf46a",
+    "source": "Generated",
+    "bio": "Horn-driven funk with Afrobeat in its bones and no interest in short songs. Their records were reissued decades late and sold out immediately.",
+    "origin": "Lagos, NG",
+    "type": "Group",
+    "sinceYear": 1976,
+    "imageUrl": "https://picsum.photos/seed/artist-the-hot-plate-revue/500/500"
+  },
+  {
+    "name": "Margo Teal",
+    "sourceId": "cc5da798-d3b5-5fc3-b9f6-4cbc12c986bf",
+    "source": "Generated",
+    "bio": "Neo-soul with the drums pushed forward and the polish deliberately left off. Teal writes about ordinary things and makes them sound enormous.",
+    "origin": "Oakland, US",
+    "type": "Person",
+    "sinceYear": 1998,
+    "imageUrl": "https://picsum.photos/seed/artist-margo-teal/500/500"
+  },
+  {
+    "name": "Eight Track Committee",
+    "sourceId": "51cfd42a-3189-5298-90eb-4676313266b2",
+    "source": "Generated",
+    "bio": "A big band in an era that could not afford them, playing funk with the arrangements fully written out. Impossibly tight and clearly having a good time.",
+    "origin": "Bristol, UK",
+    "type": "Group",
+    "sinceYear": 2003,
+    "imageUrl": "https://picsum.photos/seed/artist-eight-track-committee/500/500"
+  },
+  {
+    "name": "Curtis Mbeki",
+    "sourceId": "a31cbdd7-324a-5333-bfe0-ef38370e889b",
+    "source": "Generated",
+    "bio": "A bassist turned bandleader whose records move between township jazz, funk and something entirely his own. Warm, generous music with real steel in it.",
+    "origin": "Johannesburg, ZA",
+    "type": "Person",
+    "sinceYear": 1988,
+    "imageUrl": "https://picsum.photos/seed/artist-curtis-mbeki/500/500"
+  },
+  {
+    "name": "Borough Tape",
+    "sourceId": "b63a2d9a-d893-5194-a276-050a95ce8f24",
+    "source": "Generated",
+    "bio": "Two MCs and a producer who built a catalogue out of dusty loops and very specific local detail. British hip-hop that never once tried to sound American.",
+    "origin": "London, UK",
+    "type": "Group",
+    "sinceYear": 1996,
+    "imageUrl": "https://picsum.photos/seed/artist-borough-tape/500/500"
+  },
+  {
+    "name": "Kade Oyelaran",
+    "sourceId": "1e0ae647-a619-5336-9907-81173d313b11",
+    "source": "Generated",
+    "bio": "Writes in long paragraphs and delivers them like conversation. The records are dense enough to reward the fourth listen and welcoming enough to survive the first.",
+    "origin": "Atlanta, US",
+    "type": "Person",
+    "sinceYear": 2011,
+    "imageUrl": "https://picsum.photos/seed/artist-kade-oyelaran/500/500"
+  },
+  {
+    "name": "The Basement Press",
+    "sourceId": "e74ddf77-d2aa-560a-aeb3-9c0c06522229",
+    "source": "Generated",
+    "bio": "Golden-age crew whose records were passed around long before they were bought. The samples alone are worth the price of admission.",
+    "origin": "Queens, US",
+    "type": "Group",
+    "sinceYear": 1989,
+    "imageUrl": "https://picsum.photos/seed/artist-the-basement-press/500/500"
+  },
+  {
+    "name": "Lucid Margin",
+    "sourceId": "16557357-32c3-5d7b-99cf-f5a9c6b4d281",
+    "source": "Generated",
+    "bio": "A producer and rapper working in two languages and treating both as instruments. Jazz-leaning beats with a real editor's discipline.",
+    "origin": "Paris, FR",
+    "type": "Person",
+    "sinceYear": 2016,
+    "imageUrl": "https://picsum.photos/seed/artist-lucid-margin/500/500"
+  },
+  {
+    "name": "Two Turntables North",
+    "sourceId": "82368831-a908-5674-be82-8f0ea2c75cb2",
+    "source": "Generated",
+    "bio": "DJs first, producers second, and it shows in how the records are sequenced. Built for playing all the way through.",
+    "origin": "Toronto, CA",
+    "type": "Group",
+    "sinceYear": 2001,
+    "imageUrl": "https://picsum.photos/seed/artist-two-turntables-north/500/500"
+  },
+  {
+    "name": "Sable Ridge",
+    "sourceId": "8915d2d7-15c3-5b09-a454-492515a917ec",
+    "source": "Generated",
+    "bio": "Slow, heavy and unhurried, with the low end mixed like it matters. The most recent arrival in this section and already a staff favourite.",
+    "origin": "Houston, US",
+    "type": "Person",
+    "sinceYear": 2022,
+    "imageUrl": "https://picsum.photos/seed/artist-sable-ridge/500/500"
+  },
+  {
+    "name": "Wren Alderly",
+    "sourceId": "0669ce7d-bfe5-5ffa-bc4d-a31c2eede091",
+    "source": "Generated",
+    "bio": "A guitarist and singer working in the older tradition, where the tune matters more than the singer. Thirty years of records with no obvious weak one.",
+    "origin": "Cardiff, UK",
+    "type": "Person",
+    "sinceYear": 1993,
+    "imageUrl": "https://picsum.photos/seed/artist-wren-alderly/500/500"
+  },
+  {
+    "name": "The Hollow Oak Band",
+    "sourceId": "f40854d0-46ac-545c-b223-440ba0637fb0",
+    "source": "Generated",
+    "bio": "String band music played fast and sung plainly. Recorded in one room with one microphone for most of their career, entirely on purpose.",
+    "origin": "Asheville, US",
+    "type": "Group",
+    "sinceYear": 1972,
+    "imageUrl": "https://picsum.photos/seed/artist-the-hollow-oak-band/500/500"
+  },
+  {
+    "name": "Inés Caballero",
+    "sourceId": "6105a216-90e6-5d66-8cc1-f666c03ca2d5",
+    "source": "Generated",
+    "bio": "Flamenco training put to use on songs that are not quite flamenco. Caballero's records are stark, rhythmic and unlike much else in this section.",
+    "origin": "Seville, ES",
+    "type": "Person",
+    "sinceYear": 2010,
+    "imageUrl": "https://picsum.photos/seed/artist-inés-caballero/500/500"
+  },
+  {
+    "name": "Blackthorn Ferry",
+    "sourceId": "9833af85-57ba-51f2-9f9b-dee015e3802f",
+    "source": "Generated",
+    "bio": "Traditional players who write their own material and refuse to be precious about the distinction. A live band first, on record almost by accident.",
+    "origin": "Galway, IE",
+    "type": "Group",
+    "sinceYear": 1985,
+    "imageUrl": "https://picsum.photos/seed/artist-blackthorn-ferry/500/500"
+  },
+  {
+    "name": "Mariam Touré",
+    "sourceId": "8490fc4d-59b0-507b-9387-c1b0e6975e18",
+    "source": "Generated",
+    "bio": "A guitarist and singer whose records carry desert blues into places it does not usually go. Hypnotic, unhurried and absolutely worth the shelf space.",
+    "origin": "Bamako, ML",
+    "type": "Person",
+    "sinceYear": 1998,
+    "imageUrl": "https://picsum.photos/seed/artist-mariam-touré/500/500"
+  },
+  {
+    "name": "The Dust Road Family",
+    "sourceId": "ac2d4890-adf9-5040-923f-9133f4353405",
+    "source": "Generated",
+    "bio": "Country music made by people who clearly love the form and refuse to treat it as a costume. Harmonies first, everything else second.",
+    "origin": "Austin, US",
+    "type": "Group",
+    "sinceYear": 2006,
+    "imageUrl": "https://picsum.photos/seed/artist-the-dust-road-family/500/500"
+  },
+  {
+    "name": "Rooster Quinn",
+    "sourceId": "9cc44038-108b-57b0-a1df-cdf6b2a6596d",
+    "source": "Generated",
+    "bio": "One guitar, one voice, and a catalogue recorded mostly in front rooms and radio stations. The reissues finally do the tapes justice.",
+    "origin": "Clarksdale, US",
+    "type": "Person",
+    "sinceYear": 1959,
+    "imageUrl": "https://picsum.photos/seed/artist-rooster-quinn/500/500"
+  },
+  {
+    "name": "The Back Porch Three",
+    "sourceId": "ceb17014-6f76-5d10-94eb-037501244a46",
+    "source": "Generated",
+    "bio": "Jump blues played by people who spent their working lives in dance halls. Nothing here is trying to be profound and all of it lands.",
+    "origin": "Kansas City, US",
+    "type": "Group",
+    "sinceYear": 1968,
+    "imageUrl": "https://picsum.photos/seed/artist-the-back-porch-three/500/500"
+  },
+  {
+    "name": "Odie Lamarr",
+    "sourceId": "e7038cf2-da8f-51aa-ae41-686e5a6fe2dd",
+    "source": "Generated",
+    "bio": "Electric blues with the amp pushed past where it wants to go. Lamarr's records were cheap to make and have outlasted almost everything around them.",
+    "origin": "Chicago, US",
+    "type": "Person",
+    "sinceYear": 1977,
+    "imageUrl": "https://picsum.photos/seed/artist-odie-lamarr/500/500"
+  },
+  {
+    "name": "Hattie Boyle",
+    "sourceId": "45a0a3aa-fcd7-51be-a675-8f220d8eb96c",
+    "source": "Generated",
+    "bio": "A slide player who came to the blues through punk and kept the impatience. Short songs, no solos for the sake of it.",
+    "origin": "Glasgow, UK",
+    "type": "Person",
+    "sinceYear": 2009,
+    "imageUrl": "https://picsum.photos/seed/artist-hattie-boyle/500/500"
+  },
+  {
+    "name": "Kingston Mailroom",
+    "sourceId": "92da3104-5897-5047-b58e-e0dc9d98f9e3",
+    "source": "Generated",
+    "bio": "A studio band who cut hundreds of sides for other people before anyone thought to credit them. These are the records with their own name on the label.",
+    "origin": "Kingston, JM",
+    "type": "Group",
+    "sinceYear": 1974,
+    "imageUrl": "https://picsum.photos/seed/artist-kingston-mailroom/500/500"
+  },
+  {
+    "name": "Errol Plummer",
+    "sourceId": "0205d92c-83af-5600-82a7-a71f073d0b4f",
+    "source": "Generated",
+    "bio": "A singer whose roots records defined a decade and whose dub versions arguably defined the next one. Essential in either form.",
+    "origin": "Kingston, JM",
+    "type": "Person",
+    "sinceYear": 1969,
+    "imageUrl": "https://picsum.photos/seed/artist-errol-plummer/500/500"
+  },
+  {
+    "name": "Dub Committee",
+    "sourceId": "29ec8ac0-b63e-5457-8262-2dad7100c049",
+    "source": "Generated",
+    "bio": "UK dub built in a basement with more delay units than sense. Heavy, spacious records that reveal something new on every system.",
+    "origin": "London, UK",
+    "type": "Group",
+    "sinceYear": 1982,
+    "imageUrl": "https://picsum.photos/seed/artist-dub-committee/500/500"
+  },
+  {
+    "name": "Sela Brown",
+    "sourceId": "efa055ff-53fb-5890-bc78-b294d2314a10",
+    "source": "Generated",
+    "bio": "Modern roots singing with a producer's ear for arrangement. Brown's albums are patient in a way that new records rarely are.",
+    "origin": "Bridgetown, BB",
+    "type": "Person",
+    "sinceYear": 2013,
+    "imageUrl": "https://picsum.photos/seed/artist-sela-brown/500/500"
+  },
+  {
+    "name": "Northgate Philharmonic",
+    "sourceId": "880416f3-f690-50a9-982b-e09c5f501013",
+    "source": "Generated",
+    "bio": "A regional orchestra with a recording history longer than most national ones. Their mid-century sessions remain the benchmark for several of these works.",
+    "origin": "Manchester, UK",
+    "type": "Orchestra",
+    "sinceYear": 1948,
+    "imageUrl": "https://picsum.photos/seed/artist-northgate-philharmonic/500/500"
+  },
+  {
+    "name": "The Ashwell Quartet",
+    "sourceId": "23e9cbf9-fd09-5754-b93c-fa6886165608",
+    "source": "Generated",
+    "bio": "A string quartet with a reputation for taking familiar repertoire apart and putting it back together slightly differently. Divisive in the best way.",
+    "origin": "Vienna, AT",
+    "type": "Group",
+    "sinceYear": 1987,
+    "imageUrl": "https://picsum.photos/seed/artist-the-ashwell-quartet/500/500"
+  },
+  {
+    "name": "Helena Varga",
+    "sourceId": "8dc2e504-bc19-5f5a-a812-cf04168e5892",
+    "source": "Generated",
+    "bio": "A pianist who records live wherever possible and lets the mistakes stand. The results feel like performances rather than documents.",
+    "origin": "Budapest, HU",
+    "type": "Person",
+    "sinceYear": 1992,
+    "imageUrl": "https://picsum.photos/seed/artist-helena-varga/500/500"
+  },
+  {
+    "name": "St Brendan's Choir",
+    "sourceId": "60e97bbc-eb89-560f-ab24-f0ad8e66c413",
+    "source": "Generated",
+    "bio": "Choral recordings made in the building the music was written for, which is most of the point. Reverb you could not fake if you tried.",
+    "origin": "Cork, IE",
+    "type": "Choir",
+    "sinceYear": 1955,
+    "imageUrl": "https://picsum.photos/seed/artist-st-brendan-s-choir/500/500"
+  },
+  {
+    "name": "Trio Mareado",
+    "sourceId": "6c09936f-99b4-5b35-9d96-8f7e6200d67e",
+    "source": "Generated",
+    "bio": "Tango rearranged for people who were not there the first time, played by people who were. Elegant and slightly seasick, as the name suggests.",
+    "origin": "Buenos Aires, AR",
+    "type": "Group",
+    "sinceYear": 1981,
+    "imageUrl": "https://picsum.photos/seed/artist-trio-mareado/500/500"
+  },
+  {
+    "name": "Célia Navarro",
+    "sourceId": "e192fb03-8125-5ad6-b842-87f1e7f8eebb",
+    "source": "Generated",
+    "bio": "Bossa and tropicalia sung with a directness that cuts through the arrangements. Her late-sixties albums are the ones worth hunting down.",
+    "origin": "São Paulo, BR",
+    "type": "Person",
+    "sinceYear": 1968,
+    "imageUrl": "https://picsum.photos/seed/artist-célia-navarro/500/500"
+  },
+  {
+    "name": "Orquesta Luz del Norte",
+    "sourceId": "fd27f7a2-f986-5632-bdd6-26c7611c50cb",
+    "source": "Generated",
+    "bio": "A full salsa orchestra with the personnel to prove it. Records made for dancing and mixed accordingly, with the percussion where it belongs.",
+    "origin": "Havana, CU",
+    "type": "Orchestra",
+    "sinceYear": 1959,
+    "imageUrl": "https://picsum.photos/seed/artist-orquesta-luz-del-norte/500/500"
+  },
+  {
+    "name": "Arvid Holm",
+    "sourceId": "9e370d4d-0bf5-5063-8669-cae7b6d313f3",
+    "source": "Generated",
+    "bio": "A film composer whose scores work as albums, which is rarer than it should be. Sparse, patient writing that trusts the listener.",
+    "origin": "Helsinki, FI",
+    "type": "Person",
+    "sinceYear": 1990,
+    "imageUrl": "https://picsum.photos/seed/artist-arvid-holm/500/500"
+  },
+  {
+    "name": "The Gilded Curtain Cast",
+    "sourceId": "726d3a7d-ffec-5613-99ae-b10ced71e484",
+    "source": "Generated",
+    "bio": "The original cast recording ensemble for a long-running West End production. Recorded across two days with the pit orchestra fully live.",
+    "origin": "London, UK",
+    "type": "Other",
+    "sinceYear": 2015,
+    "imageUrl": "https://picsum.photos/seed/artist-the-gilded-curtain-cast/500/500"
+  },
+  {
+    "name": "Paloma Reyes",
+    "sourceId": "6c4495c8-fb94-571e-9271-c64ea1027ce6",
+    "source": "Generated",
+    "bio": "Writes for film and television and treats both with the same seriousness. Her soundtrack albums sell steadily to people who have never seen the films.",
+    "origin": "Mexico City, MX",
+    "type": "Person",
+    "sinceYear": 2003,
+    "imageUrl": "https://picsum.photos/seed/artist-paloma-reyes/500/500"
+  },
+  {
+    "name": "Mister Moonlight",
+    "sourceId": "749e9cd2-81e4-5b2e-b224-e63ca8fa808f",
+    "source": "Generated",
+    "bio": "The fictional crooner at the centre of a 1963 film, whose in-character recordings were released as a real album and quietly became a cult item. Credited to the character rather than the singer, as the studio insisted at the time.",
+    "origin": "London, UK",
+    "type": "Character",
+    "sinceYear": 1962,
+    "imageUrl": "https://picsum.photos/seed/artist-mister-moonlight/500/500"
   }
 ]
