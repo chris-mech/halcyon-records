@@ -39,10 +39,8 @@ resource halcyonrecords 'Microsoft.Sql/servers/databases@2023-08-01' = {
   name: 'halcyonrecords'
   location: location
   properties: {
-    autoPauseDelay: 15
     collation: 'Latin1_General_100_CI_AS_SC'
     freeLimitExhaustionBehavior: 'AutoPause'
-    minCapacity: json('0.5')
     useFreeLimit: true
   }
   sku: {
