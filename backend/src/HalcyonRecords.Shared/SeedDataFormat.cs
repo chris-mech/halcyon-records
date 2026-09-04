@@ -17,6 +17,10 @@ public static class SeedDataJsonOptions
     {
         PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
         WriteIndented = true,
-        Converters = { new JsonStringEnumConverter<SeedSource>() },
+        Converters =
+        {
+            new JsonStringEnumConverter<SeedSource>(),
+            new JsonStringEnumConverter<ArtistType>(),
+        },
     };
 }

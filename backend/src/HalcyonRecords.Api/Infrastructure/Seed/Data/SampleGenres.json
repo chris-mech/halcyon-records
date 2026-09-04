@@ -1,9 +1,15 @@
 [
   {
-    "name": "Jazz",
-    "slug": "jazz",
-    "description": "Modal, cool, hard bop and everything that came after: records for late nights and slow Sundays alike.",
-    "imageUrl": "https://picsum.photos/seed/genre-jazz/400/300"
+    "name": "Blues",
+    "slug": "blues",
+    "description": "Delta bottleneck, Chicago electric, and the slow-burning stuff in between: the root system most of this shop grew out of.",
+    "imageUrl": "https://picsum.photos/seed/genre-blues/400/300"
+  },
+  {
+    "name": "Classical",
+    "slug": "classical",
+    "description": "Symphonies, string quartets and solo piano, pressed for people who want the whole argument rather than the highlights.",
+    "imageUrl": "https://picsum.photos/seed/genre-classical/400/300"
   },
   {
     "name": "Electronic",
@@ -15,12 +21,54 @@
     "name": "Folk, World, & Country",
     "slug": "folk-world-and-country",
     "description": "Country twang, front-porch folk, and rhythms from every corner of the map, proof that roots music has no borders.",
-    "imageUrl": "https://picsum.photos/seed/genre-folk/400/300"
+    "imageUrl": "https://picsum.photos/seed/genre-folk-world-and-country/400/300"
+  },
+  {
+    "name": "Funk / Soul",
+    "slug": "funk-soul",
+    "description": "Rhythm sections that refuse to sit still and voices that carry the room: the good stuff, loud or otherwise.",
+    "imageUrl": "https://picsum.photos/seed/genre-funk-soul/400/300"
+  },
+  {
+    "name": "Hip-Hop",
+    "slug": "hip-hop",
+    "description": "Breakbeats, boom bap, and everything the sampler made possible once someone thought to loop the good bit.",
+    "imageUrl": "https://picsum.photos/seed/genre-hip-hop/400/300"
+  },
+  {
+    "name": "Jazz",
+    "slug": "jazz",
+    "description": "Modal, cool, hard bop and everything that came after: records for late nights and slow Sundays alike.",
+    "imageUrl": "https://picsum.photos/seed/genre-jazz/400/300"
+  },
+  {
+    "name": "Latin",
+    "slug": "latin",
+    "description": "Salsa, bossa, cumbia and tropicalia: records that assume you have somewhere better to be than sitting down.",
+    "imageUrl": "https://picsum.photos/seed/genre-latin/400/300"
+  },
+  {
+    "name": "Pop",
+    "slug": "pop",
+    "description": "Hooks built to last three minutes and stay for thirty years, with no apology offered for any of it.",
+    "imageUrl": "https://picsum.photos/seed/genre-pop/400/300"
+  },
+  {
+    "name": "Reggae",
+    "slug": "reggae",
+    "description": "Roots, dub and lovers rock: basslines with room to breathe and mixing desks treated as instruments.",
+    "imageUrl": "https://picsum.photos/seed/genre-reggae/400/300"
   },
   {
     "name": "Rock",
     "slug": "rock",
     "description": "Loud guitars, louder hooks, and the odd quiet moment in between: the genre that never really left.",
     "imageUrl": "https://picsum.photos/seed/genre-rock/400/300"
+  },
+  {
+    "name": "Stage & Screen",
+    "slug": "stage-and-screen",
+    "description": "Soundtracks, scores and cast recordings: music written to serve a story that turned out to stand up on its own.",
+    "imageUrl": "https://picsum.photos/seed/genre-stage-and-screen/400/300"
   }
 ]

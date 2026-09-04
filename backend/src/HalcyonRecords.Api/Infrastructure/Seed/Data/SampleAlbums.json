@@ -1,130 +1,4039 @@
 [
   {
-    "title": "Low Tide Radio",
-    "sourceId": "b6f1a2c4-3e9d-4a7f-9c2b-1d5e8f3a6b90",
+    "title": "Symphony No. 4 / Nocturnes",
+    "sourceId": "ef828758-6a97-556d-9b1a-6a08bd5b0988",
     "source": "Generated",
-    "description": "Placeholder description.",
-    "releaseDate": "2023-05-12",
-    "label": "Fictional Records",
-    "isNew": true,
-    "isStaffPick": false,
-    "imageUrl": "https://picsum.photos/seed/album-low-tide-radio/500/500",
-    "artistSourceIds": [ "7eb83daa-2915-414b-be54-2d8a9a9c2927" ],
-    "genreSlugs": [ "jazz" ],
-    "unitsInStock": 12,
-    "priceInPence": 1899,
-    "originalPriceInPence": null
-  },
-  {
-    "title": "Static & Sea",
-    "sourceId": "c2d4e6f8-1a3b-4c5d-8e9f-2a4b6c8d0e12",
-    "source": "Generated",
-    "description": "Placeholder description.",
-    "releaseDate": "2021-09-01",
-    "label": "Fictional Records",
+    "description": "The orchestra's first stereo session, recorded over three cold evenings in a hall that has since been demolished. Still the reference version for the Nocturnes as far as most of our customers are concerned.",
+    "releaseDate": "1957-11-04",
+    "label": "Harrow Lane Records",
     "isNew": false,
-    "isStaffPick": true,
-    "imageUrl": "https://picsum.photos/seed/album-static-sea/500/500",
-    "artistSourceIds": [ "da140048-06d0-4601-843d-cf65014b2f2d" ],
-    "genreSlugs": [ "electronic" ],
+    "isStaffPick": false,
+    "imageUrl": "https://picsum.photos/seed/album-symphony-no-4-nocturnes/500/500",
+    "artistSourceIds": [
+      "880416f3-f690-50a9-982b-e09c5f501013"
+    ],
+    "genreSlugs": [
+      "classical"
+    ],
     "unitsInStock": 5,
-    "priceInPence": 1599,
-    "originalPriceInPence": 1999
+    "priceInPence": 1999,
+    "originalPriceInPence": 2799
   },
   {
-    "title": "Ashwood",
-    "sourceId": "d3e5f7a9-2b4c-4d6e-9f0a-3b5c7d9e1f23",
+    "title": "Music for Strings and Winter",
+    "sourceId": "bfdc4262-bf89-54ba-b019-5f1442c21bc0",
     "source": "Generated",
-    "description": "Placeholder description.",
-    "releaseDate": "2019-03-15",
-    "label": "Fictional Records",
+    "description": "A programme of short pieces assembled almost as an afterthought and now the most requested record in the orchestra's catalogue. Restrained playing, beautifully captured.",
+    "releaseDate": "1963-02-18",
+    "label": "Harrow Lane Records",
     "isNew": false,
-    "isStaffPick": true,
-    "imageUrl": "https://picsum.photos/seed/album-ashwood/500/500",
-    "artistSourceIds": [ "1f4e8aff-adde-41fc-8a45-c69346605b36" ],
-    "genreSlugs": [ "folk-world-and-country" ],
-    "unitsInStock": 8,
-    "priceInPence": 1799,
+    "isStaffPick": false,
+    "imageUrl": "https://picsum.photos/seed/album-music-for-strings-and-winter/500/500",
+    "artistSourceIds": [
+      "880416f3-f690-50a9-982b-e09c5f501013"
+    ],
+    "genreSlugs": [
+      "classical"
+    ],
+    "unitsInStock": 2,
+    "priceInPence": 2699,
     "originalPriceInPence": null
   },
   {
-    "title": "Corridor Six",
-    "sourceId": "e4f6a8b0-3c5d-4e7f-a01b-4c6d8e0f1a34",
+    "title": "Evensong at St Brendan's",
+    "sourceId": "38cce9da-2964-51e1-ae7b-bc34f9777e22",
     "source": "Generated",
-    "description": "Placeholder description.",
-    "releaseDate": "2024-01-20",
-    "label": "Fictional Records",
-    "isNew": true,
-    "isStaffPick": false,
-    "imageUrl": "https://picsum.photos/seed/album-corridor-six/500/500",
-    "artistSourceIds": [ "604712c0-7c26-40c4-99a2-993f0151ea91" ],
-    "genreSlugs": [ "rock" ],
-    "unitsInStock": 20,
-    "priceInPence": 2099,
-    "originalPriceInPence": null
-  },
-  {
-    "title": "Halflight",
-    "sourceId": "f5a7b9c1-4d6e-4f80-b12c-5d7e9f0a1b45",
-    "source": "Generated",
-    "description": "Placeholder description.",
-    "releaseDate": "2016-11-11",
-    "label": "Fictional Records",
+    "description": "Recorded in the church itself with two microphones and no acoustic treatment whatsoever. The building does at least half the work and nobody involved pretended otherwise.",
+    "releaseDate": "1961-12-01",
+    "label": "Lantern Row",
     "isNew": false,
     "isStaffPick": false,
-    "imageUrl": "https://picsum.photos/seed/album-halflight/500/500",
-    "artistSourceIds": [ "ee1d4d83-1405-48bc-a991-26115db88d98" ],
-    "genreSlugs": [ "jazz", "folk-world-and-country" ],
-    "unitsInStock": 3,
-    "priceInPence": 1499,
-    "originalPriceInPence": null
-  },
-  {
-    "title": "Concrete Bloom",
-    "sourceId": "a6b8c0d2-5e7f-4a91-c23d-6e8f0a1b2c56",
-    "source": "Generated",
-    "description": "Placeholder description.",
-    "releaseDate": "2022-07-04",
-    "label": "Fictional Records",
-    "isNew": false,
-    "isStaffPick": false,
-    "imageUrl": "https://picsum.photos/seed/album-concrete-bloom/500/500",
-    "artistSourceIds": [ "7eb83daa-2915-414b-be54-2d8a9a9c2927", "604712c0-7c26-40c4-99a2-993f0151ea91" ],
-    "genreSlugs": [ "rock" ],
-    "unitsInStock": 0,
-    "priceInPence": 1899,
-    "originalPriceInPence": 2299
-  },
-  {
-    "title": "Nightshift",
-    "sourceId": "b7c9d1e3-6f80-4ba2-d34e-7f091a2b3c67",
-    "source": "Generated",
-    "description": "Placeholder description.",
-    "releaseDate": "2020-02-14",
-    "label": "Fictional Records",
-    "isNew": false,
-    "isStaffPick": false,
-    "imageUrl": "https://picsum.photos/seed/album-nightshift/500/500",
-    "artistSourceIds": [ "da140048-06d0-4601-843d-cf65014b2f2d" ],
-    "genreSlugs": [ "electronic" ],
+    "imageUrl": "https://picsum.photos/seed/album-evensong-at-st-brendan-s/500/500",
+    "artistSourceIds": [
+      "60e97bbc-eb89-560f-ab24-f0ad8e66c413"
+    ],
+    "genreSlugs": [
+      "classical"
+    ],
     "unitsInStock": 15,
+    "priceInPence": 1399,
+    "originalPriceInPence": null
+  },
+  {
+    "title": "Blue Hour",
+    "sourceId": "007725fe-dc95-598d-9a07-505b7b678651",
+    "source": "Generated",
+    "description": "The session that named the band, cut in a single night after a fortnight of club dates. You can hear the fatigue, and it improves everything.",
+    "releaseDate": "1959-06-22",
+    "label": "Meridian Tapes",
+    "isNew": false,
+    "isStaffPick": false,
+    "imageUrl": "https://picsum.photos/seed/album-blue-hour/500/500",
+    "artistSourceIds": [
+      "f0b67c55-aac4-5e4a-a9ac-1c8b44ed20f1"
+    ],
+    "genreSlugs": [
+      "jazz"
+    ],
+    "unitsInStock": 1,
     "priceInPence": 1699,
     "originalPriceInPence": null
   },
   {
-    "title": "Weathervane",
-    "sourceId": "c8d0e2f4-7091-4cb3-e45f-80a1b2c3d478",
+    "title": "Second Set",
+    "sourceId": "ba8ceb86-8681-5deb-ab95-ade24543b977",
     "source": "Generated",
-    "description": "Placeholder description.",
-    "releaseDate": "2025-06-01",
-    "label": "Fictional Records",
-    "isNew": true,
-    "isStaffPick": true,
-    "imageUrl": "https://picsum.photos/seed/album-weathervane/500/500",
-    "artistSourceIds": [ "1f4e8aff-adde-41fc-8a45-c69346605b36" ],
-    "genreSlugs": [ "folk-world-and-country" ],
+    "description": "Looser and warmer than the debut, with two of the longest tracks the group ever committed to tape. The rhythm section is the whole story here.",
+    "releaseDate": "1964-09-14",
+    "label": "Meridian Tapes",
+    "isNew": false,
+    "isStaffPick": false,
+    "imageUrl": "https://picsum.photos/seed/album-second-set/500/500",
+    "artistSourceIds": [
+      "f0b67c55-aac4-5e4a-a9ac-1c8b44ed20f1"
+    ],
+    "genreSlugs": [
+      "jazz"
+    ],
+    "unitsInStock": 19,
+    "priceInPence": 2899,
+    "originalPriceInPence": null
+  },
+  {
+    "title": "Three Sides of the Room",
+    "sourceId": "e18ebd7a-c2c0-59b2-9a0e-29f582c77c88",
+    "source": "Generated",
+    "description": "A debut with nothing to prove and no interest in proving it anyway. Piano, bass and drums arranged as a conversation rather than a hierarchy.",
+    "releaseDate": "1965-03-30",
+    "label": "Blue Meridian",
+    "isNew": false,
+    "isStaffPick": false,
+    "imageUrl": "https://picsum.photos/seed/album-three-sides-of-the-room/500/500",
+    "artistSourceIds": [
+      "b3b1556b-fa36-56f7-9dfd-06517840c641"
+    ],
+    "genreSlugs": [
+      "jazz"
+    ],
+    "unitsInStock": 11,
+    "priceInPence": 2399,
+    "originalPriceInPence": 2799
+  },
+  {
+    "title": "Quiet Arithmetic",
+    "sourceId": "b00464a2-a064-5c40-a6f4-33032403272b",
+    "source": "Generated",
+    "description": "The trio at their most severe and their most rewarding, working through a set of originals built on very small ideas. Repays close attention.",
+    "releaseDate": "1968-07-11",
+    "label": "Blue Meridian",
+    "isNew": false,
+    "isStaffPick": false,
+    "imageUrl": "https://picsum.photos/seed/album-quiet-arithmetic/500/500",
+    "artistSourceIds": [
+      "b3b1556b-fa36-56f7-9dfd-06517840c641"
+    ],
+    "genreSlugs": [
+      "jazz"
+    ],
+    "unitsInStock": 17,
+    "priceInPence": 1799,
+    "originalPriceInPence": null
+  },
+  {
+    "title": "Hard Country Lines",
+    "sourceId": "c2c364f6-ed63-5ae4-a378-1f7f210a41f9",
+    "source": "Generated",
+    "description": "Recorded in a radio station after hours because it was the only room available with a working microphone. One man, one guitar, no second takes.",
+    "releaseDate": "1961-04-09",
+    "label": "Foundry Street",
+    "isNew": false,
+    "isStaffPick": false,
+    "imageUrl": "https://picsum.photos/seed/album-hard-country-lines/500/500",
+    "artistSourceIds": [
+      "9cc44038-108b-57b0-a1df-cdf6b2a6596d"
+    ],
+    "genreSlugs": [
+      "blues"
+    ],
     "unitsInStock": 9,
+    "priceInPence": 2599,
+    "originalPriceInPence": null
+  },
+  {
+    "title": "Trouble the Water",
+    "sourceId": "23904cc4-b0f4-5351-b9b0-feb394a32d12",
+    "source": "Generated",
+    "description": "The record that got him heard outside the county, collecting sides cut across four years and three states. The tape hiss is part of the deal.",
+    "releaseDate": "1966-10-21",
+    "label": "Foundry Street",
+    "isNew": false,
+    "isStaffPick": false,
+    "imageUrl": "https://picsum.photos/seed/album-trouble-the-water/500/500",
+    "artistSourceIds": [
+      "9cc44038-108b-57b0-a1df-cdf6b2a6596d"
+    ],
+    "genreSlugs": [
+      "blues"
+    ],
+    "unitsInStock": 7,
+    "priceInPence": 3999,
+    "originalPriceInPence": null
+  },
+  {
+    "title": "Bailando en la Azotea",
+    "sourceId": "3bac1f7a-3946-584e-9638-a3881f1f35a4",
+    "source": "Generated",
+    "description": "A full orchestra recorded live in a ballroom, with the percussion mixed exactly where a dancer would want it. Nothing about this record is for sitting down.",
+    "releaseDate": "1962-05-26",
+    "label": "Coastal Union",
+    "isNew": false,
+    "isStaffPick": false,
+    "imageUrl": "https://picsum.photos/seed/album-bailando-en-la-azotea/500/500",
+    "artistSourceIds": [
+      "fd27f7a2-f986-5632-bdd6-26c7611c50cb"
+    ],
+    "genreSlugs": [
+      "latin"
+    ],
+    "unitsInStock": 3,
+    "priceInPence": 1399,
+    "originalPriceInPence": null
+  },
+  {
+    "title": "Tarde de Vidro",
+    "sourceId": "f3e568de-eb9d-58a8-b3c2-b8df4288e106",
+    "source": "Generated",
+    "description": "Bossa arrangements stripped back until only the voice and the guitar are load-bearing. Her best-known record and deservedly so.",
+    "releaseDate": "1969-08-15",
+    "label": "Verdant Sound",
+    "isNew": false,
+    "isStaffPick": true,
+    "imageUrl": "https://picsum.photos/seed/album-tarde-de-vidro/500/500",
+    "artistSourceIds": [
+      "e192fb03-8125-5ad6-b842-87f1e7f8eebb"
+    ],
+    "genreSlugs": [
+      "latin",
+      "jazz"
+    ],
+    "unitsInStock": 3,
+    "priceInPence": 1799,
+    "originalPriceInPence": null
+  },
+  {
+    "title": "After the Curtain Falls",
+    "sourceId": "aa0a4f0b-d7b2-5819-ac9d-587f793cf0d9",
+    "source": "Generated",
+    "description": "The in-film recordings from a 1963 picture, released as a straight album because the studio thought it would sell. It did not, and then forty years later it very much did.",
+    "releaseDate": "1963-10-04",
+    "label": "Gable End",
+    "isNew": false,
+    "isStaffPick": true,
+    "imageUrl": "https://picsum.photos/seed/album-after-the-curtain-falls/500/500",
+    "artistSourceIds": [
+      "749e9cd2-81e4-5b2e-b224-e63ca8fa808f"
+    ],
+    "genreSlugs": [
+      "stage-and-screen",
+      "pop"
+    ],
+    "unitsInStock": 25,
+    "priceInPence": 2599,
+    "originalPriceInPence": null
+  },
+  {
+    "title": "Sweetheart Frequency",
+    "sourceId": "804b546a-b1ca-587f-ad83-5bc9d33f0aee",
+    "source": "Generated",
+    "description": "The crossover record, built from country songs given orchestral arrangements nobody expected to work. They worked.",
+    "releaseDate": "1967-02-14",
+    "label": "Nightpost Records",
+    "isNew": false,
+    "isStaffPick": false,
+    "imageUrl": "https://picsum.photos/seed/album-sweetheart-frequency/500/500",
+    "artistSourceIds": [
+      "5073829f-c24e-5d9c-be69-4cb84ee3498f"
+    ],
+    "genreSlugs": [
+      "pop"
+    ],
+    "unitsInStock": 5,
+    "priceInPence": 2799,
+    "originalPriceInPence": null
+  },
+  {
+    "title": "Boone Sings the Standards",
+    "sourceId": "8622315a-5a61-5dce-b549-6c958fd980c4",
+    "source": "Generated",
+    "description": "Recorded in four days with a band who had clearly done this before. A covers record that earns its place through phrasing alone.",
+    "releaseDate": "1969-11-07",
+    "label": "Nightpost Records",
+    "isNew": false,
+    "isStaffPick": false,
+    "imageUrl": "https://picsum.photos/seed/album-boone-sings-the-standards/500/500",
+    "artistSourceIds": [
+      "5073829f-c24e-5d9c-be69-4cb84ee3498f"
+    ],
+    "genreSlugs": [
+      "pop",
+      "jazz"
+    ],
+    "unitsInStock": 6,
+    "priceInPence": 2099,
+    "originalPriceInPence": null
+  },
+  {
+    "title": "Furnace Road",
+    "sourceId": "285c4e10-a5fa-579f-902a-72f9baaa3b17",
+    "source": "Generated",
+    "description": "Recorded in eleven days in a converted garage with the amps facing the wall. Loud, mean and entirely without pretension.",
+    "releaseDate": "1972-03-17",
+    "label": "Ash & Iron Records",
+    "isNew": false,
+    "isStaffPick": false,
+    "imageUrl": "https://picsum.photos/seed/album-furnace-road/500/500",
+    "artistSourceIds": [
+      "4d2918c6-19f1-5dca-9fb2-aa20bea97467"
+    ],
+    "genreSlugs": [
+      "rock",
+      "blues"
+    ],
+    "unitsInStock": 6,
+    "priceInPence": 2299,
+    "originalPriceInPence": 2899
+  },
+  {
+    "title": "Steel and Sundown",
+    "sourceId": "8d5e879b-0ff5-5186-af7e-21d25b4ead00",
+    "source": "Generated",
+    "description": "The one where the songs caught up with the volume. Still their biggest seller and the obvious place to start.",
+    "releaseDate": "1975-09-05",
+    "label": "Ash & Iron Records",
+    "isNew": false,
+    "isStaffPick": false,
+    "imageUrl": "https://picsum.photos/seed/album-steel-and-sundown/500/500",
+    "artistSourceIds": [
+      "4d2918c6-19f1-5dca-9fb2-aa20bea97467"
+    ],
+    "genreSlugs": [
+      "rock"
+    ],
+    "unitsInStock": 20,
+    "priceInPence": 2499,
+    "originalPriceInPence": null
+  },
+  {
+    "title": "The Long Shift",
+    "sourceId": "3c361aec-1b58-540a-b95c-d34f4c8d0676",
+    "source": "Generated",
+    "description": "Cut in the gaps between a punishing touring schedule, which is why it sounds like a band rather than a project. Grooves first, everything else after.",
+    "releaseDate": "1974-06-28",
+    "label": "Trestle Records",
+    "isNew": false,
+    "isStaffPick": false,
+    "imageUrl": "https://picsum.photos/seed/album-the-long-shift/500/500",
+    "artistSourceIds": [
+      "583f76f0-40e7-53dd-ac48-f91550a44a54"
+    ],
+    "genreSlugs": [
+      "jazz",
+      "funk-soul"
+    ],
+    "unitsInStock": 2,
+    "priceInPence": 2899,
+    "originalPriceInPence": null
+  },
+  {
+    "title": "Parade Ground",
+    "sourceId": "e683c654-22c1-528b-b6fb-39b031372813",
+    "source": "Generated",
+    "description": "Their most ambitious record, arranged for a slightly larger group and better for it. The closing track runs to fourteen minutes and earns every one.",
+    "releaseDate": "1978-04-12",
+    "label": "Trestle Records",
+    "isNew": false,
+    "isStaffPick": true,
+    "imageUrl": "https://picsum.photos/seed/album-parade-ground/500/500",
+    "artistSourceIds": [
+      "583f76f0-40e7-53dd-ac48-f91550a44a54"
+    ],
+    "genreSlugs": [
+      "jazz"
+    ],
+    "unitsInStock": 5,
     "priceInPence": 1999,
     "originalPriceInPence": null
+  },
+  {
+    "title": "Timber and Tin",
+    "sourceId": "c92c3cc2-48d0-5c3f-98c1-0b72e7b40145",
+    "source": "Generated",
+    "description": "One room, one microphone, five players standing in a circle. The old method, used because it is the right one rather than out of nostalgia.",
+    "releaseDate": "1973-05-19",
+    "label": "Ember Hill",
+    "isNew": false,
+    "isStaffPick": false,
+    "imageUrl": "https://picsum.photos/seed/album-timber-and-tin/500/500",
+    "artistSourceIds": [
+      "f40854d0-46ac-545c-b223-440ba0637fb0"
+    ],
+    "genreSlugs": [
+      "folk-world-and-country"
+    ],
+    "unitsInStock": 10,
+    "priceInPence": 1899,
+    "originalPriceInPence": 2399
+  },
+  {
+    "title": "Harvest Weight",
+    "sourceId": "e37f137e-1c86-540d-8f46-d530c0696743",
+    "source": "Generated",
+    "description": "Originals rather than traditionals this time, and strong enough that most listeners cannot tell which is which. Plainly sung and beautifully played.",
+    "releaseDate": "1977-10-01",
+    "label": "Ember Hill",
+    "isNew": false,
+    "isStaffPick": true,
+    "imageUrl": "https://picsum.photos/seed/album-harvest-weight/500/500",
+    "artistSourceIds": [
+      "f40854d0-46ac-545c-b223-440ba0637fb0"
+    ],
+    "genreSlugs": [
+      "folk-world-and-country"
+    ],
+    "unitsInStock": 22,
+    "priceInPence": 1799,
+    "originalPriceInPence": null
+  },
+  {
+    "title": "Northern Line Soul",
+    "sourceId": "d9e1a7df-4d04-5342-9431-2ede62a4246f",
+    "source": "Generated",
+    "description": "British soul with a horn section that could hold its own anywhere. Ignored at home on release and heavily bootlegged everywhere else.",
+    "releaseDate": "1975-07-25",
+    "label": "Quarry Bank Sound",
+    "isNew": false,
+    "isStaffPick": false,
+    "imageUrl": "https://picsum.photos/seed/album-northern-line-soul/500/500",
+    "artistSourceIds": [
+      "a6465fdb-f043-5437-bd5c-56614cbb61bd"
+    ],
+    "genreSlugs": [
+      "funk-soul"
+    ],
+    "unitsInStock": 4,
+    "priceInPence": 2499,
+    "originalPriceInPence": null
+  },
+  {
+    "title": "Vance!",
+    "sourceId": "7c5b1b88-d71b-5f0f-9b8d-bfad0a3f363a",
+    "source": "Generated",
+    "description": "Recorded live in front of two hundred people who plainly knew every word. The best possible argument for his back catalogue.",
+    "releaseDate": "1978-11-10",
+    "label": "Quarry Bank Sound",
+    "isNew": false,
+    "isStaffPick": false,
+    "imageUrl": "https://picsum.photos/seed/album-vance/500/500",
+    "artistSourceIds": [
+      "a6465fdb-f043-5437-bd5c-56614cbb61bd"
+    ],
+    "genreSlugs": [
+      "funk-soul"
+    ],
+    "unitsInStock": 23,
+    "priceInPence": 3899,
+    "originalPriceInPence": null
+  },
+  {
+    "title": "Dub in the Mailroom",
+    "sourceId": "dd8adcc8-3056-56f2-9ecb-e9c9db4982b7",
+    "source": "Generated",
+    "description": "The studio band stepping out from behind everyone else's singles. Instrumental, spacious and mixed with obvious glee.",
+    "releaseDate": "1976-02-20",
+    "label": "Silver Fathom",
+    "isNew": false,
+    "isStaffPick": false,
+    "imageUrl": "https://picsum.photos/seed/album-dub-in-the-mailroom/500/500",
+    "artistSourceIds": [
+      "92da3104-5897-5047-b58e-e0dc9d98f9e3"
+    ],
+    "genreSlugs": [
+      "reggae"
+    ],
+    "unitsInStock": 5,
+    "priceInPence": 2399,
+    "originalPriceInPence": null
+  },
+  {
+    "title": "Return Postage",
+    "sourceId": "f17adae5-c2f3-5b6d-9cdd-1c134a538e57",
+    "source": "Generated",
+    "description": "Heavier and stranger than the first, with the desk treated as the lead instrument throughout. A dub record in the proper sense.",
+    "releaseDate": "1979-08-08",
+    "label": "Silver Fathom",
+    "isNew": false,
+    "isStaffPick": false,
+    "imageUrl": "https://picsum.photos/seed/album-return-postage/500/500",
+    "artistSourceIds": [
+      "92da3104-5897-5047-b58e-e0dc9d98f9e3"
+    ],
+    "genreSlugs": [
+      "reggae"
+    ],
+    "unitsInStock": 5,
+    "priceInPence": 1999,
+    "originalPriceInPence": null
+  },
+  {
+    "title": "Small Hours, Long Roads",
+    "sourceId": "ba5d70c3-09eb-5931-a53d-0e9a328d33da",
+    "source": "Generated",
+    "description": "Songs other people made famous, here in their original and considerably bleaker form. The definitive versions by some distance.",
+    "releaseDate": "1976-04-30",
+    "label": "Cormorant Records",
+    "isNew": false,
+    "isStaffPick": false,
+    "imageUrl": "https://picsum.photos/seed/album-small-hours-long-roads/500/500",
+    "artistSourceIds": [
+      "eac7c03d-8627-5455-a49d-e8a3eda8c0f7"
+    ],
+    "genreSlugs": [
+      "rock",
+      "folk-world-and-country"
+    ],
+    "unitsInStock": 14,
+    "priceInPence": 3599,
+    "originalPriceInPence": null
+  },
+  {
+    "title": "Ashes in the Yard",
+    "sourceId": "910f87d8-d67e-5b50-b312-fed75c488ef7",
+    "source": "Generated",
+    "description": "Afrobeat-inflected funk with a horn section that refuses to stop for breath. Three tracks, one side each, no filler anywhere.",
+    "releaseDate": "1977-01-14",
+    "label": "Coastal Union",
+    "isNew": false,
+    "isStaffPick": false,
+    "imageUrl": "https://picsum.photos/seed/album-ashes-in-the-yard/500/500",
+    "artistSourceIds": [
+      "00ac2875-ca52-5423-9a6d-0e9db31bf46a"
+    ],
+    "genreSlugs": [
+      "funk-soul"
+    ],
+    "unitsInStock": 11,
+    "priceInPence": 2799,
+    "originalPriceInPence": null
+  },
+  {
+    "title": "Market Day",
+    "sourceId": "29efe727-a1b2-540e-a12b-2b260830a2ee",
+    "source": "Generated",
+    "description": "Looser than the debut and considerably more percussive. Reissued in 2014 and gone from our shelves within a fortnight.",
+    "releaseDate": "1979-06-16",
+    "label": "Coastal Union",
+    "isNew": false,
+    "isStaffPick": false,
+    "imageUrl": "https://picsum.photos/seed/album-market-day/500/500",
+    "artistSourceIds": [
+      "00ac2875-ca52-5423-9a6d-0e9db31bf46a"
+    ],
+    "genreSlugs": [
+      "funk-soul",
+      "latin"
+    ],
+    "unitsInStock": 10,
+    "priceInPence": 2999,
+    "originalPriceInPence": 3599
+  },
+  {
+    "title": "Wired Up Wrong",
+    "sourceId": "b7f9a010-641e-5eeb-99dd-d79a31515d46",
+    "source": "Generated",
+    "description": "Electric blues recorded cheap and fast with the amplifier complaining audibly throughout. That complaint is most of the appeal.",
+    "releaseDate": "1978-03-03",
+    "label": "Foundry Street",
+    "isNew": false,
+    "isStaffPick": false,
+    "imageUrl": "https://picsum.photos/seed/album-wired-up-wrong/500/500",
+    "artistSourceIds": [
+      "e7038cf2-da8f-51aa-ae41-686e5a6fe2dd"
+    ],
+    "genreSlugs": [
+      "blues"
+    ],
+    "unitsInStock": 9,
+    "priceInPence": 2199,
+    "originalPriceInPence": null
+  },
+  {
+    "title": "South Side Standard",
+    "sourceId": "37f608f5-0d50-5462-8105-97ece81774f8",
+    "source": "Generated",
+    "description": "A band record rather than a solo one, with a rhythm section that pushes him somewhere new. Underrated then and now.",
+    "releaseDate": "1979-12-01",
+    "label": "Foundry Street",
+    "isNew": false,
+    "isStaffPick": false,
+    "imageUrl": "https://picsum.photos/seed/album-south-side-standard/500/500",
+    "artistSourceIds": [
+      "e7038cf2-da8f-51aa-ae41-686e5a6fe2dd"
+    ],
+    "genreSlugs": [
+      "blues",
+      "funk-soul"
+    ],
+    "unitsInStock": 15,
+    "priceInPence": 1799,
+    "originalPriceInPence": 2299
+  },
+  {
+    "title": "Transit Signal",
+    "sourceId": "1d1ad2e7-ed92-5a51-bc61-9621a70e6ae8",
+    "source": "Generated",
+    "description": "The debut, recorded in a fortnight for almost nothing, and still the coldest thing in their catalogue. Post-punk with the shouting removed.",
+    "releaseDate": "1979-10-26",
+    "label": "Northbound Sound",
+    "isNew": false,
+    "isStaffPick": false,
+    "imageUrl": "https://picsum.photos/seed/album-transit-signal/500/500",
+    "artistSourceIds": [
+      "e70f9a7f-1c83-5dc5-bd2c-aa47423b6f5e"
+    ],
+    "genreSlugs": [
+      "rock"
+    ],
+    "unitsInStock": 26,
+    "priceInPence": 2199,
+    "originalPriceInPence": null
+  },
+  {
+    "title": "Hot Plate Sessions",
+    "sourceId": "90e7e20e-059f-554d-8044-031c1991f1df",
+    "source": "Generated",
+    "description": "The house band finally billed on their own sleeve, playing the material they had been sharpening behind other singers for years.",
+    "releaseDate": "1971-05-08",
+    "label": "Trestle Records",
+    "isNew": false,
+    "isStaffPick": false,
+    "imageUrl": "https://picsum.photos/seed/album-hot-plate-sessions/500/500",
+    "artistSourceIds": [
+      "b8117703-2e9f-5588-8efa-a1adcfa9dce5"
+    ],
+    "genreSlugs": [
+      "funk-soul"
+    ],
+    "unitsInStock": 14,
+    "priceInPence": 2699,
+    "originalPriceInPence": null
+  },
+  {
+    "title": "Every Night This Week",
+    "sourceId": "57408946-a043-50fa-ae61-2a43f508d450",
+    "source": "Generated",
+    "description": "Live to two-track in a club they played most weeks, with all the between-song noise left in. As close to being there as vinyl manages.",
+    "releaseDate": "1974-09-20",
+    "label": "Trestle Records",
+    "isNew": false,
+    "isStaffPick": false,
+    "imageUrl": "https://picsum.photos/seed/album-every-night-this-week/500/500",
+    "artistSourceIds": [
+      "b8117703-2e9f-5588-8efa-a1adcfa9dce5"
+    ],
+    "genreSlugs": [
+      "funk-soul"
+    ],
+    "unitsInStock": 2,
+    "priceInPence": 1799,
+    "originalPriceInPence": null
+  },
+  {
+    "title": "Rivers of Sound",
+    "sourceId": "3bf287bc-0ad0-532d-a0ac-9df7fd150947",
+    "source": "Generated",
+    "description": "Roots singing of the sort that defined the decade, with arrangements that leave enormous amounts of room. A cornerstone record.",
+    "releaseDate": "1973-07-07",
+    "label": "Silver Fathom",
+    "isNew": false,
+    "isStaffPick": false,
+    "imageUrl": "https://picsum.photos/seed/album-rivers-of-sound/500/500",
+    "artistSourceIds": [
+      "0205d92c-83af-5600-82a7-a71f073d0b4f"
+    ],
+    "genreSlugs": [
+      "reggae"
+    ],
+    "unitsInStock": 14,
+    "priceInPence": 2799,
+    "originalPriceInPence": null
+  },
+  {
+    "title": "Rivers in Dub",
+    "sourceId": "c673016e-83d1-5388-8441-893270eb72d5",
+    "source": "Generated",
+    "description": "The companion dub to Rivers of Sound, taken apart by the same band that built it. Arguably the better of the two records.",
+    "releaseDate": "1974-11-30",
+    "label": "Silver Fathom",
+    "isNew": false,
+    "isStaffPick": true,
+    "imageUrl": "https://picsum.photos/seed/album-rivers-in-dub/500/500",
+    "artistSourceIds": [
+      "0205d92c-83af-5600-82a7-a71f073d0b4f",
+      "92da3104-5897-5047-b58e-e0dc9d98f9e3"
+    ],
+    "genreSlugs": [
+      "reggae"
+    ],
+    "unitsInStock": 23,
+    "priceInPence": 2099,
+    "originalPriceInPence": null
+  },
+  {
+    "title": "Hold the Line Steady",
+    "sourceId": "fbc990dd-dda0-54f3-ae3a-8ed0b71293ae",
+    "source": "Generated",
+    "description": "Gospel phrasing applied to secular material, delivered with enough authority to settle any argument about the difference.",
+    "releaseDate": "1970-08-19",
+    "label": "Nightpost Records",
+    "isNew": false,
+    "isStaffPick": false,
+    "imageUrl": "https://picsum.photos/seed/album-hold-the-line-steady/500/500",
+    "artistSourceIds": [
+      "cb7f7d90-69df-592e-b405-67b06b127d62"
+    ],
+    "genreSlugs": [
+      "funk-soul"
+    ],
+    "unitsInStock": 12,
+    "priceInPence": 3399,
+    "originalPriceInPence": null
+  },
+  {
+    "title": "Alma Live at the Regent",
+    "sourceId": "3a99fdab-c143-5523-9216-5070d3c22f64",
+    "source": "Generated",
+    "description": "One night, one reel, no edits. The band are excellent and she is plainly on a different plane entirely.",
+    "releaseDate": "1976-05-11",
+    "label": "Nightpost Records",
+    "isNew": false,
+    "isStaffPick": false,
+    "imageUrl": "https://picsum.photos/seed/album-alma-live-at-the-regent/500/500",
+    "artistSourceIds": [
+      "cb7f7d90-69df-592e-b405-67b06b127d62"
+    ],
+    "genreSlugs": [
+      "funk-soul"
+    ],
+    "unitsInStock": 17,
+    "priceInPence": 2799,
+    "originalPriceInPence": null
+  },
+  {
+    "title": "Kansas City Jump",
+    "sourceId": "7411164b-1b7f-57da-a364-6018b5100ab6",
+    "source": "Generated",
+    "description": "Dance hall blues by a trio who spent decades playing for people who wanted to move. Cheerful, brisk and completely without ego.",
+    "releaseDate": "1971-02-06",
+    "label": "Waypoint Audio",
+    "isNew": false,
+    "isStaffPick": false,
+    "imageUrl": "https://picsum.photos/seed/album-kansas-city-jump/500/500",
+    "artistSourceIds": [
+      "ceb17014-6f76-5d10-94eb-037501244a46"
+    ],
+    "genreSlugs": [
+      "blues"
+    ],
+    "unitsInStock": 15,
+    "priceInPence": 2699,
+    "originalPriceInPence": null
+  },
+  {
+    "title": "Last of the Front Rooms",
+    "sourceId": "c0cd1c52-a84b-5afe-8dd8-383bcede5101",
+    "source": "Generated",
+    "description": "Late sides cut in the houses of friends, with conversation audible between takes. The last recordings he made and among the best.",
+    "releaseDate": "1974-04-02",
+    "label": "Waypoint Audio",
+    "isNew": false,
+    "isStaffPick": false,
+    "imageUrl": "https://picsum.photos/seed/album-last-of-the-front-rooms/500/500",
+    "artistSourceIds": [
+      "9cc44038-108b-57b0-a1df-cdf6b2a6596d"
+    ],
+    "genreSlugs": [
+      "blues"
+    ],
+    "unitsInStock": 13,
+    "priceInPence": 2599,
+    "originalPriceInPence": null
+  },
+  {
+    "title": "Noite Comprida",
+    "sourceId": "bdce85a8-d3c3-5141-b719-322971881cb8",
+    "source": "Generated",
+    "description": "Darker and more orchestral than her sixties work, recorded after a five-year silence. Worth the wait and then some.",
+    "releaseDate": "1972-09-29",
+    "label": "Verdant Sound",
+    "isNew": false,
+    "isStaffPick": false,
+    "imageUrl": "https://picsum.photos/seed/album-noite-comprida/500/500",
+    "artistSourceIds": [
+      "e192fb03-8125-5ad6-b842-87f1e7f8eebb"
+    ],
+    "genreSlugs": [
+      "latin"
+    ],
+    "unitsInStock": 14,
+    "priceInPence": 2199,
+    "originalPriceInPence": 2799
+  },
+  {
+    "title": "Ritmo del Puerto",
+    "sourceId": "029819cd-9a01-56e0-93a5-a69669cbca90",
+    "source": "Generated",
+    "description": "The orchestra's last great session before the personnel scattered. Enormous, joyful and recorded far better than it needed to be.",
+    "releaseDate": "1975-11-22",
+    "label": "Coastal Union",
+    "isNew": false,
+    "isStaffPick": false,
+    "imageUrl": "https://picsum.photos/seed/album-ritmo-del-puerto/500/500",
+    "artistSourceIds": [
+      "fd27f7a2-f986-5632-bdd6-26c7611c50cb"
+    ],
+    "genreSlugs": [
+      "latin"
+    ],
+    "unitsInStock": 34,
+    "priceInPence": 1599,
+    "originalPriceInPence": null
+  },
+  {
+    "title": "Cold Frequencies",
+    "sourceId": "44c2ac72-61a4-503a-87eb-2f2914aac13e",
+    "source": "Generated",
+    "description": "The second album, and the one where the drum sound arrived. Widely imitated since, rarely equalled.",
+    "releaseDate": "1981-03-14",
+    "label": "Northbound Sound",
+    "isNew": false,
+    "isStaffPick": false,
+    "imageUrl": "https://picsum.photos/seed/album-cold-frequencies/500/500",
+    "artistSourceIds": [
+      "e70f9a7f-1c83-5dc5-bd2c-aa47423b6f5e"
+    ],
+    "genreSlugs": [
+      "rock"
+    ],
+    "unitsInStock": 5,
+    "priceInPence": 2199,
+    "originalPriceInPence": null
+  },
+  {
+    "title": "The Glass Corridor",
+    "sourceId": "0aa578c8-446b-59e2-95b2-16427bc11aca",
+    "source": "Generated",
+    "description": "Synthesisers pushed to the front and the guitars used as texture. Divided the audience on release and looks obviously correct now.",
+    "releaseDate": "1983-06-27",
+    "label": "Northbound Sound",
+    "isNew": false,
+    "isStaffPick": false,
+    "imageUrl": "https://picsum.photos/seed/album-the-glass-corridor/500/500",
+    "artistSourceIds": [
+      "e70f9a7f-1c83-5dc5-bd2c-aa47423b6f5e"
+    ],
+    "genreSlugs": [
+      "rock",
+      "electronic"
+    ],
+    "unitsInStock": 7,
+    "priceInPence": 1699,
+    "originalPriceInPence": null
+  },
+  {
+    "title": "Interior Weather",
+    "sourceId": "e2624f50-bf18-5d6d-a598-b943b1f18de2",
+    "source": "Generated",
+    "description": "The fourth record, quietly the best, and the one nobody bought at the time. Start here if you want the argument settled.",
+    "releaseDate": "1986-09-08",
+    "label": "Northbound Sound",
+    "isNew": false,
+    "isStaffPick": false,
+    "imageUrl": "https://picsum.photos/seed/album-interior-weather/500/500",
+    "artistSourceIds": [
+      "e70f9a7f-1c83-5dc5-bd2c-aa47423b6f5e"
+    ],
+    "genreSlugs": [
+      "rock"
+    ],
+    "unitsInStock": 5,
+    "priceInPence": 1799,
+    "originalPriceInPence": null
+  },
+  {
+    "title": "Harbour Lights",
+    "sourceId": "43fd77bc-73d5-580d-8b18-203fcfd707be",
+    "source": "Generated",
+    "description": "Choruses built for rooms with balconies, delivered by a band who had never played one at the time. They would soon enough.",
+    "releaseDate": "1984-05-21",
+    "label": "Quarry Bank Sound",
+    "isNew": false,
+    "isStaffPick": false,
+    "imageUrl": "https://picsum.photos/seed/album-harbour-lights/500/500",
+    "artistSourceIds": [
+      "110b2853-c916-56d3-8a88-b6905517ec0a"
+    ],
+    "genreSlugs": [
+      "rock"
+    ],
+    "unitsInStock": 15,
+    "priceInPence": 1699,
+    "originalPriceInPence": 2299
+  },
+  {
+    "title": "Every Town Has One",
+    "sourceId": "7a050f0a-0a9d-5359-aff5-5b9ff781e555",
+    "source": "Generated",
+    "description": "Their commercial peak, and unusually for such things, also their best set of songs. The production has aged more gracefully than most.",
+    "releaseDate": "1986-02-10",
+    "label": "Quarry Bank Sound",
+    "isNew": false,
+    "isStaffPick": false,
+    "imageUrl": "https://picsum.photos/seed/album-every-town-has-one/500/500",
+    "artistSourceIds": [
+      "110b2853-c916-56d3-8a88-b6905517ec0a"
+    ],
+    "genreSlugs": [
+      "rock"
+    ],
+    "unitsInStock": 11,
+    "priceInPence": 1599,
+    "originalPriceInPence": null
+  },
+  {
+    "title": "Winter Pier",
+    "sourceId": "bf231024-a26d-5834-b616-d87d03990c7a",
+    "source": "Generated",
+    "description": "Recorded as the band were falling apart and all the better for the tension. A proper closing statement, intentional or otherwise.",
+    "releaseDate": "1989-11-13",
+    "label": "Quarry Bank Sound",
+    "isNew": false,
+    "isStaffPick": false,
+    "imageUrl": "https://picsum.photos/seed/album-winter-pier/500/500",
+    "artistSourceIds": [
+      "110b2853-c916-56d3-8a88-b6905517ec0a"
+    ],
+    "genreSlugs": [
+      "rock"
+    ],
+    "unitsInStock": 6,
+    "priceInPence": 1999,
+    "originalPriceInPence": null
+  },
+  {
+    "title": "Paper Hearts",
+    "sourceId": "8bb9ab32-68f3-5951-8fcd-a030eb21be9d",
+    "source": "Generated",
+    "description": "Twelve songs, none over three minutes, not one of them wasted. The template a great many bands have since worked from.",
+    "releaseDate": "1985-04-15",
+    "label": "Gable End",
+    "isNew": false,
+    "isStaffPick": false,
+    "imageUrl": "https://picsum.photos/seed/album-paper-hearts/500/500",
+    "artistSourceIds": [
+      "96bf5bec-0d37-53a2-a9fc-f505d745054c"
+    ],
+    "genreSlugs": [
+      "pop"
+    ],
+    "unitsInStock": 16,
+    "priceInPence": 1799,
+    "originalPriceInPence": null
+  },
+  {
+    "title": "Second Class Post",
+    "sourceId": "0a91a20a-dc36-5556-b63c-f2bc217320be",
+    "source": "Generated",
+    "description": "Jangling, bittersweet and recorded in three weeks flat. The singles are famous and the album tracks are better.",
+    "releaseDate": "1986-08-19",
+    "label": "Gable End",
+    "isNew": false,
+    "isStaffPick": true,
+    "imageUrl": "https://picsum.photos/seed/album-second-class-post/500/500",
+    "artistSourceIds": [
+      "96bf5bec-0d37-53a2-a9fc-f505d745054c"
+    ],
+    "genreSlugs": [
+      "pop"
+    ],
+    "unitsInStock": 10,
+    "priceInPence": 1699,
+    "originalPriceInPence": null
+  },
+  {
+    "title": "The Last Word",
+    "sourceId": "ad2a0c0a-8ad6-5b29-80bf-68338f50a741",
+    "source": "Generated",
+    "description": "Their farewell record, made without anyone announcing it as one. Sadder and sharper than anything else they did.",
+    "releaseDate": "1989-03-06",
+    "label": "Gable End",
+    "isNew": false,
+    "isStaffPick": false,
+    "imageUrl": "https://picsum.photos/seed/album-the-last-word/500/500",
+    "artistSourceIds": [
+      "96bf5bec-0d37-53a2-a9fc-f505d745054c"
+    ],
+    "genreSlugs": [
+      "pop",
+      "rock"
+    ],
+    "unitsInStock": 38,
+    "priceInPence": 2099,
+    "originalPriceInPence": null
+  },
+  {
+    "title": "Kentish Town Nights",
+    "sourceId": "a8246f2a-3932-50a1-a057-98652190f290",
+    "source": "Generated",
+    "description": "The debut, written entirely in a shared flat on the road they took their name from. Modest ambitions, immodestly good songs.",
+    "releaseDate": "1987-07-31",
+    "label": "Lowtide Recordings",
+    "isNew": false,
+    "isStaffPick": false,
+    "imageUrl": "https://picsum.photos/seed/album-kentish-town-nights/500/500",
+    "artistSourceIds": [
+      "8f0a6aaf-e0cc-5b84-bdbc-66b663a36d59"
+    ],
+    "genreSlugs": [
+      "rock"
+    ],
+    "unitsInStock": 7,
+    "priceInPence": 3299,
+    "originalPriceInPence": null
+  },
+  {
+    "title": "Streetlight Economy",
+    "sourceId": "23e14795-809a-597d-8d5d-fb487f52f5f7",
+    "source": "Generated",
+    "description": "Bigger production, same songwriting, and the point at which people outside London started paying attention.",
+    "releaseDate": "1989-06-12",
+    "label": "Lowtide Recordings",
+    "isNew": false,
+    "isStaffPick": false,
+    "imageUrl": "https://picsum.photos/seed/album-streetlight-economy/500/500",
+    "artistSourceIds": [
+      "8f0a6aaf-e0cc-5b84-bdbc-66b663a36d59"
+    ],
+    "genreSlugs": [
+      "rock"
+    ],
+    "unitsInStock": 5,
+    "priceInPence": 1999,
+    "originalPriceInPence": null
+  },
+  {
+    "title": "The Ferry Home",
+    "sourceId": "1ede286c-3f18-55b9-a6d7-54ce0da91cf6",
+    "source": "Generated",
+    "description": "Traditional tunes and new writing sequenced so you cannot tell where one ends. Recorded quickly because the band were bored of studios.",
+    "releaseDate": "1986-10-17",
+    "label": "Ember Hill",
+    "isNew": false,
+    "isStaffPick": false,
+    "imageUrl": "https://picsum.photos/seed/album-the-ferry-home/500/500",
+    "artistSourceIds": [
+      "9833af85-57ba-51f2-9f9b-dee015e3802f"
+    ],
+    "genreSlugs": [
+      "folk-world-and-country"
+    ],
+    "unitsInStock": 6,
+    "priceInPence": 1899,
+    "originalPriceInPence": null
+  },
+  {
+    "title": "Salt and Rope",
+    "sourceId": "af4a8df3-f7a5-52a7-8749-420269a1d386",
+    "source": "Generated",
+    "description": "Their most-played record in this shop, largely because it never lets up. Fiddle-led, fast and completely unsentimental.",
+    "releaseDate": "1989-09-22",
+    "label": "Ember Hill",
+    "isNew": false,
+    "isStaffPick": false,
+    "imageUrl": "https://picsum.photos/seed/album-salt-and-rope/500/500",
+    "artistSourceIds": [
+      "9833af85-57ba-51f2-9f9b-dee015e3802f"
+    ],
+    "genreSlugs": [
+      "folk-world-and-country"
+    ],
+    "unitsInStock": 9,
+    "priceInPence": 1799,
+    "originalPriceInPence": null
+  },
+  {
+    "title": "Late Rehearsal",
+    "sourceId": "67dcb7ca-bd72-54b6-a555-ca5de80f34f0",
+    "source": "Generated",
+    "description": "Standards taken apart with obvious affection and reassembled slightly wrong. Her first record and already fully formed.",
+    "releaseDate": "1983-02-25",
+    "label": "Blue Meridian",
+    "isNew": false,
+    "isStaffPick": false,
+    "imageUrl": "https://picsum.photos/seed/album-late-rehearsal/500/500",
+    "artistSourceIds": [
+      "34706b8c-13aa-5767-b483-fb6cf19995a9"
+    ],
+    "genreSlugs": [
+      "jazz"
+    ],
+    "unitsInStock": 15,
+    "priceInPence": 2099,
+    "originalPriceInPence": null
+  },
+  {
+    "title": "Second Language",
+    "sourceId": "58979656-b4ef-5b81-ae49-79105872ce26",
+    "source": "Generated",
+    "description": "Originals for the first time, sung with the same liberties she takes with everyone else's material. Quietly one of the decade's best vocal jazz records.",
+    "releaseDate": "1987-11-04",
+    "label": "Blue Meridian",
+    "isNew": false,
+    "isStaffPick": false,
+    "imageUrl": "https://picsum.photos/seed/album-second-language/500/500",
+    "artistSourceIds": [
+      "34706b8c-13aa-5767-b483-fb6cf19995a9"
+    ],
+    "genreSlugs": [
+      "jazz"
+    ],
+    "unitsInStock": 30,
+    "priceInPence": 1699,
+    "originalPriceInPence": null
+  },
+  {
+    "title": "Vals para Nadie",
+    "sourceId": "925da702-7a13-5f10-bbf9-3810f4224a50",
+    "source": "Generated",
+    "description": "Tango played by people who grew up with it and refuse to treat it as a museum piece. Elegant and just slightly unstable.",
+    "releaseDate": "1984-03-09",
+    "label": "Verdant Sound",
+    "isNew": false,
+    "isStaffPick": false,
+    "imageUrl": "https://picsum.photos/seed/album-vals-para-nadie/500/500",
+    "artistSourceIds": [
+      "6c09936f-99b4-5b35-9d96-8f7e6200d67e"
+    ],
+    "genreSlugs": [
+      "latin"
+    ],
+    "unitsInStock": 39,
+    "priceInPence": 2199,
+    "originalPriceInPence": null
+  },
+  {
+    "title": "Puerto Gris",
+    "sourceId": "2b780733-17c5-5a09-ae74-a740e3792d23",
+    "source": "Generated",
+    "description": "The record where the jazz players in the group stopped pretending otherwise. Freer, stranger and thoroughly recommended.",
+    "releaseDate": "1988-06-05",
+    "label": "Verdant Sound",
+    "isNew": false,
+    "isStaffPick": false,
+    "imageUrl": "https://picsum.photos/seed/album-puerto-gris/500/500",
+    "artistSourceIds": [
+      "6c09936f-99b4-5b35-9d96-8f7e6200d67e"
+    ],
+    "genreSlugs": [
+      "latin",
+      "jazz"
+    ],
+    "unitsInStock": 9,
+    "priceInPence": 1699,
+    "originalPriceInPence": null
+  },
+  {
+    "title": "Basement Pressure",
+    "sourceId": "d8965c6f-8fc6-598f-87ba-c6e601e71a96",
+    "source": "Generated",
+    "description": "UK dub built on a desk held together with tape and optimism. Enormous low end and an unusual amount of wit.",
+    "releaseDate": "1984-07-13",
+    "label": "Silver Fathom",
+    "isNew": false,
+    "isStaffPick": false,
+    "imageUrl": "https://picsum.photos/seed/album-basement-pressure/500/500",
+    "artistSourceIds": [
+      "29ec8ac0-b63e-5457-8262-2dad7100c049"
+    ],
+    "genreSlugs": [
+      "reggae"
+    ],
+    "unitsInStock": 3,
+    "priceInPence": 3899,
+    "originalPriceInPence": null
+  },
+  {
+    "title": "Committee Rules",
+    "sourceId": "d16d528f-0258-5380-8aff-147a75ff3bb7",
+    "source": "Generated",
+    "description": "Drum machines folded into the mix without losing an ounce of weight. A bridge between two scenes that mostly ignored each other.",
+    "releaseDate": "1988-02-27",
+    "label": "Silver Fathom",
+    "isNew": false,
+    "isStaffPick": false,
+    "imageUrl": "https://picsum.photos/seed/album-committee-rules/500/500",
+    "artistSourceIds": [
+      "29ec8ac0-b63e-5457-8262-2dad7100c049"
+    ],
+    "genreSlugs": [
+      "reggae",
+      "electronic"
+    ],
+    "unitsInStock": 19,
+    "priceInPence": 2199,
+    "originalPriceInPence": null
+  },
+  {
+    "title": "Quartets, Volume One",
+    "sourceId": "0ad417fe-fc24-59d4-84bb-e529992d6694",
+    "source": "Generated",
+    "description": "Familiar repertoire taken at unfamiliar tempos, which annoyed a great many people and delighted the rest. Superbly recorded.",
+    "releaseDate": "1988-04-22",
+    "label": "Harrow Lane Records",
+    "isNew": false,
+    "isStaffPick": true,
+    "imageUrl": "https://picsum.photos/seed/album-quartets-volume-one/500/500",
+    "artistSourceIds": [
+      "23e9cbf9-fd09-5754-b93c-fa6886165608"
+    ],
+    "genreSlugs": [
+      "classical"
+    ],
+    "unitsInStock": 16,
+    "priceInPence": 1799,
+    "originalPriceInPence": null
+  },
+  {
+    "title": "Night Pieces",
+    "sourceId": "9062d15d-61ae-5212-96f2-1e8c50c7d47f",
+    "source": "Generated",
+    "description": "A programme of quieter works played with the same argumentative streak. The most approachable thing in their catalogue.",
+    "releaseDate": "1989-12-08",
+    "label": "Harrow Lane Records",
+    "isNew": false,
+    "isStaffPick": true,
+    "imageUrl": "https://picsum.photos/seed/album-night-pieces/500/500",
+    "artistSourceIds": [
+      "23e9cbf9-fd09-5754-b93c-fa6886165608"
+    ],
+    "genreSlugs": [
+      "classical"
+    ],
+    "unitsInStock": 32,
+    "priceInPence": 1499,
+    "originalPriceInPence": null
+  },
+  {
+    "title": "Concrete Gardens",
+    "sourceId": "01b5ec2a-86cd-5e2d-878d-91ec2d355b69",
+    "source": "Generated",
+    "description": "Made with borrowed samplers and a great deal of nerve. Still turning up in other people's sets three decades later.",
+    "releaseDate": "1988-09-16",
+    "label": "Pressing Room 4",
+    "isNew": false,
+    "isStaffPick": false,
+    "imageUrl": "https://picsum.photos/seed/album-concrete-gardens/500/500",
+    "artistSourceIds": [
+      "bbd43eb3-695d-5bcb-9315-64aea11aeb96"
+    ],
+    "genreSlugs": [
+      "electronic"
+    ],
+    "unitsInStock": 18,
+    "priceInPence": 2299,
+    "originalPriceInPence": null
+  },
+  {
+    "title": "Municipal Dreams",
+    "sourceId": "ba7c81b8-71a0-5bf9-a4f2-a3b615d4a735",
+    "source": "Generated",
+    "description": "Warmer than the debut and considerably more melodic, without giving up any of the strangeness. An easy first purchase.",
+    "releaseDate": "1989-08-04",
+    "label": "Pressing Room 4",
+    "isNew": false,
+    "isStaffPick": false,
+    "imageUrl": "https://picsum.photos/seed/album-municipal-dreams/500/500",
+    "artistSourceIds": [
+      "bbd43eb3-695d-5bcb-9315-64aea11aeb96"
+    ],
+    "genreSlugs": [
+      "electronic"
+    ],
+    "unitsInStock": 11,
+    "priceInPence": 1699,
+    "originalPriceInPence": null
+  },
+  {
+    "title": "Golden City Sessions",
+    "sourceId": "353b04e5-f8b4-51c1-bcc9-5e445c0cd8ca",
+    "source": "Generated",
+    "description": "Township jazz, funk and something else entirely, held together by one of the great bass players. Generous, warm music.",
+    "releaseDate": "1988-11-25",
+    "label": "Coastal Union",
+    "isNew": false,
+    "isStaffPick": false,
+    "imageUrl": "https://picsum.photos/seed/album-golden-city-sessions/500/500",
+    "artistSourceIds": [
+      "a31cbdd7-324a-5333-bfe0-ef38370e889b"
+    ],
+    "genreSlugs": [
+      "funk-soul",
+      "jazz"
+    ],
+    "unitsInStock": 2,
+    "priceInPence": 2299,
+    "originalPriceInPence": null
+  },
+  {
+    "title": "Long Way from the Coast",
+    "sourceId": "abbcd3f9-1137-5641-93d9-881b2390c704",
+    "source": "Generated",
+    "description": "A larger band and a bigger sound, recorded in two cities and sequenced as one continuous set. His most confident record.",
+    "releaseDate": "1989-05-19",
+    "label": "Coastal Union",
+    "isNew": false,
+    "isStaffPick": false,
+    "imageUrl": "https://picsum.photos/seed/album-long-way-from-the-coast/500/500",
+    "artistSourceIds": [
+      "a31cbdd7-324a-5333-bfe0-ef38370e889b"
+    ],
+    "genreSlugs": [
+      "funk-soul"
+    ],
+    "unitsInStock": 17,
+    "priceInPence": 1899,
+    "originalPriceInPence": 2199
+  },
+  {
+    "title": "First Editions",
+    "sourceId": "36e672e8-b5b2-5bec-a752-19470280f658",
+    "source": "Generated",
+    "description": "The debut, built from records the crew grew up with and dubbed onto tape long before anyone bought it. Foundational stuff.",
+    "releaseDate": "1989-10-10",
+    "label": "Foundry Street",
+    "isNew": false,
+    "isStaffPick": false,
+    "imageUrl": "https://picsum.photos/seed/album-first-editions/500/500",
+    "artistSourceIds": [
+      "e74ddf77-d2aa-560a-aeb3-9c0c06522229"
+    ],
+    "genreSlugs": [
+      "hip-hop"
+    ],
+    "unitsInStock": 16,
+    "priceInPence": 2199,
+    "originalPriceInPence": null
+  },
+  {
+    "title": "Overture and Interval",
+    "sourceId": "0d353cf1-e5d8-5d1f-a17b-525b257b259e",
+    "source": "Generated",
+    "description": "Concert arrangements of theatre music, recorded because the orchestra kept being asked to play it live. More fun than that sounds.",
+    "releaseDate": "1985-01-28",
+    "label": "Harrow Lane Records",
+    "isNew": false,
+    "isStaffPick": false,
+    "imageUrl": "https://picsum.photos/seed/album-overture-and-interval/500/500",
+    "artistSourceIds": [
+      "880416f3-f690-50a9-982b-e09c5f501013"
+    ],
+    "genreSlugs": [
+      "classical",
+      "stage-and-screen"
+    ],
+    "unitsInStock": 7,
+    "priceInPence": 1899,
+    "originalPriceInPence": null
+  },
+  {
+    "title": "The Antwerp Tapes",
+    "sourceId": "bc9002d7-61a2-57be-b08d-f22866a33777",
+    "source": "Generated",
+    "description": "Home recordings from a fallow decade, released years later once someone found the reels. Rough, intimate and essential.",
+    "releaseDate": "1982-04-16",
+    "label": "Cormorant Records",
+    "isNew": false,
+    "isStaffPick": false,
+    "imageUrl": "https://picsum.photos/seed/album-the-antwerp-tapes/500/500",
+    "artistSourceIds": [
+      "eac7c03d-8627-5455-a49d-e8a3eda8c0f7"
+    ],
+    "genreSlugs": [
+      "rock"
+    ],
+    "unitsInStock": 30,
+    "priceInPence": 2099,
+    "originalPriceInPence": null
+  },
+  {
+    "title": "Nothing Doing",
+    "sourceId": "7fd6474d-421d-5fef-a3e1-bca974569b59",
+    "source": "Generated",
+    "description": "Arrived at the end of a scene they were never really part of, which cost them then and looks like foresight now. Restrained where their peers were not.",
+    "releaseDate": "1993-04-20",
+    "label": "Lowtide Recordings",
+    "isNew": false,
+    "isStaffPick": false,
+    "imageUrl": "https://picsum.photos/seed/album-nothing-doing/500/500",
+    "artistSourceIds": [
+      "f86aeb4e-5a33-54cc-871f-d91d615fb68c"
+    ],
+    "genreSlugs": [
+      "rock"
+    ],
+    "unitsInStock": 0,
+    "priceInPence": 1899,
+    "originalPriceInPence": 2399
+  },
+  {
+    "title": "The Slow Part",
+    "sourceId": "05da2c96-b32d-5cc1-8618-f5b978683075",
+    "source": "Generated",
+    "description": "Quieter, longer and considerably better than the debut. The record their reputation was eventually rebuilt on.",
+    "releaseDate": "1996-10-14",
+    "label": "Lowtide Recordings",
+    "isNew": false,
+    "isStaffPick": false,
+    "imageUrl": "https://picsum.photos/seed/album-the-slow-part/500/500",
+    "artistSourceIds": [
+      "f86aeb4e-5a33-54cc-871f-d91d615fb68c"
+    ],
+    "genreSlugs": [
+      "rock"
+    ],
+    "unitsInStock": 10,
+    "priceInPence": 1599,
+    "originalPriceInPence": null
+  },
+  {
+    "title": "Ordnance Survey",
+    "sourceId": "248b5ee1-810c-565c-a678-3a04b5ef816f",
+    "source": "Generated",
+    "description": "Guitar music with an unusual amount of care taken over the words. Should have been enormous and somehow never was.",
+    "releaseDate": "1995-06-05",
+    "label": "Northbound Sound",
+    "isNew": false,
+    "isStaffPick": false,
+    "imageUrl": "https://picsum.photos/seed/album-ordnance-survey/500/500",
+    "artistSourceIds": [
+      "76ee04d3-26bc-5db0-98d1-bf9f081f8a63"
+    ],
+    "genreSlugs": [
+      "rock"
+    ],
+    "unitsInStock": 20,
+    "priceInPence": 1899,
+    "originalPriceInPence": null
+  },
+  {
+    "title": "Second City Fiction",
+    "sourceId": "bebf1fec-5802-5584-a132-fd30bb28e7d3",
+    "source": "Generated",
+    "description": "Recorded after their label lost interest, which freed them up entirely. The best thing they ever did by a comfortable margin.",
+    "releaseDate": "1998-09-21",
+    "label": "Northbound Sound",
+    "isNew": false,
+    "isStaffPick": false,
+    "imageUrl": "https://picsum.photos/seed/album-second-city-fiction/500/500",
+    "artistSourceIds": [
+      "76ee04d3-26bc-5db0-98d1-bf9f081f8a63"
+    ],
+    "genreSlugs": [
+      "rock"
+    ],
+    "unitsInStock": 4,
+    "priceInPence": 1999,
+    "originalPriceInPence": null
+  },
+  {
+    "title": "Common Ground",
+    "sourceId": "9a151f08-495d-5f63-8270-59222f6f4dcd",
+    "source": "Generated",
+    "description": "The band at full stretch, with arrangements that finally match the ambition of the songwriting. Their most durable record.",
+    "releaseDate": "1992-03-02",
+    "label": "Lowtide Recordings",
+    "isNew": false,
+    "isStaffPick": false,
+    "imageUrl": "https://picsum.photos/seed/album-common-ground/500/500",
+    "artistSourceIds": [
+      "8f0a6aaf-e0cc-5b84-bdbc-66b663a36d59"
+    ],
+    "genreSlugs": [
+      "rock"
+    ],
+    "unitsInStock": 35,
+    "priceInPence": 2199,
+    "originalPriceInPence": null
+  },
+  {
+    "title": "Terminus",
+    "sourceId": "9bc0c1c5-408f-582e-99a9-211cd5d44b86",
+    "source": "Generated",
+    "description": "A closing statement recorded with no expectation of a follow-up. Sombre, generous and completely unhurried.",
+    "releaseDate": "1995-11-27",
+    "label": "Lowtide Recordings",
+    "isNew": false,
+    "isStaffPick": false,
+    "imageUrl": "https://picsum.photos/seed/album-terminus/500/500",
+    "artistSourceIds": [
+      "8f0a6aaf-e0cc-5b84-bdbc-66b663a36d59"
+    ],
+    "genreSlugs": [
+      "rock"
+    ],
+    "unitsInStock": 2,
+    "priceInPence": 1899,
+    "originalPriceInPence": null
+  },
+  {
+    "title": "Second Editions",
+    "sourceId": "55d82d68-9a27-573e-bb29-fe45de8e4d81",
+    "source": "Generated",
+    "description": "Denser and funnier than the debut, built on samples that would be unclearable today. A golden-age record in the truest sense.",
+    "releaseDate": "1992-05-11",
+    "label": "Foundry Street",
+    "isNew": false,
+    "isStaffPick": false,
+    "imageUrl": "https://picsum.photos/seed/album-second-editions/500/500",
+    "artistSourceIds": [
+      "e74ddf77-d2aa-560a-aeb3-9c0c06522229"
+    ],
+    "genreSlugs": [
+      "hip-hop"
+    ],
+    "unitsInStock": 15,
+    "priceInPence": 1999,
+    "originalPriceInPence": 2699
+  },
+  {
+    "title": "Borough Business",
+    "sourceId": "1cce2471-2c04-54e3-ac65-3581b644ebbd",
+    "source": "Generated",
+    "description": "Live instrumentation folded in beside the breaks, years before that became the obvious move. Warm and unusually spacious.",
+    "releaseDate": "1994-08-16",
+    "label": "Foundry Street",
+    "isNew": false,
+    "isStaffPick": false,
+    "imageUrl": "https://picsum.photos/seed/album-borough-business/500/500",
+    "artistSourceIds": [
+      "e74ddf77-d2aa-560a-aeb3-9c0c06522229"
+    ],
+    "genreSlugs": [
+      "hip-hop",
+      "funk-soul"
+    ],
+    "unitsInStock": 0,
+    "priceInPence": 2499,
+    "originalPriceInPence": null
+  },
+  {
+    "title": "Press Run",
+    "sourceId": "6069ce6f-d18a-59c1-92a5-4c3efc06c61c",
+    "source": "Generated",
+    "description": "Their last record together and the one that sounds least like a farewell. Confident, loose and plainly enjoying itself.",
+    "releaseDate": "1997-02-25",
+    "label": "Foundry Street",
+    "isNew": false,
+    "isStaffPick": false,
+    "imageUrl": "https://picsum.photos/seed/album-press-run/500/500",
+    "artistSourceIds": [
+      "e74ddf77-d2aa-560a-aeb3-9c0c06522229"
+    ],
+    "genreSlugs": [
+      "hip-hop"
+    ],
+    "unitsInStock": 14,
+    "priceInPence": 1899,
+    "originalPriceInPence": null
+  },
+  {
+    "title": "Local Frequencies",
+    "sourceId": "ceef7ff1-79b2-5f49-8fea-cb21f0f23e47",
+    "source": "Generated",
+    "description": "British hip-hop with no interest in sounding like anywhere else, full of place names you would need a map for. All the better for it.",
+    "releaseDate": "1997-07-08",
+    "label": "Quarry Bank Sound",
+    "isNew": false,
+    "isStaffPick": false,
+    "imageUrl": "https://picsum.photos/seed/album-local-frequencies/500/500",
+    "artistSourceIds": [
+      "b63a2d9a-d893-5194-a276-050a95ce8f24"
+    ],
+    "genreSlugs": [
+      "hip-hop"
+    ],
+    "unitsInStock": 1,
+    "priceInPence": 2299,
+    "originalPriceInPence": null
+  },
+  {
+    "title": "Night Bus Radio",
+    "sourceId": "b77b3f0a-5cce-5607-976d-dfc1f19bb67d",
+    "source": "Generated",
+    "description": "Recorded almost entirely between midnight and dawn and sequenced to be heard the same way. Their best-loved record.",
+    "releaseDate": "1999-10-19",
+    "label": "Quarry Bank Sound",
+    "isNew": false,
+    "isStaffPick": false,
+    "imageUrl": "https://picsum.photos/seed/album-night-bus-radio/500/500",
+    "artistSourceIds": [
+      "b63a2d9a-d893-5194-a276-050a95ce8f24"
+    ],
+    "genreSlugs": [
+      "hip-hop"
+    ],
+    "unitsInStock": 4,
+    "priceInPence": 2299,
+    "originalPriceInPence": null
+  },
+  {
+    "title": "Assembly Line",
+    "sourceId": "54203651-2478-5eac-bd08-a4935390535e",
+    "source": "Generated",
+    "description": "Machine music made by people who were present at the beginning and never got precious about it. Warm where you expect cold.",
+    "releaseDate": "1993-09-07",
+    "label": "Pressing Room 4",
+    "isNew": false,
+    "isStaffPick": false,
+    "imageUrl": "https://picsum.photos/seed/album-assembly-line/500/500",
+    "artistSourceIds": [
+      "5df22c77-10f0-5fb5-a5bc-dc19d4cf5536"
+    ],
+    "genreSlugs": [
+      "electronic"
+    ],
+    "unitsInStock": 5,
+    "priceInPence": 1899,
+    "originalPriceInPence": null
+  },
+  {
+    "title": "Third Shift",
+    "sourceId": "fa89d52a-7602-5670-903e-1c7839483804",
+    "source": "Generated",
+    "description": "Longer tracks, deeper mixes and a marked drop in tempo. Built for the very end of the night rather than the middle of it.",
+    "releaseDate": "1996-04-29",
+    "label": "Pressing Room 4",
+    "isNew": false,
+    "isStaffPick": false,
+    "imageUrl": "https://picsum.photos/seed/album-third-shift/500/500",
+    "artistSourceIds": [
+      "5df22c77-10f0-5fb5-a5bc-dc19d4cf5536"
+    ],
+    "genreSlugs": [
+      "electronic"
+    ],
+    "unitsInStock": 0,
+    "priceInPence": 2199,
+    "originalPriceInPence": null
+  },
+  {
+    "title": "Public Works",
+    "sourceId": "9c907177-97b3-5c56-ba54-2df5c3c9ed5b",
+    "source": "Generated",
+    "description": "The most sample-heavy record in their catalogue, assembled from sources nobody has ever fully identified. Endlessly replayable.",
+    "releaseDate": "1991-06-18",
+    "label": "Pressing Room 4",
+    "isNew": false,
+    "isStaffPick": false,
+    "imageUrl": "https://picsum.photos/seed/album-public-works/500/500",
+    "artistSourceIds": [
+      "bbd43eb3-695d-5bcb-9315-64aea11aeb96"
+    ],
+    "genreSlugs": [
+      "electronic"
+    ],
+    "unitsInStock": 17,
+    "priceInPence": 2299,
+    "originalPriceInPence": null
+  },
+  {
+    "title": "Low Orbit",
+    "sourceId": "1cec15f3-ea71-509c-aa3e-611abebdb151",
+    "source": "Generated",
+    "description": "Beatless for long stretches and none the worse for it. The record the ambient crowd claimed and the dance crowd never quite forgave.",
+    "releaseDate": "1994-11-01",
+    "label": "Pressing Room 4",
+    "isNew": false,
+    "isStaffPick": false,
+    "imageUrl": "https://picsum.photos/seed/album-low-orbit/500/500",
+    "artistSourceIds": [
+      "bbd43eb3-695d-5bcb-9315-64aea11aeb96"
+    ],
+    "genreSlugs": [
+      "electronic"
+    ],
+    "unitsInStock": 19,
+    "priceInPence": 1699,
+    "originalPriceInPence": null
+  },
+  {
+    "title": "Signal Decay",
+    "sourceId": "0dfb0f63-7fe2-53e6-9a98-2b67da6e110a",
+    "source": "Generated",
+    "description": "A debut assembled alone over four years on borrowed hardware. Restless, precise and entirely without filler.",
+    "releaseDate": "1998-02-09",
+    "label": "Meridian Tapes",
+    "isNew": false,
+    "isStaffPick": false,
+    "imageUrl": "https://picsum.photos/seed/album-signal-decay/500/500",
+    "artistSourceIds": [
+      "e152c569-56b3-5c7f-8ec1-a370dc023fba"
+    ],
+    "genreSlugs": [
+      "electronic"
+    ],
+    "unitsInStock": 37,
+    "priceInPence": 1699,
+    "originalPriceInPence": null
+  },
+  {
+    "title": "Harbour Static",
+    "sourceId": "2c938d6e-fa35-5885-9aa8-84c540f40481",
+    "source": "Generated",
+    "description": "Field recordings and drum programming in roughly equal measure. Considerably warmer than the title suggests.",
+    "releaseDate": "1999-11-15",
+    "label": "Meridian Tapes",
+    "isNew": false,
+    "isStaffPick": false,
+    "imageUrl": "https://picsum.photos/seed/album-harbour-static/500/500",
+    "artistSourceIds": [
+      "e152c569-56b3-5c7f-8ec1-a370dc023fba"
+    ],
+    "genreSlugs": [
+      "electronic"
+    ],
+    "unitsInStock": 13,
+    "priceInPence": 2099,
+    "originalPriceInPence": null
+  },
+  {
+    "title": "Postcards from the Boulevard",
+    "sourceId": "645f96ba-c6c2-5a30-b783-8222d44a65f7",
+    "source": "Generated",
+    "description": "Synthetic, bright and hiding real melancholy under the gloss. A record that gets sadder the better you know it.",
+    "releaseDate": "1994-07-22",
+    "label": "Gable End",
+    "isNew": false,
+    "isStaffPick": false,
+    "imageUrl": "https://picsum.photos/seed/album-postcards-from-the-boulevard/500/500",
+    "artistSourceIds": [
+      "4f5fc96a-2b10-575a-bf86-d0bb0da2766c"
+    ],
+    "genreSlugs": [
+      "pop",
+      "electronic"
+    ],
+    "unitsInStock": 34,
+    "priceInPence": 1899,
+    "originalPriceInPence": null
+  },
+  {
+    "title": "Everything in Neon",
+    "sourceId": "8ddaaf40-d459-511f-9de2-21bc7ec0caf1",
+    "source": "Generated",
+    "description": "The hits record that was not a hits record, made of new songs written to sound familiar. A neat trick, well executed.",
+    "releaseDate": "1997-05-16",
+    "label": "Gable End",
+    "isNew": false,
+    "isStaffPick": false,
+    "imageUrl": "https://picsum.photos/seed/album-everything-in-neon/500/500",
+    "artistSourceIds": [
+      "4f5fc96a-2b10-575a-bf86-d0bb0da2766c"
+    ],
+    "genreSlugs": [
+      "pop"
+    ],
+    "unitsInStock": 18,
+    "priceInPence": 3599,
+    "originalPriceInPence": null
+  },
+  {
+    "title": "The Long Meadow",
+    "sourceId": "2e539ed2-ca99-5c8d-93df-648323d7159d",
+    "source": "Generated",
+    "description": "Traditional playing with a songwriter's ear, recorded live in a village hall over two afternoons. Nothing here is showing off.",
+    "releaseDate": "1995-03-24",
+    "label": "Ember Hill",
+    "isNew": false,
+    "isStaffPick": false,
+    "imageUrl": "https://picsum.photos/seed/album-the-long-meadow/500/500",
+    "artistSourceIds": [
+      "0669ce7d-bfe5-5ffa-bc4d-a31c2eede091"
+    ],
+    "genreSlugs": [
+      "folk-world-and-country"
+    ],
+    "unitsInStock": 22,
+    "priceInPence": 1999,
+    "originalPriceInPence": null
+  },
+  {
+    "title": "Winter Ground",
+    "sourceId": "eaec71dc-e627-5712-80c1-d84583d21774",
+    "source": "Generated",
+    "description": "Sparser and darker than what came before, with the guitar mixed close enough to hear the room. A grower, and a considerable one.",
+    "releaseDate": "1999-01-29",
+    "label": "Ember Hill",
+    "isNew": false,
+    "isStaffPick": true,
+    "imageUrl": "https://picsum.photos/seed/album-winter-ground/500/500",
+    "artistSourceIds": [
+      "0669ce7d-bfe5-5ffa-bc4d-a31c2eede091"
+    ],
+    "genreSlugs": [
+      "folk-world-and-country"
+    ],
+    "unitsInStock": 0,
+    "priceInPence": 1999,
+    "originalPriceInPence": null
+  },
+  {
+    "title": "Preludes, Live in Budapest",
+    "sourceId": "c779b3fb-15aa-5892-bd07-ce18591a9a85",
+    "source": "Generated",
+    "description": "Recorded in concert with the audience audible and the occasional fumble left in. Far more alive than a studio take would have been.",
+    "releaseDate": "1994-10-07",
+    "label": "Harrow Lane Records",
+    "isNew": false,
+    "isStaffPick": false,
+    "imageUrl": "https://picsum.photos/seed/album-preludes-live-in-budapest/500/500",
+    "artistSourceIds": [
+      "8dc2e504-bc19-5f5a-a812-cf04168e5892"
+    ],
+    "genreSlugs": [
+      "classical"
+    ],
+    "unitsInStock": 29,
+    "priceInPence": 1899,
+    "originalPriceInPence": null
+  },
+  {
+    "title": "Late Sonatas",
+    "sourceId": "924138fd-c378-585c-a5ad-141274bf67ed",
+    "source": "Generated",
+    "description": "Big, serious repertoire played without a hint of reverence. The interpretations are arguable and that is rather the point.",
+    "releaseDate": "1998-06-12",
+    "label": "Harrow Lane Records",
+    "isNew": false,
+    "isStaffPick": false,
+    "imageUrl": "https://picsum.photos/seed/album-late-sonatas/500/500",
+    "artistSourceIds": [
+      "8dc2e504-bc19-5f5a-a812-cf04168e5892"
+    ],
+    "genreSlugs": [
+      "classical"
+    ],
+    "unitsInStock": 21,
+    "priceInPence": 1799,
+    "originalPriceInPence": null
+  },
+  {
+    "title": "Room for Everything",
+    "sourceId": "ce644bdf-d220-5a9c-8d6c-2afea8ef6b15",
+    "source": "Generated",
+    "description": "A bassist's record in the best sense, where the low end leads and everyone else responds. Light on its feet throughout.",
+    "releaseDate": "1997-09-30",
+    "label": "Blue Meridian",
+    "isNew": false,
+    "isStaffPick": false,
+    "imageUrl": "https://picsum.photos/seed/album-room-for-everything/500/500",
+    "artistSourceIds": [
+      "083e1be3-5290-55ff-acf2-34b986140f0e"
+    ],
+    "genreSlugs": [
+      "jazz"
+    ],
+    "unitsInStock": 8,
+    "priceInPence": 2699,
+    "originalPriceInPence": null
+  },
+  {
+    "title": "Long Endings",
+    "sourceId": "90273bd7-a83f-5e44-87e9-43ecf5fa9e65",
+    "source": "Generated",
+    "description": "Exactly what the title promises, with three tracks that take their time dissolving. Ideal late-evening listening.",
+    "releaseDate": "1999-04-13",
+    "label": "Blue Meridian",
+    "isNew": false,
+    "isStaffPick": false,
+    "imageUrl": "https://picsum.photos/seed/album-long-endings/500/500",
+    "artistSourceIds": [
+      "083e1be3-5290-55ff-acf2-34b986140f0e"
+    ],
+    "genreSlugs": [
+      "jazz"
+    ],
+    "unitsInStock": 31,
+    "priceInPence": 1899,
+    "originalPriceInPence": null
+  },
+  {
+    "title": "Kitchen Table Sessions",
+    "sourceId": "78c03472-e8e0-57ad-a427-cbe2ddc2d8e3",
+    "source": "Generated",
+    "description": "Neo-soul with the polish deliberately left off and the drums pushed forward. Her debut and still the most direct thing she has made.",
+    "releaseDate": "1999-08-24",
+    "label": "Trestle Records",
+    "isNew": false,
+    "isStaffPick": true,
+    "imageUrl": "https://picsum.photos/seed/album-kitchen-table-sessions/500/500",
+    "artistSourceIds": [
+      "cc5da798-d3b5-5fc3-b9f6-4cbc12c986bf"
+    ],
+    "genreSlugs": [
+      "funk-soul"
+    ],
+    "unitsInStock": 11,
+    "priceInPence": 2499,
+    "originalPriceInPence": null
+  },
+  {
+    "title": "Sahel Blues",
+    "sourceId": "c7978ce6-52f4-52f5-a4b8-d9a4aee5eabb",
+    "source": "Generated",
+    "description": "Desert blues that trades urgency for hypnosis and wins the exchange comfortably. Recorded in two days with almost no overdubs.",
+    "releaseDate": "1999-06-08",
+    "label": "Coastal Union",
+    "isNew": false,
+    "isStaffPick": true,
+    "imageUrl": "https://picsum.photos/seed/album-sahel-blues/500/500",
+    "artistSourceIds": [
+      "8490fc4d-59b0-507b-9387-c1b0e6975e18"
+    ],
+    "genreSlugs": [
+      "folk-world-and-country",
+      "blues"
+    ],
+    "unitsInStock": 14,
+    "priceInPence": 2599,
+    "originalPriceInPence": null
+  },
+  {
+    "title": "Score for a Quiet Film",
+    "sourceId": "8a4db90a-fabd-5acb-97f4-7bcaad66e3b3",
+    "source": "Generated",
+    "description": "A score that works without the picture, which is the highest compliment available. Sparse writing with enormous patience behind it.",
+    "releaseDate": "1993-11-19",
+    "label": "Lantern Row",
+    "isNew": false,
+    "isStaffPick": false,
+    "imageUrl": "https://picsum.photos/seed/album-score-for-a-quiet-film/500/500",
+    "artistSourceIds": [
+      "9e370d4d-0bf5-5063-8669-cae7b6d313f3"
+    ],
+    "genreSlugs": [
+      "stage-and-screen"
+    ],
+    "unitsInStock": 38,
+    "priceInPence": 1899,
+    "originalPriceInPence": 2299
+  },
+  {
+    "title": "Northern Light",
+    "sourceId": "70d599b9-0283-59e4-99b4-8358fc61a1d1",
+    "source": "Generated",
+    "description": "Written for a documentary nobody saw and reissued on its own merits. Strings, silence and very little else.",
+    "releaseDate": "1997-03-11",
+    "label": "Lantern Row",
+    "isNew": false,
+    "isStaffPick": false,
+    "imageUrl": "https://picsum.photos/seed/album-northern-light/500/500",
+    "artistSourceIds": [
+      "9e370d4d-0bf5-5063-8669-cae7b6d313f3"
+    ],
+    "genreSlugs": [
+      "stage-and-screen",
+      "classical"
+    ],
+    "unitsInStock": 15,
+    "priceInPence": 1999,
+    "originalPriceInPence": null
+  },
+  {
+    "title": "Southbound Nothing",
+    "sourceId": "f4f1b899-1db2-54a5-a6c3-473ec6a90998",
+    "source": "Generated",
+    "description": "A debut that arrived a couple of years after it would have been fashionable, and is much better for having missed.",
+    "releaseDate": "1999-09-14",
+    "label": "Ash & Iron Records",
+    "isNew": false,
+    "isStaffPick": false,
+    "imageUrl": "https://picsum.photos/seed/album-southbound-nothing/500/500",
+    "artistSourceIds": [
+      "7c24d5dc-308e-5832-a3a9-905875e7d7ea"
+    ],
+    "genreSlugs": [
+      "rock"
+    ],
+    "unitsInStock": 10,
+    "priceInPence": 1999,
+    "originalPriceInPence": null
+  },
+  {
+    "title": "Milonga Nueva",
+    "sourceId": "fbc9ad32-d529-594c-9ae9-3fa01b199db4",
+    "source": "Generated",
+    "description": "The trio's return after a long silence, with a younger bandoneon player who changes the balance entirely. Sharper and less nostalgic.",
+    "releaseDate": "1993-02-16",
+    "label": "Verdant Sound",
+    "isNew": false,
+    "isStaffPick": true,
+    "imageUrl": "https://picsum.photos/seed/album-milonga-nueva/500/500",
+    "artistSourceIds": [
+      "6c09936f-99b4-5b35-9d96-8f7e6200d67e"
+    ],
+    "genreSlugs": [
+      "latin"
+    ],
+    "unitsInStock": 6,
+    "priceInPence": 3099,
+    "originalPriceInPence": null
+  },
+  {
+    "title": "Ciudad Doble",
+    "sourceId": "14029d1b-5a4e-599f-be30-724ee438e436",
+    "source": "Generated",
+    "description": "Two long suites recorded either side of a European tour. Their most adventurous work and their least played, unfairly.",
+    "releaseDate": "1998-10-27",
+    "label": "Verdant Sound",
+    "isNew": false,
+    "isStaffPick": false,
+    "imageUrl": "https://picsum.photos/seed/album-ciudad-doble/500/500",
+    "artistSourceIds": [
+      "6c09936f-99b4-5b35-9d96-8f7e6200d67e"
+    ],
+    "genreSlugs": [
+      "latin",
+      "jazz"
+    ],
+    "unitsInStock": 2,
+    "priceInPence": 2099,
+    "originalPriceInPence": null
+  },
+  {
+    "title": "The Slow Reveal",
+    "sourceId": "513924d1-d00b-583b-a2fc-7a765ceb5ea0",
+    "source": "Generated",
+    "description": "Bigger, slower and considerably more confident than the debut. The record that turned a cult following into a real one.",
+    "releaseDate": "2002-05-07",
+    "label": "Ash & Iron Records",
+    "isNew": false,
+    "isStaffPick": false,
+    "imageUrl": "https://picsum.photos/seed/album-the-slow-reveal/500/500",
+    "artistSourceIds": [
+      "7c24d5dc-308e-5832-a3a9-905875e7d7ea"
+    ],
+    "genreSlugs": [
+      "rock"
+    ],
+    "unitsInStock": 1,
+    "priceInPence": 2199,
+    "originalPriceInPence": null
+  },
+  {
+    "title": "Under the Overpass",
+    "sourceId": "2637776c-b912-51a5-995d-14c6efa973d6",
+    "source": "Generated",
+    "description": "Recorded in a single room with the band facing each other and almost nothing fixed afterwards. Rough in all the right places.",
+    "releaseDate": "2006-08-28",
+    "label": "Ash & Iron Records",
+    "isNew": false,
+    "isStaffPick": false,
+    "imageUrl": "https://picsum.photos/seed/album-under-the-overpass/500/500",
+    "artistSourceIds": [
+      "7c24d5dc-308e-5832-a3a9-905875e7d7ea"
+    ],
+    "genreSlugs": [
+      "rock"
+    ],
+    "unitsInStock": 7,
+    "priceInPence": 2299,
+    "originalPriceInPence": null
+  },
+  {
+    "title": "Tidal Range",
+    "sourceId": "6f33a2b3-6b6b-59a6-80bb-71ae38bff9f4",
+    "source": "Generated",
+    "description": "Guitar music that unfolds at its own pace and refuses to be rushed by anyone. Six tracks, forty-eight minutes, no complaints.",
+    "releaseDate": "2005-04-11",
+    "label": "Lowtide Recordings",
+    "isNew": false,
+    "isStaffPick": false,
+    "imageUrl": "https://picsum.photos/seed/album-tidal-range/500/500",
+    "artistSourceIds": [
+      "56be698f-badd-54fb-b46f-e1bbc039d771"
+    ],
+    "genreSlugs": [
+      "rock"
+    ],
+    "unitsInStock": 1,
+    "priceInPence": 2199,
+    "originalPriceInPence": null
+  },
+  {
+    "title": "Estuary",
+    "sourceId": "c1068f6d-a70a-5d61-b8b7-02403caaa88a",
+    "source": "Generated",
+    "description": "Quieter and more textural than the debut, recorded largely at dawn because the studio was cheaper. It shows, helpfully.",
+    "releaseDate": "2008-10-06",
+    "label": "Lowtide Recordings",
+    "isNew": false,
+    "isStaffPick": false,
+    "imageUrl": "https://picsum.photos/seed/album-estuary/500/500",
+    "artistSourceIds": [
+      "56be698f-badd-54fb-b46f-e1bbc039d771"
+    ],
+    "genreSlugs": [
+      "rock"
+    ],
+    "unitsInStock": 7,
+    "priceInPence": 1999,
+    "originalPriceInPence": null
+  },
+  {
+    "title": "Return to Sender",
+    "sourceId": "a010ff21-3d53-5cb1-b1be-2b5d815b20dd",
+    "source": "Generated",
+    "description": "Wiry, sharp-elbowed guitar music with lyrics worth reading on their own. Their debut and their most immediate record.",
+    "releaseDate": "2007-03-13",
+    "label": "Cormorant Records",
+    "isNew": false,
+    "isStaffPick": false,
+    "imageUrl": "https://picsum.photos/seed/album-return-to-sender/500/500",
+    "artistSourceIds": [
+      "0fa9fc01-b6d5-539a-b4f1-fcd05ee1dbf8"
+    ],
+    "genreSlugs": [
+      "rock"
+    ],
+    "unitsInStock": 10,
+    "priceInPence": 1799,
+    "originalPriceInPence": null
+  },
+  {
+    "title": "No Forwarding Address",
+    "sourceId": "0be99523-7b4a-5bec-8daf-39bb0b90f755",
+    "source": "Generated",
+    "description": "Made during the first of their two break-ups, which you can hear throughout. Tense, brilliant and slightly unpleasant.",
+    "releaseDate": "2009-07-21",
+    "label": "Cormorant Records",
+    "isNew": false,
+    "isStaffPick": false,
+    "imageUrl": "https://picsum.photos/seed/album-no-forwarding-address/500/500",
+    "artistSourceIds": [
+      "0fa9fc01-b6d5-539a-b4f1-fcd05ee1dbf8"
+    ],
+    "genreSlugs": [
+      "rock"
+    ],
+    "unitsInStock": 6,
+    "priceInPence": 2499,
+    "originalPriceInPence": null
+  },
+  {
+    "title": "Late Editions",
+    "sourceId": "85c51da4-13e9-53d7-b234-d587c317bb68",
+    "source": "Generated",
+    "description": "A reunion record made with no fanfare and no expectations whatsoever. Considerably better than reunion records are entitled to be.",
+    "releaseDate": "2003-11-18",
+    "label": "Northbound Sound",
+    "isNew": false,
+    "isStaffPick": true,
+    "imageUrl": "https://picsum.photos/seed/album-late-editions/500/500",
+    "artistSourceIds": [
+      "76ee04d3-26bc-5db0-98d1-bf9f081f8a63"
+    ],
+    "genreSlugs": [
+      "rock"
+    ],
+    "unitsInStock": 20,
+    "priceInPence": 1799,
+    "originalPriceInPence": 2399
+  },
+  {
+    "title": "North of the Border",
+    "sourceId": "9d6b3bc5-b0ff-53ad-a85f-213ef32be893",
+    "source": "Generated",
+    "description": "Sequenced by DJs, which is why it works best played end to end and loudly. Nothing here is in the wrong order.",
+    "releaseDate": "2004-06-15",
+    "label": "Waypoint Audio",
+    "isNew": false,
+    "isStaffPick": true,
+    "imageUrl": "https://picsum.photos/seed/album-north-of-the-border/500/500",
+    "artistSourceIds": [
+      "82368831-a908-5674-be82-8f0ea2c75cb2"
+    ],
+    "genreSlugs": [
+      "hip-hop"
+    ],
+    "unitsInStock": 3,
+    "priceInPence": 2299,
+    "originalPriceInPence": null
+  },
+  {
+    "title": "Common Tongue",
+    "sourceId": "df25f128-9f79-58c4-8653-2e3689d48ed1",
+    "source": "Generated",
+    "description": "Their most political record and their most tuneful, which is not the usual pairing. Ages remarkably well.",
+    "releaseDate": "2002-09-24",
+    "label": "Quarry Bank Sound",
+    "isNew": false,
+    "isStaffPick": false,
+    "imageUrl": "https://picsum.photos/seed/album-common-tongue/500/500",
+    "artistSourceIds": [
+      "b63a2d9a-d893-5194-a276-050a95ce8f24"
+    ],
+    "genreSlugs": [
+      "hip-hop"
+    ],
+    "unitsInStock": 5,
+    "priceInPence": 1799,
+    "originalPriceInPence": 2599
+  },
+  {
+    "title": "Last Orders",
+    "sourceId": "3ec9cb09-249f-533a-80e8-47c4b59b392b",
+    "source": "Generated",
+    "description": "Live horns, live drums and a crew who had clearly stopped caring what anyone expected. A generous, celebratory record.",
+    "releaseDate": "2005-12-02",
+    "label": "Quarry Bank Sound",
+    "isNew": false,
+    "isStaffPick": false,
+    "imageUrl": "https://picsum.photos/seed/album-last-orders/500/500",
+    "artistSourceIds": [
+      "b63a2d9a-d893-5194-a276-050a95ce8f24"
+    ],
+    "genreSlugs": [
+      "hip-hop",
+      "funk-soul"
+    ],
+    "unitsInStock": 6,
+    "priceInPence": 2299,
+    "originalPriceInPence": null
+  },
+  {
+    "title": "Long Form One",
+    "sourceId": "0561c213-00b3-5995-a308-4fece649dc0e",
+    "source": "Generated",
+    "description": "Two pieces, one per side, both unhurried in the extreme. Exactly what the collective's name promises and no less welcome for it.",
+    "releaseDate": "2004-02-20",
+    "label": "Meridian Tapes",
+    "isNew": false,
+    "isStaffPick": false,
+    "imageUrl": "https://picsum.photos/seed/album-long-form-one/500/500",
+    "artistSourceIds": [
+      "e5d63e51-ae42-5af8-bb65-0c5e04a4db57"
+    ],
+    "genreSlugs": [
+      "electronic"
+    ],
+    "unitsInStock": 15,
+    "priceInPence": 2399,
+    "originalPriceInPence": null
+  },
+  {
+    "title": "Grain and Tape",
+    "sourceId": "832eb7bb-ba29-542f-8e6e-12ecc2911524",
+    "source": "Generated",
+    "description": "Built almost entirely from degraded tape loops and left deliberately unpolished. The most tactile record in this section.",
+    "releaseDate": "2003-05-30",
+    "label": "Meridian Tapes",
+    "isNew": false,
+    "isStaffPick": false,
+    "imageUrl": "https://picsum.photos/seed/album-grain-and-tape/500/500",
+    "artistSourceIds": [
+      "e152c569-56b3-5c7f-8ec1-a370dc023fba"
+    ],
+    "genreSlugs": [
+      "electronic"
+    ],
+    "unitsInStock": 17,
+    "priceInPence": 2099,
+    "originalPriceInPence": null
+  },
+  {
+    "title": "Before the Peak",
+    "sourceId": "aed4af3c-2bcd-5a7c-b5b4-c7a93db39708",
+    "source": "Generated",
+    "description": "Dance music for the hours either side of the main event, made by a duo with no interest in the main event. Patient and beautifully mixed.",
+    "releaseDate": "2009-06-26",
+    "label": "Pressing Room 4",
+    "isNew": false,
+    "isStaffPick": false,
+    "imageUrl": "https://picsum.photos/seed/album-before-the-peak/500/500",
+    "artistSourceIds": [
+      "ea49931f-75ca-53d1-825e-c2dc653f92e1"
+    ],
+    "genreSlugs": [
+      "electronic"
+    ],
+    "unitsInStock": 31,
+    "priceInPence": 2399,
+    "originalPriceInPence": null
+  },
+  {
+    "title": "Empty Room Theory",
+    "sourceId": "5666bb32-b5d7-5467-a933-d9a4491167fe",
+    "source": "Generated",
+    "description": "Sparse to the point of austerity and never once cold. A debut that arrived fully formed, which is unusual and slightly annoying.",
+    "releaseDate": "2009-11-13",
+    "label": "Pressing Room 4",
+    "isNew": false,
+    "isStaffPick": false,
+    "imageUrl": "https://picsum.photos/seed/album-empty-room-theory/500/500",
+    "artistSourceIds": [
+      "03c4b6a7-bf10-5225-806e-5752dda0cb1e"
+    ],
+    "genreSlugs": [
+      "electronic"
+    ],
+    "unitsInStock": 16,
+    "priceInPence": 3599,
+    "originalPriceInPence": null
+  },
+  {
+    "title": "Between Two Silences",
+    "sourceId": "2cc181e2-295b-5acc-8db8-01c8e63c7983",
+    "source": "Generated",
+    "description": "Solo piano recorded in an empty hall with the sustain pedal doing much of the arranging. Almost nothing here is hurried.",
+    "releaseDate": "2003-09-05",
+    "label": "Blue Meridian",
+    "isNew": false,
+    "isStaffPick": false,
+    "imageUrl": "https://picsum.photos/seed/album-between-two-silences/500/500",
+    "artistSourceIds": [
+      "fba0fdcf-cc33-50c8-8314-305fbeb2d403"
+    ],
+    "genreSlugs": [
+      "jazz"
+    ],
+    "unitsInStock": 0,
+    "priceInPence": 2399,
+    "originalPriceInPence": null
+  },
+  {
+    "title": "The Space Between Notes",
+    "sourceId": "a7f6245c-6fe8-5adc-8b73-e624e0f609bd",
+    "source": "Generated",
+    "description": "A trio record for once, though she still leaves more room than most players would dare. Our most reliable jazz recommendation.",
+    "releaseDate": "2007-04-27",
+    "label": "Blue Meridian",
+    "isNew": false,
+    "isStaffPick": false,
+    "imageUrl": "https://picsum.photos/seed/album-the-space-between-notes/500/500",
+    "artistSourceIds": [
+      "fba0fdcf-cc33-50c8-8314-305fbeb2d403"
+    ],
+    "genreSlugs": [
+      "jazz"
+    ],
+    "unitsInStock": 15,
+    "priceInPence": 2299,
+    "originalPriceInPence": 2799
+  },
+  {
+    "title": "Highlife Studies",
+    "sourceId": "cfd4d788-5faf-552b-8f96-949722c34666",
+    "source": "Generated",
+    "description": "Post-bop structures with highlife phrasing folded in so naturally you stop noticing the join. A remarkable debut.",
+    "releaseDate": "2009-02-17",
+    "label": "Coastal Union",
+    "isNew": false,
+    "isStaffPick": false,
+    "imageUrl": "https://picsum.photos/seed/album-highlife-studies/500/500",
+    "artistSourceIds": [
+      "c734c87c-025a-5de8-b3bd-b2f1d865b90a"
+    ],
+    "genreSlugs": [
+      "jazz"
+    ],
+    "unitsInStock": 29,
+    "priceInPence": 2299,
+    "originalPriceInPence": null
+  },
+  {
+    "title": "Full Arrangement",
+    "sourceId": "36133874-a0d9-5531-b915-b4270e9b68fa",
+    "source": "Generated",
+    "description": "A big band that nobody could afford, playing charts written out in full. Impossibly tight and audibly delighted about it.",
+    "releaseDate": "2005-07-19",
+    "label": "Trestle Records",
+    "isNew": false,
+    "isStaffPick": false,
+    "imageUrl": "https://picsum.photos/seed/album-full-arrangement/500/500",
+    "artistSourceIds": [
+      "51cfd42a-3189-5298-90eb-4676313266b2"
+    ],
+    "genreSlugs": [
+      "funk-soul"
+    ],
+    "unitsInStock": 27,
+    "priceInPence": 2599,
+    "originalPriceInPence": null
+  },
+  {
+    "title": "Committee Business",
+    "sourceId": "2eedb71d-661c-51ee-a133-121b1308794b",
+    "source": "Generated",
+    "description": "Recorded live in two nights with a horn section of eleven. The room noise is half the record and entirely welcome.",
+    "releaseDate": "2008-03-25",
+    "label": "Trestle Records",
+    "isNew": false,
+    "isStaffPick": true,
+    "imageUrl": "https://picsum.photos/seed/album-committee-business/500/500",
+    "artistSourceIds": [
+      "51cfd42a-3189-5298-90eb-4676313266b2"
+    ],
+    "genreSlugs": [
+      "funk-soul"
+    ],
+    "unitsInStock": 8,
+    "priceInPence": 2499,
+    "originalPriceInPence": null
+  },
+  {
+    "title": "Heavy Rotation",
+    "sourceId": "13219839-9c83-5b0f-8dc5-f08d4bb864af",
+    "source": "Generated",
+    "description": "Bigger production than the debut without losing the grit that made it work. Her most-played record in this shop.",
+    "releaseDate": "2004-10-12",
+    "label": "Trestle Records",
+    "isNew": false,
+    "isStaffPick": false,
+    "imageUrl": "https://picsum.photos/seed/album-heavy-rotation/500/500",
+    "artistSourceIds": [
+      "cc5da798-d3b5-5fc3-b9f6-4cbc12c986bf"
+    ],
+    "genreSlugs": [
+      "funk-soul"
+    ],
+    "unitsInStock": 17,
+    "priceInPence": 1999,
+    "originalPriceInPence": null
+  },
+  {
+    "title": "The Tuesday Set",
+    "sourceId": "299f2940-c706-5eb8-b61a-9f7df41ae478",
+    "source": "Generated",
+    "description": "Songs worked out in public during a weekly residency and recorded once they were ready. Sounds like a room, which is rare now.",
+    "releaseDate": "2006-05-23",
+    "label": "Gable End",
+    "isNew": false,
+    "isStaffPick": false,
+    "imageUrl": "https://picsum.photos/seed/album-the-tuesday-set/500/500",
+    "artistSourceIds": [
+      "538af20b-002c-5837-8e30-db361acede9d"
+    ],
+    "genreSlugs": [
+      "pop"
+    ],
+    "unitsInStock": 20,
+    "priceInPence": 2399,
+    "originalPriceInPence": null
+  },
+  {
+    "title": "Residency",
+    "sourceId": "ac08f4ef-2c8d-50c6-a96c-935635f1dbc5",
+    "source": "Generated",
+    "description": "More assured and slightly sadder, with arrangements that make room for a proper string section. Their high point so far.",
+    "releaseDate": "2009-09-08",
+    "label": "Gable End",
+    "isNew": false,
+    "isStaffPick": true,
+    "imageUrl": "https://picsum.photos/seed/album-residency/500/500",
+    "artistSourceIds": [
+      "538af20b-002c-5837-8e30-db361acede9d"
+    ],
+    "genreSlugs": [
+      "pop"
+    ],
+    "unitsInStock": 14,
+    "priceInPence": 2299,
+    "originalPriceInPence": null
+  },
+  {
+    "title": "Dust Road",
+    "sourceId": "6afd4187-baa6-57ec-b0d6-4f1ea75eb61d",
+    "source": "Generated",
+    "description": "Country music played by people who plainly love it rather than wearing it. Harmonies first, everything else afterwards.",
+    "releaseDate": "2007-08-14",
+    "label": "Ember Hill",
+    "isNew": false,
+    "isStaffPick": false,
+    "imageUrl": "https://picsum.photos/seed/album-dust-road/500/500",
+    "artistSourceIds": [
+      "ac2d4890-adf9-5040-923f-9133f4353405"
+    ],
+    "genreSlugs": [
+      "folk-world-and-country"
+    ],
+    "unitsInStock": 7,
+    "priceInPence": 1899,
+    "originalPriceInPence": null
+  },
+  {
+    "title": "River Crossing",
+    "sourceId": "c782827b-a4d8-5fc9-adbf-0d5db8e2bd4d",
+    "source": "Generated",
+    "description": "A band record after two solo ones, with percussion that changes the whole centre of gravity. Hypnotic in a different way.",
+    "releaseDate": "2004-03-09",
+    "label": "Coastal Union",
+    "isNew": false,
+    "isStaffPick": true,
+    "imageUrl": "https://picsum.photos/seed/album-river-crossing/500/500",
+    "artistSourceIds": [
+      "8490fc4d-59b0-507b-9387-c1b0e6975e18"
+    ],
+    "genreSlugs": [
+      "folk-world-and-country"
+    ],
+    "unitsInStock": 12,
+    "priceInPence": 2199,
+    "originalPriceInPence": null
+  },
+  {
+    "title": "Music for a Border Town",
+    "sourceId": "d9176cc6-0abe-5a71-8217-56b429613f90",
+    "source": "Generated",
+    "description": "Written for a film few people saw and sold steadily ever since to people who never will. Works entirely on its own terms.",
+    "releaseDate": "2006-11-10",
+    "label": "Lantern Row",
+    "isNew": false,
+    "isStaffPick": false,
+    "imageUrl": "https://picsum.photos/seed/album-music-for-a-border-town/500/500",
+    "artistSourceIds": [
+      "6c4495c8-fb94-571e-9271-c64ea1027ce6"
+    ],
+    "genreSlugs": [
+      "stage-and-screen"
+    ],
+    "unitsInStock": 13,
+    "priceInPence": 1899,
+    "originalPriceInPence": null
+  },
+  {
+    "title": "Two Winters",
+    "sourceId": "6fd0aad0-6d60-5691-a78d-0277134a7b6a",
+    "source": "Generated",
+    "description": "Two scores collected on one record, sharing a mood and almost nothing else. The second half is the reason to buy it.",
+    "releaseDate": "2002-01-25",
+    "label": "Lantern Row",
+    "isNew": false,
+    "isStaffPick": false,
+    "imageUrl": "https://picsum.photos/seed/album-two-winters/500/500",
+    "artistSourceIds": [
+      "9e370d4d-0bf5-5063-8669-cae7b6d313f3"
+    ],
+    "genreSlugs": [
+      "stage-and-screen"
+    ],
+    "unitsInStock": 5,
+    "priceInPence": 1999,
+    "originalPriceInPence": 2599
+  },
+  {
+    "title": "The Cartographer",
+    "sourceId": "b134832d-e537-56dd-9353-d1de902ae2a0",
+    "source": "Generated",
+    "description": "Synthesisers alongside the strings for the first time, used sparingly and to real effect. His most-played score by some distance.",
+    "releaseDate": "2008-09-19",
+    "label": "Lantern Row",
+    "isNew": false,
+    "isStaffPick": false,
+    "imageUrl": "https://picsum.photos/seed/album-the-cartographer/500/500",
+    "artistSourceIds": [
+      "9e370d4d-0bf5-5063-8669-cae7b6d313f3"
+    ],
+    "genreSlugs": [
+      "stage-and-screen",
+      "electronic"
+    ],
+    "unitsInStock": 6,
+    "priceInPence": 2299,
+    "originalPriceInPence": null
+  },
+  {
+    "title": "Tango de Aeropuerto",
+    "sourceId": "5fe6f02b-e851-5043-9a4b-a3c0a80c343f",
+    "source": "Generated",
+    "description": "Written almost entirely in transit and recorded in a fortnight at home. Restless music that never settles, deliberately.",
+    "releaseDate": "2003-06-21",
+    "label": "Verdant Sound",
+    "isNew": false,
+    "isStaffPick": false,
+    "imageUrl": "https://picsum.photos/seed/album-tango-de-aeropuerto/500/500",
+    "artistSourceIds": [
+      "6c09936f-99b4-5b35-9d96-8f7e6200d67e"
+    ],
+    "genreSlugs": [
+      "latin"
+    ],
+    "unitsInStock": 6,
+    "priceInPence": 2499,
+    "originalPriceInPence": null
+  },
+  {
+    "title": "Cold Water Swimming",
+    "sourceId": "225b659d-f453-5cbc-b0bd-9d3bee717fc0",
+    "source": "Generated",
+    "description": "Recorded in a converted fish processing plant on the coast, which you can hear in every reverb tail. Glacial and quietly enormous.",
+    "releaseDate": "2013-02-11",
+    "label": "Northbound Sound",
+    "isNew": false,
+    "isStaffPick": false,
+    "imageUrl": "https://picsum.photos/seed/album-cold-water-swimming/500/500",
+    "artistSourceIds": [
+      "95aa41d1-afe3-5751-86d3-e4273375cbe1"
+    ],
+    "genreSlugs": [
+      "rock"
+    ],
+    "unitsInStock": 17,
+    "priceInPence": 2499,
+    "originalPriceInPence": null
+  },
+  {
+    "title": "The Slow Thaw",
+    "sourceId": "09ae8a7f-5e88-55f5-ae67-0f2efacdb21c",
+    "source": "Generated",
+    "description": "Warmer than the debut without giving up any of the patience. Four of these six tracks pass eight minutes and none outstay their welcome.",
+    "releaseDate": "2017-09-15",
+    "label": "Northbound Sound",
+    "isNew": false,
+    "isStaffPick": false,
+    "imageUrl": "https://picsum.photos/seed/album-the-slow-thaw/500/500",
+    "artistSourceIds": [
+      "95aa41d1-afe3-5751-86d3-e4273375cbe1"
+    ],
+    "genreSlugs": [
+      "rock"
+    ],
+    "unitsInStock": 29,
+    "priceInPence": 3799,
+    "originalPriceInPence": 4399
+  },
+  {
+    "title": "Low Tide Radio",
+    "sourceId": "29cb2d4e-f7d8-5f33-8ca0-58a2454259ca",
+    "source": "Generated",
+    "description": "Reverb-soaked guitar music built for headphones and long journeys. The record that made the band's reputation outside their own city.",
+    "releaseDate": "2015-05-12",
+    "label": "Lowtide Recordings",
+    "isNew": false,
+    "isStaffPick": false,
+    "imageUrl": "https://picsum.photos/seed/album-low-tide-radio/500/500",
+    "artistSourceIds": [
+      "93e04dda-4a93-58bb-80e4-a5d35abfb3c2"
+    ],
+    "genreSlugs": [
+      "rock"
+    ],
+    "unitsInStock": 1,
+    "priceInPence": 1999,
+    "originalPriceInPence": null
+  },
+  {
+    "title": "Static & Sea",
+    "sourceId": "190ff512-0efd-591b-970c-dc54dc0d7f8d",
+    "source": "Generated",
+    "description": "Synthesisers used as weather rather than melody, layered under the guitars until you stop separating them. Their most immersive record.",
+    "releaseDate": "2018-09-01",
+    "label": "Lowtide Recordings",
+    "isNew": false,
+    "isStaffPick": false,
+    "imageUrl": "https://picsum.photos/seed/album-static-and-sea/500/500",
+    "artistSourceIds": [
+      "93e04dda-4a93-58bb-80e4-a5d35abfb3c2"
+    ],
+    "genreSlugs": [
+      "rock",
+      "electronic"
+    ],
+    "unitsInStock": 6,
+    "priceInPence": 2599,
+    "originalPriceInPence": null
+  },
+  {
+    "title": "Every Quiet Thing",
+    "sourceId": "3c8f0890-de31-5c5c-bed7-d41161bb43c3",
+    "source": "Generated",
+    "description": "Songs that begin almost apologetically and end somewhere considerably louder. A debut that finally caught up with a live reputation.",
+    "releaseDate": "2016-04-08",
+    "label": "Cormorant Records",
+    "isNew": false,
+    "isStaffPick": false,
+    "imageUrl": "https://picsum.photos/seed/album-every-quiet-thing/500/500",
+    "artistSourceIds": [
+      "50956779-de1d-5af4-ac88-b9c153ebe671"
+    ],
+    "genreSlugs": [
+      "rock"
+    ],
+    "unitsInStock": 4,
+    "priceInPence": 2199,
+    "originalPriceInPence": null
+  },
+  {
+    "title": "House on Fire",
+    "sourceId": "07eaa32b-e7bd-54db-b7ac-dd2ea89b8af6",
+    "source": "Generated",
+    "description": "Recorded fast with a full band and almost nothing repaired afterwards. The most direct thing in her catalogue.",
+    "releaseDate": "2019-06-14",
+    "label": "Cormorant Records",
+    "isNew": false,
+    "isStaffPick": false,
+    "imageUrl": "https://picsum.photos/seed/album-house-on-fire/500/500",
+    "artistSourceIds": [
+      "50956779-de1d-5af4-ac88-b9c153ebe671"
+    ],
+    "genreSlugs": [
+      "rock"
+    ],
+    "unitsInStock": 26,
+    "priceInPence": 2199,
+    "originalPriceInPence": null
+  },
+  {
+    "title": "Corridor Six",
+    "sourceId": "2b977543-e255-58e4-b410-af5a81f7d36d",
+    "source": "Generated",
+    "description": "Written and mostly recorded overnight in a rehearsal room above a motorway services. Widescreen rock made in a very small space.",
+    "releaseDate": "2017-01-20",
+    "label": "Ash & Iron Records",
+    "isNew": false,
+    "isStaffPick": false,
+    "imageUrl": "https://picsum.photos/seed/album-corridor-six/500/500",
+    "artistSourceIds": [
+      "52e72592-864f-5094-a9e7-459dc2d53019"
+    ],
+    "genreSlugs": [
+      "rock"
+    ],
+    "unitsInStock": 33,
+    "priceInPence": 2099,
+    "originalPriceInPence": null
+  },
+  {
+    "title": "Service Station Hymns",
+    "sourceId": "6c588609-b902-53e8-8c27-5d03c81f443e",
+    "source": "Generated",
+    "description": "Bigger in every dimension than the debut and still recognisably the same band. The choruses are the point and they know it.",
+    "releaseDate": "2019-10-25",
+    "label": "Ash & Iron Records",
+    "isNew": false,
+    "isStaffPick": false,
+    "imageUrl": "https://picsum.photos/seed/album-service-station-hymns/500/500",
+    "artistSourceIds": [
+      "52e72592-864f-5094-a9e7-459dc2d53019"
+    ],
+    "genreSlugs": [
+      "rock"
+    ],
+    "unitsInStock": 14,
+    "priceInPence": 2299,
+    "originalPriceInPence": null
+  },
+  {
+    "title": "Signal Fires",
+    "sourceId": "72b9f5fe-1125-57fd-a887-06732140b637",
+    "source": "Generated",
+    "description": "Recorded almost entirely alone in a flat in Hamburg, then toured with a band twice the size. The homemade intimacy survives the volume.",
+    "releaseDate": "2014-03-07",
+    "label": "Cormorant Records",
+    "isNew": false,
+    "isStaffPick": false,
+    "imageUrl": "https://picsum.photos/seed/album-signal-fires/500/500",
+    "artistSourceIds": [
+      "2d097285-455f-55ff-9a08-684a21bdd010"
+    ],
+    "genreSlugs": [
+      "rock"
+    ],
+    "unitsInStock": 4,
+    "priceInPence": 2299,
+    "originalPriceInPence": null
+  },
+  {
+    "title": "Ground Sea",
+    "sourceId": "fc73919b-6104-55d0-a0a2-ea92ab7bf296",
+    "source": "Generated",
+    "description": "Arrived with no announcement four years after anyone expected it, and stayed in rotation for a decade. Tidal in the truest sense.",
+    "releaseDate": "2012-11-16",
+    "label": "Lowtide Recordings",
+    "isNew": false,
+    "isStaffPick": false,
+    "imageUrl": "https://picsum.photos/seed/album-ground-sea/500/500",
+    "artistSourceIds": [
+      "56be698f-badd-54fb-b46f-e1bbc039d771"
+    ],
+    "genreSlugs": [
+      "rock"
+    ],
+    "unitsInStock": 10,
+    "priceInPence": 2199,
+    "originalPriceInPence": null
+  },
+  {
+    "title": "Dead Letter Club",
+    "sourceId": "007d9151-945d-545c-9002-df3045e65235",
+    "source": "Generated",
+    "description": "The self-titled reunion record made after their first break-up. Sharper and considerably more generous than what preceded it.",
+    "releaseDate": "2013-07-19",
+    "label": "Cormorant Records",
+    "isNew": false,
+    "isStaffPick": false,
+    "imageUrl": "https://picsum.photos/seed/album-dead-letter-club/500/500",
+    "artistSourceIds": [
+      "0fa9fc01-b6d5-539a-b4f1-fcd05ee1dbf8"
+    ],
+    "genreSlugs": [
+      "rock"
+    ],
+    "unitsInStock": 24,
+    "priceInPence": 2099,
+    "originalPriceInPence": null
+  },
+  {
+    "title": "Interference Pattern",
+    "sourceId": "03ab0b1a-885c-5897-9333-cdc0affcf032",
+    "source": "Generated",
+    "description": "A debut that arrived fully assembled, loud and unusually good at knowing when to stop. The most asked-about band on this wall.",
+    "releaseDate": "2019-11-08",
+    "label": "Northbound Sound",
+    "isNew": false,
+    "isStaffPick": true,
+    "imageUrl": "https://picsum.photos/seed/album-interference-pattern/500/500",
+    "artistSourceIds": [
+      "fce6c02d-e4e9-5e76-833e-8a16e5753ac1"
+    ],
+    "genreSlugs": [
+      "rock"
+    ],
+    "unitsInStock": 1,
+    "priceInPence": 2099,
+    "originalPriceInPence": null
+  },
+  {
+    "title": "Residency Hours",
+    "sourceId": "44bf7452-5895-5fb3-bd38-f5bdce23789b",
+    "source": "Generated",
+    "description": "Written for the club she was playing four nights a week and recorded in the same room. Music built for a specific space and it travels anyway.",
+    "releaseDate": "2014-06-20",
+    "label": "Blue Meridian",
+    "isNew": false,
+    "isStaffPick": false,
+    "imageUrl": "https://picsum.photos/seed/album-residency-hours/500/500",
+    "artistSourceIds": [
+      "2bcb20ca-136b-56b0-bc29-cdf4c3ef98fe"
+    ],
+    "genreSlugs": [
+      "jazz"
+    ],
+    "unitsInStock": 26,
+    "priceInPence": 2899,
+    "originalPriceInPence": 3299
+  },
+  {
+    "title": "Halflight",
+    "sourceId": "6b1a7303-5a40-5f3a-8329-267742fad6c7",
+    "source": "Generated",
+    "description": "A collaboration that had no business working, folding Voss's production instincts into Marsh's writing. It works completely.",
+    "releaseDate": "2017-11-11",
+    "label": "Blue Meridian",
+    "isNew": false,
+    "isStaffPick": false,
+    "imageUrl": "https://picsum.photos/seed/album-halflight/500/500",
+    "artistSourceIds": [
+      "2bcb20ca-136b-56b0-bc29-cdf4c3ef98fe",
+      "928bf8a1-fecb-5304-8e88-0918811e1244"
+    ],
+    "genreSlugs": [
+      "jazz",
+      "folk-world-and-country"
+    ],
+    "unitsInStock": 32,
+    "priceInPence": 2499,
+    "originalPriceInPence": null
+  },
+  {
+    "title": "Loop and Horn",
+    "sourceId": "02451def-c42c-5ed7-9c11-c1e19d3d98da",
+    "source": "Generated",
+    "description": "Jazz arranged like a dance record, with the structure doing most of the emotional work. Stranger and better than it sounds on paper.",
+    "releaseDate": "2015-08-28",
+    "label": "Meridian Tapes",
+    "isNew": false,
+    "isStaffPick": false,
+    "imageUrl": "https://picsum.photos/seed/album-loop-and-horn/500/500",
+    "artistSourceIds": [
+      "928bf8a1-fecb-5304-8e88-0918811e1244"
+    ],
+    "genreSlugs": [
+      "jazz",
+      "electronic"
+    ],
+    "unitsInStock": 18,
+    "priceInPence": 2399,
+    "originalPriceInPence": null
+  },
+  {
+    "title": "The Accra Sessions",
+    "sourceId": "8a41a44f-d2c4-534d-8ab0-96a7ecca9e18",
+    "source": "Generated",
+    "description": "Recorded at home with local players rather than an imported band, which changes everything about how it breathes.",
+    "releaseDate": "2013-04-26",
+    "label": "Coastal Union",
+    "isNew": false,
+    "isStaffPick": false,
+    "imageUrl": "https://picsum.photos/seed/album-the-accra-sessions/500/500",
+    "artistSourceIds": [
+      "c734c87c-025a-5de8-b3bd-b2f1d865b90a"
+    ],
+    "genreSlugs": [
+      "jazz"
+    ],
+    "unitsInStock": 5,
+    "priceInPence": 2499,
+    "originalPriceInPence": null
+  },
+  {
+    "title": "Coastal Path",
+    "sourceId": "c348ff09-aba6-5185-a24d-57945d9a5028",
+    "source": "Generated",
+    "description": "Assembled from tape of actual places and processed until the places are only a rumour. Best heard walking.",
+    "releaseDate": "2016-02-19",
+    "label": "Meridian Tapes",
+    "isNew": false,
+    "isStaffPick": false,
+    "imageUrl": "https://picsum.photos/seed/album-coastal-path/500/500",
+    "artistSourceIds": [
+      "5403f0e9-1f3e-58ff-befa-fd2e7fbca4fd"
+    ],
+    "genreSlugs": [
+      "electronic"
+    ],
+    "unitsInStock": 29,
+    "priceInPence": 2699,
+    "originalPriceInPence": null
+  },
+  {
+    "title": "Weather Station",
+    "sourceId": "f91d25ef-60e0-5950-930f-af53efbe4d12",
+    "source": "Generated",
+    "description": "Longer and less forgiving than the debut, built around a single recording made over eleven months. Genuinely immersive.",
+    "releaseDate": "2019-04-05",
+    "label": "Meridian Tapes",
+    "isNew": false,
+    "isStaffPick": false,
+    "imageUrl": "https://picsum.photos/seed/album-weather-station/500/500",
+    "artistSourceIds": [
+      "5403f0e9-1f3e-58ff-befa-fd2e7fbca4fd"
+    ],
+    "genreSlugs": [
+      "electronic"
+    ],
+    "unitsInStock": 18,
+    "priceInPence": 2399,
+    "originalPriceInPence": null
+  },
+  {
+    "title": "After Hours Protocol",
+    "sourceId": "e15f584c-17a4-54f6-8e09-fdbcbf78c534",
+    "source": "Generated",
+    "description": "Dance music with the urgency removed and the texture doubled. Built for a proper system and slightly wasted on anything else.",
+    "releaseDate": "2013-10-11",
+    "label": "Pressing Room 4",
+    "isNew": false,
+    "isStaffPick": true,
+    "imageUrl": "https://picsum.photos/seed/album-after-hours-protocol/500/500",
+    "artistSourceIds": [
+      "ea49931f-75ca-53d1-825e-c2dc653f92e1"
+    ],
+    "genreSlugs": [
+      "electronic"
+    ],
+    "unitsInStock": 14,
+    "priceInPence": 2599,
+    "originalPriceInPence": null
+  },
+  {
+    "title": "Second Room",
+    "sourceId": "1f049b75-295d-54d0-8245-0ad6c31b3bcc",
+    "source": "Generated",
+    "description": "Named for the smaller room at the club, which tells you exactly what it is for. Patient, warm and beautifully sequenced.",
+    "releaseDate": "2018-06-22",
+    "label": "Pressing Room 4",
+    "isNew": false,
+    "isStaffPick": false,
+    "imageUrl": "https://picsum.photos/seed/album-second-room/500/500",
+    "artistSourceIds": [
+      "ea49931f-75ca-53d1-825e-c2dc653f92e1"
+    ],
+    "genreSlugs": [
+      "electronic"
+    ],
+    "unitsInStock": 16,
+    "priceInPence": 2599,
+    "originalPriceInPence": null
+  },
+  {
+    "title": "Negative Space",
+    "sourceId": "c901b7c7-dd00-5baa-b160-e8c9c9328cb1",
+    "source": "Generated",
+    "description": "Even sparser than the debut, which seemed impossible at the time. What is missing carries as much as what is there.",
+    "releaseDate": "2014-09-12",
+    "label": "Pressing Room 4",
+    "isNew": false,
+    "isStaffPick": false,
+    "imageUrl": "https://picsum.photos/seed/album-negative-space/500/500",
+    "artistSourceIds": [
+      "03c4b6a7-bf10-5225-806e-5752dda0cb1e"
+    ],
+    "genreSlugs": [
+      "electronic"
+    ],
+    "unitsInStock": 14,
+    "priceInPence": 2499,
+    "originalPriceInPence": null
+  },
+  {
+    "title": "Ashwood",
+    "sourceId": "d4397b6a-7ccf-537c-8023-80040f4c523c",
+    "source": "Generated",
+    "description": "Acoustic guitar and field recordings folded into the usual machinery, to genuinely disorienting effect. The outlier in her catalogue.",
+    "releaseDate": "2018-03-15",
+    "label": "Pressing Room 4",
+    "isNew": false,
+    "isStaffPick": false,
+    "imageUrl": "https://picsum.photos/seed/album-ashwood/500/500",
+    "artistSourceIds": [
+      "03c4b6a7-bf10-5225-806e-5752dda0cb1e"
+    ],
+    "genreSlugs": [
+      "electronic",
+      "folk-world-and-country"
+    ],
+    "unitsInStock": 4,
+    "priceInPence": 2599,
+    "originalPriceInPence": null
+  },
+  {
+    "title": "Tessellate",
+    "sourceId": "42ab5b8b-c6a4-5b89-adaf-524607f45593",
+    "source": "Generated",
+    "description": "Precise, restless and constitutionally unable to sit still. Changes direction roughly every ninety seconds and gets away with it.",
+    "releaseDate": "2019-07-26",
+    "label": "Waypoint Audio",
+    "isNew": false,
+    "isStaffPick": false,
+    "imageUrl": "https://picsum.photos/seed/album-tessellate/500/500",
+    "artistSourceIds": [
+      "af7230b5-828a-5791-8a20-af59bca9c19c"
+    ],
+    "genreSlugs": [
+      "electronic"
+    ],
+    "unitsInStock": 34,
+    "priceInPence": 2399,
+    "originalPriceInPence": null
+  },
+  {
+    "title": "Sunday Best",
+    "sourceId": "79602a87-e59c-5b25-87c9-e01b3a8e8158",
+    "source": "Generated",
+    "description": "Immaculate pop songs sung with just enough weariness to keep them from cloying. A debut with no wasted seconds.",
+    "releaseDate": "2014-05-02",
+    "label": "Gable End",
+    "isNew": false,
+    "isStaffPick": false,
+    "imageUrl": "https://picsum.photos/seed/album-sunday-best/500/500",
+    "artistSourceIds": [
+      "cf5638c7-fea6-590c-b357-9e00c6f55049"
+    ],
+    "genreSlugs": [
+      "pop"
+    ],
+    "unitsInStock": 1,
+    "priceInPence": 2199,
+    "originalPriceInPence": 2599
+  },
+  {
+    "title": "Occasion Wear",
+    "sourceId": "119967a0-cb63-5894-a7fc-e5db6de2817d",
+    "source": "Generated",
+    "description": "Glossier and sadder, with arrangements that reward the volume being turned up. Their best set of choruses so far.",
+    "releaseDate": "2018-08-17",
+    "label": "Gable End",
+    "isNew": false,
+    "isStaffPick": true,
+    "imageUrl": "https://picsum.photos/seed/album-occasion-wear/500/500",
+    "artistSourceIds": [
+      "cf5638c7-fea6-590c-b357-9e00c6f55049"
+    ],
+    "genreSlugs": [
+      "pop"
+    ],
+    "unitsInStock": 6,
+    "priceInPence": 3999,
+    "originalPriceInPence": null
+  },
+  {
+    "title": "Small Hours",
+    "sourceId": "4f76004e-8f93-548e-9b2a-2d8fe74892c8",
+    "source": "Generated",
+    "description": "Written, played and produced alone, which is exactly why it sounds like nobody else. Bright on the surface, bleak underneath.",
+    "releaseDate": "2018-02-23",
+    "label": "Nightpost Records",
+    "isNew": false,
+    "isStaffPick": false,
+    "imageUrl": "https://picsum.photos/seed/album-small-hours/500/500",
+    "artistSourceIds": [
+      "fb9ead1a-2cae-528d-ae4d-f545efdccba0"
+    ],
+    "genreSlugs": [
+      "pop"
+    ],
+    "unitsInStock": 5,
+    "priceInPence": 2299,
+    "originalPriceInPence": null
+  },
+  {
+    "title": "Paper Weather",
+    "sourceId": "4de30151-18a9-55ae-a982-00042a584e00",
+    "source": "Generated",
+    "description": "More electronic and more direct, with three of the sharpest songs she has written. A short record that does not waste a second.",
+    "releaseDate": "2019-09-06",
+    "label": "Nightpost Records",
+    "isNew": false,
+    "isStaffPick": false,
+    "imageUrl": "https://picsum.photos/seed/album-paper-weather/500/500",
+    "artistSourceIds": [
+      "fb9ead1a-2cae-528d-ae4d-f545efdccba0"
+    ],
+    "genreSlugs": [
+      "pop",
+      "electronic"
+    ],
+    "unitsInStock": 33,
+    "priceInPence": 2299,
+    "originalPriceInPence": null
+  },
+  {
+    "title": "Long Paragraphs",
+    "sourceId": "d0c3ec92-522d-56fb-8a59-65c1c380c7c5",
+    "source": "Generated",
+    "description": "Dense writing delivered like conversation, over beats that leave plenty of room for it. Rewards a fourth listen and survives the first.",
+    "releaseDate": "2014-10-17",
+    "label": "Foundry Street",
+    "isNew": false,
+    "isStaffPick": false,
+    "imageUrl": "https://picsum.photos/seed/album-long-paragraphs/500/500",
+    "artistSourceIds": [
+      "1e0ae647-a619-5336-9907-81173d313b11"
+    ],
+    "genreSlugs": [
+      "hip-hop"
+    ],
+    "unitsInStock": 13,
+    "priceInPence": 2799,
+    "originalPriceInPence": null
+  },
+  {
+    "title": "Second Person",
+    "sourceId": "bcd47660-4c63-550c-866a-106bda1e70a5",
+    "source": "Generated",
+    "description": "Live musicians throughout and a noticeably lighter touch. His most musical record and probably his best.",
+    "releaseDate": "2018-11-30",
+    "label": "Foundry Street",
+    "isNew": false,
+    "isStaffPick": false,
+    "imageUrl": "https://picsum.photos/seed/album-second-person/500/500",
+    "artistSourceIds": [
+      "1e0ae647-a619-5336-9907-81173d313b11"
+    ],
+    "genreSlugs": [
+      "hip-hop",
+      "jazz"
+    ],
+    "unitsInStock": 19,
+    "priceInPence": 2399,
+    "originalPriceInPence": null
+  },
+  {
+    "title": "Marges Lucides",
+    "sourceId": "636c2ba8-ccbc-50f5-9a2f-3d2d77ab0e4e",
+    "source": "Generated",
+    "description": "Two languages treated as two instruments, over jazz-leaning beats with a real editor's discipline. Nothing here is longer than it needs to be.",
+    "releaseDate": "2018-05-18",
+    "label": "Waypoint Audio",
+    "isNew": false,
+    "isStaffPick": false,
+    "imageUrl": "https://picsum.photos/seed/album-marges-lucides/500/500",
+    "artistSourceIds": [
+      "16557357-32c3-5d7b-99cf-f5a9c6b4d281"
+    ],
+    "genreSlugs": [
+      "hip-hop"
+    ],
+    "unitsInStock": 0,
+    "priceInPence": 2799,
+    "originalPriceInPence": null
+  },
+  {
+    "title": "Compás Roto",
+    "sourceId": "a9635056-f29f-514e-aef5-828f290b8fe3",
+    "source": "Generated",
+    "description": "Flamenco training applied to songs that are not flamenco, with the rhythmic discipline fully intact. Stark and hypnotic.",
+    "releaseDate": "2013-06-07",
+    "label": "Verdant Sound",
+    "isNew": false,
+    "isStaffPick": true,
+    "imageUrl": "https://picsum.photos/seed/album-compás-roto/500/500",
+    "artistSourceIds": [
+      "6105a216-90e6-5d66-8cc1-f666c03ca2d5"
+    ],
+    "genreSlugs": [
+      "folk-world-and-country"
+    ],
+    "unitsInStock": 12,
+    "priceInPence": 2099,
+    "originalPriceInPence": null
+  },
+  {
+    "title": "Tierra Seca",
+    "sourceId": "94eeef6a-279c-5d63-a203-8a2f16d5cbd4",
+    "source": "Generated",
+    "description": "A fuller band and a wider palette without losing the severity that made the debut work. Her most complete record.",
+    "releaseDate": "2017-04-21",
+    "label": "Verdant Sound",
+    "isNew": false,
+    "isStaffPick": false,
+    "imageUrl": "https://picsum.photos/seed/album-tierra-seca/500/500",
+    "artistSourceIds": [
+      "6105a216-90e6-5d66-8cc1-f666c03ca2d5"
+    ],
+    "genreSlugs": [
+      "folk-world-and-country",
+      "latin"
+    ],
+    "unitsInStock": 17,
+    "priceInPence": 1999,
+    "originalPriceInPence": 2499
+  },
+  {
+    "title": "Family Business",
+    "sourceId": "2bca58b6-544f-5985-a163-6cdb1ae644f6",
+    "source": "Generated",
+    "description": "Harmonies stacked four deep over songs that would work with none at all. Country music with real craft under the warmth.",
+    "releaseDate": "2015-10-09",
+    "label": "Ember Hill",
+    "isNew": false,
+    "isStaffPick": false,
+    "imageUrl": "https://picsum.photos/seed/album-family-business/500/500",
+    "artistSourceIds": [
+      "ac2d4890-adf9-5040-923f-9133f4353405"
+    ],
+    "genreSlugs": [
+      "folk-world-and-country"
+    ],
+    "unitsInStock": 11,
+    "priceInPence": 2599,
+    "originalPriceInPence": 3399
+  },
+  {
+    "title": "Bridgetown Roots",
+    "sourceId": "ec750f06-69d3-5623-89b6-066cc994a8d9",
+    "source": "Generated",
+    "description": "Modern roots singing with a producer's ear for space. Patient in a way that new reggae records rarely bother being.",
+    "releaseDate": "2016-07-15",
+    "label": "Silver Fathom",
+    "isNew": false,
+    "isStaffPick": false,
+    "imageUrl": "https://picsum.photos/seed/album-bridgetown-roots/500/500",
+    "artistSourceIds": [
+      "efa055ff-53fb-5890-bc78-b294d2314a10"
+    ],
+    "genreSlugs": [
+      "reggae"
+    ],
+    "unitsInStock": 13,
+    "priceInPence": 2599,
+    "originalPriceInPence": null
+  },
+  {
+    "title": "Short Fuse",
+    "sourceId": "c46a0d9c-c476-5c0c-b6a6-6a6cb8b3315d",
+    "source": "Generated",
+    "description": "Slide guitar played with punk impatience, no track over three minutes and no solos for the sake of it. Refreshing and slightly rude.",
+    "releaseDate": "2015-03-27",
+    "label": "Foundry Street",
+    "isNew": false,
+    "isStaffPick": false,
+    "imageUrl": "https://picsum.photos/seed/album-short-fuse/500/500",
+    "artistSourceIds": [
+      "45a0a3aa-fcd7-51be-a675-8f220d8eb96c"
+    ],
+    "genreSlugs": [
+      "blues"
+    ],
+    "unitsInStock": 4,
+    "priceInPence": 2599,
+    "originalPriceInPence": null
+  },
+  {
+    "title": "The Gilded Curtain",
+    "sourceId": "76219660-1638-5f47-b102-b66a24d12eb9",
+    "source": "Generated",
+    "description": "The original cast recording, made across two days with the pit orchestra fully live in the room. Far better recorded than most of its kind.",
+    "releaseDate": "2016-03-11",
+    "label": "Lantern Row",
+    "isNew": false,
+    "isStaffPick": false,
+    "imageUrl": "https://picsum.photos/seed/album-the-gilded-curtain/500/500",
+    "artistSourceIds": [
+      "726d3a7d-ffec-5613-99ae-b10ced71e484"
+    ],
+    "genreSlugs": [
+      "stage-and-screen"
+    ],
+    "unitsInStock": 12,
+    "priceInPence": 2399,
+    "originalPriceInPence": null
+  },
+  {
+    "title": "The Quiet Coast",
+    "sourceId": "bbe8395a-9e18-5326-8d70-d4633fb2361a",
+    "source": "Generated",
+    "description": "A television score collected as an album and much the better for the edit. Strings, patience and a very light hand.",
+    "releaseDate": "2015-01-16",
+    "label": "Lantern Row",
+    "isNew": false,
+    "isStaffPick": false,
+    "imageUrl": "https://picsum.photos/seed/album-the-quiet-coast/500/500",
+    "artistSourceIds": [
+      "9e370d4d-0bf5-5063-8669-cae7b6d313f3"
+    ],
+    "genreSlugs": [
+      "stage-and-screen",
+      "classical"
+    ],
+    "unitsInStock": 13,
+    "priceInPence": 2299,
+    "originalPriceInPence": null
+  },
+  {
+    "title": "Northern Crossing",
+    "sourceId": "4152f047-0f20-520d-9e82-6d215dbdb22f",
+    "source": "Generated",
+    "description": "Her most expansive score to date, written for a series that ran three seasons. Works perfectly well without any of them.",
+    "releaseDate": "2019-02-08",
+    "label": "Lantern Row",
+    "isNew": false,
+    "isStaffPick": false,
+    "imageUrl": "https://picsum.photos/seed/album-northern-crossing/500/500",
+    "artistSourceIds": [
+      "6c4495c8-fb94-571e-9271-c64ea1027ce6"
+    ],
+    "genreSlugs": [
+      "stage-and-screen"
+    ],
+    "unitsInStock": 13,
+    "priceInPence": 1799,
+    "originalPriceInPence": null
+  },
+  {
+    "title": "Bad Reception",
+    "sourceId": "89c43367-6127-59d5-9db9-f3520a9d65d6",
+    "source": "Generated",
+    "description": "Louder and angrier than the debut, recorded in nine days with almost nothing fixed afterwards. A proper second record.",
+    "releaseDate": "2022-03-25",
+    "label": "Northbound Sound",
+    "isNew": false,
+    "isStaffPick": false,
+    "imageUrl": "https://picsum.photos/seed/album-bad-reception/500/500",
+    "artistSourceIds": [
+      "fce6c02d-e4e9-5e76-833e-8a16e5753ac1"
+    ],
+    "genreSlugs": [
+      "rock"
+    ],
+    "unitsInStock": 11,
+    "priceInPence": 2199,
+    "originalPriceInPence": 2799
+  },
+  {
+    "title": "Standing Wave",
+    "sourceId": "d2e3a637-57d0-5f22-b31f-a057716845f6",
+    "source": "Generated",
+    "description": "The record where the band stopped shouting and became considerably more frightening. Their best work by a distance.",
+    "releaseDate": "2025-08-15",
+    "label": "Northbound Sound",
+    "isNew": true,
+    "isStaffPick": true,
+    "imageUrl": "https://picsum.photos/seed/album-standing-wave/500/500",
+    "artistSourceIds": [
+      "fce6c02d-e4e9-5e76-833e-8a16e5753ac1"
+    ],
+    "genreSlugs": [
+      "rock"
+    ],
+    "unitsInStock": 36,
+    "priceInPence": 2299,
+    "originalPriceInPence": null
+  },
+  {
+    "title": "Nightshift",
+    "sourceId": "97ce1609-4824-5a00-add7-dc959312a992",
+    "source": "Generated",
+    "description": "Written on tour and recorded immediately afterwards, which accounts for both the fatigue and the momentum. Their most direct album.",
+    "releaseDate": "2021-09-24",
+    "label": "Ash & Iron Records",
+    "isNew": false,
+    "isStaffPick": false,
+    "imageUrl": "https://picsum.photos/seed/album-nightshift/500/500",
+    "artistSourceIds": [
+      "52e72592-864f-5094-a9e7-459dc2d53019"
+    ],
+    "genreSlugs": [
+      "rock"
+    ],
+    "unitsInStock": 27,
+    "priceInPence": 2299,
+    "originalPriceInPence": null
+  },
+  {
+    "title": "Weathervane",
+    "sourceId": "02069b7f-16e4-559e-9002-4e88afc08225",
+    "source": "Generated",
+    "description": "Four years in the making and audibly worth it, with strings on half the tracks and no loss of nerve. A genuine step up.",
+    "releaseDate": "2025-06-06",
+    "label": "Ash & Iron Records",
+    "isNew": true,
+    "isStaffPick": false,
+    "imageUrl": "https://picsum.photos/seed/album-weathervane/500/500",
+    "artistSourceIds": [
+      "52e72592-864f-5094-a9e7-459dc2d53019"
+    ],
+    "genreSlugs": [
+      "rock"
+    ],
+    "unitsInStock": 11,
+    "priceInPence": 3199,
+    "originalPriceInPence": null
+  },
+  {
+    "title": "Concrete Bloom",
+    "sourceId": "9203107a-4719-5f25-a966-52c63421f95c",
+    "source": "Generated",
+    "description": "Her heaviest record, made with a rhythm section she had been touring with for years. Nothing tentative anywhere on it.",
+    "releaseDate": "2022-07-08",
+    "label": "Cormorant Records",
+    "isNew": false,
+    "isStaffPick": false,
+    "imageUrl": "https://picsum.photos/seed/album-concrete-bloom/500/500",
+    "artistSourceIds": [
+      "50956779-de1d-5af4-ac88-b9c153ebe671"
+    ],
+    "genreSlugs": [
+      "rock"
+    ],
+    "unitsInStock": 12,
+    "priceInPence": 2799,
+    "originalPriceInPence": null
+  },
+  {
+    "title": "Slow Burn Season",
+    "sourceId": "0eada9de-ca9b-56b3-ab6e-84e70370ae4e",
+    "source": "Generated",
+    "description": "Acoustic for long stretches and all the more forceful for it. The most recent thing on this wall and already a staff favourite.",
+    "releaseDate": "2026-02-13",
+    "label": "Cormorant Records",
+    "isNew": true,
+    "isStaffPick": false,
+    "imageUrl": "https://picsum.photos/seed/album-slow-burn-season/500/500",
+    "artistSourceIds": [
+      "50956779-de1d-5af4-ac88-b9c153ebe671"
+    ],
+    "genreSlugs": [
+      "rock",
+      "folk-world-and-country"
+    ],
+    "unitsInStock": 14,
+    "priceInPence": 2899,
+    "originalPriceInPence": null
+  },
+  {
+    "title": "Distant Early Warning",
+    "sourceId": "f40bea88-8379-5c63-b101-7bd921dbaa39",
+    "source": "Generated",
+    "description": "The guitars pushed back and the drums pushed forward, which changes the band entirely. Divisive and completely convincing.",
+    "releaseDate": "2023-05-19",
+    "label": "Lowtide Recordings",
+    "isNew": false,
+    "isStaffPick": false,
+    "imageUrl": "https://picsum.photos/seed/album-distant-early-warning/500/500",
+    "artistSourceIds": [
+      "93e04dda-4a93-58bb-80e4-a5d35abfb3c2"
+    ],
+    "genreSlugs": [
+      "rock"
+    ],
+    "unitsInStock": 37,
+    "priceInPence": 3999,
+    "originalPriceInPence": null
+  },
+  {
+    "title": "Meltwater",
+    "sourceId": "08484dcd-5794-5ba4-9a1b-e9ab17d87e6e",
+    "source": "Generated",
+    "description": "Recorded across two winters in the same converted plant as the debut. Slower, warmer and considerably more melodic.",
+    "releaseDate": "2024-10-04",
+    "label": "Northbound Sound",
+    "isNew": false,
+    "isStaffPick": false,
+    "imageUrl": "https://picsum.photos/seed/album-meltwater/500/500",
+    "artistSourceIds": [
+      "95aa41d1-afe3-5751-86d3-e4273375cbe1"
+    ],
+    "genreSlugs": [
+      "rock"
+    ],
+    "unitsInStock": 17,
+    "priceInPence": 2899,
+    "originalPriceInPence": null
+  },
+  {
+    "title": "Hamburg Tapes",
+    "sourceId": "4ca3577a-5579-5078-a2db-37fe960a59ab",
+    "source": "Generated",
+    "description": "Back to recording alone after two band albums, and the songs benefit enormously from the smaller room.",
+    "releaseDate": "2025-04-11",
+    "label": "Cormorant Records",
+    "isNew": true,
+    "isStaffPick": false,
+    "imageUrl": "https://picsum.photos/seed/album-hamburg-tapes/500/500",
+    "artistSourceIds": [
+      "2d097285-455f-55ff-9a08-684a21bdd010"
+    ],
+    "genreSlugs": [
+      "rock"
+    ],
+    "unitsInStock": 3,
+    "priceInPence": 2799,
+    "originalPriceInPence": null
+  },
+  {
+    "title": "Half-Light Hours",
+    "sourceId": "dc876901-6ff8-568b-bcb7-64adf904636d",
+    "source": "Generated",
+    "description": "Club tracks with an unusual amount of sadness built into them. A debut that sold out three pressings before anyone noticed.",
+    "releaseDate": "2023-02-17",
+    "label": "Pressing Room 4",
+    "isNew": false,
+    "isStaffPick": false,
+    "imageUrl": "https://picsum.photos/seed/album-half-light-hours/500/500",
+    "artistSourceIds": [
+      "0787ca27-52ea-5cdd-ab05-df48b9fffdfc"
+    ],
+    "genreSlugs": [
+      "electronic"
+    ],
+    "unitsInStock": 10,
+    "priceInPence": 2899,
+    "originalPriceInPence": null
+  },
+  {
+    "title": "Lisbon After Rain",
+    "sourceId": "bada4b87-3354-5e7e-aa21-202b34ede11d",
+    "source": "Generated",
+    "description": "Slower, longer and more melodic than the debut, and considerably harder to keep in stock. Genuinely special.",
+    "releaseDate": "2026-01-23",
+    "label": "Pressing Room 4",
+    "isNew": true,
+    "isStaffPick": false,
+    "imageUrl": "https://picsum.photos/seed/album-lisbon-after-rain/500/500",
+    "artistSourceIds": [
+      "0787ca27-52ea-5cdd-ab05-df48b9fffdfc"
+    ],
+    "genreSlugs": [
+      "electronic"
+    ],
+    "unitsInStock": 5,
+    "priceInPence": 2899,
+    "originalPriceInPence": null
+  },
+  {
+    "title": "Nine Figures",
+    "sourceId": "c6311833-785e-54ce-9f74-498c77b5eb81",
+    "source": "Generated",
+    "description": "As restless as ever but rather better arranged, with three tracks that finally hold still long enough to land.",
+    "releaseDate": "2022-11-11",
+    "label": "Waypoint Audio",
+    "isNew": false,
+    "isStaffPick": false,
+    "imageUrl": "https://picsum.photos/seed/album-nine-figures/500/500",
+    "artistSourceIds": [
+      "af7230b5-828a-5791-8a20-af59bca9c19c"
+    ],
+    "genreSlugs": [
+      "electronic"
+    ],
+    "unitsInStock": 5,
+    "priceInPence": 2799,
+    "originalPriceInPence": null
+  },
+  {
+    "title": "Recursive",
+    "sourceId": "5126cb25-2779-5d57-9bb5-6f4cb7660307",
+    "source": "Generated",
+    "description": "Built from a single motif taken apart across seven tracks. Their most conceptual record and, unexpectedly, their most danceable.",
+    "releaseDate": "2025-09-26",
+    "label": "Waypoint Audio",
+    "isNew": true,
+    "isStaffPick": false,
+    "imageUrl": "https://picsum.photos/seed/album-recursive/500/500",
+    "artistSourceIds": [
+      "af7230b5-828a-5791-8a20-af59bca9c19c"
+    ],
+    "genreSlugs": [
+      "electronic"
+    ],
+    "unitsInStock": 16,
+    "priceInPence": 2799,
+    "originalPriceInPence": null
+  },
+  {
+    "title": "Ice Road",
+    "sourceId": "2a06320f-4fcc-5bd1-8061-cbc5bce16bda",
+    "source": "Generated",
+    "description": "Recorded across a single winter journey and processed for two years afterwards. Bleak, beautiful and very long.",
+    "releaseDate": "2024-01-19",
+    "label": "Meridian Tapes",
+    "isNew": false,
+    "isStaffPick": false,
+    "imageUrl": "https://picsum.photos/seed/album-ice-road/500/500",
+    "artistSourceIds": [
+      "5403f0e9-1f3e-58ff-befa-fd2e7fbca4fd"
+    ],
+    "genreSlugs": [
+      "electronic"
+    ],
+    "unitsInStock": 17,
+    "priceInPence": 2699,
+    "originalPriceInPence": null
+  },
+  {
+    "title": "Closing Time Signature",
+    "sourceId": "95736481-c920-58a2-9c99-33a5856215bb",
+    "source": "Generated",
+    "description": "Exactly what the duo have always done, done better than they have done it before. For the very end of the night.",
+    "releaseDate": "2025-11-14",
+    "label": "Pressing Room 4",
+    "isNew": true,
+    "isStaffPick": false,
+    "imageUrl": "https://picsum.photos/seed/album-closing-time-signature/500/500",
+    "artistSourceIds": [
+      "ea49931f-75ca-53d1-825e-c2dc653f92e1"
+    ],
+    "genreSlugs": [
+      "electronic"
+    ],
+    "unitsInStock": 33,
+    "priceInPence": 3199,
+    "originalPriceInPence": null
+  },
+  {
+    "title": "Sparrow",
+    "sourceId": "ade77153-68cb-5dbc-8bbf-32db4a7fcde0",
+    "source": "Generated",
+    "description": "Very small sounds arranged around very large hooks. A debut that seemed slight on release and has not stopped growing since.",
+    "releaseDate": "2021-06-18",
+    "label": "Nightpost Records",
+    "isNew": false,
+    "isStaffPick": false,
+    "imageUrl": "https://picsum.photos/seed/album-sparrow/500/500",
+    "artistSourceIds": [
+      "7a268390-e1f0-5b7e-a625-36cbc153b6b1"
+    ],
+    "genreSlugs": [
+      "pop"
+    ],
+    "unitsInStock": 13,
+    "priceInPence": 3099,
+    "originalPriceInPence": null
+  },
+  {
+    "title": "Second Flight",
+    "sourceId": "216332df-c8ff-54e6-b1b8-7da4aab3d05a",
+    "source": "Generated",
+    "description": "The record that made everyone pay proper attention, built on the same principles at three times the scale.",
+    "releaseDate": "2025-05-30",
+    "label": "Nightpost Records",
+    "isNew": true,
+    "isStaffPick": false,
+    "imageUrl": "https://picsum.photos/seed/album-second-flight/500/500",
+    "artistSourceIds": [
+      "7a268390-e1f0-5b7e-a625-36cbc153b6b1"
+    ],
+    "genreSlugs": [
+      "pop",
+      "electronic"
+    ],
+    "unitsInStock": 34,
+    "priceInPence": 2999,
+    "originalPriceInPence": null
+  },
+  {
+    "title": "Common Weather",
+    "sourceId": "30185598-ef53-5079-bb19-f4e1463baeba",
+    "source": "Generated",
+    "description": "Her first record made with an outside producer, and the collaboration is plainly good for her. Sharper and warmer at once.",
+    "releaseDate": "2022-09-16",
+    "label": "Nightpost Records",
+    "isNew": false,
+    "isStaffPick": false,
+    "imageUrl": "https://picsum.photos/seed/album-common-weather/500/500",
+    "artistSourceIds": [
+      "fb9ead1a-2cae-528d-ae4d-f545efdccba0"
+    ],
+    "genreSlugs": [
+      "pop"
+    ],
+    "unitsInStock": 18,
+    "priceInPence": 2399,
+    "originalPriceInPence": null
+  },
+  {
+    "title": "The Understudy",
+    "sourceId": "99f3553c-70e9-59e9-b027-8d595022cafc",
+    "source": "Generated",
+    "description": "Written across a year off and recorded in three weeks. Quiet, exact and among the best things released this year.",
+    "releaseDate": "2026-03-20",
+    "label": "Nightpost Records",
+    "isNew": true,
+    "isStaffPick": false,
+    "imageUrl": "https://picsum.photos/seed/album-the-understudy/500/500",
+    "artistSourceIds": [
+      "fb9ead1a-2cae-528d-ae4d-f545efdccba0"
+    ],
+    "genreSlugs": [
+      "pop"
+    ],
+    "unitsInStock": 18,
+    "priceInPence": 2199,
+    "originalPriceInPence": null
+  },
+  {
+    "title": "Best Behaviour",
+    "sourceId": "3330d1d5-c40a-5c91-b674-f4e567cb9ffa",
+    "source": "Generated",
+    "description": "Sunnier than anything they have made and hiding just as much underneath. The choruses do a great deal of quiet work.",
+    "releaseDate": "2023-08-25",
+    "label": "Gable End",
+    "isNew": false,
+    "isStaffPick": false,
+    "imageUrl": "https://picsum.photos/seed/album-best-behaviour/500/500",
+    "artistSourceIds": [
+      "cf5638c7-fea6-590c-b357-9e00c6f55049"
+    ],
+    "genreSlugs": [
+      "pop"
+    ],
+    "unitsInStock": 3,
+    "priceInPence": 2999,
+    "originalPriceInPence": 3299
+  },
+  {
+    "title": "Low Country",
+    "sourceId": "4e3bb7cd-d481-57c6-811e-42c9f1400ec3",
+    "source": "Generated",
+    "description": "Slow, heavy and mixed so the low end genuinely matters. The newest name in this section and already the most requested.",
+    "releaseDate": "2025-07-18",
+    "label": "Foundry Street",
+    "isNew": true,
+    "isStaffPick": false,
+    "imageUrl": "https://picsum.photos/seed/album-low-country/500/500",
+    "artistSourceIds": [
+      "8915d2d7-15c3-5b09-a454-492515a917ec"
+    ],
+    "genreSlugs": [
+      "hip-hop"
+    ],
+    "unitsInStock": 15,
+    "priceInPence": 2999,
+    "originalPriceInPence": null
+  },
+  {
+    "title": "Third Person",
+    "sourceId": "503863bc-90d8-5ffa-9d95-60e298e4ceb6",
+    "source": "Generated",
+    "description": "Completes a loose trilogy and is comfortably the most assured part of it. Live band, long verses, no filler.",
+    "releaseDate": "2023-04-14",
+    "label": "Foundry Street",
+    "isNew": false,
+    "isStaffPick": false,
+    "imageUrl": "https://picsum.photos/seed/album-third-person/500/500",
+    "artistSourceIds": [
+      "1e0ae647-a619-5336-9907-81173d313b11"
+    ],
+    "genreSlugs": [
+      "hip-hop"
+    ],
+    "unitsInStock": 38,
+    "priceInPence": 2699,
+    "originalPriceInPence": null
+  },
+  {
+    "title": "Notes in the Margin",
+    "sourceId": "df1288ef-5eb1-59fc-a054-67c1d8e3d91b",
+    "source": "Generated",
+    "description": "Recorded with a jazz trio in the room, which turns out to be exactly what these songs wanted. Elegant and unusually short.",
+    "releaseDate": "2024-06-21",
+    "label": "Waypoint Audio",
+    "isNew": false,
+    "isStaffPick": true,
+    "imageUrl": "https://picsum.photos/seed/album-notes-in-the-margin/500/500",
+    "artistSourceIds": [
+      "16557357-32c3-5d7b-99cf-f5a9c6b4d281"
+    ],
+    "genreSlugs": [
+      "hip-hop",
+      "jazz"
+    ],
+    "unitsInStock": 26,
+    "priceInPence": 2599,
+    "originalPriceInPence": null
+  },
+  {
+    "title": "Night Kitchen",
+    "sourceId": "9844d0ff-ca57-56ab-9e15-a585d51e101c",
+    "source": "Generated",
+    "description": "Written during a year with no gigs and recorded the moment there were rooms to play again. You can hear the relief.",
+    "releaseDate": "2021-11-05",
+    "label": "Blue Meridian",
+    "isNew": false,
+    "isStaffPick": false,
+    "imageUrl": "https://picsum.photos/seed/album-night-kitchen/500/500",
+    "artistSourceIds": [
+      "2bcb20ca-136b-56b0-bc29-cdf4c3ef98fe"
+    ],
+    "genreSlugs": [
+      "jazz"
+    ],
+    "unitsInStock": 1,
+    "priceInPence": 3299,
+    "originalPriceInPence": null
+  },
+  {
+    "title": "Standard Time",
+    "sourceId": "c1687c5f-1451-56af-a0ef-e62142cc0f35",
+    "source": "Generated",
+    "description": "Her first standards record, approached with the same appetite for rearrangement she brings to her own material.",
+    "releaseDate": "2025-10-10",
+    "label": "Blue Meridian",
+    "isNew": true,
+    "isStaffPick": false,
+    "imageUrl": "https://picsum.photos/seed/album-standard-time/500/500",
+    "artistSourceIds": [
+      "2bcb20ca-136b-56b0-bc29-cdf4c3ef98fe"
+    ],
+    "genreSlugs": [
+      "jazz"
+    ],
+    "unitsInStock": 1,
+    "priceInPence": 2899,
+    "originalPriceInPence": null
+  },
+  {
+    "title": "Machine Ballads",
+    "sourceId": "87c2fe8e-5469-5d80-b7e3-ad07d9e3af47",
+    "source": "Generated",
+    "description": "Loops, horns and an unusual amount of tenderness. The clearest statement yet of what she has been working towards.",
+    "releaseDate": "2024-03-08",
+    "label": "Meridian Tapes",
+    "isNew": false,
+    "isStaffPick": false,
+    "imageUrl": "https://picsum.photos/seed/album-machine-ballads/500/500",
+    "artistSourceIds": [
+      "928bf8a1-fecb-5304-8e88-0918811e1244"
+    ],
+    "genreSlugs": [
+      "jazz",
+      "electronic"
+    ],
+    "unitsInStock": 20,
+    "priceInPence": 2399,
+    "originalPriceInPence": null
+  },
+  {
+    "title": "Osaka Solo",
+    "sourceId": "d150e879-1ad3-5eda-94b8-a450f60f5014",
+    "source": "Generated",
+    "description": "Back to solo piano in a hall she has recorded in three times before. As spare and as generous as anything in her catalogue.",
+    "releaseDate": "2022-05-27",
+    "label": "Blue Meridian",
+    "isNew": false,
+    "isStaffPick": true,
+    "imageUrl": "https://picsum.photos/seed/album-osaka-solo/500/500",
+    "artistSourceIds": [
+      "fba0fdcf-cc33-50c8-8314-305fbeb2d403"
+    ],
+    "genreSlugs": [
+      "jazz"
+    ],
+    "unitsInStock": 13,
+    "priceInPence": 3399,
+    "originalPriceInPence": null
+  },
+  {
+    "title": "Salt Air Dub",
+    "sourceId": "fc2b7edf-f33b-5866-b6ca-742fceb117bc",
+    "source": "Generated",
+    "description": "A full dub companion to her second album, mixed by the singer herself. Heavier and stranger than the vocal versions.",
+    "releaseDate": "2021-04-30",
+    "label": "Silver Fathom",
+    "isNew": false,
+    "isStaffPick": false,
+    "imageUrl": "https://picsum.photos/seed/album-salt-air-dub/500/500",
+    "artistSourceIds": [
+      "efa055ff-53fb-5890-bc78-b294d2314a10"
+    ],
+    "genreSlugs": [
+      "reggae"
+    ],
+    "unitsInStock": 8,
+    "priceInPence": 2599,
+    "originalPriceInPence": null
+  },
+  {
+    "title": "Steady Ground",
+    "sourceId": "8edfbbfe-ee75-5e4d-8b50-56757b5aad86",
+    "source": "Generated",
+    "description": "Horns, harmonies and a rhythm section with nothing to prove. The most joyful record she has made.",
+    "releaseDate": "2025-03-14",
+    "label": "Silver Fathom",
+    "isNew": true,
+    "isStaffPick": false,
+    "imageUrl": "https://picsum.photos/seed/album-steady-ground/500/500",
+    "artistSourceIds": [
+      "efa055ff-53fb-5890-bc78-b294d2314a10"
+    ],
+    "genreSlugs": [
+      "reggae",
+      "funk-soul"
+    ],
+    "unitsInStock": 9,
+    "priceInPence": 2699,
+    "originalPriceInPence": null
+  },
+  {
+    "title": "Bottleneck",
+    "sourceId": "e6a37377-6a8a-54fb-8532-3a751f857415",
+    "source": "Generated",
+    "description": "Eleven songs in twenty-nine minutes, played like she has somewhere to be. The impatience remains the whole appeal.",
+    "releaseDate": "2024-08-16",
+    "label": "Foundry Street",
+    "isNew": false,
+    "isStaffPick": false,
+    "imageUrl": "https://picsum.photos/seed/album-bottleneck/500/500",
+    "artistSourceIds": [
+      "45a0a3aa-fcd7-51be-a675-8f220d8eb96c"
+    ],
+    "genreSlugs": [
+      "blues"
+    ],
+    "unitsInStock": 15,
+    "priceInPence": 3499,
+    "originalPriceInPence": null
+  },
+  {
+    "title": "Casa Vacía",
+    "sourceId": "84e0b466-66b0-5f79-9640-23e53258b7e3",
+    "source": "Generated",
+    "description": "Recorded in an empty house over one summer with two microphones. The most intimate thing she has released.",
+    "releaseDate": "2023-10-27",
+    "label": "Verdant Sound",
+    "isNew": false,
+    "isStaffPick": false,
+    "imageUrl": "https://picsum.photos/seed/album-casa-vacía/500/500",
+    "artistSourceIds": [
+      "6105a216-90e6-5d66-8cc1-f666c03ca2d5"
+    ],
+    "genreSlugs": [
+      "folk-world-and-country",
+      "latin"
+    ],
+    "unitsInStock": 2,
+    "priceInPence": 3099,
+    "originalPriceInPence": null
+  },
+  {
+    "title": "Long Way Home",
+    "sourceId": "0f2c72d6-3f09-5a03-8204-d34d2bcbc007",
+    "source": "Generated",
+    "description": "Their first record in six years and their warmest, with a couple of the best songs anyone in this section wrote last year.",
+    "releaseDate": "2025-02-21",
+    "label": "Ember Hill",
+    "isNew": false,
+    "isStaffPick": false,
+    "imageUrl": "https://picsum.photos/seed/album-long-way-home/500/500",
+    "artistSourceIds": [
+      "ac2d4890-adf9-5040-923f-9133f4353405"
+    ],
+    "genreSlugs": [
+      "folk-world-and-country"
+    ],
+    "unitsInStock": 16,
+    "priceInPence": 2999,
+    "originalPriceInPence": null
+  },
+  {
+    "title": "The Cartographer's Daughter",
+    "sourceId": "392074e8-f1b0-5f20-afa5-9099c5e8c812",
+    "source": "Generated",
+    "description": "A score written for a film that was never finished, released on its own terms instead. Complete in every way that matters.",
+    "releaseDate": "2024-11-08",
+    "label": "Lantern Row",
+    "isNew": false,
+    "isStaffPick": false,
+    "imageUrl": "https://picsum.photos/seed/album-the-cartographer-s-daughter/500/500",
+    "artistSourceIds": [
+      "6c4495c8-fb94-571e-9271-c64ea1027ce6"
+    ],
+    "genreSlugs": [
+      "stage-and-screen"
+    ],
+    "unitsInStock": 22,
+    "priceInPence": 2399,
+    "originalPriceInPence": null
+  },
+  {
+    "title": "Nocturnes, Revisited",
+    "sourceId": "c5f61814-2022-5cdb-a782-3fb791654852",
+    "source": "Generated",
+    "description": "A return to repertoire she first recorded thirty years ago, taken slower and with far less to prove. Remarkable playing.",
+    "releaseDate": "2026-04-17",
+    "label": "Harrow Lane Records",
+    "isNew": true,
+    "isStaffPick": false,
+    "imageUrl": "https://picsum.photos/seed/album-nocturnes-revisited/500/500",
+    "artistSourceIds": [
+      "8dc2e504-bc19-5f5a-a812-cf04168e5892"
+    ],
+    "genreSlugs": [
+      "classical"
+    ],
+    "unitsInStock": 36,
+    "priceInPence": 2199,
+    "originalPriceInPence": 3099
   }
 ]
