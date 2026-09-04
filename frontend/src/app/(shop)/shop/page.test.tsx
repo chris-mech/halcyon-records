@@ -114,13 +114,20 @@ describe("ShopPage", () => {
     ).toBeInTheDocument();
   });
 
-  test("throws when the API returns an error", async () => {
+  test("throws when the API returns an error, carrying status and error as the cause", async () => {
     vi.mocked(client.GET).mockResolvedValue({
       data: undefined,
       error: { title: "Server error" },
-      response: new Response(),
+      response: new Response(null, { status: 503 }),
     });
 
-    await expect(renderPage()).rejects.toThrow("Failed to load albums.");
+    const error = (await renderPage().catch((e: unknown) => e)) as Error;
+
+    expect(error).toBeInstanceOf(Error);
+    expect(error.message).toBe("Failed to load albums.");
+    expect(error.cause).toEqual({
+      status: 503,
+      error: { title: "Server error" },
+    });
   });
 });

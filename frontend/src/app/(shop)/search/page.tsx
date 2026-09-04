@@ -4,6 +4,7 @@ import Link from "next/link";
 import { Search } from "lucide-react";
 
 import { client } from "@/lib/api/client";
+import { assertOk } from "@/lib/api/assert-ok";
 import { LoadingState } from "@/components/loading-state";
 import { SkeletonCardGrid } from "@/components/skeleton-primitives";
 import { Skeleton } from "@/components/ui/skeleton";
@@ -76,13 +77,12 @@ export async function SearchContent({
     );
   }
 
-  const { data, error } = await client.GET("/api/search", {
-    params: { query: { q: query } },
-  });
-
-  if (error) {
-    throw new Error("Search failed.");
-  }
+  const data = assertOk(
+    await client.GET("/api/search", {
+      params: { query: { q: query } },
+    }),
+    "Search failed.",
+  );
 
   const hasMatches = data.bestMatches.length > 0;
 

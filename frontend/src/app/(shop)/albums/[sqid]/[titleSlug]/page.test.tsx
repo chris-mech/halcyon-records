@@ -116,7 +116,7 @@ describe("generateMetadata", () => {
     vi.mocked(client.GET).mockResolvedValue({
       data: undefined,
       error: { title: "Not Found", status: 404 },
-      response: new Response(),
+      response: new Response(null, { status: 404 }),
     });
 
     await expect(renderMetadata()).rejects.toMatchObject({
@@ -210,11 +210,28 @@ describe("AlbumDetailPage", () => {
     vi.mocked(client.GET).mockResolvedValue({
       data: undefined,
       error: { title: "Not Found", status: 404 },
-      response: new Response(),
+      response: new Response(null, { status: 404 }),
     });
 
     await expect(renderPage()).rejects.toMatchObject({
       digest: "NEXT_HTTP_ERROR_FALLBACK;404",
+    });
+  });
+
+  test("throws with cause when the album fetch fails with a non-404 error", async () => {
+    vi.mocked(client.GET).mockResolvedValue({
+      data: undefined,
+      error: { title: "Server Error" },
+      response: new Response(null, { status: 503 }),
+    });
+
+    const error = (await renderPage().catch((e: unknown) => e)) as Error;
+
+    expect(error).toBeInstanceOf(Error);
+    expect(error.message).toBe("Failed to load album.");
+    expect(error.cause).toEqual({
+      status: 503,
+      error: { title: "Server Error" },
     });
   });
 

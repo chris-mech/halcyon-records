@@ -6,7 +6,7 @@ import { Controller, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { signIn } from "next-auth/react";
 
-import { mergeCartAtLogin } from "@/lib/cart/sync-cart";
+import { mergeCartAtLogin, notifyCartSyncFailed } from "@/lib/cart/sync-cart";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -69,7 +69,9 @@ function RegisterForm({ next }: RegisterFormProps) {
       return;
     }
 
-    await mergeCartAtLogin();
+    if (!(await mergeCartAtLogin())) {
+      notifyCartSyncFailed();
+    }
     router.push(next ?? "/");
   }
 

@@ -6,6 +6,7 @@ import { cacheLife } from "next/cache";
 
 import type { components } from "@/lib/api/schema";
 import { client } from "@/lib/api/client";
+import { assertOk } from "@/lib/api/assert-ok";
 import { LoadingState } from "@/components/loading-state";
 import {
   SkeletonCardGrid,
@@ -63,13 +64,15 @@ async function getArtistDetailData(
   "use cache";
   cacheLife({ stale: 60, revalidate: 60, expire: 300 });
 
-  const { data: artist, error } = await client.GET("/api/artists/{sqid}", {
+  const result = await client.GET("/api/artists/{sqid}", {
     params: { path: { sqid }, query: { sort } },
   });
 
-  if (error) {
+  if (result.response.status === 404) {
     return { found: false };
   }
+
+  const artist = assertOk(result, "Failed to load artist.");
 
   return { found: true, artist };
 }

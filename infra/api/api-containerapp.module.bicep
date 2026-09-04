@@ -160,7 +160,7 @@ resource api 'Microsoft.App/containerApps@2025-10-02-preview' = {
       ]
       scale: {
         minReplicas: 0
-        maxReplicas: 3
+        maxReplicas: 1
       }
     }
   }

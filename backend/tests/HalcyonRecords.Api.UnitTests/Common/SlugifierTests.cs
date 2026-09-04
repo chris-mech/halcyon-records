@@ -1,4 +1,5 @@
-﻿using FluentAssertions;
+﻿using System.Text;
+using FluentAssertions;
 using HalcyonRecords.Shared;
 
 namespace HalcyonRecords.Api.UnitTests.Common;
@@ -18,6 +19,12 @@ public class SlugifierTests
     [InlineData("コーヒー", "コーヒー")]
     [InlineData("안녕하세요 세계", "안녕하세요-세계")]
     [InlineData("Straße", "straße")]
+    [InlineData("Øre", "øre")]
+    [InlineData("ÆRLIG", "ærlig")]
+    [InlineData("Suður", "suður")]
+    [InlineData("Þing", "þing")]
+    [InlineData("Coffee ☕ Break", "coffee-break")]
+    [InlineData("🔥🔥🔥", "")]
     [InlineData("!!!", "")]
     [InlineData("", "")]
     [InlineData("&", "and")]
@@ -25,4 +32,14 @@ public class SlugifierTests
     [InlineData("Track_01", "track-01")]
     public void Slugify_ProducesExpectedSlug(string input, string expected) =>
         Slugifier.Slugify(input).Should().Be(expected);
+
+    [Fact]
+    public void Slugify_ProducesIdenticalSlugRegardlessOfUnicodeNormalizationForm()
+    {
+        var nfc = "Déjà Vu".Normalize(NormalizationForm.FormC);
+        var nfd = "Déjà Vu".Normalize(NormalizationForm.FormD);
+
+        Slugifier.Slugify(nfc).Should().Be("déjà-vu");
+        Slugifier.Slugify(nfd).Should().Be("déjà-vu");
+    }
 }

@@ -15,7 +15,9 @@ public sealed class SqlServerContainerFixture : IAsyncLifetime
 {
     private readonly MsSqlContainer _container = new MsSqlBuilder(
         "mcr.microsoft.com/mssql/server:2025-latest"
-    ).Build();
+    )
+        .WithEnvironment("MSSQL_COLLATION", "Latin1_General_100_CI_AS_SC")
+        .Build();
 
     private SqlConnection _connection = null!;
     private Respawner _respawner = null!;

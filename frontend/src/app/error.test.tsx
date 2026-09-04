@@ -1,6 +1,7 @@
-import { describe, expect, test, vi } from "vitest";
+import { beforeEach, describe, expect, test, vi } from "vitest";
 import { fireEvent, render, screen } from "@testing-library/react";
 import { useSession } from "next-auth/react";
+import { ReadonlyURLSearchParams, useSearchParams } from "next/navigation";
 
 import ErrorPage from "./error";
 
@@ -8,6 +9,15 @@ vi.mock("next-auth/react", () => ({
   useSession: vi.fn(),
   signOut: vi.fn(),
 }));
+
+vi.mock("next/navigation", async (importOriginal) => ({
+  ...(await importOriginal()),
+  useSearchParams: vi.fn(),
+}));
+
+beforeEach(() => {
+  vi.mocked(useSearchParams).mockReturnValue(new ReadonlyURLSearchParams());
+});
 
 describe("Error", () => {
   test("calls retry, not reset, when the try again button is clicked", () => {

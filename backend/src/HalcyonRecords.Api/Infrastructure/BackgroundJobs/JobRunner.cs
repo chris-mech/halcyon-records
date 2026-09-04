@@ -60,6 +60,25 @@ public static class JobRunner
                     );
                     break;
 
+                case "reseed":
+                    await provider
+                        .GetRequiredService<DataClearer>()
+                        .ClearAllAsync(cancellationToken);
+                    await DbSeeder.SeedAsync(
+                        provider.GetRequiredService<ApplicationDbContext>(),
+                        provider.GetRequiredService<UserManager<User>>(),
+                        provider.GetRequiredService<IOptions<ShopOptions>>(),
+                        provider.GetRequiredService<TimeProvider>(),
+                        cancellationToken
+                    );
+                    await provider
+                        .GetRequiredService<MeilisearchIndexer>()
+                        .RebuildAsync(
+                            provider.GetRequiredService<ApplicationDbContext>(),
+                            cancellationToken
+                        );
+                    break;
+
                 case "reindex":
                     await provider
                         .GetRequiredService<MeilisearchIndexer>()

@@ -1,10 +1,10 @@
 import { beforeEach, describe, expect, test, vi } from "vitest";
-import { fireEvent, render, screen } from "@testing-library/react";
+import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { useSession } from "next-auth/react";
 
 import { useCartStore } from "@/lib/cart/cart-store";
 import type { CartItem } from "@/lib/cart/cart-store";
-import { syncCart } from "@/lib/cart/sync-cart";
+import { notifyCartSyncFailed, syncCart } from "@/lib/cart/sync-cart";
 
 import CartPage from "./page";
 
@@ -14,6 +14,7 @@ vi.mock("next-auth/react", () => ({
 
 vi.mock("@/lib/cart/sync-cart", () => ({
   syncCart: vi.fn(),
+  notifyCartSyncFailed: vi.fn(),
 }));
 
 function fixtureItem(overrides: Partial<CartItem> = {}): CartItem {
@@ -40,7 +41,8 @@ function fixtureItem(overrides: Partial<CartItem> = {}): CartItem {
 
 beforeEach(() => {
   useCartStore.setState({ items: [] });
-  vi.mocked(syncCart).mockClear();
+  vi.mocked(syncCart).mockClear().mockResolvedValue(true);
+  vi.mocked(notifyCartSyncFailed).mockClear();
   vi.mocked(useSession).mockReturnValue({
     status: "unauthenticated",
     data: null,
@@ -152,5 +154,26 @@ describe("CartPage", () => {
     fireEvent(window, new Event("focus"));
 
     expect(syncCart).toHaveBeenCalledTimes(2);
+  });
+
+  test("shows a toast when the sync fails", async () => {
+    vi.mocked(syncCart).mockResolvedValue(false);
+    vi.mocked(useSession).mockReturnValue({
+      status: "authenticated",
+      data: {
+        user: {
+          id: "1",
+          firstName: "Fixture",
+          lastName: "User",
+          email: "fixture-user@test.invalid",
+        },
+        expires: "2099-01-01T00:00:00.000Z",
+      },
+      update: vi.fn(),
+    });
+
+    render(<CartPage />);
+
+    await waitFor(() => expect(notifyCartSyncFailed).toHaveBeenCalled());
   });
 });

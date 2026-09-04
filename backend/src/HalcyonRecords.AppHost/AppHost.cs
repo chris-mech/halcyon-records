@@ -31,7 +31,11 @@ IResourceBuilder<AzureApplicationInsightsResource>? appInsights = isPublishMode
 
 var sql = builder
     .AddAzureSqlServer("sql")
-    .RunAsContainer(c => c.WithImageTag("2025-latest").WithDataVolume())
+    .RunAsContainer(c =>
+        c.WithImageTag("2025-latest")
+            .WithDataVolume()
+            .WithEnvironment("MSSQL_COLLATION", "Latin1_General_100_CI_AS_SC")
+    )
     .AddDatabase("halcyonrecords");
 
 var meilisearch = builder
@@ -79,7 +83,7 @@ api = api.PublishAsAzureContainerApp(
     (infrastructure, app) =>
     {
         app.Template.Scale.MinReplicas = 0;
-        app.Template.Scale.MaxReplicas = 3;
+        app.Template.Scale.MaxReplicas = 1;
     }
 );
 

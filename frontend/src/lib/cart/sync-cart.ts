@@ -1,3 +1,4 @@
+import { toast } from "@/components/ui/toast";
 import { useCartStore } from "./cart-store";
 import type { CartItem } from "./cart-store";
 
@@ -91,4 +92,13 @@ async function syncCartOnLogout(): Promise<void> {
   useCartStore.getState().setItems([]);
 }
 
-export { syncCart, mergeCartAtLogin, syncCartOnLogout };
+function notifyCartSyncFailed(): void {
+  toast.add({
+    type: "error",
+    title: "Bag didn't sync",
+    description:
+      "Your changes are saved locally, but couldn't reach the server. We'll try again shortly.",
+  });
+}
+
+export { syncCart, mergeCartAtLogin, syncCartOnLogout, notifyCartSyncFailed };

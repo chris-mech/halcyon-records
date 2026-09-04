@@ -49,4 +49,30 @@ public class RateLimitingTests(SqlServerContainerFixture fixture) : IAsyncLifeti
             Environment.SetEnvironmentVariable("RateLimiting__PermitLimit", null);
         }
     }
+
+    [Fact]
+    public async Task ProductionEnvironment_UsesAppsettingsProductionWindowSeconds()
+    {
+        await using var productionFactory = new ProductionApiWebApplicationFactory(fixture);
+        Environment.SetEnvironmentVariable("RateLimiting__PermitLimit", "2");
+        try
+        {
+            using var client = productionFactory.CreateClient();
+
+            await client.GetAsync("/api/genres", TestContext.Current.CancellationToken);
+            await client.GetAsync("/api/genres", TestContext.Current.CancellationToken);
+            var rejected = await client.GetAsync(
+                "/api/genres",
+                TestContext.Current.CancellationToken
+            );
+
+            rejected.StatusCode.Should().Be(HttpStatusCode.TooManyRequests);
+            rejected.Headers.RetryAfter?.Delta.Should().NotBeNull();
+            rejected.Headers.RetryAfter!.Delta!.Value.TotalSeconds.Should().BeLessThanOrEqualTo(10);
+        }
+        finally
+        {
+            Environment.SetEnvironmentVariable("RateLimiting__PermitLimit", null);
+        }
+    }
 }

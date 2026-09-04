@@ -14,7 +14,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { EmptyState } from "@/components/empty-state";
-import { syncCart } from "@/lib/cart/sync-cart";
+import { syncCart, notifyCartSyncFailed } from "@/lib/cart/sync-cart";
 import {
   selectCartTotalQuantity,
   useCartHydrated,
@@ -36,14 +36,16 @@ export default function CartPage() {
       return;
     }
 
-    void syncCart();
-
-    function handleFocus() {
-      void syncCart();
+    async function runSync() {
+      if (!(await syncCart())) {
+        notifyCartSyncFailed();
+      }
     }
 
-    window.addEventListener("focus", handleFocus);
-    return () => window.removeEventListener("focus", handleFocus);
+    void runSync();
+
+    window.addEventListener("focus", runSync);
+    return () => window.removeEventListener("focus", runSync);
   }, [status]);
 
   if (!hydrated) {
