@@ -13,16 +13,17 @@ const APP_CONTENT_ID = "app-content";
 const HEADING =
   "Still loading, and thank you so much for taking a look at my store.";
 const SUBHEADING =
-  "Azure SQL, Meilisearch, and the API all scale to zero when idle, so the first request wakes the whole stack back up.";
+  "Azure SQL, Meilisearch, and the API scale to zero when idle, so the first request can take up to a minute to wake the stack back up.";
 
 const TECH_MESSAGES = [
-  "Built with .NET 10 and vertical slice architecture: each feature owns its own path straight through to the database.",
-  "Search runs on Meilisearch, self-hosted and typo-tolerant.",
-  "The whole stack is orchestrated locally with .NET Aspire: API, database, search, and frontend, one command.",
-  "Frontend is Next.js 16 with React Server Components and partial prerendering.",
+  "Built with .NET 10 and vertical slice architecture, where each feature has its own path to the database.",
+  "Search runs on Meilisearch, which tolerates typos and ranks results by relevance.",
+  ".NET Aspire orchestrates the stack locally, so service discovery and configuration are already wired between services.",
+  "The frontend runs on Next.js 16, and combines React Server Components with partial prerendering for fast page loads.",
   "Infrastructure as code with Azure Bicep, deployed through a GitHub Actions CI/CD pipeline on every merge.",
-  "Type-safe error handling throughout, using the Result pattern instead of exceptions for expected failures.",
-  "The frontend's API client is generated straight from the backend's OpenAPI spec: one contract, no drift between the two.",
+  "Rate limiting caps API requests per IP address, protecting the API from excessive request volume.",
+  "HybridCache stores frequent query results in memory, so identical requests skip the database and search index entirely.",
+  "A fully documented OpenAPI specification generates the frontend's API client directly, and keeps both sides in sync.",
 ];
 
 function pickNextMessageIndex(currentIndex: number, poolSize: number) {
