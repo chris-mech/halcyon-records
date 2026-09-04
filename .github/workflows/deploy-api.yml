@@ -5,6 +5,7 @@ on:
     branches: [main]
     paths:
       - "backend/**"
+      - "infra/**"
       - ".github/workflows/deploy-api.yml"
   workflow_dispatch:
 
@@ -84,6 +85,9 @@ jobs:
         env:
           MEDIATR_LICENSE_KEY: ${{ secrets.MEDIATR_LICENSE_KEY }}
         run: azd env set AZURE_MEDIATR_LICENSE_KEY "$MEDIATR_LICENSE_KEY"
+
+      - name: Preview infrastructure changes
+        run: azd provision --preview
 
       - name: Provision infrastructure
         run: azd provision --no-prompt
