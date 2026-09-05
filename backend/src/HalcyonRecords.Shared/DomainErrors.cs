@@ -108,7 +108,7 @@ public static class DomainErrors
         public static Error CartEmpty() =>
             Error.Validation(
                 code: "Order.CartEmpty",
-                description: "Your bag is empty. Add something before checking out."
+                description: "Your cart is empty. Add something before checking out."
             );
 
         public static Error InsufficientStock(string title) =>

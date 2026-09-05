@@ -3,7 +3,7 @@ import { expect, test } from "@playwright/test";
 import { expectNoAccessibilityViolations } from "./axe-helper";
 
 test.describe("cart to checkout", () => {
-  test("anonymous browse and add-to-bag survives login, then checkout completes and the order shows in history", async ({
+  test("anonymous browse and add-to-cart survives login, then checkout completes and the order shows in history", async ({
     page,
   }) => {
     const email = `e2e-cart-to-checkout-${Date.now()}@example.test`;
@@ -33,7 +33,7 @@ test.describe("cart to checkout", () => {
       await expect(page.getByRole("link", { name: "Log in" })).toBeVisible();
     });
 
-    await test.step("browse the catalogue anonymously and add an album to the bag", async () => {
+    await test.step("browse the catalogue anonymously and add an album to the cart", async () => {
       await page.goto("/shop");
       await expectNoAccessibilityViolations(page);
 
@@ -42,12 +42,12 @@ test.describe("cart to checkout", () => {
       albumTitle = (await titleLink.textContent())?.trim() ?? "";
       expect(albumTitle).toBeTruthy();
 
-      await firstCard.getByRole("button", { name: "Add to bag" }).click();
-      await expect(page.getByRole("link", { name: "Bag (1)" })).toBeVisible();
+      await firstCard.getByRole("button", { name: "Add to cart" }).click();
+      await expect(page.getByRole("link", { name: "Cart (1)" })).toBeVisible();
     });
 
-    await test.step("the bag holds the item while still anonymous", async () => {
-      await page.getByRole("link", { name: "Bag (1)" }).click();
+    await test.step("the cart holds the item while still anonymous", async () => {
+      await page.getByRole("link", { name: "Cart (1)" }).click();
       await expectNoAccessibilityViolations(page);
 
       await expect(
@@ -68,7 +68,7 @@ test.describe("cart to checkout", () => {
       await page.getByRole("link", { name: "Log in" }).click();
     });
 
-    await test.step("logging back in merges the anonymous bag (local wins)", async () => {
+    await test.step("logging back in merges the anonymous cart (local wins)", async () => {
       await expectNoAccessibilityViolations(page);
 
       await page.getByLabel("Email").fill(email);
@@ -104,7 +104,7 @@ test.describe("cart to checkout", () => {
       await page.goto("/account");
       await expectNoAccessibilityViolations(page);
 
-      await expect(page.getByRole("link", { name: "Bag (0)" })).toBeVisible();
+      await expect(page.getByRole("link", { name: "Cart (0)" })).toBeVisible();
 
       await expect(page.getByText(`Order ${orderNumber}`)).toBeVisible();
 
