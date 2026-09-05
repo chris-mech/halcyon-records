@@ -138,7 +138,7 @@ export async function HomeContent() {
             </ShadowStackText>
           </Link>
 
-          <div className="mb-7 flex flex-wrap gap-x-1 text-sm font-bold tracking-wide text-muted-foreground uppercase">
+          <div className="mb-7 flex flex-wrap text-sm font-bold tracking-wide text-muted-foreground uppercase">
             {coverStory.artists.map((artist, index) => (
               <Fragment key={artist.sqid}>
                 {index > 0 && ", "}

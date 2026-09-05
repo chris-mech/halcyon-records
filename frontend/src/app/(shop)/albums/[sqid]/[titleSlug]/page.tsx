@@ -150,7 +150,7 @@ export async function AlbumDetailContent({
         <div className="flex flex-col">
           <GenrePillList genres={album.genres} className="mb-5" />
 
-          <div className="mb-2 flex flex-wrap gap-x-1 text-sm font-bold tracking-wide text-muted-foreground uppercase">
+          <div className="mb-2 flex flex-wrap text-sm font-bold tracking-wide text-muted-foreground uppercase">
             {album.artists.map((artist, index) => (
               <Fragment key={artist.sqid}>
                 {index > 0 && ", "}

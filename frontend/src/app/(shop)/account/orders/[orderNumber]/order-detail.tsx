@@ -177,7 +177,7 @@ function OrderDetail({ orderNumber }: OrderDetailProps) {
                   className="size-16 shrink-0"
                 />
                 <div className="flex-1">
-                  <p className="mb-1 flex flex-wrap gap-x-1 text-[0.6875rem] font-bold tracking-wide text-muted-foreground uppercase">
+                  <p className="mb-1 flex flex-wrap text-[0.6875rem] font-bold tracking-wide text-muted-foreground uppercase">
                     {item.artists.map((artist, index) => (
                       <Fragment key={artist.sqid}>
                         {index > 0 && ", "}
