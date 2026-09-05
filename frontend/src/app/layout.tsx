@@ -3,7 +3,12 @@ import { Big_Shoulders, Fraunces, Manrope } from "next/font/google";
 import { SessionProvider } from "next-auth/react";
 import { Suspense } from "react";
 
-import { DEPLOYMENT_URL, SITE_DESCRIPTION, SITE_NAME } from "@/lib/site-config";
+import {
+  DEPLOYMENT_URL,
+  SITE_DESCRIPTION,
+  SITE_NAME,
+  SITE_OPEN_GRAPH_DEFAULTS,
+} from "@/lib/site-config";
 import { cn } from "@/lib/utils";
 import { ColdStartOverlay } from "@/components/cold-start-overlay";
 import { AuthSessionProvider } from "@/components/auth-session-provider";
@@ -37,11 +42,7 @@ export const metadata: Metadata = {
     template: `%s | ${SITE_NAME}`,
   },
   description: SITE_DESCRIPTION,
-  openGraph: {
-    siteName: SITE_NAME,
-    type: "website",
-    locale: "en_GB",
-  },
+  openGraph: SITE_OPEN_GRAPH_DEFAULTS,
 };
 
 export const viewport: Viewport = {

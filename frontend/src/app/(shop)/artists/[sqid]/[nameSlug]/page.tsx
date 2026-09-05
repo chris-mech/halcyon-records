@@ -6,6 +6,7 @@ import { cacheLife } from "next/cache";
 
 import type { components } from "@/lib/api/schema";
 import { client } from "@/lib/api/client";
+import { SITE_OPEN_GRAPH_DEFAULTS } from "@/lib/site-config";
 import { assertOk } from "@/lib/api/assert-ok";
 import { LoadingState } from "@/components/loading-state";
 import {
@@ -48,7 +49,9 @@ export async function generateMetadata({
   return {
     title: artist.name,
     description: artist.bio ?? undefined,
-    openGraph: artist.imageUrl ? { images: [artist.imageUrl] } : undefined,
+    ...(artist.imageUrl && {
+      openGraph: { ...SITE_OPEN_GRAPH_DEFAULTS, images: [artist.imageUrl] },
+    }),
   };
 }
 

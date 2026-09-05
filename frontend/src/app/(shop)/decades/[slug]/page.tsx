@@ -7,6 +7,7 @@ import { cacheLife } from "next/cache";
 import { PAGE_SIZE, parseCatalogFilters } from "@/lib/catalog-search-params";
 import type { components } from "@/lib/api/schema";
 import { client } from "@/lib/api/client";
+import { SITE_OPEN_GRAPH_DEFAULTS } from "@/lib/site-config";
 import { LoadingState } from "@/components/loading-state";
 import { SkeletonCardGrid } from "@/components/skeleton-primitives";
 import { Skeleton } from "@/components/ui/skeleton";
@@ -38,7 +39,9 @@ export async function generateMetadata({
   return {
     title: decade.label,
     description: decade.description ?? undefined,
-    openGraph: decade.imageUrl ? { images: [decade.imageUrl] } : undefined,
+    ...(decade.imageUrl && {
+      openGraph: { ...SITE_OPEN_GRAPH_DEFAULTS, images: [decade.imageUrl] },
+    }),
   };
 }
 
