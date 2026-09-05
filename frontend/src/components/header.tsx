@@ -188,7 +188,7 @@ function Header({
                 "h-auto px-4.5 py-2.25 text-xs font-bold tracking-wide uppercase",
               )}
             >
-              Bag ({hydrated ? totalQuantity : 0})
+              Cart ({hydrated ? totalQuantity : 0})
             </Link>
           </div>
         </>

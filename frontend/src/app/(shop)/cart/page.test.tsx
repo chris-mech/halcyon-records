@@ -54,13 +54,13 @@ describe("CartPage", () => {
   test("shows the empty state when the cart has no items", () => {
     render(<CartPage />);
 
-    expect(screen.getByText("Your bag is empty")).toBeInTheDocument();
+    expect(screen.getByText("Your cart is empty")).toBeInTheDocument();
     expect(
       screen.getByRole("link", { name: "Start browsing" }),
     ).toHaveAttribute("href", "/");
   });
 
-  test("shows bag rows and a subtotal when the cart has items", () => {
+  test("shows cart rows and a subtotal when the cart has items", () => {
     useCartStore.setState({
       items: [
         fixtureItem({ albumSqid: "album-a", priceInPence: 2000, quantity: 1 }),

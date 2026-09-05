@@ -10,7 +10,7 @@ export default function CheckoutLayout({
   return (
     <>
       <SkipLink />
-      <Header variant="stripped" backHref="/cart" backLabel="← Back to bag" />
+      <Header variant="stripped" backHref="/cart" backLabel="← Back to cart" />
       <main id="main-content" tabIndex={-1} className="flex flex-1 flex-col">
         {children}
       </main>

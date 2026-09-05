@@ -48,7 +48,7 @@ function CheckoutForm() {
 
     if (!(await syncCart())) {
       form.setError("root.serverError", {
-        message: "Couldn't refresh your bag. Please try again.",
+        message: "Couldn't refresh your cart. Please try again.",
       });
       return;
     }
@@ -68,7 +68,7 @@ function CheckoutForm() {
       if (response.status === 409) {
         const body = await response.json();
         form.setError("root.serverError", {
-          message: body.detail ?? "Sorry, an item in your bag just sold out.",
+          message: body.detail ?? "Sorry, an item in your cart just sold out.",
         });
         await syncCart();
         return;

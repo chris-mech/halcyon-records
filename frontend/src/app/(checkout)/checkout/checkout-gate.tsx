@@ -51,7 +51,7 @@ function CheckoutGate() {
         </CardContent>
         <CardFooter className="justify-center">
           <p className="text-center text-xs text-muted-foreground">
-            Your bag is saved. Nothing will be lost.
+            Your cart is saved. Nothing will be lost.
           </p>
         </CardFooter>
       </Card>

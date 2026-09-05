@@ -16,11 +16,11 @@ describe("CheckoutGate", () => {
     ).toHaveAttribute("href", "/register?next=/checkout");
   });
 
-  test("reassures the user their bag is saved", () => {
+  test("reassures the user their cart is saved", () => {
     render(<CheckoutGate />);
 
     expect(
-      screen.getByText("Your bag is saved. Nothing will be lost."),
+      screen.getByText("Your cart is saved. Nothing will be lost."),
     ).toBeInTheDocument();
   });
 });

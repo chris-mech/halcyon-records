@@ -6,7 +6,7 @@ import { StepIndicator } from "./step-indicator";
 describe("StepIndicator", () => {
   test("renders all four step labels", () => {
     render(<StepIndicator currentStep="checkout" />);
-    expect(screen.getByText("Bag")).toBeInTheDocument();
+    expect(screen.getByText("Cart")).toBeInTheDocument();
     expect(screen.getByText("Log in")).toBeInTheDocument();
     expect(screen.getByText("Checkout")).toBeInTheDocument();
     expect(screen.getByText("Confirmation")).toBeInTheDocument();
@@ -18,7 +18,7 @@ describe("StepIndicator", () => {
       "aria-current",
       "step",
     );
-    expect(screen.getByText("Bag")).not.toHaveAttribute("aria-current");
+    expect(screen.getByText("Cart")).not.toHaveAttribute("aria-current");
     expect(screen.getByText("Confirmation")).not.toHaveAttribute(
       "aria-current",
     );
@@ -30,7 +30,7 @@ describe("StepIndicator", () => {
       (text: string) => (_: string, element: Element | null) =>
         element?.textContent === text;
 
-    expect(screen.getByText(hasCombinedText("Bag ✓"))).toBeInTheDocument();
+    expect(screen.getByText(hasCombinedText("Cart ✓"))).toBeInTheDocument();
     expect(screen.getByText(hasCombinedText("Log in ✓"))).toBeInTheDocument();
     expect(
       screen.queryByText(hasCombinedText("Checkout ✓")),

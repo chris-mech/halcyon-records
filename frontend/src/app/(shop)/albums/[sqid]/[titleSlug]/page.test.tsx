@@ -189,13 +189,13 @@ describe("AlbumDetailPage", () => {
     expect(screen.queryByText(/left in stock/)).not.toBeInTheDocument();
   });
 
-  test("shows out of stock and disables Add to bag at zero stock", async () => {
+  test("shows out of stock and disables Add to cart at zero stock", async () => {
     mockAlbumFetch({ unitsInStock: 0, isInStock: false }, []);
 
     render(await renderPage());
 
     expect(screen.getByText("Out of stock")).toBeInTheDocument();
-    expect(screen.getByRole("button", { name: "Add to bag" })).toBeDisabled();
+    expect(screen.getByRole("button", { name: "Add to cart" })).toBeDisabled();
   });
 
   test("redirects permanently when the URL's title slug doesn't match", async () => {

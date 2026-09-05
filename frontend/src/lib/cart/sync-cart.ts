@@ -95,7 +95,7 @@ async function syncCartOnLogout(): Promise<void> {
 function notifyCartSyncFailed(): void {
   toast.add({
     type: "error",
-    title: "Bag didn't sync",
+    title: "Cart didn't sync",
     description:
       "Your changes are saved locally, but couldn't reach the server. We'll try again shortly.",
   });

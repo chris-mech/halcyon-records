@@ -4,7 +4,7 @@ import Link from "next/link";
 import { formatPrice } from "@/lib/format";
 import type { components } from "@/lib/api/schema";
 import { Card } from "@/components/ui/card";
-import { AddToBagButton } from "@/components/add-to-bag-button";
+import { AddToCartButton } from "@/components/add-to-cart-button";
 import { AlbumTagStack } from "@/components/album-tag-stack";
 import { MediaThumbnail } from "./media-thumbnail";
 
@@ -96,7 +96,7 @@ function ProductCard({
               {formatPrice(album.priceInPence)}
             </span>
           </p>
-          <AddToBagButton
+          <AddToCartButton
             album={album}
             variant="link"
             className="h-auto p-0 text-[0.6875rem] font-bold tracking-wide text-slate uppercase"
