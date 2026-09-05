@@ -1,6 +1,7 @@
 import { describe, expect, test, vi } from "vitest";
 import { render, screen } from "@testing-library/react";
 
+import { SITE_OPEN_GRAPH_DEFAULTS } from "@/lib/site-config";
 import { client } from "@/lib/api/client";
 import type { components } from "@/lib/api/schema";
 
@@ -112,6 +113,22 @@ describe("generateMetadata", () => {
     ]);
   });
 
+  test("keeps the site's Open Graph defaults alongside the cover image", async () => {
+    mockAlbumFetch({ imageUrl: "https://example.com/cover.jpg" });
+
+    const metadata = await renderMetadata();
+
+    expect(metadata.openGraph).toMatchObject(SITE_OPEN_GRAPH_DEFAULTS);
+  });
+
+  test("leaves Open Graph unset when there is no cover image, so the site default applies", async () => {
+    mockAlbumFetch({ imageUrl: null });
+
+    const metadata = await renderMetadata();
+
+    expect(metadata.openGraph).toBeUndefined();
+  });
+
   test("calls notFound when the album fetch errors", async () => {
     vi.mocked(client.GET).mockResolvedValue({
       data: undefined,
@@ -189,13 +206,13 @@ describe("AlbumDetailPage", () => {
     expect(screen.queryByText(/left in stock/)).not.toBeInTheDocument();
   });
 
-  test("shows out of stock and disables Add to bag at zero stock", async () => {
+  test("shows out of stock and disables Add to cart at zero stock", async () => {
     mockAlbumFetch({ unitsInStock: 0, isInStock: false }, []);
 
     render(await renderPage());
 
     expect(screen.getByText("Out of stock")).toBeInTheDocument();
-    expect(screen.getByRole("button", { name: "Add to bag" })).toBeDisabled();
+    expect(screen.getByRole("button", { name: "Add to cart" })).toBeDisabled();
   });
 
   test("redirects permanently when the URL's title slug doesn't match", async () => {

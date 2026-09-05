@@ -170,7 +170,7 @@ describe("HomePage", () => {
     ).toBeInTheDocument();
   });
 
-  test("disables the cover story's Add to bag when it's out of stock", async () => {
+  test("disables the cover story's Add to cart when it's out of stock", async () => {
     mockHomepageFetch({
       coverStory: buildCoverStory({ unitsInStock: 0, isInStock: false }),
     });
@@ -182,7 +182,7 @@ describe("HomePage", () => {
       .closest("section")!;
 
     expect(
-      within(coverStorySection).getByRole("button", { name: /add to bag/i }),
+      within(coverStorySection).getByRole("button", { name: /add to cart/i }),
     ).toBeDisabled();
   });
 

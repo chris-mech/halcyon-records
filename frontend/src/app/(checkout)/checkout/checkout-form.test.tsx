@@ -118,7 +118,7 @@ describe("CheckoutForm", () => {
     submit();
 
     expect(
-      await screen.findByText("Couldn't refresh your bag. Please try again."),
+      await screen.findByText("Couldn't refresh your cart. Please try again."),
     ).toBeInTheDocument();
     expect(fetch).not.toHaveBeenCalled();
     expect(push).not.toHaveBeenCalled();

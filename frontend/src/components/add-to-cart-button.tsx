@@ -18,7 +18,7 @@ interface CartEligibleAlbum {
   artists: { sqid: string; name: string; nameSlug: string }[];
 }
 
-interface AddToBagButtonProps {
+interface AddToCartButtonProps {
   album: CartEligibleAlbum;
   quantity?: number;
   variant?: VariantProps<typeof buttonVariants>["variant"];
@@ -26,13 +26,13 @@ interface AddToBagButtonProps {
   className?: string;
 }
 
-function AddToBagButton({
+function AddToCartButton({
   album,
   quantity = 1,
   variant,
   size,
   className,
-}: AddToBagButtonProps) {
+}: AddToCartButtonProps) {
   const inCartQuantity = useCartStore(
     (state) =>
       state.items.find((item) => item.albumSqid === album.sqid)?.quantity ?? 0,
@@ -56,7 +56,7 @@ function AddToBagButton({
       artists: album.artists,
     });
 
-    toast.add({ title: "Added to bag", description: album.title });
+    toast.add({ title: "Added to cart", description: album.title });
   }
 
   return (
@@ -68,10 +68,10 @@ function AddToBagButton({
       onClick={handleClick}
       className={className}
     >
-      Add to bag
+      Add to cart
     </Button>
   );
 }
 
-export { AddToBagButton };
+export { AddToCartButton };
 export type { CartEligibleAlbum };

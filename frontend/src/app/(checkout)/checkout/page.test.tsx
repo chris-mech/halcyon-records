@@ -44,7 +44,7 @@ describe("CheckoutPage", () => {
   test("shows the empty state when the cart has no items", () => {
     render(<CheckoutPage />);
 
-    expect(screen.getByText("Your bag is empty")).toBeInTheDocument();
+    expect(screen.getByText("Your cart is empty")).toBeInTheDocument();
   });
 
   test("shows the login gate and step when unauthenticated", () => {

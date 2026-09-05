@@ -63,7 +63,7 @@ describe("syncCart", () => {
     expect(useCartStore.getState().items).toEqual(serverCart);
   });
 
-  test("pushes an empty local cart too, so a just-emptied bag overwrites a stale server cart", async () => {
+  test("pushes an empty local cart too, so a just-emptied cart overwrites a stale server cart", async () => {
     const serverCart: CartItem[] = [];
     vi.mocked(fetch)
       .mockResolvedValueOnce(fetchResponse(true))
@@ -198,7 +198,7 @@ describe("syncCartOnLogout", () => {
     expect(useCartStore.getState().items).toEqual([]);
   });
 
-  test("pushes an empty cart to the server too, so a just-emptied bag doesn't leave stale items behind", async () => {
+  test("pushes an empty cart to the server too, so a just-emptied cart doesn't leave stale items behind", async () => {
     vi.mocked(fetch).mockResolvedValueOnce(fetchResponse(true));
 
     await syncCartOnLogout();
@@ -218,7 +218,7 @@ describe("notifyCartSyncFailed", () => {
 
     expect(toast.add).toHaveBeenCalledWith({
       type: "error",
-      title: "Bag didn't sync",
+      title: "Cart didn't sync",
       description:
         "Your changes are saved locally, but couldn't reach the server. We'll try again shortly.",
     });

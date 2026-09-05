@@ -1,6 +1,7 @@
 import { describe, expect, test, vi } from "vitest";
 import { render, screen, within } from "@testing-library/react";
 
+import { SITE_OPEN_GRAPH_DEFAULTS } from "@/lib/site-config";
 import { client } from "@/lib/api/client";
 import type { components } from "@/lib/api/schema";
 
@@ -161,6 +162,24 @@ describe("generateMetadata", () => {
     expect(metadata.openGraph?.images).toEqual([
       "https://example.com/decade.jpg",
     ]);
+  });
+
+  test("keeps the site's Open Graph defaults alongside the decade image", async () => {
+    mockDecadeFetches({
+      detailOverrides: { imageUrl: "https://example.com/decade.jpg" },
+    });
+
+    const metadata = await renderMetadata();
+
+    expect(metadata.openGraph).toMatchObject(SITE_OPEN_GRAPH_DEFAULTS);
+  });
+
+  test("leaves Open Graph unset when there is no decade image, so the site default applies", async () => {
+    mockDecadeFetches({ detailOverrides: { imageUrl: null } });
+
+    const metadata = await renderMetadata();
+
+    expect(metadata.openGraph).toBeUndefined();
   });
 
   test("calls notFound when the decade fetch errors", async () => {

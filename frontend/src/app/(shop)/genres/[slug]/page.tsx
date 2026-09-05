@@ -5,6 +5,7 @@ import { notFound } from "next/navigation";
 import { cacheLife } from "next/cache";
 
 import { client } from "@/lib/api/client";
+import { SITE_OPEN_GRAPH_DEFAULTS } from "@/lib/site-config";
 import type { components } from "@/lib/api/schema";
 import { PAGE_SIZE, parseCatalogFilters } from "@/lib/catalog-search-params";
 import { LoadingState } from "@/components/loading-state";
@@ -38,7 +39,9 @@ export async function generateMetadata({
   return {
     title: genre.name,
     description: genre.description ?? undefined,
-    openGraph: genre.imageUrl ? { images: [genre.imageUrl] } : undefined,
+    ...(genre.imageUrl && {
+      openGraph: { ...SITE_OPEN_GRAPH_DEFAULTS, images: [genre.imageUrl] },
+    }),
   };
 }
 

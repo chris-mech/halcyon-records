@@ -1,6 +1,11 @@
 const SITE_NAME = "Halcyon Records";
 const SITE_DESCRIPTION =
   "A full-stack record shop demo: browse, buy, and check out a curated vinyl catalogue.";
+const SITE_OPEN_GRAPH_DEFAULTS = {
+  siteName: SITE_NAME,
+  type: "website",
+  locale: "en_GB",
+} as const;
 
 export function resolveSiteUrl(): string {
   if (process.env.NEXT_PUBLIC_SITE_URL) {
@@ -28,4 +33,10 @@ export function resolveDeploymentUrl(): string {
 const SITE_URL = resolveSiteUrl();
 const DEPLOYMENT_URL = resolveDeploymentUrl();
 
-export { SITE_NAME, SITE_URL, DEPLOYMENT_URL, SITE_DESCRIPTION };
+export {
+  SITE_NAME,
+  SITE_URL,
+  DEPLOYMENT_URL,
+  SITE_DESCRIPTION,
+  SITE_OPEN_GRAPH_DEFAULTS,
+};

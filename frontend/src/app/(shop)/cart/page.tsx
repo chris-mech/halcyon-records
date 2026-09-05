@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useSession } from "next-auth/react";
 import { useEffect } from "react";
-import { ShoppingBag } from "lucide-react";
+import { ShoppingCart } from "lucide-react";
 
 import { buttonVariants } from "@/components/ui/button";
 import {
@@ -56,9 +56,12 @@ export default function CartPage() {
     return (
       <EmptyState
         icon={
-          <ShoppingBag aria-hidden className="size-5.5 text-muted-foreground" />
+          <ShoppingCart
+            aria-hidden
+            className="size-5.5 text-muted-foreground"
+          />
         }
-        heading="Your bag is empty"
+        heading="Your cart is empty"
         description="Nothing here yet. Have a dig through this week's cover story or browse the full catalogue."
       >
         <Link
@@ -82,7 +85,7 @@ export default function CartPage() {
   return (
     <div className="mx-auto w-full max-w-275 px-16 py-11">
       <div className="mb-8 flex items-baseline justify-between">
-        <h1 className="font-serif text-4xl font-medium italic">Your bag</h1>
+        <h1 className="font-serif text-4xl font-medium italic">Your cart</h1>
         <span className="text-sm font-semibold text-muted-foreground">
           {totalQuantity} {totalQuantity === 1 ? "item" : "items"}
         </span>

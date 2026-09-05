@@ -5,6 +5,7 @@ import { notFound, permanentRedirect } from "next/navigation";
 import { cacheLife } from "next/cache";
 
 import { client } from "@/lib/api/client";
+import { SITE_OPEN_GRAPH_DEFAULTS } from "@/lib/site-config";
 import { assertOk } from "@/lib/api/assert-ok";
 import { formatPrice } from "@/lib/format";
 import { LoadingState } from "@/components/loading-state";
@@ -46,7 +47,9 @@ export async function generateMetadata({
   return {
     title: artistNames ? `${album.title} by ${artistNames}` : album.title,
     description: album.description ?? undefined,
-    openGraph: album.imageUrl ? { images: [album.imageUrl] } : undefined,
+    ...(album.imageUrl && {
+      openGraph: { ...SITE_OPEN_GRAPH_DEFAULTS, images: [album.imageUrl] },
+    }),
   };
 }
 
@@ -150,7 +153,7 @@ export async function AlbumDetailContent({
         <div className="flex flex-col">
           <GenrePillList genres={album.genres} className="mb-5" />
 
-          <div className="mb-2 flex flex-wrap gap-x-1 text-sm font-bold tracking-wide text-muted-foreground uppercase">
+          <div className="mb-2 flex flex-wrap text-sm font-bold tracking-wide text-muted-foreground uppercase">
             {album.artists.map((artist, index) => (
               <Fragment key={artist.sqid}>
                 {index > 0 && ", "}

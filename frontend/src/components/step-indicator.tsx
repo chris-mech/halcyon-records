@@ -1,7 +1,7 @@
 import { cn } from "@/lib/utils";
 
 const STEPS = [
-  { key: "bag", label: "Bag" },
+  { key: "cart", label: "Cart" },
   { key: "login", label: "Log in" },
   { key: "checkout", label: "Checkout" },
   { key: "confirmation", label: "Confirmation" },

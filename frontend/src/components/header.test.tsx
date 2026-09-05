@@ -97,7 +97,7 @@ describe("Header", () => {
     await waitFor(() => expect(signOut).toHaveBeenCalled());
   });
 
-  test("shows the live bag count from the cart store", () => {
+  test("shows the live cart count from the cart store", () => {
     vi.mocked(useSession).mockReturnValue({
       data: null,
       status: "unauthenticated",
@@ -122,7 +122,7 @@ describe("Header", () => {
 
     render(<Header />);
 
-    expect(screen.getByRole("link", { name: "Bag (2)" })).toBeInTheDocument();
+    expect(screen.getByRole("link", { name: "Cart (2)" })).toBeInTheDocument();
   });
 
   test("shows a Back to shop link in the stripped variant by default", () => {
@@ -148,13 +148,12 @@ describe("Header", () => {
     });
 
     render(
-      <Header variant="stripped" backHref="/cart" backLabel="← Back to bag" />,
+      <Header variant="stripped" backHref="/cart" backLabel="← Back to cart" />,
     );
 
-    expect(screen.getByRole("link", { name: "← Back to bag" })).toHaveAttribute(
-      "href",
-      "/cart",
-    );
+    expect(
+      screen.getByRole("link", { name: "← Back to cart" }),
+    ).toHaveAttribute("href", "/cart");
   });
 
   test("prefills the search box from the current URL", () => {

@@ -132,13 +132,13 @@ describe("ProductCard", () => {
     expect(screen.queryByRole("img")).not.toBeInTheDocument();
   });
 
-  test("disables Add to bag when the album is out of stock", () => {
+  test("disables Add to cart when the album is out of stock", () => {
     render(<ProductCard album={buildAlbum({ isInStock: false })} />);
-    expect(screen.getByRole("button", { name: /add to bag/i })).toBeDisabled();
+    expect(screen.getByRole("button", { name: /add to cart/i })).toBeDisabled();
   });
 
-  test("keeps Add to bag enabled when in stock", () => {
+  test("keeps Add to cart enabled when in stock", () => {
     render(<ProductCard album={buildAlbum({ isInStock: true })} />);
-    expect(screen.getByRole("button", { name: /add to bag/i })).toBeEnabled();
+    expect(screen.getByRole("button", { name: /add to cart/i })).toBeEnabled();
   });
 });

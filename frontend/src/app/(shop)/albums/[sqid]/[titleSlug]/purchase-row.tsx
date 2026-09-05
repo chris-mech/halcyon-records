@@ -4,7 +4,7 @@ import { useState } from "react";
 import { Minus, Plus } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
-import { AddToBagButton } from "@/components/add-to-bag-button";
+import { AddToCartButton } from "@/components/add-to-cart-button";
 
 import type { components } from "@/lib/api/schema";
 
@@ -51,7 +51,7 @@ function PurchaseRow({ album }: PurchaseRowProps) {
           <Plus aria-hidden className="size-3.5" />
         </Button>
       </div>
-      <AddToBagButton
+      <AddToCartButton
         album={album}
         quantity={quantity}
         className="h-11 flex-1 px-8.5 text-[0.8125rem] font-bold tracking-wide uppercase"

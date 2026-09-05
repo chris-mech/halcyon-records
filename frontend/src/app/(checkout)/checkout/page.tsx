@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { ShoppingBag } from "lucide-react";
+import { ShoppingCart } from "lucide-react";
 import { useSession } from "next-auth/react";
 
 import { EmptyState } from "@/components/empty-state";
@@ -26,10 +26,13 @@ export default function CheckoutPage() {
     return (
       <EmptyState
         icon={
-          <ShoppingBag aria-hidden className="size-5.5 text-muted-foreground" />
+          <ShoppingCart
+            aria-hidden
+            className="size-5.5 text-muted-foreground"
+          />
         }
-        heading="Your bag is empty"
-        description="Add something to your bag before checking out."
+        heading="Your cart is empty"
+        description="Add something to your cart before checking out."
       >
         <Link
           href="/"

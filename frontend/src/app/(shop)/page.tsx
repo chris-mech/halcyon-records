@@ -14,7 +14,7 @@ import {
 import { Skeleton } from "@/components/ui/skeleton";
 import { GenrePillList } from "@/components/genre-pill-list";
 import { ShadowStackText } from "@/components/shadow-stack-text";
-import { AddToBagButton } from "@/components/add-to-bag-button";
+import { AddToCartButton } from "@/components/add-to-cart-button";
 import { MediaThumbnail } from "@/components/media-thumbnail";
 import type { components } from "@/lib/api/schema";
 
@@ -138,7 +138,7 @@ export async function HomeContent() {
             </ShadowStackText>
           </Link>
 
-          <div className="mb-7 flex flex-wrap gap-x-1 text-sm font-bold tracking-wide text-muted-foreground uppercase">
+          <div className="mb-7 flex flex-wrap text-sm font-bold tracking-wide text-muted-foreground uppercase">
             {coverStory.artists.map((artist, index) => (
               <Fragment key={artist.sqid}>
                 {index > 0 && ", "}
@@ -159,7 +159,7 @@ export async function HomeContent() {
           )}
 
           <div className="flex items-center gap-6">
-            <AddToBagButton album={coverStory} size="lg" />
+            <AddToCartButton album={coverStory} size="lg" />
             <span className="text-sm font-semibold text-muted-foreground">
               {formatPrice(coverStory.priceInPence)}
             </span>

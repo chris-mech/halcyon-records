@@ -4,7 +4,7 @@ import Link from "next/link";
 import { formatPrice } from "@/lib/format";
 import type { components } from "@/lib/api/schema";
 import { Card } from "@/components/ui/card";
-import { AddToBagButton } from "@/components/add-to-bag-button";
+import { AddToCartButton } from "@/components/add-to-cart-button";
 import { AlbumTagStack } from "@/components/album-tag-stack";
 import { MediaThumbnail } from "./media-thumbnail";
 
@@ -43,7 +43,7 @@ function ProductCard({
       />
 
       <div className="flex flex-1 flex-col gap-2.5 p-4">
-        <div className="flex flex-wrap items-center gap-x-1 text-[0.6875rem] font-bold tracking-wide text-muted-foreground uppercase">
+        <div className="line-clamp-2 min-h-[2lh] text-[0.6875rem] font-bold tracking-wide text-muted-foreground uppercase">
           {album.artists.map((artist, index) => (
             <Fragment key={artist.sqid}>
               {index > 0 && ", "}
@@ -57,7 +57,9 @@ function ProductCard({
           ))}
           {showGenre && album.genres.length > 0 && (
             <>
-              <span aria-hidden>·</span>
+              <span aria-hidden className="mx-1">
+                ·
+              </span>
               {album.genres.map((genre, index) => (
                 <Fragment key={genre.slug}>
                   {index > 0 && ", "}
@@ -72,7 +74,7 @@ function ProductCard({
             </>
           )}
           {showReleaseYear && releaseYear != null && (
-            <span className="text-[0.6875rem] font-semibold text-muted-foreground">
+            <span className="ms-1 text-[0.6875rem] font-semibold text-muted-foreground">
               {releaseYear}
             </span>
           )}
@@ -96,7 +98,7 @@ function ProductCard({
               {formatPrice(album.priceInPence)}
             </span>
           </p>
-          <AddToBagButton
+          <AddToCartButton
             album={album}
             variant="link"
             className="h-auto p-0 text-[0.6875rem] font-bold tracking-wide text-slate uppercase"

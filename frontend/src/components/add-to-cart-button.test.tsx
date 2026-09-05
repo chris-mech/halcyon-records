@@ -4,8 +4,8 @@ import { fireEvent, render, screen } from "@testing-library/react";
 import { toast } from "@/components/ui/toast";
 import { useCartStore } from "@/lib/cart/cart-store";
 
-import { AddToBagButton } from "./add-to-bag-button";
-import type { CartEligibleAlbum } from "./add-to-bag-button";
+import { AddToCartButton } from "./add-to-cart-button";
+import type { CartEligibleAlbum } from "./add-to-cart-button";
 
 vi.mock("@/components/ui/toast", () => ({
   toast: { add: vi.fn() },
@@ -15,9 +15,9 @@ function fixtureAlbum(
   overrides: Partial<CartEligibleAlbum> = {},
 ): CartEligibleAlbum {
   return {
-    sqid: "add-to-bag-album",
-    title: "Add To Bag Fixture Album",
-    titleSlug: "add-to-bag-fixture-album",
+    sqid: "add-to-cart-album",
+    title: "Add To Cart Fixture Album",
+    titleSlug: "add-to-cart-fixture-album",
     imageUrl: null,
     priceInPence: 1999,
     originalPriceInPence: null,
@@ -39,42 +39,42 @@ beforeEach(() => {
   vi.mocked(toast.add).mockClear();
 });
 
-describe("AddToBagButton", () => {
+describe("AddToCartButton", () => {
   test("adds the album to the cart and shows a confirmation toast", () => {
-    render(<AddToBagButton album={fixtureAlbum()} />);
+    render(<AddToCartButton album={fixtureAlbum()} />);
 
-    fireEvent.click(screen.getByRole("button", { name: "Add to bag" }));
+    fireEvent.click(screen.getByRole("button", { name: "Add to cart" }));
 
     expect(useCartStore.getState().items).toEqual([
-      expect.objectContaining({ albumSqid: "add-to-bag-album", quantity: 1 }),
+      expect.objectContaining({ albumSqid: "add-to-cart-album", quantity: 1 }),
     ]);
     expect(toast.add).toHaveBeenCalledWith({
-      title: "Added to bag",
-      description: "Add To Bag Fixture Album",
+      title: "Added to cart",
+      description: "Add To Cart Fixture Album",
     });
   });
 
   test("adds the given quantity instead of defaulting to one", () => {
-    render(<AddToBagButton album={fixtureAlbum()} quantity={2} />);
+    render(<AddToCartButton album={fixtureAlbum()} quantity={2} />);
 
-    fireEvent.click(screen.getByRole("button", { name: "Add to bag" }));
+    fireEvent.click(screen.getByRole("button", { name: "Add to cart" }));
 
     expect(useCartStore.getState().items[0].quantity).toBe(2);
   });
 
   test("is disabled when the album is out of stock", () => {
-    render(<AddToBagButton album={fixtureAlbum({ isInStock: false })} />);
+    render(<AddToCartButton album={fixtureAlbum({ isInStock: false })} />);
 
-    expect(screen.getByRole("button", { name: "Add to bag" })).toBeDisabled();
+    expect(screen.getByRole("button", { name: "Add to cart" })).toBeDisabled();
   });
 
   test("is disabled once the cart already holds the full available stock", () => {
     useCartStore.setState({
       items: [
         {
-          albumSqid: "add-to-bag-album",
-          title: "Add To Bag Fixture Album",
-          titleSlug: "add-to-bag-fixture-album",
+          albumSqid: "add-to-cart-album",
+          title: "Add To Cart Fixture Album",
+          titleSlug: "add-to-cart-fixture-album",
           imageUrl: null,
           priceInPence: 1999,
           originalPriceInPence: null,
@@ -86,8 +86,8 @@ describe("AddToBagButton", () => {
       ],
     });
 
-    render(<AddToBagButton album={fixtureAlbum({ unitsInStock: 3 })} />);
+    render(<AddToCartButton album={fixtureAlbum({ unitsInStock: 3 })} />);
 
-    expect(screen.getByRole("button", { name: "Add to bag" })).toBeDisabled();
+    expect(screen.getByRole("button", { name: "Add to cart" })).toBeDisabled();
   });
 });
