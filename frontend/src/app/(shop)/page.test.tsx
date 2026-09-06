@@ -95,16 +95,25 @@ function mockHomepageFetch({
         : { data: coverStory, error: undefined, response: new Response() };
     }
 
-    const isNew = (options as { params?: { query?: { isNew?: boolean } } })
-      ?.params?.query?.isNew;
+    const query = (
+      options as {
+        params?: { query?: { isNew?: boolean; isOnSale?: boolean } };
+      }
+    )?.params?.query;
+
+    let items: AlbumSummary[];
+    if (query?.isNew) {
+      items = newArrivals;
+    } else if (query?.isOnSale) {
+      items = onSaleAlbums;
+    } else {
+      throw new Error(
+        `Unexpected /api/albums query in the homepage mock: ${JSON.stringify(query)}`,
+      );
+    }
 
     return {
-      data: {
-        items: isNew ? newArrivals : onSaleAlbums,
-        page: 1,
-        pageSize: 4,
-        totalCount: isNew ? newArrivals.length : onSaleAlbums.length,
-      },
+      data: { items, page: 1, pageSize: 4, totalCount: items.length },
       error: undefined,
       response: new Response(),
     };

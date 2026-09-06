@@ -45,8 +45,6 @@ async function getHomepageData(): Promise<HomepageData> {
           page: 1,
           pageSize: 4,
           isNew: true,
-          isOnSale: false,
-          isStaffPick: false,
           sort: "NewestFirst",
         },
       },
@@ -56,9 +54,7 @@ async function getHomepageData(): Promise<HomepageData> {
         query: {
           page: 1,
           pageSize: 4,
-          isNew: false,
           isOnSale: true,
-          isStaffPick: false,
           sort: "NewestFirst",
         },
       },
