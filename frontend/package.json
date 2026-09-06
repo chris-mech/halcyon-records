@@ -11,6 +11,7 @@
     "codegen:generate": "NODE_OPTIONS=--use-system-ca openapi-typescript $CODEGEN_API_URL/openapi/v1.json -o src/lib/api/schema.d.ts",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
+    "screenshots": "bun run scripts/capture-screenshots.ts",
     "test": "vitest run",
     "test:e2e": "playwright test",
     "test:e2e:report": "playwright show-report",
