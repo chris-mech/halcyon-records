@@ -74,11 +74,25 @@ async function main() {
   await page.waitForURL(/\/albums\//);
   await shoot("album-detail");
 
-  await page.goto(`${BASE_URL}/login?next=/account`);
+  await page.goto(`${BASE_URL}/shop`);
+  await settle();
+  await page.getByRole("button", { name: "Add to cart" }).nth(0).click();
+  await page.getByRole("button", { name: "Add to cart" }).nth(1).click();
+  await page.getByRole("link", { name: "Cart (2)" }).waitFor();
+
+  await page.goto(`${BASE_URL}/cart`);
+  await page.getByRole("heading", { name: "Your cart" }).waitFor();
+  await shoot("cart");
+
+  await page.getByRole("link", { name: "Checkout" }).click();
+  await page.waitForURL((url) => url.pathname === "/checkout");
+  await page.getByRole("link", { name: "Log in" }).click();
+  await page.waitForURL((url) => url.pathname === "/login");
   await settle();
   await page.getByRole("button", { name: "Try the demo account" }).click();
-  await page.waitForURL((url) => url.pathname === "/account");
-  await shoot("order-history");
+  await page.waitForURL((url) => url.pathname === "/checkout");
+  await page.getByRole("button", { name: /^Place order/ }).waitFor();
+  await shoot("checkout");
 
   await browser.close();
 }
