@@ -1,4 +1,3 @@
-import { Fragment } from "react";
 import Link from "next/link";
 
 import { formatPrice } from "@/lib/format";
@@ -6,6 +5,7 @@ import type { components } from "@/lib/api/schema";
 import { Card } from "@/components/ui/card";
 import { AddToCartButton } from "@/components/add-to-cart-button";
 import { AlbumTagStack } from "@/components/album-tag-stack";
+import { InlineLinkList } from "@/components/inline-link-list";
 import { MediaThumbnail } from "./media-thumbnail";
 
 type AlbumSummary = components["schemas"]["AlbumSummaryResponse"];
@@ -44,39 +44,40 @@ function ProductCard({
 
       <div className="flex flex-1 flex-col gap-2.5 p-4">
         <div className="line-clamp-2 min-h-[2lh] text-[0.6875rem] font-bold tracking-wide text-muted-foreground uppercase">
-          {album.artists.map((artist, index) => (
-            <Fragment key={artist.sqid}>
-              {index > 0 && ", "}
-              <Link
-                href={`/artists/${artist.sqid}/${artist.nameSlug}`}
-                className="outline-none hover:underline focus-visible:ring-3 focus-visible:ring-ring"
-              >
-                {artist.name}
-              </Link>
-            </Fragment>
-          ))}
+          <InlineLinkList
+            items={album.artists.map((artist) => ({
+              id: artist.sqid,
+              href: `/artists/${artist.sqid}/${artist.nameSlug}`,
+              label: artist.name,
+            }))}
+            linkClassName="outline-none hover:underline focus-visible:ring-3 focus-visible:ring-ring"
+          />
           {showGenre && album.genres.length > 0 && (
             <>
-              <span aria-hidden className="mx-1">
-                ·
+              <span className="sr-only">. </span>
+              <span aria-hidden className="mx-2">
+                |
               </span>
-              {album.genres.map((genre, index) => (
-                <Fragment key={genre.slug}>
-                  {index > 0 && ", "}
-                  <Link
-                    href={`/genres/${genre.slug}`}
-                    className="outline-none hover:underline focus-visible:ring-3 focus-visible:ring-ring"
-                  >
-                    {genre.name}
-                  </Link>
-                </Fragment>
-              ))}
+              <InlineLinkList
+                items={album.genres.map((genre) => ({
+                  id: genre.slug,
+                  href: `/genres/${genre.slug}`,
+                  label: genre.name,
+                }))}
+                linkClassName="outline-none hover:underline focus-visible:ring-3 focus-visible:ring-ring"
+              />
             </>
           )}
           {showReleaseYear && releaseYear != null && (
-            <span className="ms-1 text-[0.6875rem] font-semibold text-muted-foreground">
-              {releaseYear}
-            </span>
+            <>
+              <span className="sr-only">. </span>
+              <span aria-hidden className="mx-2">
+                |
+              </span>
+              <span className="text-[0.6875rem] font-semibold text-muted-foreground">
+                {releaseYear}
+              </span>
+            </>
           )}
         </div>
 

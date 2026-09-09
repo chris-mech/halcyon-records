@@ -1,9 +1,9 @@
 "use client";
 
-import { Fragment } from "react";
 import Link from "next/link";
 import { Minus, Plus } from "lucide-react";
 
+import { InlineLinkList } from "@/components/inline-link-list";
 import { MediaThumbnail } from "@/components/media-thumbnail";
 import { Button } from "@/components/ui/button";
 import { formatPrice } from "@/lib/format";
@@ -31,17 +31,14 @@ function CartRow({ item }: CartRowProps) {
 
       <div className="flex-1">
         <p className="mb-1 flex flex-wrap text-[0.6875rem] font-bold tracking-wide text-muted-foreground uppercase">
-          {item.artists.map((artist, index) => (
-            <Fragment key={artist.sqid}>
-              {index > 0 && ", "}
-              <Link
-                href={`/artists/${artist.sqid}/${artist.nameSlug}`}
-                className="hover:underline"
-              >
-                {artist.name}
-              </Link>
-            </Fragment>
-          ))}
+          <InlineLinkList
+            items={item.artists.map((artist) => ({
+              id: artist.sqid,
+              href: `/artists/${artist.sqid}/${artist.nameSlug}`,
+              label: artist.name,
+            }))}
+            linkClassName="hover:underline"
+          />
         </p>
         <Link
           href={albumHref}
