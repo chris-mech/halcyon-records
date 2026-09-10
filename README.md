@@ -230,6 +230,11 @@ halcyon-records/
 ### The deployed system
 
 ```mermaid
+---
+config:
+  flowchart:
+    diagramPadding: 220
+---
 flowchart LR
     browser["Customer's browser"]
 
@@ -263,6 +268,11 @@ A merge to main also triggers Vercel, which builds and deploys the storefront.
 ### Placing an order
 
 ```mermaid
+---
+config:
+  sequence:
+    diagramMarginX: 330
+---
 sequenceDiagram
     actor Customer
     participant Storefront as Next.js storefront
@@ -274,7 +284,7 @@ sequenceDiagram
     Storefront->>Handler: POST /api/orders, with an idempotency key
     Handler->>Handler: Reads the signed-in session
     Handler->>API: POST /api/orders, with access token
-    API->>DB: Confirms and reduces stock for every item in one transaction
+    API->>DB: Confirms and reduces stock<br/>for every item in one transaction
     DB-->>API: Rows updated
     API-->>Handler: 201 Created, with the order number
     Handler-->>Storefront: Order number
