@@ -11,9 +11,9 @@ public static class SeedDataFileNames
     public const string Decades = "SampleDecades.json";
 }
 
-public static class SeedDataJsonOptions
+public static class SeedDataJson
 {
-    public static readonly JsonSerializerOptions Default = new()
+    public static readonly JsonSerializerOptions SerializerOptions = new()
     {
         PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
         WriteIndented = true,
