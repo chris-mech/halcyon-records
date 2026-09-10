@@ -17,7 +17,7 @@ public static class ErrorOrHttpExtensions
                 throw new InvalidOperationException(
                     "Problem() was called with a validation error, but this endpoint's "
                         + "Results<> union has no ValidationProblem branch. Use "
-                        + "ProblemWithValidation() instead if this request can be validated."
+                        + "ProblemWithValidationProblem() instead if this request can be validated."
                 );
             }
 
@@ -53,7 +53,7 @@ public static class ErrorOrHttpExtensions
             if (errors.Count == 0)
             {
                 throw new InvalidOperationException(
-                    "Problem()/ProblemWithValidation() was called with an empty error list."
+                    "Problem()/ProblemWithValidationProblem() was called with an empty error list."
                 );
             }
         }
