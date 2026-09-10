@@ -69,7 +69,7 @@ Table AspNetUsers {
   Email nvarchar(256)
   UserName nvarchar(256)
   PasswordHash nvarchar(max)
-  PublicId uniqueidentifier [not null]
+  PublicId uniqueidentifier [not null, unique]
   IsShowcaseAccount bit [not null]
   RegisteredAt datetimeoffset [not null]
   LastActiveAt datetimeoffset [not null]
