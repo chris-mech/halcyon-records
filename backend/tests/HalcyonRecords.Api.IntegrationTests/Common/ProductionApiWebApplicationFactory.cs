@@ -6,7 +6,10 @@ namespace HalcyonRecords.Api.IntegrationTests.Common;
 
 internal sealed class ProductionApiWebApplicationFactory : WebApplicationFactory<Program>
 {
-    public ProductionApiWebApplicationFactory(SqlServerContainerFixture fixture)
+    public ProductionApiWebApplicationFactory(
+        SqlServerContainerFixture fixture,
+        MeilisearchContainerFixture? meilisearchFixture = null
+    )
     {
         Environment.SetEnvironmentVariable(
             "ConnectionStrings__halcyonrecords",
@@ -24,6 +27,14 @@ internal sealed class ProductionApiWebApplicationFactory : WebApplicationFactory
             $"{JwtOptions.SectionName}__Audience",
             ApiWebApplicationFactory.JwtAudience
         );
+
+        if (meilisearchFixture is not null)
+        {
+            Environment.SetEnvironmentVariable(
+                "ConnectionStrings__meilisearch",
+                meilisearchFixture.ConnectionString
+            );
+        }
     }
 
     protected override void ConfigureWebHost(IWebHostBuilder builder) =>

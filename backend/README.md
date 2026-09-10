@@ -102,3 +102,22 @@ a job name. The API runs that one job and exits.
 `deploy-api.yml` runs `migrate`, `seed` and `reindex` in that order after every deploy.
 `account-maintenance` runs daily at 03:15 UTC and `restock` at 03:20 UTC. `reseed` runs only when
 started by hand.
+
+## Health checks
+
+`/alive` runs only a self check and reports whether the API can respond. `/health` also checks SQL
+Server and Meilisearch.
+
+In development, both answer on the API's usual address:
+
+```bash
+curl https://localhost:7000/alive
+curl https://localhost:7000/health
+```
+
+Everywhere else they answer only on the port set by `HealthChecks:ManagementPort`, and not at all
+when it is unset. In production that port is 8081, which Container Apps probes call directly and
+ingress never forwards to. The startup and liveness probes use `/alive`, and the readiness probe
+uses `/health`.
+
+Neither endpoint appears in the OpenAPI document or in Scalar.
