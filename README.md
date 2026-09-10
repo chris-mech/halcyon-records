@@ -53,8 +53,8 @@ features a dedicated page with an introduction of its own.
   syncs it at sign-in.
 - **Oversell Protection** Each item's stock check and decrement are one atomic update, and the
   transaction rolls back if any item is short.
-- **Idempotent Orders** A UUID v7 idempotency key on every order means a duplicate request
-  receives the original order instead of creating a second.
+- **Idempotent Orders** An idempotency key on every order means a duplicate request receives
+  the original order instead of creating a second.
 - **Simulated Checkout** Checkout takes no payment, while still reducing stock for everyone and
   saving the order to the account's history.
 
