@@ -1,0 +1,138 @@
+Project halcyon_records {
+  database_type: 'SQL Server'
+}
+
+Table Albums {
+  Id int [pk, increment]
+  Title nvarchar(1000) [not null]
+  Description nvarchar(max)
+  ReleaseDate date
+  Label nvarchar(200)
+  IsNew bit [not null]
+  IsStaffPick bit [not null]
+  ImageUrl nvarchar(500)
+  UnitsInStock int [not null]
+  RestockUnitsInStock int [not null]
+  PriceInPence int [not null]
+  OriginalPriceInPence int
+}
+
+Table Artists {
+  Id int [pk, increment]
+  Name nvarchar(150) [not null]
+  Bio nvarchar(max)
+  Origin nvarchar(200)
+  Type nvarchar(20)
+  SinceYear int
+  ImageUrl nvarchar(500)
+}
+
+Table Genres {
+  Id int [pk, increment]
+  Name nvarchar(150) [not null, unique]
+  Slug nvarchar(200) [not null, unique]
+  Description nvarchar(max)
+  ImageUrl nvarchar(500)
+}
+
+Table Decades {
+  Slug nvarchar(50) [pk]
+  Label nvarchar(50) [not null]
+  StartYear int
+  EndYear int
+  Description nvarchar(max)
+  ImageUrl nvarchar(500)
+}
+
+Table AlbumArtists {
+  AlbumId int [not null]
+  ArtistId int [not null]
+
+  indexes {
+    (AlbumId, ArtistId) [pk]
+  }
+}
+
+Table AlbumGenres {
+  AlbumId int [not null]
+  GenreId int [not null]
+
+  indexes {
+    (AlbumId, GenreId) [pk]
+  }
+}
+
+Table AspNetUsers {
+  Id int [pk, increment]
+  FirstName nvarchar(100) [not null]
+  LastName nvarchar(100) [not null]
+  Email nvarchar(256)
+  UserName nvarchar(256)
+  PasswordHash nvarchar(max)
+  PublicId uniqueidentifier [not null, unique]
+  IsShowcaseAccount bit [not null]
+  RegisteredAt datetimeoffset [not null]
+  LastActiveAt datetimeoffset [not null]
+}
+
+Table RefreshTokens {
+  Id int [pk, increment]
+  TokenHash nvarchar(64) [not null, unique]
+  UserId int [not null]
+  ExpiresAt datetimeoffset [not null]
+  CreatedAt datetimeoffset [not null]
+  RevokedAt datetimeoffset
+  ReplacedByTokenId int
+}
+
+Table Carts {
+  Id int [pk, increment]
+  UserId int [not null, unique]
+}
+
+Table CartItems {
+  CartId int [not null]
+  AlbumId int [not null]
+  Quantity int [not null]
+
+  indexes {
+    (CartId, AlbumId) [pk]
+  }
+}
+
+Table Orders {
+  Id int [pk, increment]
+  UserId int [not null]
+  OrderNumber nvarchar(20) [not null, unique]
+  IdempotencyKey uniqueidentifier [not null, unique]
+  ContactFirstName nvarchar(max) [not null]
+  ContactLastName nvarchar(max) [not null]
+  ContactEmail nvarchar(max) [not null]
+  TotalInPence int [not null]
+  PlacedAt datetimeoffset [not null]
+  Status nvarchar(20) [not null]
+}
+
+Table OrderItems {
+  OrderId int [not null]
+  AlbumId int [not null]
+  Quantity int [not null]
+  PriceAtPurchaseInPence int [not null]
+
+  indexes {
+    (OrderId, AlbumId) [pk]
+  }
+}
+
+Ref: AlbumArtists.AlbumId > Albums.Id
+Ref: AlbumArtists.ArtistId > Artists.Id
+Ref: AlbumGenres.AlbumId > Albums.Id
+Ref: AlbumGenres.GenreId > Genres.Id
+Ref: Carts.UserId - AspNetUsers.Id
+Ref: CartItems.CartId > Carts.Id
+Ref: CartItems.AlbumId > Albums.Id
+Ref: Orders.UserId > AspNetUsers.Id
+Ref: OrderItems.OrderId > Orders.Id
+Ref: OrderItems.AlbumId > Albums.Id
+Ref: RefreshTokens.UserId > AspNetUsers.Id
+Ref: RefreshTokens.ReplacedByTokenId >? RefreshTokens.Id

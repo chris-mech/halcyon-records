@@ -112,6 +112,23 @@ describe("ProductCard", () => {
     );
   });
 
+  test("separates the artist and genre groups with a pipe", () => {
+    const { container } = render(
+      <ProductCard
+        album={buildAlbum({
+          artists: [{ sqid: "a1", name: "Artist One", nameSlug: "artist-one" }],
+          genres: [{ name: "Genre Match 1", slug: "genre-match-1" }],
+        })}
+      />,
+    );
+
+    const separators = Array.from(
+      container.querySelectorAll('[aria-hidden="true"]'),
+    );
+    expect(separators.some((node) => node.textContent === "|")).toBe(true);
+    expect(screen.getByText(".")).toBeInTheDocument();
+  });
+
   test("hides the release year by default", () => {
     render(<ProductCard album={buildAlbum({ releaseDate: "1974-06-01" })} />);
     expect(screen.queryByText("1974")).not.toBeInTheDocument();
@@ -125,6 +142,20 @@ describe("ProductCard", () => {
       />,
     );
     expect(screen.getByText("1974")).toBeInTheDocument();
+  });
+
+  test("separates the release year from the genres with a pipe", () => {
+    const { container } = render(
+      <ProductCard
+        album={buildAlbum({ releaseDate: "1974-06-01" })}
+        showReleaseYear
+      />,
+    );
+
+    const pipes = Array.from(
+      container.querySelectorAll('[aria-hidden="true"]'),
+    ).filter((node) => node.textContent === "|");
+    expect(pipes).toHaveLength(2);
   });
 
   test("renders a placeholder icon when there is no cover art", () => {

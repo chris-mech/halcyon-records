@@ -557,7 +557,7 @@ public sealed class SeedDataSession(
 
         return await JsonSerializer.DeserializeAsync<List<T>>(
                 stream,
-                SeedDataJsonOptions.Default,
+                SeedDataJson.SerializerOptions,
                 cancellationToken
             )
             ?? throw new InvalidOperationException($"Seed file '{fileName}' deserialised to null.");
@@ -575,7 +575,7 @@ public sealed class SeedDataSession(
         await JsonSerializer.SerializeAsync(
             stream,
             values,
-            SeedDataJsonOptions.Default,
+            SeedDataJson.SerializerOptions,
             cancellationToken
         );
     }

@@ -4021,11 +4021,11 @@
     "sourceId": "c5f61814-2022-5cdb-a782-3fb791654852",
     "source": "Generated",
     "description": "A return to repertoire she first recorded thirty years ago, taken slower and with far less to prove. Remarkable playing.",
-    "releaseDate": "2026-04-17",
+    "releaseDate": "2025-10-25",
     "label": "Harrow Lane Records",
     "isNew": true,
     "isStaffPick": false,
-    "imageUrl": "https://picsum.photos/seed/album-nocturnes-revisited/500/500",
+    "imageUrl": "https://picsum.photos/seed/album-nocturnes/500/500",
     "artistSourceIds": [
       "8dc2e504-bc19-5f5a-a812-cf04168e5892"
     ],
@@ -4034,6 +4034,6 @@
     ],
     "unitsInStock": 36,
     "priceInPence": 2199,
-    "originalPriceInPence": 3099
+    "originalPriceInPence": null
   }
 ]

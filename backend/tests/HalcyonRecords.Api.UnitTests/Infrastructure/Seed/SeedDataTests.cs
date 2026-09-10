@@ -30,7 +30,7 @@ public class SeedDataTests
         var path = Path.Combine(AppContext.BaseDirectory, SeedDataFolder, fileName);
         using var stream = File.OpenRead(path);
 
-        return JsonSerializer.Deserialize<List<T>>(stream, SeedDataJsonOptions.Default)
+        return JsonSerializer.Deserialize<List<T>>(stream, SeedDataJson.SerializerOptions)
             ?? throw new InvalidOperationException($"Seed file '{fileName}' deserialised to null.");
     }
 

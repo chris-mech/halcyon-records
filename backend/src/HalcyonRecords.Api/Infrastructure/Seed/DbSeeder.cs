@@ -186,7 +186,7 @@ public static class DbSeeder
 
         return await JsonSerializer.DeserializeAsync<List<T>>(
                 stream,
-                SeedDataJsonOptions.Default,
+                SeedDataJson.SerializerOptions,
                 cancellationToken
             )
             ?? throw new InvalidOperationException($"Seed file '{fileName}' deserialised to null.");

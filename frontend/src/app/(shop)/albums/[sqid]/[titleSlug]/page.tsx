@@ -1,4 +1,4 @@
-import { Fragment, Suspense } from "react";
+import { Suspense } from "react";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound, permanentRedirect } from "next/navigation";
@@ -14,6 +14,7 @@ import {
   SkeletonLines,
 } from "@/components/skeleton-primitives";
 import { Skeleton } from "@/components/ui/skeleton";
+import { InlineLinkList } from "@/components/inline-link-list";
 import { AlbumTagStack } from "@/components/album-tag-stack";
 import { GenrePillList } from "@/components/genre-pill-list";
 import { ProductCard } from "@/components/product-card";
@@ -154,17 +155,14 @@ export async function AlbumDetailContent({
           <GenrePillList genres={album.genres} className="mb-5" />
 
           <div className="mb-2 flex flex-wrap text-sm font-bold tracking-wide text-muted-foreground uppercase">
-            {album.artists.map((artist, index) => (
-              <Fragment key={artist.sqid}>
-                {index > 0 && ", "}
-                <Link
-                  href={`/artists/${artist.sqid}/${artist.nameSlug}`}
-                  className="hover:underline"
-                >
-                  {artist.name}
-                </Link>
-              </Fragment>
-            ))}
+            <InlineLinkList
+              items={album.artists.map((artist) => ({
+                id: artist.sqid,
+                href: `/artists/${artist.sqid}/${artist.nameSlug}`,
+                label: artist.name,
+              }))}
+              linkClassName="hover:underline"
+            />
           </div>
 
           <h1 className="mb-5 font-serif text-[2.625rem] leading-tight font-medium italic">
@@ -202,7 +200,7 @@ export async function AlbumDetailContent({
                 <div className="flex justify-between border-b border-line py-2.5 text-sm">
                   <dt className="font-semibold text-muted-foreground">Genre</dt>
                   <dd className="font-semibold">
-                    {album.genres.map((genre) => genre.name).join(", ")}
+                    {album.genres.map((genre) => genre.name).join(" · ")}
                   </dd>
                 </div>
               )}

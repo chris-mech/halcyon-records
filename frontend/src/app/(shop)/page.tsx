@@ -1,4 +1,4 @@
-import { Fragment, Suspense } from "react";
+import { Suspense } from "react";
 import { connection } from "next/server";
 import Link from "next/link";
 import { cacheLife } from "next/cache";
@@ -12,6 +12,7 @@ import {
   SkeletonLines,
 } from "@/components/skeleton-primitives";
 import { Skeleton } from "@/components/ui/skeleton";
+import { InlineLinkList } from "@/components/inline-link-list";
 import { GenrePillList } from "@/components/genre-pill-list";
 import { ShadowStackText } from "@/components/shadow-stack-text";
 import { AddToCartButton } from "@/components/add-to-cart-button";
@@ -45,8 +46,6 @@ async function getHomepageData(): Promise<HomepageData> {
           page: 1,
           pageSize: 4,
           isNew: true,
-          isOnSale: false,
-          isStaffPick: false,
           sort: "NewestFirst",
         },
       },
@@ -56,9 +55,7 @@ async function getHomepageData(): Promise<HomepageData> {
         query: {
           page: 1,
           pageSize: 4,
-          isNew: false,
           isOnSale: true,
-          isStaffPick: false,
           sort: "NewestFirst",
         },
       },
@@ -139,17 +136,14 @@ export async function HomeContent() {
           </Link>
 
           <div className="mb-7 flex flex-wrap text-sm font-bold tracking-wide text-muted-foreground uppercase">
-            {coverStory.artists.map((artist, index) => (
-              <Fragment key={artist.sqid}>
-                {index > 0 && ", "}
-                <Link
-                  href={`/artists/${artist.sqid}/${artist.nameSlug}`}
-                  className="hover:underline"
-                >
-                  {artist.name}
-                </Link>
-              </Fragment>
-            ))}
+            <InlineLinkList
+              items={coverStory.artists.map((artist) => ({
+                id: artist.sqid,
+                href: `/artists/${artist.sqid}/${artist.nameSlug}`,
+                label: artist.name,
+              }))}
+              linkClassName="hover:underline"
+            />
           </div>
 
           {coverStory.description && (

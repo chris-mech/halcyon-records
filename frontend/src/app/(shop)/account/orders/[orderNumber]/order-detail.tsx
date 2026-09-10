@@ -1,12 +1,13 @@
 "use client";
 
-import { Fragment, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 
 import { LoadingState } from "@/components/loading-state";
 import { SkeletonLines } from "@/components/skeleton-primitives";
 import { Skeleton } from "@/components/ui/skeleton";
 import { MediaThumbnail } from "@/components/media-thumbnail";
+import { InlineLinkList } from "@/components/inline-link-list";
 import { Badge } from "@/components/ui/badge";
 import {
   Breadcrumb,
@@ -178,17 +179,14 @@ function OrderDetail({ orderNumber }: OrderDetailProps) {
                 />
                 <div className="flex-1">
                   <p className="mb-1 flex flex-wrap text-[0.6875rem] font-bold tracking-wide text-muted-foreground uppercase">
-                    {item.artists.map((artist, index) => (
-                      <Fragment key={artist.sqid}>
-                        {index > 0 && ", "}
-                        <Link
-                          href={`/artists/${artist.sqid}/${artist.nameSlug}`}
-                          className="hover:underline"
-                        >
-                          {artist.name}
-                        </Link>
-                      </Fragment>
-                    ))}
+                    <InlineLinkList
+                      items={item.artists.map((artist) => ({
+                        id: artist.sqid,
+                        href: `/artists/${artist.sqid}/${artist.nameSlug}`,
+                        label: artist.name,
+                      }))}
+                      linkClassName="hover:underline"
+                    />
                   </p>
                   <p className="font-serif text-base italic">{item.title}</p>
                   <p className="mt-1 text-xs text-muted-foreground">
