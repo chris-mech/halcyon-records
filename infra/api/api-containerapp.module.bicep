@@ -19,6 +19,8 @@ param keyvault_outputs_name string
 
 param api_identity_outputs_clientid string
 
+var healthChecksManagementPort = 8081
+
 resource keyvault 'Microsoft.KeyVault/vaults@2024-11-01' existing = {
   name: keyvault_outputs_name
 }
@@ -89,7 +91,7 @@ resource api 'Microsoft.App/containerApps@2025-10-02-preview' = {
             }
             {
               name: 'HTTP_PORTS'
-              value: api_containerport
+              value: '${api_containerport};${healthChecksManagementPort}'
             }
             {
               name: 'ConnectionStrings__halcyonrecords'
@@ -154,6 +156,43 @@ resource api 'Microsoft.App/containerApps@2025-10-02-preview' = {
             {
               name: 'AZURE_TOKEN_CREDENTIALS'
               value: 'ManagedIdentityCredential'
+            }
+            {
+              name: 'HealthChecks__ManagementPort'
+              value: string(healthChecksManagementPort)
+            }
+          ]
+          probes: [
+            {
+              type: 'Startup'
+              httpGet: {
+                path: '/alive'
+                port: healthChecksManagementPort
+              }
+              initialDelaySeconds: 1
+              periodSeconds: 5
+              timeoutSeconds: 3
+              failureThreshold: 10
+            }
+            {
+              type: 'Liveness'
+              httpGet: {
+                path: '/alive'
+                port: healthChecksManagementPort
+              }
+              periodSeconds: 10
+              timeoutSeconds: 3
+              failureThreshold: 3
+            }
+            {
+              type: 'Readiness'
+              httpGet: {
+                path: '/health'
+                port: healthChecksManagementPort
+              }
+              periodSeconds: 10
+              timeoutSeconds: 5
+              failureThreshold: 10
             }
           ]
         }
