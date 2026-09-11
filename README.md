@@ -1,36 +1,48 @@
 # Halcyon Records
 
 **A full-stack record shop**, built with ASP.NET Core and Next.js. Deployed across Azure and
-Vercel, with fast, typo-tolerant search powered by Meilisearch.
+Vercel, with typo-tolerant search powered by Meilisearch.
 
 [![CI](https://github.com/chris-mech/halcyon-records/actions/workflows/ci.yml/badge.svg)](https://github.com/chris-mech/halcyon-records/actions/workflows/ci.yml)
 [![Deploy API](https://github.com/chris-mech/halcyon-records/actions/workflows/deploy-api.yml/badge.svg)](https://github.com/chris-mech/halcyon-records/actions/workflows/deploy-api.yml)
 ![.NET 10](https://img.shields.io/badge/.NET-10-512BD4?logo=dotnet&logoColor=white)
 ![Next.js 16](https://img.shields.io/badge/Next.js-16-000000?logo=nextdotjs&logoColor=white)
 
-## Live
-
 - **Storefront:** https://halcyon-records.vercel.app
 - **API reference:** https://api.livelydesert-e3113c84.uksouth.azurecontainerapps.io/scalar
 
 > **The first visit takes about a minute.** The API and the database sleep when nobody is
 > using them, and wake on the first request.
+>
+> **Best viewed on a desktop screen.** A layout for phones and tablets is on the roadmap.
 
 ![The Halcyon Records homepage, showing this week's cover story above rows of new arrivals and on-sale records](docs/images/storefront.webp)
 
-## What it is
+## Overview
 
-Halcyon Records is a fictional but fully functional record shop, where you can browse the
-catalogue by artist, genre or decade and fill a cart as you go. Signing in gives you an
-account that lets you check out, and keeps your cart, your order history and your details.
-Place an order and the stock is checked before you get your order number. Nothing is
-charged at any point.
+Halcyon Records is a fictional but fully functional record shop. The storefront and the API it
+depends on are each tested and deployed automatically.
 
-The homepage opens with a cover story that changes weekly, followed by rows of new
-arrivals and discounted records. Anyone arriving with something in mind can search by
-title, artist, genre or year. A half-remembered title or a misspelled name will still
-turn up the right record. Regardless of how you get there, every part of the catalogue
-features a dedicated page with an introduction of its own.
+The shop gives you several ways to find a record. Each week the homepage features a different
+staff pick, and every artist, genre and decade has its own page with a written introduction.
+A search box at the top of the page forgives spelling mistakes, and its results include
+suggestions for similar records.
+
+Anyone can browse and add records to a cart, but checking out needs an account. Creating an
+account saves the cart, your contact details and order history. Once you are signed in,
+placing an order costs nothing. Use the "Try the demo account" button on the login page to
+start exploring the whole shop without registering.
+
+## Tech stack
+
+| Area                 | Technologies                                                                                                                                                                         |
+| -------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| Backend              | ASP.NET Core minimal APIs, .NET 10, C#, MediatR, FluentValidation, ErrorOr, Entity Framework Core, ASP.NET Core Identity, JWT bearer authentication, Sqids, Scalar, OpenAPI, Coravel |
+| Frontend             | Next.js 16 App Router, React 19, TypeScript, Tailwind CSS v4, shadcn/ui, NextAuth, Zustand, React Hook Form, Zod, openapi-typescript, openapi-fetch, Bun                             |
+| Data and search      | SQL Server, Azure SQL Database, Meilisearch, HybridCache                                                                                                                             |
+| Local development    | .NET Aspire, Docker Desktop, mkcert                                                                                                                                                  |
+| Testing              | xUnit, Testcontainers, Vitest, Testing Library, Playwright, axe-core                                                                                                                 |
+| Hosting and delivery | Azure Container Apps, Azure Container Apps Jobs, Azure Key Vault, Vercel, Bicep, GitHub Actions, GitHub Container Registry, Sentry, OpenTelemetry, Azure Application Insights        |
 
 ## Features
 
@@ -49,18 +61,18 @@ features a dedicated page with an introduction of its own.
 
 ### Cart and checkout
 
-- **Guest Carts** Zustand holds the cart in the browser while a visitor is signed out, then
-  syncs it at sign-in.
+- **Guest Carts** A Zustand store holds a signed-out visitor's cart in the browser until
+  sign-in saves it to their account.
 - **Oversell Protection** Each item's stock check and decrement are one atomic update, and the
   transaction rolls back if any item is short.
 - **Idempotent Orders** An idempotency key on every order means a duplicate request receives
   the original order instead of creating a second.
-- **Simulated Checkout** Checkout takes no payment, while still reducing stock for everyone and
-  saving the order to the account's history.
+- **Simulated Checkout** Placing an order costs nothing, while still reducing stock globally and
+  adding it to the account's order history.
 
 ### Accounts and access
 
-- **Persistent User Accounts** An account carries the cart, order history and personal details
+- **Persistent User Accounts** An account carries the cart, order history and contact details
   across sessions and devices.
 - **Rotating Refresh Tokens** Tokens are stored only as hashes and replaced on every refresh.
   Reusing a revoked one invalidates the whole chain.
@@ -71,6 +83,8 @@ features a dedicated page with an introduction of its own.
 
 ### Backend engineering
 
+- **Vertical Slice Architecture** Each API operation's endpoint, validator and handler share one
+  folder and are registered automatically.
 - **Validated Requests** FluentValidation runs as a pipeline behaviour, rejecting bad input
   before any handler is reached.
 - **Consistent Error Responses** Expected errors and unhandled exceptions leave the API in the
@@ -81,8 +95,8 @@ features a dedicated page with an introduction of its own.
 
 ### Frontend engineering
 
-- **Generated API Client** The backend's OpenAPI specification generates the frontend's types
-  through openapi-typescript, enforcing a single contract at compile time.
+- **Generated API Client** The frontend's types are derived from the backend's OpenAPI
+  specification by openapi-typescript, enforcing a single contract at compile time.
 - **Partial Prerendering** A cached static shell renders immediately while the dynamic sections
   stream in behind Suspense boundaries.
 - **Generated Metadata** Titles, descriptions and Open Graph tags are set per page, and the
@@ -92,12 +106,12 @@ features a dedicated page with an introduction of its own.
 
 - **Nightly Restock** A cron-scheduled Azure Container Apps Job restores every album to its
   restock level in one update.
-- **Account Maintenance** A separate job resets the demo account and deletes accounts idle for a
-  week or older than 90 days.
-- **On-Demand Reindex** The Meilisearch index rebuilds from the database when needed, triggered
-  manually rather than on a schedule.
+- **Account Maintenance** A cleanup job resets the demo account and deletes accounts idle for
+  a week or older than 90 days.
+- **On-Demand Reindex** The Meilisearch index rebuilds from the database after every deploy or
+  when needed.
 
-### Testing
+### Automated testing
 
 - **Isolated Unit Tests** Validators, encoders and pipeline behaviours each have their own
   tests, and frontend components render under Testing Library.
@@ -131,14 +145,14 @@ features a dedicated page with an introduction of its own.
 
 - **Traces and Metrics** OpenTelemetry exports request traces and runtime metrics to the Aspire
   dashboard locally and Application Insights in production.
-- **Structured Logging** Source-generated LoggerMessage calls keep log fields queryable rather
-  than buried in message strings.
+- **Structured Logging** Generated logging methods keep log fields queryable and give every
+  entry its own event ID.
 - **Error Reporting** Sentry captures exceptions across the storefront's browser, server and
   edge runtimes, tagged by environment.
 - **Health Probes** Container Apps polls a liveness endpoint for the process and a readiness
   endpoint covering SQL Server and Meilisearch.
 
-## A look around
+## Screenshots
 
 Catalogue:
 
@@ -156,65 +170,9 @@ Checkout:
 
 ![The checkout page, showing contact details pulled from the account beside an order summary, with the checkout progress above](docs/images/checkout.webp)
 
-## Tech stack
+## Architecture
 
-### Backend
-
-- **ASP.NET Core** minimal APIs on **.NET 10**, in C#.
-- **MediatR** for vertical slice architecture.
-- **FluentValidation** for request validation.
-- **ErrorOr** for expected errors.
-- **Entity Framework Core** for data access.
-- **ASP.NET Core Identity** and **JWT bearer** for authentication.
-- **Sqids** for public IDs.
-- **Scalar** for the **OpenAPI** reference.
-- **Coravel** for in-process scheduling.
-
-### Frontend
-
-- **Next.js 16** App Router, **React 19** and **TypeScript**.
-- **Tailwind CSS v4** and **shadcn/ui** for styling and components.
-- **NextAuth** for sign-in.
-- **Zustand** for the guest cart.
-- **React Hook Form** and **Zod** for forms and validation.
-- **openapi-typescript** and **openapi-fetch** for the generated API client.
-- **Bun** as the runtime and package manager.
-
-### Data and search
-
-- **SQL Server**, hosted as **Azure SQL Database**.
-- **Meilisearch** for search.
-- **HybridCache** for in-memory response caching.
-
-### Local development
-
-- **.NET Aspire** for orchestration, service wiring and the local dashboard.
-- **Docker Desktop** for the SQL Server and Meilisearch containers.
-- **mkcert** for local HTTPS.
-
-### Testing
-
-- **xUnit** for backend unit tests.
-- **Testcontainers** for SQL Server in integration tests.
-- **Vitest** and **Testing Library** for frontend components.
-- **Playwright** for end-to-end journeys.
-- **axe-core** for accessibility checks.
-
-### Hosting and delivery
-
-- **Azure Container Apps** for the API and Meilisearch.
-- **Azure Container Apps Jobs** for the nightly restock, account cleanup and search reindex.
-- **Azure Key Vault** for secrets.
-- **Vercel** for the storefront.
-- **Bicep** for infrastructure as code.
-- **GitHub Actions** for CI and deployment.
-- **GitHub Container Registry** for the API image.
-- **Sentry** for storefront error reporting.
-- **OpenTelemetry** and **Azure Application Insights** for API traces and metrics.
-
-## How it fits together
-
-### The repository
+### Project structure
 
 ```
 halcyon-records/
@@ -227,7 +185,7 @@ halcyon-records/
 └── docs/        database schema and screenshots
 ```
 
-### The deployed system
+### Deployed system
 
 ```mermaid
 ---
@@ -265,7 +223,7 @@ flowchart LR
 
 A merge to main also triggers Vercel, which builds and deploys the storefront.
 
-### Placing an order
+### Order flow
 
 ```mermaid
 ---
@@ -294,7 +252,7 @@ sequenceDiagram
 The access token travels in an encrypted cookie that page scripts cannot read. Only the route
 handler on Vercel decrypts it. If any item is short, the whole order is rolled back.
 
-### The database
+### Database schema
 
 ![Halcyon Records database schema](docs/images/erd.png)
 
@@ -320,9 +278,9 @@ Decisions the diagram does not show:
   account is identified by a separate `PublicId`, which is also the subject claim in its access
   token.
 
-## Running it locally
+## Getting started
 
-### What you need
+### Prerequisites
 
 - **.NET 10 SDK**.
 - **Docker Desktop**, running before you start the app or the tests.
@@ -357,7 +315,7 @@ dotnet user-secrets set "Parameters:mediatr-license-key" "your-key-here"
 
 Both live outside the repository, so a fresh clone on the same machine needs neither step again.
 
-### Start the app
+### Running the app
 
 ```bash
 dotnet run --project backend/src/HalcyonRecords.AppHost
@@ -414,7 +372,7 @@ bun run test:e2e
   setting.
 - **Smarter Search**: semantic search that finds records by meaning as well as by keyword.
 - **Admin Area**: adding an album, editing its listing and removing it from sale.
-- **Sales Dashboard**: shop owner can view order volume, revenue and best sellers over any
+- **Sales Dashboard**: the shop owner can view order volume, revenue and best sellers over any
   chosen period.
 
 ## Further reading
